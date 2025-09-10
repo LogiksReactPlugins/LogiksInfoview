@@ -1,6 +1,6 @@
-import S, { useState as I, useRef as ge, useMemo as ie } from "react";
-import ae from "axios";
-var te = { exports: {} }, G = {};
+import R, { useState as F, useRef as pe, useMemo as ce } from "react";
+import oe from "axios";
+var te = { exports: {} }, U = {};
 /**
  * @license React
  * react-jsx-runtime.production.js
@@ -10,10 +10,10 @@ var te = { exports: {} }, G = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var ce;
-function pe() {
-  if (ce) return G;
-  ce = 1;
+var de;
+function ye() {
+  if (de) return U;
+  de = 1;
   var t = Symbol.for("react.transitional.element"), a = Symbol.for("react.fragment");
   function u(l, i, n) {
     var d = null;
@@ -30,9 +30,9 @@ function pe() {
       props: n
     };
   }
-  return G.Fragment = a, G.jsx = u, G.jsxs = u, G;
+  return U.Fragment = a, U.jsx = u, U.jsxs = u, U;
 }
-var J = {};
+var V = {};
 /**
  * @license React
  * react-jsx-runtime.development.js
@@ -42,26 +42,26 @@ var J = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var de;
-function ye() {
-  return de || (de = 1, process.env.NODE_ENV !== "production" && function() {
+var ue;
+function be() {
+  return ue || (ue = 1, process.env.NODE_ENV !== "production" && function() {
     function t(s) {
       if (s == null) return null;
       if (typeof s == "function")
-        return s.$$typeof === W ? null : s.displayName || s.name || null;
+        return s.$$typeof === M ? null : s.displayName || s.name || null;
       if (typeof s == "string") return s;
       switch (s) {
         case O:
           return "Fragment";
-        case _:
+        case T:
           return "Profiler";
-        case y:
+        case b:
           return "StrictMode";
-        case L:
+        case P:
           return "Suspense";
         case se:
           return "SuspenseList";
-        case M:
+        case I:
           return "Activity";
       }
       if (typeof s == "object")
@@ -70,16 +70,16 @@ function ye() {
         ), s.$$typeof) {
           case h:
             return "Portal";
-          case T:
+          case L:
             return (s.displayName || "Context") + ".Provider";
           case C:
             return (s._context.displayName || "Context") + ".Consumer";
           case E:
             var m = s.render;
             return s = s.displayName, s || (s = m.displayName || m.name || "", s = s !== "" ? "ForwardRef(" + s + ")" : "ForwardRef"), s;
-          case A:
+          case ne:
             return m = s.displayName || null, m !== null ? m : t(s.type) || "Memo";
-          case D:
+          case A:
             m = s._payload, s = s._init;
             try {
               return t(s(m));
@@ -100,17 +100,17 @@ function ye() {
       }
       if (m) {
         m = console;
-        var g = m.error, r = typeof Symbol == "function" && Symbol.toStringTag && s[Symbol.toStringTag] || s.constructor.name || "Object";
-        return g.call(
+        var p = m.error, N = typeof Symbol == "function" && Symbol.toStringTag && s[Symbol.toStringTag] || s.constructor.name || "Object";
+        return p.call(
           m,
           "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.",
-          r
+          N
         ), a(s);
       }
     }
     function l(s) {
       if (s === O) return "<>";
-      if (typeof s == "object" && s !== null && s.$$typeof === D)
+      if (typeof s == "object" && s !== null && s.$$typeof === A)
         return "<...>";
       try {
         var m = t(s);
@@ -120,45 +120,45 @@ function ye() {
       }
     }
     function i() {
-      var s = z.A;
+      var s = $.A;
       return s === null ? null : s.getOwner();
     }
     function n() {
       return Error("react-stack-top-frame");
     }
     function d(s) {
-      if (B.call(s, "key")) {
+      if (q.call(s, "key")) {
         var m = Object.getOwnPropertyDescriptor(s, "key").get;
         if (m && m.isReactWarning) return !1;
       }
       return s.key !== void 0;
     }
     function o(s, m) {
-      function g() {
-        Q || (Q = !0, console.error(
+      function p() {
+        z || (z = !0, console.error(
           "%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)",
           m
         ));
       }
-      g.isReactWarning = !0, Object.defineProperty(s, "key", {
-        get: g,
+      p.isReactWarning = !0, Object.defineProperty(s, "key", {
+        get: p,
         configurable: !0
       });
     }
     function c() {
       var s = t(this.type);
-      return Z[s] || (Z[s] = !0, console.error(
+      return Q[s] || (Q[s] = !0, console.error(
         "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
       )), s = this.props.ref, s !== void 0 ? s : null;
     }
-    function N(s, m, g, r, f, x, p, w) {
-      return g = x.ref, s = {
-        $$typeof: R,
+    function w(s, m, p, N, r, x, g, y) {
+      return p = x.ref, s = {
+        $$typeof: _,
         type: s,
         key: m,
         props: x,
-        _owner: f
-      }, (g !== void 0 ? g : null) !== null ? Object.defineProperty(s, "ref", {
+        _owner: r
+      }, (p !== void 0 ? p : null) !== null ? Object.defineProperty(s, "ref", {
         enumerable: !1,
         get: c
       }) : Object.defineProperty(s, "ref", { enumerable: !1, value: null }), s._store = {}, Object.defineProperty(s._store, "validated", {
@@ -175,68 +175,68 @@ function ye() {
         configurable: !1,
         enumerable: !1,
         writable: !0,
-        value: p
+        value: g
       }), Object.defineProperty(s, "_debugTask", {
         configurable: !1,
         enumerable: !1,
         writable: !0,
-        value: w
+        value: y
       }), Object.freeze && (Object.freeze(s.props), Object.freeze(s)), s;
     }
-    function k(s, m, g, r, f, x, p, w) {
-      var b = m.children;
-      if (b !== void 0)
-        if (r)
-          if (ne(b)) {
-            for (r = 0; r < b.length; r++)
-              v(b[r]);
-            Object.freeze && Object.freeze(b);
+    function k(s, m, p, N, r, x, g, y) {
+      var f = m.children;
+      if (f !== void 0)
+        if (N)
+          if (X(f)) {
+            for (N = 0; N < f.length; N++)
+              v(f[N]);
+            Object.freeze && Object.freeze(f);
           } else
             console.error(
               "React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead."
             );
-        else v(b);
-      if (B.call(m, "key")) {
-        b = t(s);
-        var P = Object.keys(m).filter(function(V) {
-          return V !== "key";
+        else v(f);
+      if (q.call(m, "key")) {
+        f = t(s);
+        var S = Object.keys(m).filter(function(Y) {
+          return Y !== "key";
         });
-        r = 0 < P.length ? "{key: someKey, " + P.join(": ..., ") + ": ...}" : "{key: someKey}", U[b + r] || (P = 0 < P.length ? "{" + P.join(": ..., ") + ": ...}" : "{}", console.error(
+        N = 0 < S.length ? "{key: someKey, " + S.join(": ..., ") + ": ...}" : "{key: someKey}", B[f + N] || (S = 0 < S.length ? "{" + S.join(": ..., ") + ": ...}" : "{}", console.error(
           `A props object containing a "key" prop is being spread into JSX:
   let props = %s;
   <%s {...props} />
 React keys must be passed directly to JSX without using spread:
   let props = %s;
   <%s key={someKey} {...props} />`,
-          r,
-          b,
-          P,
-          b
-        ), U[b + r] = !0);
+          N,
+          f,
+          S,
+          f
+        ), B[f + N] = !0);
       }
-      if (b = null, g !== void 0 && (u(g), b = "" + g), d(m) && (u(m.key), b = "" + m.key), "key" in m) {
-        g = {};
-        for (var $ in m)
-          $ !== "key" && (g[$] = m[$]);
-      } else g = m;
-      return b && o(
-        g,
-        typeof s == "function" ? s.displayName || s.name || "Unknown" : s
-      ), N(
-        s,
-        b,
-        x,
-        f,
-        i(),
-        g,
+      if (f = null, p !== void 0 && (u(p), f = "" + p), d(m) && (u(m.key), f = "" + m.key), "key" in m) {
+        p = {};
+        for (var D in m)
+          D !== "key" && (p[D] = m[D]);
+      } else p = m;
+      return f && o(
         p,
-        w
+        typeof s == "function" ? s.displayName || s.name || "Unknown" : s
+      ), w(
+        s,
+        f,
+        x,
+        r,
+        i(),
+        p,
+        g,
+        y
       );
     }
     function v(s) {
-      typeof s == "object" && s !== null && s.$$typeof === R && s._store && (s._store.validated = 1);
+      typeof s == "object" && s !== null && s.$$typeof === _ && s._store && (s._store.validated = 1);
     }
-    var j = S, R = Symbol.for("react.transitional.element"), h = Symbol.for("react.portal"), O = Symbol.for("react.fragment"), y = Symbol.for("react.strict_mode"), _ = Symbol.for("react.profiler"), C = Symbol.for("react.consumer"), T = Symbol.for("react.context"), E = Symbol.for("react.forward_ref"), L = Symbol.for("react.suspense"), se = Symbol.for("react.suspense_list"), A = Symbol.for("react.memo"), D = Symbol.for("react.lazy"), M = Symbol.for("react.activity"), W = Symbol.for("react.client.reference"), z = j.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, B = Object.prototype.hasOwnProperty, ne = Array.isArray, F = console.createTask ? console.createTask : function() {
+    var j = R, _ = Symbol.for("react.transitional.element"), h = Symbol.for("react.portal"), O = Symbol.for("react.fragment"), b = Symbol.for("react.strict_mode"), T = Symbol.for("react.profiler"), C = Symbol.for("react.consumer"), L = Symbol.for("react.context"), E = Symbol.for("react.forward_ref"), P = Symbol.for("react.suspense"), se = Symbol.for("react.suspense_list"), ne = Symbol.for("react.memo"), A = Symbol.for("react.lazy"), I = Symbol.for("react.activity"), M = Symbol.for("react.client.reference"), $ = j.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, q = Object.prototype.hasOwnProperty, X = Array.isArray, W = console.createTask ? console.createTask : function() {
       return null;
     };
     j = {
@@ -244,53 +244,53 @@ React keys must be passed directly to JSX without using spread:
         return s();
       }
     };
-    var Q, Z = {}, K = j.react_stack_bottom_frame.bind(
+    var z, Q = {}, Z = j.react_stack_bottom_frame.bind(
       j,
       n
-    )(), Y = F(l(n)), U = {};
-    J.Fragment = O, J.jsx = function(s, m, g, r, f) {
-      var x = 1e4 > z.recentlyCreatedOwnerStacks++;
+    )(), K = W(l(n)), B = {};
+    V.Fragment = O, V.jsx = function(s, m, p, N, r) {
+      var x = 1e4 > $.recentlyCreatedOwnerStacks++;
       return k(
         s,
         m,
-        g,
+        p,
         !1,
+        N,
         r,
-        f,
-        x ? Error("react-stack-top-frame") : K,
-        x ? F(l(s)) : Y
+        x ? Error("react-stack-top-frame") : Z,
+        x ? W(l(s)) : K
       );
-    }, J.jsxs = function(s, m, g, r, f) {
-      var x = 1e4 > z.recentlyCreatedOwnerStacks++;
+    }, V.jsxs = function(s, m, p, N, r) {
+      var x = 1e4 > $.recentlyCreatedOwnerStacks++;
       return k(
         s,
         m,
-        g,
+        p,
         !0,
+        N,
         r,
-        f,
-        x ? Error("react-stack-top-frame") : K,
-        x ? F(l(s)) : Y
+        x ? Error("react-stack-top-frame") : Z,
+        x ? W(l(s)) : K
       );
     };
-  }()), J;
+  }()), V;
 }
-var ue;
-function be() {
-  return ue || (ue = 1, process.env.NODE_ENV === "production" ? te.exports = pe() : te.exports = ye()), te.exports;
+var me;
+function je() {
+  return me || (me = 1, process.env.NODE_ENV === "production" ? te.exports = ye() : te.exports = be()), te.exports;
 }
-var e = be();
-function je(t) {
+var e = je();
+function ve(t) {
   return t.template ? t.template : "tab";
 }
-function ve(t) {
+function Ne(t) {
   const a = {};
   return Object.entries(t).forEach(([u, l]) => {
     const i = l.group || "General";
     a[i] || (a[i] = { label: i, type: "fields", fields: [] }), a[i]?.fields?.push({ name: u, ...l });
   }), a;
 }
-const H = {
+const G = {
   12: "lg:col-span-12",
   11: "lg:col-span-11",
   10: "lg:col-span-10",
@@ -304,10 +304,10 @@ const H = {
   2: "lg:col-span-2",
   1: "lg:col-span-1"
 };
-function q(t) {
+function J(t) {
   return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].includes(t) ? t : 6;
 }
-async function Ne(t) {
+async function we(t) {
   if (navigator.clipboard && navigator.clipboard.writeText)
     try {
       await navigator.clipboard.writeText(t);
@@ -325,8 +325,8 @@ async function Ne(t) {
     document.body.removeChild(a);
   }
 }
-const fe = "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg";
-function X({ field: t, data: a }) {
+const ge = "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg";
+function H({ field: t, data: a }) {
   const u = t?.name;
   return /* @__PURE__ */ e.jsxs("div", { className: "px-3 py-2 bg-gray-50 rounded-lg", children: [
     /* @__PURE__ */ e.jsx("label", { className: `
@@ -340,7 +340,7 @@ function X({ field: t, data: a }) {
         className: "w-16 h-16 rounded-full object-cover border",
         onError: (n) => {
           const d = n.currentTarget;
-          d.onerror = null, d.src = fe;
+          d.onerror = null, d.src = ge;
         }
       }
     ) : /* @__PURE__ */ e.jsx("p", { className: `
@@ -348,7 +348,7 @@ function X({ field: t, data: a }) {
   `, children: typeof a?.[u] == "object" ? JSON.stringify(a?.[u]) : String(a?.[u] ?? "") }) })
   ] });
 }
-function we({ commonInfo: t, infoData: a, hiddenFields: u = [] }) {
+function ke({ commonInfo: t, infoData: a, hiddenFields: u = [] }) {
   return /* @__PURE__ */ e.jsx("div", { className: "bg-white border border-gray-100 p-4  ", children: /* @__PURE__ */ e.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-6", children: [
     /* @__PURE__ */ e.jsx("div", { className: "lg:col-span-2 flex flex-col items-center", children: /* @__PURE__ */ e.jsx("div", { className: "relative w-42 h-42", children: /* @__PURE__ */ e.jsx(
       "img",
@@ -358,14 +358,14 @@ function we({ commonInfo: t, infoData: a, hiddenFields: u = [] }) {
         className: " w-full h-full object-cover border-4 rounded-[12px] border-white shadow-lg",
         onError: (l) => {
           const i = l.currentTarget;
-          i.onerror = null, i.src = fe;
+          i.onerror = null, i.src = ge;
         }
       }
     ) }) }),
     /* @__PURE__ */ e.jsx("div", { className: "lg:col-span-10 min-h-0 max-h-40  overflow-y-auto custom-scrollbar", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: t.fields?.map((l, i) => {
       const n = a?.[l.name];
-      return u.includes(l.name) || !n && n !== !1 && n !== 0 ? null : /* @__PURE__ */ e.jsx("div", { className: `hover:bg-gray-100 transition-colors duration-200 col-span-12 sm:col-span-6 ${H[q(l.width)] || "lg:col-span-4"}`, children: /* @__PURE__ */ e.jsx(
-        X,
+      return u.includes(l.name) || !n && n !== !1 && n !== 0 ? null : /* @__PURE__ */ e.jsx("div", { className: `hover:bg-gray-100 transition-colors duration-200 col-span-12 sm:col-span-6 ${G[J(l.width)] || "lg:col-span-4"}`, children: /* @__PURE__ */ e.jsx(
+        H,
         {
           field: l,
           data: a ?? {}
@@ -375,9 +375,9 @@ function we({ commonInfo: t, infoData: a, hiddenFields: u = [] }) {
     }) }) })
   ] }) });
 }
-function oe({ tabObj: t, methods: a, tabName: u }) {
-  const [l, i] = S.useState({});
-  return S.useEffect(() => {
+function le({ tabObj: t, methods: a, tabName: u }) {
+  const [l, i] = R.useState({});
+  return R.useEffect(() => {
     let n = !1;
     return (async () => {
       const o = t?.config;
@@ -386,10 +386,10 @@ function oe({ tabObj: t, methods: a, tabName: u }) {
         return;
       }
       if (o.type === "method") {
-        const c = o.method, N = c ? a[c] : void 0;
-        if (N)
+        const c = o.method, w = c ? a[c] : void 0;
+        if (w)
           try {
-            const k = await Promise.resolve(N());
+            const k = await Promise.resolve(w());
             n || i(k || {});
           } catch (k) {
             console.error("Method execution failed:", k), n || i({});
@@ -399,7 +399,7 @@ function oe({ tabObj: t, methods: a, tabName: u }) {
       }
       if (o.type === "api")
         try {
-          const c = await ae({
+          const c = await oe({
             method: o.method || "GET",
             // GET, POST, etc.
             url: o.url,
@@ -427,9 +427,9 @@ function oe({ tabObj: t, methods: a, tabName: u }) {
   ]), /* @__PURE__ */ e.jsx("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: l && Object.keys(l).map((n, d) => /* @__PURE__ */ e.jsx(
     "div",
     {
-      className: `col-span-12 sm:col-span-6 ${H[q(t.width)] || "lg:col-span-2"}`,
+      className: `col-span-12 sm:col-span-6 ${G[J(t.width)] || "lg:col-span-2"}`,
       children: /* @__PURE__ */ e.jsx(
-        X,
+        H,
         {
           field: { name: n, label: n },
           data: l ?? {}
@@ -440,44 +440,44 @@ function oe({ tabObj: t, methods: a, tabName: u }) {
     `field-${d}`
   )) }) });
 }
-function le({ tabObj: t, methods: a, tabName: u }) {
-  const [l, i] = I(1), [n, d] = I(10), [o, c] = I(""), [N, k] = S.useState([]), v = ge(null), [j, R] = I(null), [h, O] = I({ key: "", direction: null });
-  S.useEffect(() => {
+function ie({ tabObj: t, methods: a, tabName: u }) {
+  const [l, i] = F(1), [n, d] = F(10), [o, c] = F(""), [w, k] = R.useState([]), v = pe(null), [j, _] = F(null), [h, O] = F({ key: "", direction: null });
+  R.useEffect(() => {
     let r = !1;
     return (async () => {
-      const x = t?.config;
-      if (!x?.type) {
+      const g = t?.config;
+      if (!g?.type) {
         r || k([]);
         return;
       }
-      if (x.type === "method") {
-        const p = x.method, w = p ? a[p] : void 0;
-        if (w)
+      if (g.type === "method") {
+        const y = g.method, f = y ? a[y] : void 0;
+        if (f)
           try {
-            const b = await Promise.resolve(w());
-            r || k(b || []);
+            const S = await Promise.resolve(f());
+            r || k(S || []);
           } catch {
             r || k([]);
           }
         else
           r || k([]);
       }
-      if (x.type === "api")
+      if (g.type === "api")
         try {
-          const p = await ae({
-            method: x.method || "GET",
+          const y = await oe({
+            method: g.method || "GET",
             // GET, POST, etc.
-            url: x.url,
-            data: x.body || {},
+            url: g.url,
+            data: g.body || {},
             // request body
-            params: x.params || {},
+            params: g.params || {},
             // query params
-            headers: x.headers || {}
+            headers: g.headers || {}
             // optional headers
           });
-          r || k(p.data || {});
-        } catch (p) {
-          console.error("API fetch failed:", p), r || k([]);
+          r || k(y.data || {});
+        } catch (y) {
+          console.error("API fetch failed:", y), r || k([]);
         }
     })(), () => {
       r = !0;
@@ -490,58 +490,60 @@ function le({ tabObj: t, methods: a, tabName: u }) {
     JSON.stringify(t?.config?.body || {}),
     JSON.stringify(t?.config?.headers || {})
   ]);
-  const y = Array.isArray(N) ? N : [N], C = ((r) => {
-    const f = /* @__PURE__ */ new Set();
-    return r.forEach((x) => {
-      x && typeof x == "object" && Object.keys(x).forEach((p) => f.add(p));
-    }), Array.from(f);
-  })(y), T = t?.vmode === "edit", E = t?.config?.form && Object.keys(t.config.form).length > 0, L = (r) => {
-    let f = "asc";
-    h.key === r && h.direction === "asc" ? f = "desc" : h.key === r && h.direction === "desc" && (f = null), O({ key: r, direction: f });
-  }, se = (r) => !h.key || !h.direction ? r : [...r].sort((f, x) => {
-    const p = f[h.key], w = x[h.key];
-    if (p == null) return h.direction === "asc" ? 1 : -1;
-    if (w == null) return h.direction === "asc" ? -1 : 1;
-    if (typeof p == "boolean" && typeof w == "boolean")
-      return h.direction === "asc" ? p === w ? 0 : p ? -1 : 1 : p === w ? 0 : p ? 1 : -1;
-    const b = new Date(p), P = new Date(w);
-    if (!isNaN(b.getTime()) && !isNaN(P.getTime()))
-      return h.direction === "asc" ? b.getTime() - P.getTime() : P.getTime() - b.getTime();
-    const $ = parseFloat(p), V = parseFloat(w);
-    if (!isNaN($) && !isNaN(V))
-      return h.direction === "asc" ? $ - V : V - $;
-    const ee = String(p).toLowerCase(), re = String(w).toLowerCase();
+  const b = Array.isArray(w) ? w : [w], C = ((r) => {
+    const x = /* @__PURE__ */ new Set();
+    return r.forEach((g) => {
+      g && typeof g == "object" && Object.keys(g).forEach((y) => x.add(y));
+    }), Array.from(x);
+  })(b), L = t?.vmode === "edit", E = t?.config?.form && Object.keys(t.config.form).length > 0, P = t?.config?.info && Object.keys(t.config.info).length > 0;
+  console.log("tabObj?.config", t?.config);
+  const se = (r) => {
+    let x = "asc";
+    h.key === r && h.direction === "asc" ? x = "desc" : h.key === r && h.direction === "desc" && (x = null), O({ key: r, direction: x });
+  }, ne = (r) => !h.key || !h.direction ? r : [...r].sort((x, g) => {
+    const y = x[h.key], f = g[h.key];
+    if (y == null) return h.direction === "asc" ? 1 : -1;
+    if (f == null) return h.direction === "asc" ? -1 : 1;
+    if (typeof y == "boolean" && typeof f == "boolean")
+      return h.direction === "asc" ? y === f ? 0 : y ? -1 : 1 : y === f ? 0 : y ? 1 : -1;
+    const S = new Date(y), D = new Date(f);
+    if (!isNaN(S.getTime()) && !isNaN(D.getTime()))
+      return h.direction === "asc" ? S.getTime() - D.getTime() : D.getTime() - S.getTime();
+    const Y = parseFloat(y), ae = parseFloat(f);
+    if (!isNaN(Y) && !isNaN(ae))
+      return h.direction === "asc" ? Y - ae : ae - Y;
+    const ee = String(y).toLowerCase(), re = String(f).toLowerCase();
     return h.direction === "asc" ? ee < re ? -1 : ee > re ? 1 : 0 : ee > re ? -1 : ee < re ? 1 : 0;
-  }), A = ie(() => {
-    let r = y;
+  }), A = ce(() => {
+    let r = b;
     if (o.trim()) {
-      const f = o.toLowerCase();
-      r = y.filter((x) => C.some((p) => {
-        const w = x[p];
-        return w == null ? !1 : String(w).toLowerCase().includes(f);
+      const x = o.toLowerCase();
+      r = b.filter((g) => C.some((y) => {
+        const f = g[y];
+        return f == null ? !1 : String(f).toLowerCase().includes(x);
       }));
     }
-    return se(r);
-  }, [y, o, C, h]), D = Math.ceil(A.length / n), M = (l - 1) * n, W = M + n, z = A.slice(M, W), B = (r) => {
-    i(Math.max(1, Math.min(r, D)));
-  }, ne = (r) => {
+    return ne(r);
+  }, [b, o, C, h]), I = Math.ceil(A.length / n), M = (l - 1) * n, $ = M + n, q = A.slice(M, $), X = (r) => {
+    i(Math.max(1, Math.min(r, I)));
+  }, W = (r) => {
     d(r), i(1);
-  }, F = () => {
+  }, z = () => {
     c("");
-  }, Q = (r, f) => {
+  }, Q = (r, x) => {
     a?.editInfoRecord?.(r, u);
-  }, Z = (r, f) => {
-    a?.viewInfoRecord?.(r, u);
-  }, K = (r, f) => {
+  }, Z = (r) => {
+    a?.viewInfoRecord?.(r, t?.config?.info);
+  }, K = (r, x) => {
     a?.deleteInfoRecord?.(r, u);
-  }, Y = () => {
+  }, B = () => {
     a?.addInfoRecord?.(t?.config?.form, u);
-  }, U = (r) => r.split("_").map((f) => f.charAt(0).toUpperCase() + f.slice(1)).join(" "), s = (r, f) => {
+  }, s = (r) => r.split("_").map((x) => x.charAt(0).toUpperCase() + x.slice(1)).join(" "), m = (r, x) => {
     if (r == null || r === "")
       return /* @__PURE__ */ e.jsx("span", { className: "text-gray-400 italic", children: "-" });
     if (typeof r == "boolean")
       return /* @__PURE__ */ e.jsx("span", { className: `inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${r ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`, children: r ? "Yes" : "No" });
-    switch (f?.toLowerCase()) {
+    switch (x?.toLowerCase()) {
       case "checkbox":
         return /* @__PURE__ */ e.jsx(
           "input",
@@ -631,8 +633,8 @@ function le({ tabObj: t, methods: a, tabName: u }) {
         return r ? /* @__PURE__ */ e.jsx("a", { href: r, target: "_blank", rel: "noopener noreferrer", className: "text-blue-600 underline", children: "FILE" }) : "No File";
       case "json":
         try {
-          const x = typeof r == "string" ? JSON.parse(r) : r;
-          return /* @__PURE__ */ e.jsx("pre", { className: "whitespace-pre-wrap text-xs bg-gray-100 p-2 rounded", children: JSON.stringify(x, null, 2) });
+          const g = typeof r == "string" ? JSON.parse(r) : r;
+          return /* @__PURE__ */ e.jsx("pre", { className: "whitespace-pre-wrap text-xs bg-gray-100 p-2 rounded", children: JSON.stringify(g, null, 2) });
         } catch {
           return String(r);
         }
@@ -647,22 +649,22 @@ function le({ tabObj: t, methods: a, tabName: u }) {
       default:
         return String(r);
     }
-  }, m = (r, f) => {
-    Ne(r).then(() => {
-      R(f), v.current && clearTimeout(v.current), v.current = setTimeout(() => {
-        R("");
+  }, p = (r, x) => {
+    we(r).then(() => {
+      _(x), v.current && clearTimeout(v.current), v.current = setTimeout(() => {
+        _("");
       }, 2e3);
     }).catch(() => {
-      R("");
+      _("");
     });
-  }, g = ie(() => ({
+  }, N = ce(() => ({
     totalRows: A.length,
     columns: C.length,
     currentPageStart: M + 1,
-    currentPageEnd: Math.min(W, A.length),
+    currentPageEnd: Math.min($, A.length),
     isFiltered: o.trim().length > 0
-  }), [A, y, C, M, W]);
-  return y.length === 0 || C.length === 0 ? /* @__PURE__ */ e.jsxs("div", { className: "h-full flex flex-1 flex-col items-center justify-center py-22 text-gray-500", children: [
+  }), [A, b, C, M, $]);
+  return b.length === 0 || C.length === 0 ? /* @__PURE__ */ e.jsxs("div", { className: "h-full flex flex-1 flex-col items-center justify-center py-22 text-gray-500", children: [
     /* @__PURE__ */ e.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ e.jsxs("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: [
       /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" }),
       /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "m8 7 4-4 4 4" })
@@ -672,7 +674,7 @@ function le({ tabObj: t, methods: a, tabName: u }) {
     E && /* @__PURE__ */ e.jsxs(
       "button",
       {
-        onClick: Y,
+        onClick: B,
         className: "mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-action cursor-pointer",
         children: [
           /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 mr-2", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 4v16m8-8H4" }) }),
@@ -697,7 +699,7 @@ function le({ tabObj: t, methods: a, tabName: u }) {
         o && /* @__PURE__ */ e.jsx(
           "button",
           {
-            onClick: F,
+            onClick: z,
             className: "absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600",
             title: "Clear search",
             children: /* @__PURE__ */ e.jsx("svg", { className: "h-4 w-4", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M6 18L18 6M6 6l12 12" }) })
@@ -707,7 +709,7 @@ function le({ tabObj: t, methods: a, tabName: u }) {
       E && /* @__PURE__ */ e.jsxs(
         "button",
         {
-          onClick: Y,
+          onClick: B,
           className: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-action cursor-pointer",
           children: [
             /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 mr-2", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 4v16m8-8H4" }) }),
@@ -720,12 +722,12 @@ function le({ tabObj: t, methods: a, tabName: u }) {
       /* @__PURE__ */ e.jsx("div", { className: "flex items-center gap-6 text-sm", children: /* @__PURE__ */ e.jsx("span", { className: "flex items-center gap-2", children: /* @__PURE__ */ e.jsxs("span", { className: "text-gray-600", children: [
         "Showing ",
         /* @__PURE__ */ e.jsxs("strong", { className: "text-gray-900", children: [
-          g.currentPageStart,
+          N.currentPageStart,
           "-",
-          g.currentPageEnd
+          N.currentPageEnd
         ] }),
         " of ",
-        /* @__PURE__ */ e.jsx("strong", { className: "text-gray-900", children: g.totalRows }),
+        /* @__PURE__ */ e.jsx("strong", { className: "text-gray-900", children: N.totalRows }),
         " records"
       ] }) }) }),
       /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex justify-end gap-4", children: [
@@ -735,7 +737,7 @@ function le({ tabObj: t, methods: a, tabName: u }) {
             "select",
             {
               value: n,
-              onChange: (r) => ne(Number(r.target.value)),
+              onChange: (r) => W(Number(r.target.value)),
               className: "border border-gray-300 text-gray-900 rounded px-1 py-1 text-sm outline-0",
               children: [
                 /* @__PURE__ */ e.jsx("option", { value: 5, children: "5" }),
@@ -752,7 +754,7 @@ function le({ tabObj: t, methods: a, tabName: u }) {
           /* @__PURE__ */ e.jsx(
             "button",
             {
-              onClick: () => B(l - 1),
+              onClick: () => X(l - 1),
               disabled: l === 1,
               className: "flex items-center gap-2 text-sm font-medium text-action cursor-pointer bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors",
               children: /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 19l-7-7 7-7" }) })
@@ -762,13 +764,13 @@ function le({ tabObj: t, methods: a, tabName: u }) {
             "Page ",
             /* @__PURE__ */ e.jsx("strong", { className: "text-gray-900", children: l }),
             " of ",
-            /* @__PURE__ */ e.jsx("strong", { className: "text-gray-900", children: D })
+            /* @__PURE__ */ e.jsx("strong", { className: "text-gray-900", children: I })
           ] }) }),
           /* @__PURE__ */ e.jsx(
             "button",
             {
-              onClick: () => B(l + 1),
-              disabled: l === D,
+              onClick: () => X(l + 1),
+              disabled: l === I,
               className: "flex items-center gap-2 text-sm font-medium text-action cursor-pointer bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors",
               children: /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 5l7 7-7 7" }) })
             }
@@ -790,7 +792,7 @@ function le({ tabObj: t, methods: a, tabName: u }) {
       /* @__PURE__ */ e.jsx(
         "button",
         {
-          onClick: F,
+          onClick: z,
           className: "inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 cursor-pointer",
           children: "Clear Search"
         }
@@ -798,7 +800,7 @@ function le({ tabObj: t, methods: a, tabName: u }) {
     ] }),
     A.length > 0 && /* @__PURE__ */ e.jsx(e.Fragment, { children: /* @__PURE__ */ e.jsx("div", { className: "max-h-full overflow-auto min-w-full divide-y divide-gray-200 border border-gray-200 bordr-t", children: /* @__PURE__ */ e.jsxs("table", { className: "min-w-full h-full", children: [
       /* @__PURE__ */ e.jsx("thead", { className: " text-action", children: /* @__PURE__ */ e.jsxs("tr", { children: [
-        T && /* @__PURE__ */ e.jsx(
+        L && /* @__PURE__ */ e.jsx(
           "th",
           {
             scope: "col",
@@ -806,7 +808,7 @@ function le({ tabObj: t, methods: a, tabName: u }) {
             children: "Actions"
           }
         ),
-        C.map((r, f) => /* @__PURE__ */ e.jsx(
+        C.map((r, x) => /* @__PURE__ */ e.jsx(
           "th",
           {
             scope: "col",
@@ -815,9 +817,9 @@ function le({ tabObj: t, methods: a, tabName: u }) {
               "div",
               {
                 className: "flex items-center gap-1 cursor-pointer select-none",
-                onClick: () => L(r),
+                onClick: () => se(r),
                 children: [
-                  /* @__PURE__ */ e.jsx("span", { className: "truncate", title: U(r), children: U(r) }),
+                  /* @__PURE__ */ e.jsx("span", { className: "truncate", title: s(r), children: s(r) }),
                   h?.key === r ? h.direction === "asc" ? /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-blue-600", fill: "currentColor", viewBox: "0 0 20 20", children: /* @__PURE__ */ e.jsx("path", { d: "M5 12l5-5 5 5H5z" }) }) : /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-blue-600", fill: "currentColor", viewBox: "0 0 20 20", children: /* @__PURE__ */ e.jsx("path", { d: "M5 8l5 5 5-5H5z" }) }) : /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-gray-400 group-hover:text-gray-600", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" }) })
                 ]
               }
@@ -826,13 +828,13 @@ function le({ tabObj: t, methods: a, tabName: u }) {
           r
         ))
       ] }) }),
-      /* @__PURE__ */ e.jsx("tbody", { className: "bg-white divide-y divide-gray-200", children: z.map((r, f) => /* @__PURE__ */ e.jsxs(
+      /* @__PURE__ */ e.jsx("tbody", { className: "bg-white divide-y divide-gray-200", children: q.map((r, x) => /* @__PURE__ */ e.jsxs(
         "tr",
         {
-          className: `hover:bg-secondary transition-colors duration-150 ${f % 2 === 0 ? "bg-white" : "bg-gray-50"}`,
+          className: `hover:bg-secondary transition-colors duration-150 ${x % 2 === 0 ? "bg-white" : "bg-gray-50"}`,
           children: [
-            T && /* @__PURE__ */ e.jsx("td", { className: "px-4 sm:px-6 py-1 whitespace-nowrap text-sm bg-gray-50 text-gray-900 sticky left-0 z-10", children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-2", children: [
-              /* @__PURE__ */ e.jsx(
+            L && /* @__PURE__ */ e.jsx("td", { className: "px-4 sm:px-6 py-1 whitespace-nowrap text-sm bg-gray-50 text-gray-900 sticky left-0 z-10", children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-2", children: [
+              P && /* @__PURE__ */ e.jsx(
                 "button",
                 {
                   onClick: () => Z(r),
@@ -888,33 +890,33 @@ function le({ tabObj: t, methods: a, tabName: u }) {
                 }
               )
             ] }) }),
-            C.map((x) => /* @__PURE__ */ e.jsx(
+            C.map((g) => /* @__PURE__ */ e.jsx(
               "td",
               {
                 className: "px-4 sm:px-6 py-1 text-sm text-gray-900",
                 children: /* @__PURE__ */ e.jsxs("div", { className: "relative group flex items-center", children: [
-                  /* @__PURE__ */ e.jsx("div", { className: "truncate max-w-xs sm:max-w-none", children: s(r[x] ?? "", x) }),
+                  /* @__PURE__ */ e.jsx("div", { className: "truncate max-w-xs sm:max-w-none", children: m(r[g] ?? "", g) }),
                   /* @__PURE__ */ e.jsx(
                     "button",
                     {
-                      onClick: () => m(r[x] || "", `${r.id}-${x}`),
+                      onClick: () => p(r[g] || "", `${r.id}-${g}`),
                       className: "absolute -right-4 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity ml-2 p-1 rounded bg-gray-50 hover:bg-gray-100 cursor-pointer",
                       title: "Copy",
-                      children: j === `${r.id}-${x}` ? /* @__PURE__ */ e.jsx(e.Fragment, { children: /* @__PURE__ */ e.jsx("span", { className: "text-xs text-gray-600", children: "Copied!" }) }) : /* @__PURE__ */ e.jsx("i", { className: "fa-regular fa-copy" })
+                      children: j === `${r.id}-${g}` ? /* @__PURE__ */ e.jsx(e.Fragment, { children: /* @__PURE__ */ e.jsx("span", { className: "text-xs text-gray-600", children: "Copied!" }) }) : /* @__PURE__ */ e.jsx("i", { className: "fa-regular fa-copy" })
                     }
                   )
                 ] })
               },
-              x
+              g
             ))
           ]
         },
-        M + f
+        M + x
       )) })
     ] }) }) })
   ] });
 }
-const me = ({ groups: t, groupNames: a, setActiveTabIndex: u, activeTabIndex: l }) => /* @__PURE__ */ e.jsx(
+const xe = ({ groups: t, groupNames: a, setActiveTabIndex: u, activeTabIndex: l }) => /* @__PURE__ */ e.jsx(
   "nav",
   {
     className: "flex flex-col overflow-y-auto h-full px-2 py-1 space-y-1",
@@ -929,7 +931,7 @@ const me = ({ groups: t, groupNames: a, setActiveTabIndex: u, activeTabIndex: l 
       i
     )) : /* @__PURE__ */ e.jsx("div", { className: "py-3 px-2 text-sm text-gray-500", children: "No group available" })
   }
-), ke = ({
+), Ce = ({
   groups: t,
   groupNames: a,
   setActiveTabIndex: u,
@@ -974,19 +976,19 @@ const me = ({ groups: t, groupNames: a, setActiveTabIndex: u, activeTabIndex: l 
         paddingLeft: n ? "35px" : "0",
         paddingRight: n ? "35px" : "0"
       },
-      children: a.length > 0 ? a.map((c, N) => /* @__PURE__ */ e.jsx(
+      children: a.length > 0 ? a.map((c, w) => /* @__PURE__ */ e.jsx(
         "button",
         {
           type: "button",
-          onClick: () => u(N),
-          className: `relative cursor-pointer flex-shrink-0 py-2 px-2 sm:px-4 rounded-t-lg text-xs sm:text-sm font-semibold transition-all duration-300 ease-out focus:outline-none whitespace-nowrap ${l === N ? "text-action bg-white " : "text-gray-600 hover:text-gray-800 hover:bg-white/50"}`,
+          onClick: () => u(w),
+          className: `relative cursor-pointer flex-shrink-0 py-2 px-2 sm:px-4 rounded-t-lg text-xs sm:text-sm font-semibold transition-all duration-300 ease-out focus:outline-none whitespace-nowrap ${l === w ? "text-action bg-white " : "text-gray-600 hover:text-gray-800 hover:bg-white/50"}`,
           children: /* @__PURE__ */ e.jsx("span", { className: "relative z-10 flex items-center justify-center gap-1 sm:gap-2", children: /* @__PURE__ */ e.jsx("span", { className: "truncate", children: t[c]?.label || c }) })
         },
         c
       )) : /* @__PURE__ */ e.jsx("div", { className: "py-3 px-6 text-sm text-gray-500", children: "No group available" })
     }
   ) })
-] }), xe = ({
+] }), he = ({
   groupNames: t,
   activeTabIndex: a,
   layoutConfig: u,
@@ -1002,8 +1004,8 @@ const me = ({ groups: t, groupNames: a, setActiveTabIndex: u, activeTabIndex: l 
       t.length > 0 ? l?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 overflow-y-auto ", children: /* @__PURE__ */ e.jsx("div", { className: u?.fieldGridClass || "grid grid-cols-12 gap-2", children: l.fields.map((o, c) => /* @__PURE__ */ e.jsx(
         "div",
         {
-          className: `col-span-12 sm:col-span-6 ${H[q(o.width)] || "lg:col-span-2"}`,
-          children: /* @__PURE__ */ e.jsx(X, { field: o, data: i ?? {} })
+          className: `col-span-12 sm:col-span-6 ${G[J(o.width)] || "lg:col-span-2"}`,
+          children: /* @__PURE__ */ e.jsx(H, { field: o, data: i ?? {} })
         },
         o?.name ?? `field-${c}`
       )) }) }) : l ? d(l, t[a] || "") : null : /* @__PURE__ */ e.jsx("div", { className: "flex-1 col-span-full text-center py-8 text-gray-500", children: "No data available" }),
@@ -1069,7 +1071,7 @@ const me = ({ groups: t, groupNames: a, setActiveTabIndex: u, activeTabIndex: l 
   },
   t[a]
 );
-function he({
+function fe({
   groups: t,
   methods: a = {},
   infoData: u,
@@ -1078,16 +1080,16 @@ function he({
   layoutConfig: n = {},
   viewMode: d
 }) {
-  const [o, c] = S.useState(0), [N, k] = S.useState(!1), v = S.useRef(null), j = Object.keys(t);
-  S.useEffect(() => {
+  const [o, c] = R.useState(0), [w, k] = R.useState(!1), v = R.useRef(null), j = Object.keys(t);
+  R.useEffect(() => {
     const E = () => {
       if (v.current) {
-        const L = v.current;
-        k(L.scrollWidth > L.clientWidth);
+        const P = v.current;
+        k(P.scrollWidth > P.clientWidth);
       }
     };
     return E(), window.addEventListener("resize", E), () => window.removeEventListener("resize", E);
-  }, [j.length]), S.useEffect(() => {
+  }, [j.length]), R.useEffect(() => {
     if (v.current && j.length > 0) {
       const E = v.current.children[o];
       E && E.scrollIntoView({
@@ -1097,13 +1099,13 @@ function he({
       });
     }
   }, [o, j.length]);
-  const R = d === "tableft", h = d === "tabright", O = !R && !h, y = t[j[o] ?? ""] || null, _ = {
-    single: (E, L) => /* @__PURE__ */ e.jsx(oe, { tabObj: E, methods: a, tabName: L }),
-    grid: (E, L) => /* @__PURE__ */ e.jsx(le, { tabObj: E, methods: a, tabName: L })
-  }, C = ["single", "grid"].includes(y?.config?.uimode) ? y?.config?.uimode : "single", T = l[C] || _[C] || (() => /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }));
+  const _ = d === "tableft", h = d === "tabright", O = !_ && !h, b = t[j[o] ?? ""] || null, T = {
+    single: (E, P) => /* @__PURE__ */ e.jsx(le, { tabObj: E, methods: a, tabName: P }),
+    grid: (E, P) => /* @__PURE__ */ e.jsx(ie, { tabObj: E, methods: a, tabName: P })
+  }, C = ["single", "grid"].includes(b?.config?.uimode) ? b?.config?.uimode : "single", L = l[C] || T[C] || (() => /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }));
   return O ? /* @__PURE__ */ e.jsxs("div", { className: "flex flex-col w-full h-full overflow-hidden", children: [
     /* @__PURE__ */ e.jsx(
-      ke,
+      Ce,
       {
         groupNames: j,
         groups: t,
@@ -1111,26 +1113,26 @@ function he({
         activeTabIndex: o,
         tabsNavRef: v,
         isCommonInfo: i,
-        showScrollHint: N,
+        showScrollHint: w,
         layoutConfig: n
       }
     ),
     /* @__PURE__ */ e.jsx("main", { className: "flex-1 overflow-auto", children: /* @__PURE__ */ e.jsx(
-      xe,
+      he,
       {
         groupNames: j,
         activeTabIndex: o,
         layoutConfig: n,
-        tabObj: y,
+        tabObj: b,
         infoData: u,
         setActiveTabIndex: c,
-        renderView: T,
+        renderView: L,
         groups: t
       }
     ) })
   ] }) : /* @__PURE__ */ e.jsxs("div", { className: "flex w-full h-full overflow-hidden", children: [
-    R && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-r border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
-      me,
+    _ && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-r border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
+      xe,
       {
         groupNames: j,
         groups: t,
@@ -1139,20 +1141,20 @@ function he({
       }
     ) }),
     /* @__PURE__ */ e.jsx("main", { className: "flex-1 overflow-auto", children: /* @__PURE__ */ e.jsx(
-      xe,
+      he,
       {
         groupNames: j,
         activeTabIndex: o,
         layoutConfig: n,
-        tabObj: y,
+        tabObj: b,
         infoData: u,
         setActiveTabIndex: c,
-        renderView: T,
+        renderView: L,
         groups: t
       }
     ) }),
     h && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-l border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
-      me,
+      xe,
       {
         groupNames: j,
         groups: t,
@@ -1162,8 +1164,8 @@ function he({
     ) })
   ] });
 }
-function Ce({ title: t, children: a, isFirst: u }) {
-  const [l, i] = I(u);
+function Ee({ title: t, children: a, isFirst: u }) {
+  const [l, i] = F(u);
   return /* @__PURE__ */ e.jsx("div", { className: "group relative mt-1", children: /* @__PURE__ */ e.jsxs("div", { className: "relative bg-white rounded-lg border border-gray-100 shadow-xs hover:shadow-sm transition-all duration-300 overflow-hidden ", children: [
     /* @__PURE__ */ e.jsxs(
       "button",
@@ -1200,26 +1202,26 @@ function Ce({ title: t, children: a, isFirst: u }) {
     )
   ] }) });
 }
-function Ee({
+function Se({
   groups: t,
   methods: a = {},
   infoData: u,
   viewRenderers: l = {}
 }) {
   const i = {
-    single: (n) => /* @__PURE__ */ e.jsx(oe, { tabObj: n, methods: a }),
-    grid: (n) => /* @__PURE__ */ e.jsx(le, { tabObj: n, methods: a })
+    single: (n) => /* @__PURE__ */ e.jsx(le, { tabObj: n, methods: a }),
+    grid: (n) => /* @__PURE__ */ e.jsx(ie, { tabObj: n, methods: a })
   };
-  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2", children: t && Object.entries(t).map(([n, d], o) => /* @__PURE__ */ e.jsx(Ce, { title: n, isFirst: o === 0, children: d?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 max-h-full overflow-y-auto  custom-scrollbar", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: d.fields.map((c, N) => /* @__PURE__ */ e.jsx(
+  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2", children: t && Object.entries(t).map(([n, d], o) => /* @__PURE__ */ e.jsx(Ee, { title: n, isFirst: o === 0, children: d?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 max-h-full overflow-y-auto  custom-scrollbar", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: d.fields.map((c, w) => /* @__PURE__ */ e.jsx(
     "div",
     {
-      className: `col-span-12 sm:col-span-6 ${H[q(c.width)] || "lg:col-span-2"}`,
-      children: /* @__PURE__ */ e.jsx(X, { field: c, data: u ?? {} })
+      className: `col-span-12 sm:col-span-6 ${G[J(c.width)] || "lg:col-span-2"}`,
+      children: /* @__PURE__ */ e.jsx(H, { field: c, data: u ?? {} })
     },
-    c?.name ?? `field-${N}`
+    c?.name ?? `field-${w}`
   )) }) }) : d ? l[d.config?.uimode]?.(d) || i[d.config?.uimode]?.(d) || /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }) : null }, n)) }) }) });
 }
-function Se({ title: t, children: a }) {
+function Re({ title: t, children: a }) {
   return /* @__PURE__ */ e.jsx("div", { className: "group relative mt-1", children: /* @__PURE__ */ e.jsxs("div", { className: "relative bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden ", children: [
     /* @__PURE__ */ e.jsx(
       "button",
@@ -1241,71 +1243,71 @@ function Se({ title: t, children: a }) {
     )
   ] }) });
 }
-function Re({
+function _e({
   groups: t,
   methods: a = {},
   infoData: u,
   viewRenderers: l = {}
 }) {
   const i = {
-    single: (n) => /* @__PURE__ */ e.jsx(oe, { tabObj: n, methods: a }),
-    grid: (n) => /* @__PURE__ */ e.jsx(le, { tabObj: n, methods: a })
+    single: (n) => /* @__PURE__ */ e.jsx(le, { tabObj: n, methods: a }),
+    grid: (n) => /* @__PURE__ */ e.jsx(ie, { tabObj: n, methods: a })
   };
-  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2", children: t && Object.entries(t).map(([n, d], o) => /* @__PURE__ */ e.jsx(Se, { title: n, children: d?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 max-h-full overflow-y-auto  custom-scrollbar", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: d.fields.map((c, N) => /* @__PURE__ */ e.jsx(
+  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2", children: t && Object.entries(t).map(([n, d], o) => /* @__PURE__ */ e.jsx(Re, { title: n, children: d?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 max-h-full overflow-y-auto  custom-scrollbar", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: d.fields.map((c, w) => /* @__PURE__ */ e.jsx(
     "div",
     {
-      className: `col-span-12 sm:col-span-6 ${H[q(c.width)] || "lg:col-span-2"}`,
-      children: /* @__PURE__ */ e.jsx(X, { field: c, data: u ?? {} })
+      className: `col-span-12 sm:col-span-6 ${G[J(c.width)] || "lg:col-span-2"}`,
+      children: /* @__PURE__ */ e.jsx(H, { field: c, data: u ?? {} })
     },
-    c?.name ?? `field-${N}`
+    c?.name ?? `field-${w}`
   )) }) }) : d ? l[d.config?.uimode]?.(d) || i[d.config?.uimode]?.(d) || /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }) : null }, n)) }) }) });
 }
-function Le({
+function Pe({
   infoViewJson: t,
   data: a = {},
   hiddenFields: u = [],
-  groupFieldsFn: l = ve,
+  groupFieldsFn: l = Ne,
   layoutConfig: i = {},
   viewRenderers: n = {},
   methods: d = {}
 }) {
-  const [o, c] = S.useState({}), N = je(t.infoview ?? {});
-  let v = { ...S.useMemo(
+  const [o, c] = R.useState({}), w = ve(t.infoview ?? {});
+  let v = { ...R.useMemo(
     () => l(t.fields || {}),
     [t.fields, l]
   ) };
-  t.infoview?.groups && (v = { ...v, ...t.infoview.groups }), S.useEffect(() => {
+  t.infoview?.groups && (v = { ...v, ...t.infoview.groups }), R.useEffect(() => {
     let h = !1;
     return (async () => {
-      const y = t?.source;
-      if (!y?.type) {
+      const b = t?.source;
+      if (!b?.type) {
         h || c({});
         return;
       }
-      if (y.type === "method") {
-        const _ = y.method, C = _ ? d[_] : void 0;
+      if (b.type === "method") {
+        const T = b.method, C = T ? d[T] : void 0;
         if (C)
           try {
-            const T = await Promise.resolve(C());
-            h || c(T || {});
-          } catch (T) {
-            console.error("Method execution failed:", T), h || c({});
+            const L = await Promise.resolve(C());
+            h || c(L || {});
+          } catch (L) {
+            console.error("Method execution failed:", L), h || c({});
           }
         else
           h || c({});
       }
-      if (y.type === "api")
+      if (b.type === "api")
         try {
-          const _ = await ae({
-            method: y.method || "GET",
-            url: y.url,
-            data: y.body || {},
-            params: y.params || {},
-            headers: y.headers || {}
+          const T = await oe({
+            method: b.method || "GET",
+            url: b.url,
+            data: b.body || {},
+            params: b.params || {},
+            headers: b.headers || {}
           });
-          h || c(_.data || {});
-        } catch (_) {
-          console.error("API fetch failed:", _), h || c({});
+          h || c(T.data || {});
+        } catch (T) {
+          console.error("API fetch failed:", T), h || c({});
         }
     })(), () => {
       h = !0;
@@ -1320,11 +1322,11 @@ function Le({
   ]);
   const j = v.common || null;
   j && delete v.common;
-  const R = (h) => {
+  const _ = (h) => {
     switch (h) {
       case "accordion":
         return /* @__PURE__ */ e.jsx(
-          Ee,
+          Se,
           {
             groups: v,
             methods: d,
@@ -1336,7 +1338,7 @@ function Le({
       case "tableft":
       case "tabright":
         return /* @__PURE__ */ e.jsx(
-          he,
+          fe,
           {
             groups: v,
             viewRenderers: n,
@@ -1349,7 +1351,7 @@ function Le({
         );
       case "cards":
         return /* @__PURE__ */ e.jsx(
-          Re,
+          _e,
           {
             groups: v,
             viewRenderers: n,
@@ -1359,7 +1361,7 @@ function Le({
         );
       default:
         return /* @__PURE__ */ e.jsx(
-          he,
+          fe,
           {
             groups: v,
             viewRenderers: n,
@@ -1374,17 +1376,17 @@ function Le({
   };
   return /* @__PURE__ */ e.jsxs("div", { className: i.containerClass || "h-screen flex flex-col", children: [
     j && /* @__PURE__ */ e.jsx(
-      we,
+      ke,
       {
         commonInfo: j,
         infoData: o,
         hiddenFields: u
       }
     ),
-    R(N)
+    _(w)
   ] });
 }
 export {
-  Le as InfoView,
-  Le as default
+  Pe as InfoView,
+  Pe as default
 };

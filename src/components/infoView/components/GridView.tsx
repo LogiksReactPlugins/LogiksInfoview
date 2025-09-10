@@ -28,7 +28,7 @@ export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoVie
 
         const fetchData = async () => {
             const source = tabObj?.config;
-    
+
             if (!source?.type) {
                 if (!cancelled) setData([]);
                 return;
@@ -102,8 +102,9 @@ export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoVie
     // Check if edit mode is enabled
     const isEditMode = tabObj?.vmode === "edit";
     const hasFormConfig = tabObj?.config?.form && Object.keys(tabObj.config.form).length > 0;
+    const hasInfoConfig = tabObj?.config?.info && Object.keys(tabObj.config.info).length > 0;
 
-
+    console.log("tabObj?.config", tabObj?.config)
 
     const handleSort = (column: string) => {
         let direction: SortDirection = 'asc';
@@ -215,9 +216,9 @@ export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoVie
         methods?.editInfoRecord?.(row, tabName)
         // Implement edit logic here
     };
-  
-    const handleView = (row: Record<string, string>, index: number) => {
-        methods?.viewInfoRecord?.(row, tabName)
+
+    const handleView = (row: Record<string, string>) => {
+        methods?.viewInfoRecord?.(row, tabObj?.config?.info)
         // Implement edit logic here
     };
 
@@ -656,8 +657,8 @@ export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoVie
                                     {isEditMode && (
                                         <td className="px-4 sm:px-6 py-1 whitespace-nowrap text-sm bg-gray-50 text-gray-900 sticky left-0 z-10">
                                             <div className="flex items-center gap-2">
-                                                <button
-                                                    onClick={() => handleView(row, startIndex + rowIndex)}
+                                                {hasInfoConfig && <button
+                                                    onClick={() => handleView(row)}
                                                     className="inline-flex items-center px-2 py-1 text-xs font-medium rounded cursor-pointer text-action"
                                                     title="Edit"
                                                 >
@@ -680,7 +681,7 @@ export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoVie
                                                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                                                         />
                                                     </svg>
-                                                </button>
+                                                </button>}
                                                 <button
                                                     onClick={() => handleEdit(row, startIndex + rowIndex)}
                                                     className="inline-flex items-center px-2 py-1 text-xs font-medium rounded cursor-pointer text-action"

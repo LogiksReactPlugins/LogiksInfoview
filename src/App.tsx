@@ -129,9 +129,9 @@ function App() {
         console.log("tab", tab)
     }
 
-    function viewInfoRecord(data: Record<string, any>, tab: string) {
+    function viewInfoRecord(data: Record<string, any>, info: Record<string, any>) {
         console.log("data", data);
-        console.log("tab", tab)
+        console.log("info", info)
     }
 
     function deleteInfoRecord(data: Record<string, any>, tab: string) {
