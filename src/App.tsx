@@ -32,7 +32,7 @@ function App() {
             "editable": false
         }
     }
-    return <InfoView formJson={example7} methods={{ getInfoData }} />;
+    return <InfoView infoViewJson={example7} methods={{ getInfoData }} />;
 }
 
 export default App;

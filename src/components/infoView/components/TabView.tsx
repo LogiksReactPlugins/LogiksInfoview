@@ -304,7 +304,7 @@ export default function TabView({
 
     // Auto-scroll active tab into view
     React.useEffect(() => {
-        console.log("scrollIntoView");
+     
         if (tabsNavRef.current && groupNames.length > 0) {
             const activeButton = tabsNavRef.current.children[activeTabIndex];
             if (activeButton) {
@@ -317,12 +317,13 @@ export default function TabView({
         }
     }, [activeTabIndex, groupNames.length]);
 
-    console.log("viewMode", viewMode)
+
 
     const isLeft = viewMode === "tableft";
     const isRight = viewMode === "tabright";
     const isTop = !isLeft && !isRight;
     const tabObj = groups[groupNames[activeTabIndex] ?? ""] || null;
+   
 
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup) => React.JSX.Element> = {
@@ -334,9 +335,7 @@ export default function TabView({
         ),
     };
 
-    console.log("groups", groups)
-
-
+   
     const uiModeKey = ["single", "grid"].includes(tabObj?.config?.uimode)
         ? (tabObj?.config?.uimode as RendererKey)
         : "single";

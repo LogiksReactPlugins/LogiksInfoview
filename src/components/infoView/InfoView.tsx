@@ -12,7 +12,7 @@ import CardView from "./components/CardView.js";
 
 
 export default function LogiksInfoView({
-    formJson,
+    infoViewJson,
     data = {},
     hiddenFields = [],
     groupFieldsFn = groupFields,
@@ -24,27 +24,26 @@ export default function LogiksInfoView({
 
 
     const [infoData, setInfoData] = React.useState<InfoData>({});
-    const viewMode = determineViewMode(formJson.infoview ?? {});
+    const viewMode = determineViewMode(infoViewJson.infoview ?? {});
     const groupedFields = React.useMemo(
-        () => groupFieldsFn(formJson.fields || {}),
-        [formJson.fields, groupFieldsFn]
+        () => groupFieldsFn(infoViewJson.fields || {}),
+        [infoViewJson.fields, groupFieldsFn]
     );
 
-    console.log("groupedFields", groupedFields)
 
     let groups: Record<string, InfoViewGroup> = { ...groupedFields };
 
-    if (formJson.infoview?.groups) {
-        groups = { ...groups, ...formJson.infoview.groups };
+    if (infoViewJson.infoview?.groups) {
+        groups = { ...groups, ...infoViewJson.infoview.groups };
     }
 
-    console.log("groups", groups)
+
 
     React.useEffect(() => {
         let cancelled = false;
 
         const fetchData = async () => {
-            const source = formJson?.source;
+            const source = infoViewJson?.source;
             if (!source?.type) {
                 if (!cancelled) setInfoData({});
                 return;
@@ -90,12 +89,12 @@ export default function LogiksInfoView({
             cancelled = true;
         };
     }, [
-        formJson?.source?.type || "",
-        formJson?.source?.method || "",
-        formJson?.source?.url || "",
-        JSON.stringify(formJson?.source?.params || {}),
-        JSON.stringify(formJson?.source?.body || {}),
-        JSON.stringify(formJson?.source?.headers || {}),
+        infoViewJson?.source?.type || "",
+        infoViewJson?.source?.method || "",
+        infoViewJson?.source?.url || "",
+        JSON.stringify(infoViewJson?.source?.params || {}),
+        JSON.stringify(infoViewJson?.source?.body || {}),
+        JSON.stringify(infoViewJson?.source?.headers || {}),
     ]);
 
 

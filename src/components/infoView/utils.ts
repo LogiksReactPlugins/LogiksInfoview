@@ -16,7 +16,7 @@ export function groupFields(fields: Record<string, any>): Record<string, InfoVie
         }
         grouped[groupName]?.fields?.push({ name: key, ...config });
     });
-    console.log("grouped", grouped)
+
     return grouped;
 }
 
@@ -66,14 +66,6 @@ export function toGrid(width: number | undefined): ColWidth {
     return allowed.includes(width as ColWidth) ? (width as ColWidth) : 6;
 }
 
-export function callMethodByName(methodName: string, services: Record<string, Function>) {
-    if (services && typeof services[methodName] === "function") {
-        return services[methodName]();
-    } else {
-        console.warn(`Method "${methodName}" not found in services`);
-        return null;
-    }
-}
 
 
 export async function copyToClipboard(content: string) {
