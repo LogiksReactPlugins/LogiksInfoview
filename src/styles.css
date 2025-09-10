@@ -1,0 +1,18 @@
+/* Import Tailwind properly */
+@import "tailwindcss";
+
+.bg-action{
+    background-color: blueviolet;
+}
+
+.text-action{
+    color: blueviolet;
+}
+
+.bg-muted{
+    background-color: #fefefe;
+}
+
+
+
+
