@@ -9,7 +9,7 @@ interface TabViewProps {
     groups: Record<string, InfoViewGroup>;
     methods?: Record<string, Function>;
     infoData: InfoData;
-    viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
+    viewRenderers?: Record<string, (tab: InfoViewGroup, tabName:string) => React.ReactNode>;
     layoutConfig?: {
         containerClass?: string;
         tabNavClass?: string;
@@ -49,7 +49,7 @@ interface ContentAreaPrps extends VerticalNavProps {
     };
     infoData: InfoData;
     tabObj: InfoViewGroup | null;
-    renderView: (tab: InfoViewGroup) => React.ReactNode;
+    renderView: (tab: InfoViewGroup,tabName:string) => React.ReactNode;
 
 }
 
@@ -188,7 +188,7 @@ const ContentArea = (
         {/* Fields Container */}
         {groupNames.length > 0 ? (
             tabObj?.fields ? (
-                <div className="flex-1 overflow-y-auto  custom-scrollbar">
+                <div className="flex-1 overflow-y-auto ">
                     <div className={layoutConfig?.fieldGridClass || "grid grid-cols-12 gap-2"}>
                         {tabObj.fields.map((field: InfoViewField, index: number) => (
                             <div
@@ -202,7 +202,7 @@ const ContentArea = (
                     </div>
                 </div>
             ) : tabObj ? (
-                renderView(tabObj)
+                renderView(tabObj,groupNames[activeTabIndex] || "")
             ) : null
         ) : (
             <div className="flex-1 col-span-full text-center py-8 text-gray-500">
@@ -288,6 +288,7 @@ export default function TabView({
 
     const groupNames = Object.keys(groups);
 
+
     React.useEffect(() => {
 
         const checkOverflow = () => {
@@ -326,12 +327,12 @@ export default function TabView({
    
 
     type RendererKey = "single" | "grid";
-    const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup) => React.JSX.Element> = {
-        single: (tab) => (
-            <SingleView tabObj={tab} methods={methods} />
+    const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup,tabName:string) => React.JSX.Element> = {
+        single: (tab,tabName) => (
+            <SingleView tabObj={tab} methods={methods} tabName={tabName} />
         ),
-        grid: (tab) => (
-            <GridView tabObj={tab} methods={methods} />
+        grid: (tab,tabName) => (
+            <GridView tabObj={tab} methods={methods} tabName={tabName} />
         ),
     };
 
@@ -346,7 +347,7 @@ export default function TabView({
         (() => <div>No renderer for this type</div>);
 
 
-
+        
 
     if (isTop) {
         return (

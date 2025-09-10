@@ -1,7 +1,7 @@
 import { InfoViewGroup } from '../InfoView.types.js';
-export declare function generateMockData(rows: number): Array<Record<string, any>>;
-export default function GridView({ tabObj, methods }: {
+export default function GridView({ tabObj, methods, tabName }: {
     tabObj: InfoViewGroup;
     methods: Record<string, Function>;
+    tabName: string;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=GridView.d.ts.map

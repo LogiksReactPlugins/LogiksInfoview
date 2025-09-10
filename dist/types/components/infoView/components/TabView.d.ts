@@ -4,7 +4,7 @@ interface TabViewProps {
     groups: Record<string, InfoViewGroup>;
     methods?: Record<string, Function>;
     infoData: InfoData;
-    viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
+    viewRenderers?: Record<string, (tab: InfoViewGroup, tabName: string) => React.ReactNode>;
     layoutConfig?: {
         containerClass?: string;
         tabNavClass?: string;

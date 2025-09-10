@@ -3,51 +3,7 @@ import axios from "axios";
 import type { InfoViewGroup } from '../InfoView.types.js';
 import { copyToClipboard } from '../utils.js';
 
-const randomString = (length = 8) => {
-    const chars = "abcdefghijklmnopqrstuvwxyz";
-    return Array.from({ length })
-        .map(() => chars[Math.floor(Math.random() * chars.length)])
-        .join("");
-};
 
-const randomEmail = () => `${randomString(5)}@example.com`;
-
-const randomPhone = () =>
-    "+91" +
-    Array.from({ length: 10 })
-        .map(() => Math.floor(Math.random() * 10))
-        .join("");
-
-const randomDate = () => {
-    const start = new Date(1990, 0, 1).getTime();
-    const end = new Date(2020, 0, 1).getTime();
-    return new Date(start + Math.random() * (end - start));
-};
-
-export function generateMockData(rows: number): Array<Record<string, any>> {
-    return Array.from({ length: rows }).map((_, i) => ({
-        id: i + 1,
-        name: randomString(7),
-        email: randomEmail(),
-        phone: randomPhone(),
-        dob: randomDate().toISOString().split("T")[0],
-        isActive: Math.random() > 0.5,
-        address: `${Math.floor(Math.random() * 1000)} ${randomString(5)} Street, City`,
-        notes: randomString(20),
-
-        // 👇 extra fields to test horizontal scroll
-        department: ["HR", "Engineering", "Sales", "Finance"][Math.floor(Math.random() * 4)],
-        role: ["Manager", "Developer", "Analyst", "Intern"][Math.floor(Math.random() * 4)],
-        salary: (30000 + Math.random() * 70000).toFixed(2),
-        bonus: (Math.random() * 10000).toFixed(2),
-        rating: (Math.random() * 5).toFixed(1),
-        joinDate: randomDate().toISOString().split("T")[0],
-        lastLogin: randomDate().toISOString(),
-        project: randomString(10),
-        skills: `${randomString(5)}, ${randomString(5)}, ${randomString(5)}`,
-        manager: randomString(6),
-    }));
-}
 
 type SortDirection = 'asc' | 'desc' | null;
 
@@ -56,13 +12,13 @@ interface SortConfig {
     direction: SortDirection;
 }
 
-export default function GridView({ tabObj, methods }: { tabObj: InfoViewGroup, methods: Record<string, Function> }) {
+export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string }) {
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [searchQuery, setSearchQuery] = useState("");
     // Get the array of data
-    const [data, setData] = React.useState<Array<Record<string, any>>>(generateMockData(100));
+    const [data, setData] = React.useState<Array<Record<string, any>>>([]);
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [copiedCell, setCopiedCell] = useState<string | null>(null);
     const [sortConfig, setSortConfig] = useState<SortConfig>({ key: '', direction: null });
@@ -72,7 +28,7 @@ export default function GridView({ tabObj, methods }: { tabObj: InfoViewGroup, m
 
         const fetchData = async () => {
             const source = tabObj?.config;
-
+    
             if (!source?.type) {
                 if (!cancelled) setData([]);
                 return;
@@ -87,7 +43,6 @@ export default function GridView({ tabObj, methods }: { tabObj: InfoViewGroup, m
                         const result = await Promise.resolve(methodFn());
                         if (!cancelled) setData(result || []);
                     } catch (err) {
-                        console.error("Method execution failed:", err);
                         if (!cancelled) setData([]);
                     }
                 } else {
@@ -257,22 +212,22 @@ export default function GridView({ tabObj, methods }: { tabObj: InfoViewGroup, m
 
     // Action handlers
     const handleEdit = (row: Record<string, string>, index: number) => {
-        console.log("Edit row:", row, "at index:", index);
+        methods?.editInfoRecord?.(row, tabName)
         // Implement edit logic here
     };
-
+  
     const handleView = (row: Record<string, string>, index: number) => {
-        console.log("view row:", row, "at index:", index);
+        methods?.viewInfoRecord?.(row, tabName)
         // Implement edit logic here
     };
 
     const handleDelete = (row: Record<string, string>, index: number) => {
-        console.log("Delete row:", row, "at index:", index);
+        methods?.deleteInfoRecord?.(row, tabName)
         // Implement delete logic here
     };
 
     const handleAddRecord = () => {
-        console.log("Add new record");
+        methods?.addInfoRecord?.(tabObj?.config?.form, tabName)
         // Implement add record logic here
     };
 
@@ -702,7 +657,7 @@ export default function GridView({ tabObj, methods }: { tabObj: InfoViewGroup, m
                                         <td className="px-4 sm:px-6 py-1 whitespace-nowrap text-sm bg-gray-50 text-gray-900 sticky left-0 z-10">
                                             <div className="flex items-center gap-2">
                                                 <button
-                                                 onClick={() => handleView(row, startIndex + rowIndex)}
+                                                    onClick={() => handleView(row, startIndex + rowIndex)}
                                                     className="inline-flex items-center px-2 py-1 text-xs font-medium rounded cursor-pointer text-action"
                                                     title="Edit"
                                                 >

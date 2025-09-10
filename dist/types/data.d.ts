@@ -280,6 +280,7 @@ export declare const example7: {
                     policy_delete: string;
                     policy_update: string;
                     type: string;
+                    method: string;
                     uimode: string;
                     table: string;
                     cols: string;
@@ -365,6 +366,7 @@ export declare const example7: {
                     policy_delete: string;
                     policy_update: string;
                     table: string;
+                    method: string;
                     cols: string;
                     where: string;
                     form: {
@@ -421,6 +423,7 @@ export declare const example7: {
                     policy_create: string;
                     policy_delete: string;
                     policy_update: string;
+                    method: string;
                     table: string;
                     cols: string;
                     where: string;
@@ -504,6 +507,7 @@ export declare const example7: {
                     DEBUG: boolean;
                     type: string;
                     uimode: string;
+                    method: string;
                     table: string;
                     cols: string;
                     where: string;

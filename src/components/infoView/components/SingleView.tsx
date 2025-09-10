@@ -1,10 +1,10 @@
 import React from 'react';
 import axios from "axios";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
-import { tailwindGrid, toGrid } from '../utils.js'
+import { tailwindCols, tailwindGrid, toColWidth, toGrid } from '../utils.js'
 import type { InfoViewGroup } from '../InfoView.types.js'
 
-export default function SingleView({ tabObj, methods }: { tabObj: InfoViewGroup, methods: Record<string, Function> }) {
+export default function SingleView({ tabObj, methods,tabName }: { tabObj: InfoViewGroup, methods: Record<string, Function>,tabName:string }) {
     const [data, setData] = React.useState<Record<string, any>>({});
 
     React.useEffect(() => {
@@ -69,15 +69,21 @@ export default function SingleView({ tabObj, methods }: { tabObj: InfoViewGroup,
     ]);
 
     return (
-        <div className='flex-1 max-h-full overflow-y-auto px-3 custom-scrollbar'>
-            <div className={`grid grid-cols-1 sm:grid-cols-2 ${tailwindGrid[toGrid(tabObj.width)] || "lg:grid-cols-3"} gap-4`}>
+        <div className='flex-1 overflow-y-auto'>
+            <div className="grid grid-cols-12 gap-2">
                 {
                     data && Object.keys(data).map((field, index) => {
-                        return <InfoFieldRenderer
-                            key={field}
-                            field={{ name: field, label: field }}
-                            data={data ?? {}}
-                        />
+                        return <div
+                            key={`field-${index}`}
+                            className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(tabObj.width)] || "lg:col-span-2"
+                                                               }`}
+                        >
+                            <InfoFieldRenderer
+                                key={field}
+                                field={{ name: field, label: field }}
+                                data={data ?? {}}
+                            />
+                        </div>
                     })
                 }
             </div>

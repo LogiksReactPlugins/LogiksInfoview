@@ -286,7 +286,6 @@ export const example7 = {
 				"icon": "<i class='fa fa-plus'></i>"
 			}
 		},
-
 		"groups": {
 			"address": {
 				"label": "Address",
@@ -299,7 +298,8 @@ export const example7 = {
 					"policy_create": "contact.view.access",
 					"policy_delete": "contact.delete.access",
 					"policy_update": "contact.update.access",
-					"type": "sql",
+					"type": "method",
+					"method":"getAddresses",
 					"uimode": "grid",
 					"table": "profiletbl_address",
 					"cols": "profiletbl_address.id,profiletbl_address.address_type,profiletbl_address.title as reference_name,profiletbl_address.address,profiletbl_address.street,profiletbl_address.city,profiletbl_address.state,profiletbl_address.country,profiletbl_address.zipcode",
@@ -380,12 +380,13 @@ export const example7 = {
 				"policy": "contact.view.access",
 				"vmode": "edit",
 				"config": {
-					"type": "sql",
+					"type": "method",
 					"uimode": "grid",
 					"policy_create": "contact.view.access",
 					"policy_delete": "contact.delete.access",
 					"policy_update": "contact.update.access",
 					"table": "profiletbl_social",
+					"method":"getSocials",
 					"cols": "profiletbl_social.id,profiletbl_social.social_type,profiletbl_social.social_weblink,profiletbl_social.social_userid,profiletbl_social.token_key",
 					"where": " md5(profiletbl_social.profile_id)='#refid#'",
 					"form": {
@@ -438,11 +439,12 @@ export const example7 = {
 				"vmode": "view",
 				"policy": "contact.view.access",
 				"config": {
-					"type": "sql",
+					"type": "method",
 					"uimode": "grid",
 					"policy_create": "contact.view.access",
 					"policy_delete": "contact.delete.access",
 					"policy_update": "contact.update.access",
+					"method":"getBankDetails",
 					"table": "profiletbl_banks",
 					"cols": "profiletbl_banks.id,profiletbl_banks.bank_name as bank,profiletbl_banks.bank_acno_name as account_holder_name,profiletbl_banks.bank_acno as account_no,profiletbl_banks.bank_ifsc_code as ifsc_code,profiletbl_banks.bank_branch as branch,profiletbl_banks.bank_address as address,profiletbl_banks.bank_state as state,profiletbl_banks.bank_country as country,profiletbl_banks.bank_swift_code as swift_code",
 					"where": " md5(profiletbl_banks.profile_id)='#refid#'",
@@ -526,13 +528,14 @@ export const example7 = {
 				"vmode": "view",
 				"config": {
 					"DEBUG": false,
-					"type": "sql",
+					"type": "method",
 					"uimode": "single",
+					"method":"getOrganizationInfo",
 					"table": "profiletbl_organisation,profiletbl",
 					"cols": "profiletbl_organisation.organization as name,profiletbl_organisation.org_category as industry,profiletbl_organisation.org_type as partner_type,profiletbl_organisation.org_establishment as date_of_establishment,profiletbl_organisation.org_pan as pan_no,profiletbl_organisation.org_gst as gst_no,profiletbl_organisation.org_mail as email,profiletbl_organisation.org_landline as landline,profiletbl_organisation.org_address1 as address,profiletbl_organisation.org_country1 as country,profiletbl_organisation.org_zipcode1 as zipcode,profiletbl_organisation.org_website as website",
 					"where": "profiletbl_organisation.id=profiletbl.organization AND md5(profiletbl.id)='#refid#'"
 				},
-				"width": 12
+				"width": 6
 			},
 			"address_book": {
 				"label": "Contacts",
