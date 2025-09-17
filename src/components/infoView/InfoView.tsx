@@ -157,7 +157,10 @@ export default function LogiksInfoView({
 
 
     return (
-        <div className={layoutConfig.containerClass || "h-screen flex flex-col"}>
+
+
+
+        <div className={layoutConfig.containerClass || "flex flex-col "}>
 
             {commonInfo && (
                 <CommonInfo
@@ -168,6 +171,7 @@ export default function LogiksInfoView({
             )}
             {formView(viewMode)}
         </div>
+
 
     );
 

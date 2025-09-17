@@ -25,12 +25,12 @@ export default function CardView({
 
 
     type RendererKey = "single" | "grid";
-    const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup) => React.JSX.Element> = {
-        single: (tab) => (
-            <SingleView tabObj={tab} methods={methods} />
+    const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
+        single: (tab, tabName) => (
+            <SingleView tabObj={tab} methods={methods} tabName={tabName} />
         ),
-        grid: (tab) => (
-            <GridView tabObj={tab} methods={methods} />
+        grid: (tab, tabName) => (
+            <GridView tabObj={tab} methods={methods} tabName={tabName} />
         ),
     };
 
@@ -42,11 +42,11 @@ export default function CardView({
         <div className="bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100">
 
             <div className="p-4 mx-auto">
-                <div className="space-y-2">
+                <div className="space-y-2  flex flex-col min-h-0">
                     {groups && Object.entries(groups).map(([group, obj], index) => (
                         <Card key={group} title={group} >
                             {obj?.fields ? (
-                                <div className="flex-1 max-h-full overflow-y-auto  custom-scrollbar">
+                                <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                                     <div className={"grid grid-cols-12 gap-2"}>
                                         {obj.fields.map((field: InfoViewField, index: number) => (
                                             <div
@@ -60,9 +60,11 @@ export default function CardView({
                                     </div>
                                 </div>
                             ) : obj ? (
-                                viewRenderers[obj.config?.uimode]?.(obj) ||
-                                defaultRenderer[obj.config?.uimode as "single" | "grid"]?.(obj) ||
-                                <div>No renderer for this type</div>
+                                <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
+                                    {viewRenderers[obj.config?.uimode]?.(obj) ||
+                                        defaultRenderer[obj.config?.uimode as "single" | "grid"]?.(obj, group) ||
+                                        <div>No renderer for this type</div>}
+                                </div>
 
                             ) : null}
                         </Card>

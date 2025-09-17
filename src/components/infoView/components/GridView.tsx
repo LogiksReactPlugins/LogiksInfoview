@@ -104,7 +104,7 @@ export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoVie
     const hasFormConfig = tabObj?.config?.form && Object.keys(tabObj.config.form).length > 0;
     const hasInfoConfig = tabObj?.config?.info && Object.keys(tabObj.config.info).length > 0;
 
-    console.log("tabObj?.config", tabObj?.config)
+   
 
     const handleSort = (column: string) => {
         let direction: SortDirection = 'asc';
@@ -434,7 +434,7 @@ export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoVie
 
     if (tableData.length === 0 || columns.length === 0) {
         return (
-            <div className="h-full flex flex-1 flex-col items-center justify-center py-22 text-gray-500">
+            <div className="flex flex-1 flex-col items-center justify-center text-gray-500">
                 <div className="w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
                     <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
@@ -461,8 +461,8 @@ export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoVie
     }
 
     return (
-        <div className="w-full h-full overflow-hidden flex-1 flex flex-col">
-            <div className="my-4 mx-2 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+        <div className="w-full overflow-hidden flex-1 flex flex-col">
+            <div className="my-4 mx-2 flex  gap-4 justify-between items-start sm:items-center">
                 <div className="flex-1 max-w-md">
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -591,7 +591,7 @@ export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoVie
 
             {/* Table Container */}
             {filteredAndSortedData.length > 0 && (<>
-                <div className="max-h-full overflow-auto min-w-full divide-y divide-gray-200 border border-gray-200 bordr-t">
+                <div className=" overflow-auto min-w-full divide-y divide-gray-200 border border-gray-200 bordr-t">
                     <table className="min-w-full h-full">
                         {/* Fixed Header */}
                         <thead className=" text-action">
@@ -655,7 +655,7 @@ export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoVie
                                     {/* Actions column - only show in edit mode */}
 
                                     {isEditMode && (
-                                        <td className="px-4 sm:px-6 py-1 whitespace-nowrap text-sm bg-gray-50 text-gray-900 sticky left-0 z-10">
+                                        <td className="px-4 sm:px-6 py-1 whitespace-nowrap text-sm bg-muted text-gray-900 sticky left-0 z-10">
                                             <div className="flex items-center gap-2">
                                                 {hasInfoConfig && <button
                                                     onClick={() => handleView(row)}

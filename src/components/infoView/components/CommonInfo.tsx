@@ -19,7 +19,7 @@ interface CommonInfoProps {
 export default function CommonInfo({ commonInfo, infoData, hiddenFields = [] }: CommonInfoProps) {
 
     return (
-        <div className="bg-white border border-gray-100 p-4  ">
+        <div className="bg-white border border-gray-100 p-4 min-h-3/10 overflow-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 {/* Left Column - Avatar */}
                 <div className="lg:col-span-2 flex flex-col items-center">

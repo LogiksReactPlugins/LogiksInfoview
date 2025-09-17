@@ -73,7 +73,11 @@ function App() {
             "created_by": "SmartinfoLogiks",
             "edited_on": "2024-11-10T19:25:05.000Z",
             "edited_by": "root",
-            "editable": false
+            "editable": false,
+            "transit_status":"In Transit",
+            "destination":"Mumbai",
+            "employee_type":"Permanent",
+            "staff_code":234324
         }
     }
 

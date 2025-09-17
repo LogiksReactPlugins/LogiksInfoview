@@ -11,11 +11,11 @@ export default function Accordion({ title, children, isFirst }: AccordionProps) 
   const [isOpen, setIsOpen] = useState(isFirst);
 
   return (
-    <div className={`group relative mt-1`}>
+    <div className={`group relative mt-1 flex-1 flex flex-col min-h-0 max-h-screen`}>
       {/* Decorative gradient line */}
 
 
-      <div className="relative bg-white rounded-lg border border-gray-100 shadow-xs hover:shadow-sm transition-all duration-300 overflow-hidden ">
+      <div className="flex-1 flex flex-col min-h-0 relative bg-white rounded-lg border border-gray-100 shadow-xs hover:shadow-sm transition-all duration-300 overflow-hidden ">
         {/* Header with gradient background */}
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -27,7 +27,7 @@ export default function Accordion({ title, children, isFirst }: AccordionProps) 
               ? 'bg-action'
               : 'bg-gray-300'
               }`}></div>
-            <h3 className="text-md font-semibold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+            <h3 className="text-md capitalize font-semibold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
               {title}
             </h3>
           </div>
@@ -49,11 +49,11 @@ export default function Accordion({ title, children, isFirst }: AccordionProps) 
 
         {/* Content with smooth slide animation */}
         <div
-          className={`transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+          className={`flex-1 flex flex-col min-h-0 transition-all  duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-full opacity-100' : 'max-h-0 opacity-0'
             }`}
         >
-          <div className="px-6 pb-6 bg-gradient-to-br from-gray-50/50 to-white">
-            <div className="space-y-5 pt-4">{children}</div>
+          <div className="px-6 pb-6 bg-gradient-to-br from-gray-50/50 to-white flex-1 flex flex-col min-h-0">
+            <div className="space-y-5 pt-4 flex-1 flex flex-col min-h-0 overflow-y-auto">{children}</div>
           </div>
         </div>
       </div>

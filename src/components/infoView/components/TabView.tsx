@@ -9,7 +9,7 @@ interface TabViewProps {
     groups: Record<string, InfoViewGroup>;
     methods?: Record<string, Function>;
     infoData: InfoData;
-    viewRenderers?: Record<string, (tab: InfoViewGroup, tabName:string) => React.ReactNode>;
+    viewRenderers?: Record<string, (tab: InfoViewGroup, tabName: string) => React.ReactNode>;
     layoutConfig?: {
         containerClass?: string;
         tabNavClass?: string;
@@ -49,7 +49,7 @@ interface ContentAreaPrps extends VerticalNavProps {
     };
     infoData: InfoData;
     tabObj: InfoViewGroup | null;
-    renderView: (tab: InfoViewGroup,tabName:string) => React.ReactNode;
+    renderView: (tab: InfoViewGroup, tabName: string) => React.ReactNode;
 
 }
 
@@ -88,8 +88,21 @@ const TopNav = ({
     showScrollHint,
     isCommonInfo,
     tabsNavRef
-}: TopNavProps) => (
-    <div className={layoutConfig?.tabNavClass || "relative"}>
+}: TopNavProps) => {
+    const [showAllTabs, setShowAllTabs] = React.useState(false);
+    const dropdownRef = React.useRef(null);
+    // Close dropdown on outside click
+    React.useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (dropdownRef.current && !(dropdownRef.current as HTMLElement).contains(e.target as Node)) {
+                setShowAllTabs(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    return <div className={layoutConfig?.tabNavClass || "relative z-10"}>
         {/* Left scroll button */}
         {showScrollHint && (
             <button
@@ -98,7 +111,7 @@ const TopNav = ({
                         tabsNavRef.current.scrollBy({ left: -200, behavior: 'smooth' });
                     }
                 }}
-                className="absolute left-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
+                className="cursor-pointer absolute left-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
             >
                 <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -114,7 +127,7 @@ const TopNav = ({
                         tabsNavRef.current.scrollBy({ left: 200, behavior: 'smooth' });
                     }
                 }}
-                className="absolute right-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
+                className="cursor-pointer absolute right-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
             >
                 <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -122,13 +135,34 @@ const TopNav = ({
             </button>
         )}
 
-        {/* Gradient fade effects */}
-        {showScrollHint && (
-            <>
-                <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-gray-100 via-gray-100/80 to-transparent z-10 pointer-events-none rounded-l-2xl"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-gray-100 via-gray-100/80 to-transparent z-10 pointer-events-none rounded-r-2xl"></div>
-            </>
-        )}
+        <div className="absolute right-10 top-1  z-11" ref={dropdownRef}>
+            <button
+                onClick={() => setShowAllTabs(!showAllTabs)}
+                className="cursor-pointer ml-1 px-2 py-1 text-gray-600 hover:text-gray-800 bg-white rounded-md transition"
+            >
+                ⋮
+            </button>
+
+            {showAllTabs && (
+                <div className="absolute right-0 mt-2 w-48 max-h-100 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30">
+                    {groupNames.map((group, index) => (
+                        <button
+                            key={group}
+                            type="button"
+                            onClick={() => {
+                                setActiveTabIndex(index);
+                                setShowAllTabs(false);
+                            }}
+                            className={`w-full text-left px-3 py-2 text-sm truncate hover:bg-gray-100 ${activeTabIndex === index ? 'bg-gray-50 font-semibold text-action' : 'text-gray-700'
+                                }`}
+                        >
+                            {groups[group]?.label || group}
+                        </button>
+                    ))}
+                </div>
+            )}
+        </div>
+
 
         <div className={`relative bg-gray-100 ${isCommonInfo ? "" : "rounded-t-lg"} px-1 pt-1 shadow-inner overflow-hidden`}>
 
@@ -141,7 +175,7 @@ const TopNav = ({
                     scrollbarWidth: 'none',
                     msOverflowStyle: 'none',
                     paddingLeft: showScrollHint ? '35px' : '0',
-                    paddingRight: showScrollHint ? '35px' : '0'
+                    paddingRight: showScrollHint ? '70px' : '0'
                 }}
             >
                 {groupNames.length > 0 ? groupNames.map((group, index) => (
@@ -167,7 +201,7 @@ const TopNav = ({
             </nav>
         </div>
     </div>
-)
+}
 
 const ContentArea = (
     {
@@ -182,13 +216,13 @@ const ContentArea = (
 ) => (
     <div
         key={groupNames[activeTabIndex]}
-        className="bg-white min-h-0 rounded-b-lg border  border-t-0 border-gray-100 p-3 animate-in fade-in duration-300 flex flex-col h-full"
+        className="bg-white rounded-b-lg border  border-t-0 border-gray-100 p-3 animate-in fade-in duration-300 flex-1 flex flex-col min-h-0"
     >
 
         {/* Fields Container */}
         {groupNames.length > 0 ? (
             tabObj?.fields ? (
-                <div className="flex-1 overflow-y-auto ">
+                <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                     <div className={layoutConfig?.fieldGridClass || "grid grid-cols-12 gap-2"}>
                         {tabObj.fields.map((field: InfoViewField, index: number) => (
                             <div
@@ -202,7 +236,9 @@ const ContentArea = (
                     </div>
                 </div>
             ) : tabObj ? (
-                renderView(tabObj,groupNames[activeTabIndex] || "")
+                <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
+                    {renderView(tabObj, groupNames[activeTabIndex] || "")}
+                </div>
             ) : null
         ) : (
             <div className="flex-1 col-span-full text-center py-8 text-gray-500">
@@ -212,7 +248,7 @@ const ContentArea = (
 
         {/* Navigation controls for many tabs */}
         {groupNames.length > 5 && (
-            <div className="mt-2 pt-2 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between gap-4">
                 {/* Progress indicator */}
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                     <span>Tab {activeTabIndex + 1} of {groupNames.length}</span>
@@ -305,7 +341,7 @@ export default function TabView({
 
     // Auto-scroll active tab into view
     React.useEffect(() => {
-     
+
         if (tabsNavRef.current && groupNames.length > 0) {
             const activeButton = tabsNavRef.current.children[activeTabIndex];
             if (activeButton) {
@@ -324,34 +360,35 @@ export default function TabView({
     const isRight = viewMode === "tabright";
     const isTop = !isLeft && !isRight;
     const tabObj = groups[groupNames[activeTabIndex] ?? ""] || null;
-   
+
+    console.log("tabObj", tabObj)
+
 
     type RendererKey = "single" | "grid";
-    const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup,tabName:string) => React.JSX.Element> = {
-        single: (tab,tabName) => (
+    const defaultRenderer: Record<string, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
+        single: (tab, tabName) => (
             <SingleView tabObj={tab} methods={methods} tabName={tabName} />
         ),
-        grid: (tab,tabName) => (
+        grid: (tab, tabName) => (
             <GridView tabObj={tab} methods={methods} tabName={tabName} />
         ),
     };
 
-   
-    const uiModeKey = ["single", "grid"].includes(tabObj?.config?.uimode)
-        ? (tabObj?.config?.uimode as RendererKey)
-        : "single";
 
+    const uiModeKey = tabObj?.config?.uimode
+
+    console.log("uiModeKey", uiModeKey)
 
 
     const renderView = viewRenderers[uiModeKey] || defaultRenderer[uiModeKey] ||
-        (() => <div>No renderer for this type</div>);
+        (() => <div className="flex-1 flex justify-center p-4">No renderer for this type</div>);
 
 
-        
+
 
     if (isTop) {
         return (
-            <div className='flex flex-col w-full h-full overflow-hidden'>
+            <div className='flex-1 flex flex-col min-h-0 max-h-screen'>
                 <TopNav
                     groupNames={groupNames}
                     groups={groups}
@@ -362,18 +399,18 @@ export default function TabView({
                     showScrollHint={showScrollHint}
                     layoutConfig={layoutConfig}
                 />
-                <main className="flex-1 overflow-auto">
-                    <ContentArea
-                        groupNames={groupNames}
-                        activeTabIndex={activeTabIndex}
-                        layoutConfig={layoutConfig}
-                        tabObj={tabObj}
-                        infoData={infoData}
-                        setActiveTabIndex={setActiveTabIndex}
-                        renderView={renderView}
-                        groups={groups}
-                    />
-                </main>
+
+                <ContentArea
+                    groupNames={groupNames}
+                    activeTabIndex={activeTabIndex}
+                    layoutConfig={layoutConfig}
+                    tabObj={tabObj}
+                    infoData={infoData}
+                    setActiveTabIndex={setActiveTabIndex}
+                    renderView={renderView}
+                    groups={groups}
+                />
+
             </div>
         );
     }
@@ -381,7 +418,7 @@ export default function TabView({
     return (
 
 
-        <div className="flex w-full h-full overflow-hidden">
+        <div className="flex-1 flex min-h-0 max-h-screen">
             {isLeft && (
                 <aside className="flex-shrink-0 w-56 border-r border-gray-200 bg-gray-50 p-2">
                     <VerticalNav
@@ -393,7 +430,7 @@ export default function TabView({
                 </aside>
             )}
 
-            <main className="flex-1 overflow-auto">
+            <main className="flex-1 flex flex-col min-h-0 overflow-auto">
                 <ContentArea
                     groupNames={groupNames}
                     activeTabIndex={activeTabIndex}

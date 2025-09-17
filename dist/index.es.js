@@ -1,6 +1,6 @@
-import R, { useState as F, useRef as pe, useMemo as ce } from "react";
+import E, { useState as W, useRef as pe, useMemo as ce } from "react";
 import oe from "axios";
-var te = { exports: {} }, U = {};
+var te = { exports: {} }, V = {};
 /**
  * @license React
  * react-jsx-runtime.production.js
@@ -12,27 +12,27 @@ var te = { exports: {} }, U = {};
  */
 var de;
 function ye() {
-  if (de) return U;
+  if (de) return V;
   de = 1;
   var t = Symbol.for("react.transitional.element"), a = Symbol.for("react.fragment");
-  function u(l, i, n) {
-    var d = null;
-    if (n !== void 0 && (d = "" + n), i.key !== void 0 && (d = "" + i.key), "key" in i) {
+  function u(o, i, n) {
+    var c = null;
+    if (n !== void 0 && (c = "" + n), i.key !== void 0 && (c = "" + i.key), "key" in i) {
       n = {};
-      for (var o in i)
-        o !== "key" && (n[o] = i[o]);
+      for (var l in i)
+        l !== "key" && (n[l] = i[l]);
     } else n = i;
     return i = n.ref, {
       $$typeof: t,
-      type: l,
-      key: d,
+      type: o,
+      key: c,
       ref: i !== void 0 ? i : null,
       props: n
     };
   }
-  return U.Fragment = a, U.jsx = u, U.jsxs = u, U;
+  return V.Fragment = a, V.jsx = u, V.jsxs = u, V;
 }
-var V = {};
+var U = {};
 /**
  * @license React
  * react-jsx-runtime.development.js
@@ -43,7 +43,7 @@ var V = {};
  * LICENSE file in the root directory of this source tree.
  */
 var ue;
-function be() {
+function je() {
   return ue || (ue = 1, process.env.NODE_ENV !== "production" && function() {
     function t(s) {
       if (s == null) return null;
@@ -55,31 +55,31 @@ function be() {
           return "Fragment";
         case T:
           return "Profiler";
-        case b:
+        case v:
           return "StrictMode";
-        case P:
+        case A:
           return "Suspense";
         case se:
           return "SuspenseList";
-        case I:
+        case F:
           return "Activity";
       }
       if (typeof s == "object")
         switch (typeof s.tag == "number" && console.error(
           "Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."
         ), s.$$typeof) {
-          case h:
+          case f:
             return "Portal";
           case L:
             return (s.displayName || "Context") + ".Provider";
           case C:
             return (s._context.displayName || "Context") + ".Consumer";
-          case E:
+          case S:
             var m = s.render;
             return s = s.displayName, s || (s = m.displayName || m.name || "", s = s !== "" ? "ForwardRef(" + s + ")" : "ForwardRef"), s;
           case ne:
             return m = s.displayName || null, m !== null ? m : t(s.type) || "Memo";
-          case A:
+          case P:
             m = s._payload, s = s._init;
             try {
               return t(s(m));
@@ -100,17 +100,17 @@ function be() {
       }
       if (m) {
         m = console;
-        var p = m.error, N = typeof Symbol == "function" && Symbol.toStringTag && s[Symbol.toStringTag] || s.constructor.name || "Object";
-        return p.call(
+        var j = m.error, k = typeof Symbol == "function" && Symbol.toStringTag && s[Symbol.toStringTag] || s.constructor.name || "Object";
+        return j.call(
           m,
           "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.",
-          N
+          k
         ), a(s);
       }
     }
-    function l(s) {
+    function o(s) {
       if (s === O) return "<>";
-      if (typeof s == "object" && s !== null && s.$$typeof === A)
+      if (typeof s == "object" && s !== null && s.$$typeof === P)
         return "<...>";
       try {
         var m = t(s);
@@ -126,41 +126,41 @@ function be() {
     function n() {
       return Error("react-stack-top-frame");
     }
-    function d(s) {
+    function c(s) {
       if (q.call(s, "key")) {
         var m = Object.getOwnPropertyDescriptor(s, "key").get;
         if (m && m.isReactWarning) return !1;
       }
       return s.key !== void 0;
     }
-    function o(s, m) {
-      function p() {
+    function l(s, m) {
+      function j() {
         z || (z = !0, console.error(
           "%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)",
           m
         ));
       }
-      p.isReactWarning = !0, Object.defineProperty(s, "key", {
-        get: p,
+      j.isReactWarning = !0, Object.defineProperty(s, "key", {
+        get: j,
         configurable: !0
       });
     }
-    function c() {
+    function d() {
       var s = t(this.type);
       return Q[s] || (Q[s] = !0, console.error(
         "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
       )), s = this.props.ref, s !== void 0 ? s : null;
     }
-    function w(s, m, p, N, r, x, g, y) {
-      return p = x.ref, s = {
+    function N(s, m, j, k, r, x, y, b) {
+      return j = x.ref, s = {
         $$typeof: _,
         type: s,
         key: m,
         props: x,
         _owner: r
-      }, (p !== void 0 ? p : null) !== null ? Object.defineProperty(s, "ref", {
+      }, (j !== void 0 ? j : null) !== null ? Object.defineProperty(s, "ref", {
         enumerable: !1,
-        get: c
+        get: d
       }) : Object.defineProperty(s, "ref", { enumerable: !1, value: null }), s._store = {}, Object.defineProperty(s._store, "validated", {
         configurable: !1,
         enumerable: !1,
@@ -175,119 +175,119 @@ function be() {
         configurable: !1,
         enumerable: !1,
         writable: !0,
-        value: g
+        value: y
       }), Object.defineProperty(s, "_debugTask", {
         configurable: !1,
         enumerable: !1,
         writable: !0,
-        value: y
+        value: b
       }), Object.freeze && (Object.freeze(s.props), Object.freeze(s)), s;
     }
-    function k(s, m, p, N, r, x, g, y) {
-      var f = m.children;
-      if (f !== void 0)
-        if (N)
-          if (X(f)) {
-            for (N = 0; N < f.length; N++)
-              v(f[N]);
-            Object.freeze && Object.freeze(f);
+    function w(s, m, j, k, r, x, y, b) {
+      var g = m.children;
+      if (g !== void 0)
+        if (k)
+          if (X(g)) {
+            for (k = 0; k < g.length; k++)
+              h(g[k]);
+            Object.freeze && Object.freeze(g);
           } else
             console.error(
               "React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead."
             );
-        else v(f);
+        else h(g);
       if (q.call(m, "key")) {
-        f = t(s);
-        var S = Object.keys(m).filter(function(Y) {
+        g = t(s);
+        var R = Object.keys(m).filter(function(Y) {
           return Y !== "key";
         });
-        N = 0 < S.length ? "{key: someKey, " + S.join(": ..., ") + ": ...}" : "{key: someKey}", B[f + N] || (S = 0 < S.length ? "{" + S.join(": ..., ") + ": ...}" : "{}", console.error(
+        k = 0 < R.length ? "{key: someKey, " + R.join(": ..., ") + ": ...}" : "{key: someKey}", B[g + k] || (R = 0 < R.length ? "{" + R.join(": ..., ") + ": ...}" : "{}", console.error(
           `A props object containing a "key" prop is being spread into JSX:
   let props = %s;
   <%s {...props} />
 React keys must be passed directly to JSX without using spread:
   let props = %s;
   <%s key={someKey} {...props} />`,
-          N,
-          f,
-          S,
-          f
-        ), B[f + N] = !0);
+          k,
+          g,
+          R,
+          g
+        ), B[g + k] = !0);
       }
-      if (f = null, p !== void 0 && (u(p), f = "" + p), d(m) && (u(m.key), f = "" + m.key), "key" in m) {
-        p = {};
+      if (g = null, j !== void 0 && (u(j), g = "" + j), c(m) && (u(m.key), g = "" + m.key), "key" in m) {
+        j = {};
         for (var D in m)
-          D !== "key" && (p[D] = m[D]);
-      } else p = m;
-      return f && o(
-        p,
+          D !== "key" && (j[D] = m[D]);
+      } else j = m;
+      return g && l(
+        j,
         typeof s == "function" ? s.displayName || s.name || "Unknown" : s
-      ), w(
+      ), N(
         s,
-        f,
+        g,
         x,
         r,
         i(),
-        p,
-        g,
-        y
+        j,
+        y,
+        b
       );
     }
-    function v(s) {
+    function h(s) {
       typeof s == "object" && s !== null && s.$$typeof === _ && s._store && (s._store.validated = 1);
     }
-    var j = R, _ = Symbol.for("react.transitional.element"), h = Symbol.for("react.portal"), O = Symbol.for("react.fragment"), b = Symbol.for("react.strict_mode"), T = Symbol.for("react.profiler"), C = Symbol.for("react.consumer"), L = Symbol.for("react.context"), E = Symbol.for("react.forward_ref"), P = Symbol.for("react.suspense"), se = Symbol.for("react.suspense_list"), ne = Symbol.for("react.memo"), A = Symbol.for("react.lazy"), I = Symbol.for("react.activity"), M = Symbol.for("react.client.reference"), $ = j.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, q = Object.prototype.hasOwnProperty, X = Array.isArray, W = console.createTask ? console.createTask : function() {
+    var p = E, _ = Symbol.for("react.transitional.element"), f = Symbol.for("react.portal"), O = Symbol.for("react.fragment"), v = Symbol.for("react.strict_mode"), T = Symbol.for("react.profiler"), C = Symbol.for("react.consumer"), L = Symbol.for("react.context"), S = Symbol.for("react.forward_ref"), A = Symbol.for("react.suspense"), se = Symbol.for("react.suspense_list"), ne = Symbol.for("react.memo"), P = Symbol.for("react.lazy"), F = Symbol.for("react.activity"), M = Symbol.for("react.client.reference"), $ = p.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, q = Object.prototype.hasOwnProperty, X = Array.isArray, I = console.createTask ? console.createTask : function() {
       return null;
     };
-    j = {
+    p = {
       react_stack_bottom_frame: function(s) {
         return s();
       }
     };
-    var z, Q = {}, Z = j.react_stack_bottom_frame.bind(
-      j,
+    var z, Q = {}, Z = p.react_stack_bottom_frame.bind(
+      p,
       n
-    )(), K = W(l(n)), B = {};
-    V.Fragment = O, V.jsx = function(s, m, p, N, r) {
+    )(), K = I(o(n)), B = {};
+    U.Fragment = O, U.jsx = function(s, m, j, k, r) {
       var x = 1e4 > $.recentlyCreatedOwnerStacks++;
-      return k(
+      return w(
         s,
         m,
-        p,
+        j,
         !1,
-        N,
+        k,
         r,
         x ? Error("react-stack-top-frame") : Z,
-        x ? W(l(s)) : K
+        x ? I(o(s)) : K
       );
-    }, V.jsxs = function(s, m, p, N, r) {
+    }, U.jsxs = function(s, m, j, k, r) {
       var x = 1e4 > $.recentlyCreatedOwnerStacks++;
-      return k(
+      return w(
         s,
         m,
-        p,
+        j,
         !0,
-        N,
+        k,
         r,
         x ? Error("react-stack-top-frame") : Z,
-        x ? W(l(s)) : K
+        x ? I(o(s)) : K
       );
     };
-  }()), V;
+  }()), U;
 }
 var me;
-function je() {
-  return me || (me = 1, process.env.NODE_ENV === "production" ? te.exports = ye() : te.exports = be()), te.exports;
+function be() {
+  return me || (me = 1, process.env.NODE_ENV === "production" ? te.exports = ye() : te.exports = je()), te.exports;
 }
-var e = je();
+var e = be();
 function ve(t) {
   return t.template ? t.template : "tab";
 }
 function Ne(t) {
   const a = {};
-  return Object.entries(t).forEach(([u, l]) => {
-    const i = l.group || "General";
-    a[i] || (a[i] = { label: i, type: "fields", fields: [] }), a[i]?.fields?.push({ name: u, ...l });
+  return Object.entries(t).forEach(([u, o]) => {
+    const i = o.group || "General";
+    a[i] || (a[i] = { label: i, type: "fields", fields: [] }), a[i]?.fields?.push({ name: u, ...o });
   }), a;
 }
 const G = {
@@ -304,7 +304,7 @@ const G = {
   2: "lg:col-span-2",
   1: "lg:col-span-1"
 };
-function J(t) {
+function H(t) {
   return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].includes(t) ? t : 6;
 }
 async function we(t) {
@@ -326,7 +326,7 @@ async function we(t) {
   }
 }
 const ge = "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg";
-function H({ field: t, data: a }) {
+function J({ field: t, data: a }) {
   const u = t?.name;
   return /* @__PURE__ */ e.jsxs("div", { className: "px-3 py-2 bg-gray-50 rounded-lg", children: [
     /* @__PURE__ */ e.jsx("label", { className: `
@@ -339,8 +339,8 @@ function H({ field: t, data: a }) {
         alt: "avatar",
         className: "w-16 h-16 rounded-full object-cover border",
         onError: (n) => {
-          const d = n.currentTarget;
-          d.onerror = null, d.src = ge;
+          const c = n.currentTarget;
+          c.onerror = null, c.src = ge;
         }
       }
     ) : /* @__PURE__ */ e.jsx("p", { className: `
@@ -349,70 +349,70 @@ function H({ field: t, data: a }) {
   ] });
 }
 function ke({ commonInfo: t, infoData: a, hiddenFields: u = [] }) {
-  return /* @__PURE__ */ e.jsx("div", { className: "bg-white border border-gray-100 p-4  ", children: /* @__PURE__ */ e.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-6", children: [
+  return /* @__PURE__ */ e.jsx("div", { className: "bg-white border border-gray-100 p-4 min-h-3/10 overflow-auto", children: /* @__PURE__ */ e.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-6", children: [
     /* @__PURE__ */ e.jsx("div", { className: "lg:col-span-2 flex flex-col items-center", children: /* @__PURE__ */ e.jsx("div", { className: "relative w-42 h-42", children: /* @__PURE__ */ e.jsx(
       "img",
       {
         src: String(a.avatar_photo),
         alt: "Profile",
         className: " w-full h-full object-cover border-4 rounded-[12px] border-white shadow-lg",
-        onError: (l) => {
-          const i = l.currentTarget;
+        onError: (o) => {
+          const i = o.currentTarget;
           i.onerror = null, i.src = ge;
         }
       }
     ) }) }),
-    /* @__PURE__ */ e.jsx("div", { className: "lg:col-span-10 min-h-0 max-h-40  overflow-y-auto custom-scrollbar", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: t.fields?.map((l, i) => {
-      const n = a?.[l.name];
-      return u.includes(l.name) || !n && n !== !1 && n !== 0 ? null : /* @__PURE__ */ e.jsx("div", { className: `hover:bg-gray-100 transition-colors duration-200 col-span-12 sm:col-span-6 ${G[J(l.width)] || "lg:col-span-4"}`, children: /* @__PURE__ */ e.jsx(
-        H,
+    /* @__PURE__ */ e.jsx("div", { className: "lg:col-span-10 min-h-0 max-h-40  overflow-y-auto custom-scrollbar", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: t.fields?.map((o, i) => {
+      const n = a?.[o.name];
+      return u.includes(o.name) || !n && n !== !1 && n !== 0 ? null : /* @__PURE__ */ e.jsx("div", { className: `hover:bg-gray-100 transition-colors duration-200 col-span-12 sm:col-span-6 ${G[H(o.width)] || "lg:col-span-4"}`, children: /* @__PURE__ */ e.jsx(
+        J,
         {
-          field: l,
+          field: o,
           data: a ?? {}
         },
-        l?.name || i
-      ) }, l.name);
+        o?.name || i
+      ) }, o.name);
     }) }) })
   ] }) });
 }
 function le({ tabObj: t, methods: a, tabName: u }) {
-  const [l, i] = R.useState({});
-  return R.useEffect(() => {
+  const [o, i] = E.useState(null);
+  return E.useEffect(() => {
     let n = !1;
     return (async () => {
-      const o = t?.config;
-      if (!o?.type) {
-        n || i({});
+      const l = t?.config;
+      if (!l?.type) {
+        n || i(null);
         return;
       }
-      if (o.type === "method") {
-        const c = o.method, w = c ? a[c] : void 0;
-        if (w)
+      if (l.type === "method") {
+        const d = l.method, N = d ? a[d] : void 0;
+        if (N)
           try {
-            const k = await Promise.resolve(w());
-            n || i(k || {});
-          } catch (k) {
-            console.error("Method execution failed:", k), n || i({});
+            const w = await Promise.resolve(N());
+            n || i(w || null);
+          } catch (w) {
+            console.error("Method execution failed:", w), n || i(null);
           }
         else
-          n || i({});
+          n || i(null);
       }
-      if (o.type === "api")
+      if (l.type === "api")
         try {
-          const c = await oe({
-            method: o.method || "GET",
+          const d = await oe({
+            method: l.method || "GET",
             // GET, POST, etc.
-            url: o.url,
-            data: o.body || {},
+            url: l.url,
+            data: l.body || {},
             // request body
-            params: o.params || {},
+            params: l.params || {},
             // query params
-            headers: o.headers || {}
+            headers: l.headers || {}
             // optional headers
           });
-          n || i(c.data || {});
-        } catch (c) {
-          console.error("API fetch failed:", c), n || i({});
+          n || i(d.data || null);
+        } catch (d) {
+          console.error("API fetch failed:", d), n || i(null);
         }
     })(), () => {
       n = !0;
@@ -424,60 +424,67 @@ function le({ tabObj: t, methods: a, tabName: u }) {
     JSON.stringify(t?.config?.params || {}),
     JSON.stringify(t?.config?.body || {}),
     JSON.stringify(t?.config?.headers || {})
-  ]), /* @__PURE__ */ e.jsx("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: l && Object.keys(l).map((n, d) => /* @__PURE__ */ e.jsx(
+  ]), console.log("data", o), /* @__PURE__ */ e.jsx("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: o ? Object.keys(o).map((n, c) => /* @__PURE__ */ e.jsx(
     "div",
     {
-      className: `col-span-12 sm:col-span-6 ${G[J(t.width)] || "lg:col-span-2"}`,
+      className: `col-span-12 sm:col-span-6 ${G[H(t.width)] || "lg:col-span-2"}`,
       children: /* @__PURE__ */ e.jsx(
-        H,
+        J,
         {
           field: { name: n, label: n },
-          data: l ?? {}
+          data: o ?? {}
         },
         n
       )
     },
-    `field-${d}`
-  )) }) });
+    `field-${c}`
+  )) : /* @__PURE__ */ e.jsx("div", { className: "col-span-12 flex flex-col  min-h-0", children: /* @__PURE__ */ e.jsxs("div", { className: "flex flex-1 flex-col items-center justify-center text-gray-500", children: [
+    /* @__PURE__ */ e.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ e.jsxs("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: [
+      /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" }),
+      /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "m8 7 4-4 4 4" })
+    ] }) }),
+    /* @__PURE__ */ e.jsx("h3", { className: "text-lg font-medium text-gray-900 mb-2", children: "No Data Available" }),
+    /* @__PURE__ */ e.jsx("p", { className: "text-sm text-gray-500 text-center max-w-sm", children: "There are no records to display  at the moment." })
+  ] }) }) }) });
 }
 function ie({ tabObj: t, methods: a, tabName: u }) {
-  const [l, i] = F(1), [n, d] = F(10), [o, c] = F(""), [w, k] = R.useState([]), v = pe(null), [j, _] = F(null), [h, O] = F({ key: "", direction: null });
-  R.useEffect(() => {
+  const [o, i] = W(1), [n, c] = W(10), [l, d] = W(""), [N, w] = E.useState([]), h = pe(null), [p, _] = W(null), [f, O] = W({ key: "", direction: null });
+  E.useEffect(() => {
     let r = !1;
     return (async () => {
-      const g = t?.config;
-      if (!g?.type) {
-        r || k([]);
+      const y = t?.config;
+      if (!y?.type) {
+        r || w([]);
         return;
       }
-      if (g.type === "method") {
-        const y = g.method, f = y ? a[y] : void 0;
-        if (f)
+      if (y.type === "method") {
+        const b = y.method, g = b ? a[b] : void 0;
+        if (g)
           try {
-            const S = await Promise.resolve(f());
-            r || k(S || []);
+            const R = await Promise.resolve(g());
+            r || w(R || []);
           } catch {
-            r || k([]);
+            r || w([]);
           }
         else
-          r || k([]);
+          r || w([]);
       }
-      if (g.type === "api")
+      if (y.type === "api")
         try {
-          const y = await oe({
-            method: g.method || "GET",
+          const b = await oe({
+            method: y.method || "GET",
             // GET, POST, etc.
-            url: g.url,
-            data: g.body || {},
+            url: y.url,
+            data: y.body || {},
             // request body
-            params: g.params || {},
+            params: y.params || {},
             // query params
-            headers: g.headers || {}
+            headers: y.headers || {}
             // optional headers
           });
-          r || k(y.data || {});
-        } catch (y) {
-          console.error("API fetch failed:", y), r || k([]);
+          r || w(b.data || {});
+        } catch (b) {
+          console.error("API fetch failed:", b), r || w([]);
         }
     })(), () => {
       r = !0;
@@ -490,46 +497,44 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
     JSON.stringify(t?.config?.body || {}),
     JSON.stringify(t?.config?.headers || {})
   ]);
-  const b = Array.isArray(w) ? w : [w], C = ((r) => {
+  const v = Array.isArray(N) ? N : [N], C = ((r) => {
     const x = /* @__PURE__ */ new Set();
-    return r.forEach((g) => {
-      g && typeof g == "object" && Object.keys(g).forEach((y) => x.add(y));
+    return r.forEach((y) => {
+      y && typeof y == "object" && Object.keys(y).forEach((b) => x.add(b));
     }), Array.from(x);
-  })(b), L = t?.vmode === "edit", E = t?.config?.form && Object.keys(t.config.form).length > 0, P = t?.config?.info && Object.keys(t.config.info).length > 0;
-  console.log("tabObj?.config", t?.config);
-  const se = (r) => {
+  })(v), L = t?.vmode === "edit", S = t?.config?.form && Object.keys(t.config.form).length > 0, A = t?.config?.info && Object.keys(t.config.info).length > 0, se = (r) => {
     let x = "asc";
-    h.key === r && h.direction === "asc" ? x = "desc" : h.key === r && h.direction === "desc" && (x = null), O({ key: r, direction: x });
-  }, ne = (r) => !h.key || !h.direction ? r : [...r].sort((x, g) => {
-    const y = x[h.key], f = g[h.key];
-    if (y == null) return h.direction === "asc" ? 1 : -1;
-    if (f == null) return h.direction === "asc" ? -1 : 1;
-    if (typeof y == "boolean" && typeof f == "boolean")
-      return h.direction === "asc" ? y === f ? 0 : y ? -1 : 1 : y === f ? 0 : y ? 1 : -1;
-    const S = new Date(y), D = new Date(f);
-    if (!isNaN(S.getTime()) && !isNaN(D.getTime()))
-      return h.direction === "asc" ? S.getTime() - D.getTime() : D.getTime() - S.getTime();
-    const Y = parseFloat(y), ae = parseFloat(f);
+    f.key === r && f.direction === "asc" ? x = "desc" : f.key === r && f.direction === "desc" && (x = null), O({ key: r, direction: x });
+  }, ne = (r) => !f.key || !f.direction ? r : [...r].sort((x, y) => {
+    const b = x[f.key], g = y[f.key];
+    if (b == null) return f.direction === "asc" ? 1 : -1;
+    if (g == null) return f.direction === "asc" ? -1 : 1;
+    if (typeof b == "boolean" && typeof g == "boolean")
+      return f.direction === "asc" ? b === g ? 0 : b ? -1 : 1 : b === g ? 0 : b ? 1 : -1;
+    const R = new Date(b), D = new Date(g);
+    if (!isNaN(R.getTime()) && !isNaN(D.getTime()))
+      return f.direction === "asc" ? R.getTime() - D.getTime() : D.getTime() - R.getTime();
+    const Y = parseFloat(b), ae = parseFloat(g);
     if (!isNaN(Y) && !isNaN(ae))
-      return h.direction === "asc" ? Y - ae : ae - Y;
-    const ee = String(y).toLowerCase(), re = String(f).toLowerCase();
-    return h.direction === "asc" ? ee < re ? -1 : ee > re ? 1 : 0 : ee > re ? -1 : ee < re ? 1 : 0;
-  }), A = ce(() => {
-    let r = b;
-    if (o.trim()) {
-      const x = o.toLowerCase();
-      r = b.filter((g) => C.some((y) => {
-        const f = g[y];
-        return f == null ? !1 : String(f).toLowerCase().includes(x);
+      return f.direction === "asc" ? Y - ae : ae - Y;
+    const ee = String(b).toLowerCase(), re = String(g).toLowerCase();
+    return f.direction === "asc" ? ee < re ? -1 : ee > re ? 1 : 0 : ee > re ? -1 : ee < re ? 1 : 0;
+  }), P = ce(() => {
+    let r = v;
+    if (l.trim()) {
+      const x = l.toLowerCase();
+      r = v.filter((y) => C.some((b) => {
+        const g = y[b];
+        return g == null ? !1 : String(g).toLowerCase().includes(x);
       }));
     }
     return ne(r);
-  }, [b, o, C, h]), I = Math.ceil(A.length / n), M = (l - 1) * n, $ = M + n, q = A.slice(M, $), X = (r) => {
-    i(Math.max(1, Math.min(r, I)));
-  }, W = (r) => {
-    d(r), i(1);
+  }, [v, l, C, f]), F = Math.ceil(P.length / n), M = (o - 1) * n, $ = M + n, q = P.slice(M, $), X = (r) => {
+    i(Math.max(1, Math.min(r, F)));
+  }, I = (r) => {
+    c(r), i(1);
   }, z = () => {
-    c("");
+    d("");
   }, Q = (r, x) => {
     a?.editInfoRecord?.(r, u);
   }, Z = (r) => {
@@ -633,8 +638,8 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
         return r ? /* @__PURE__ */ e.jsx("a", { href: r, target: "_blank", rel: "noopener noreferrer", className: "text-blue-600 underline", children: "FILE" }) : "No File";
       case "json":
         try {
-          const g = typeof r == "string" ? JSON.parse(r) : r;
-          return /* @__PURE__ */ e.jsx("pre", { className: "whitespace-pre-wrap text-xs bg-gray-100 p-2 rounded", children: JSON.stringify(g, null, 2) });
+          const y = typeof r == "string" ? JSON.parse(r) : r;
+          return /* @__PURE__ */ e.jsx("pre", { className: "whitespace-pre-wrap text-xs bg-gray-100 p-2 rounded", children: JSON.stringify(y, null, 2) });
         } catch {
           return String(r);
         }
@@ -649,29 +654,29 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
       default:
         return String(r);
     }
-  }, p = (r, x) => {
+  }, j = (r, x) => {
     we(r).then(() => {
-      _(x), v.current && clearTimeout(v.current), v.current = setTimeout(() => {
+      _(x), h.current && clearTimeout(h.current), h.current = setTimeout(() => {
         _("");
       }, 2e3);
     }).catch(() => {
       _("");
     });
-  }, N = ce(() => ({
-    totalRows: A.length,
+  }, k = ce(() => ({
+    totalRows: P.length,
     columns: C.length,
     currentPageStart: M + 1,
-    currentPageEnd: Math.min($, A.length),
-    isFiltered: o.trim().length > 0
-  }), [A, b, C, M, $]);
-  return b.length === 0 || C.length === 0 ? /* @__PURE__ */ e.jsxs("div", { className: "h-full flex flex-1 flex-col items-center justify-center py-22 text-gray-500", children: [
+    currentPageEnd: Math.min($, P.length),
+    isFiltered: l.trim().length > 0
+  }), [P, v, C, M, $]);
+  return v.length === 0 || C.length === 0 ? /* @__PURE__ */ e.jsxs("div", { className: "flex flex-1 flex-col items-center justify-center text-gray-500", children: [
     /* @__PURE__ */ e.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ e.jsxs("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: [
       /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" }),
       /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "m8 7 4-4 4 4" })
     ] }) }),
     /* @__PURE__ */ e.jsx("h3", { className: "text-lg font-medium text-gray-900 mb-2", children: "No Data Available" }),
     /* @__PURE__ */ e.jsx("p", { className: "text-sm text-gray-500 text-center max-w-sm", children: "There are no records to display in the grid view at the moment." }),
-    E && /* @__PURE__ */ e.jsxs(
+    S && /* @__PURE__ */ e.jsxs(
       "button",
       {
         onClick: B,
@@ -682,8 +687,8 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
         ]
       }
     )
-  ] }) : /* @__PURE__ */ e.jsxs("div", { className: "w-full h-full overflow-hidden flex-1 flex flex-col", children: [
-    /* @__PURE__ */ e.jsxs("div", { className: "my-4 mx-2 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center", children: [
+  ] }) : /* @__PURE__ */ e.jsxs("div", { className: "w-full overflow-hidden flex-1 flex flex-col", children: [
+    /* @__PURE__ */ e.jsxs("div", { className: "my-4 mx-2 flex  gap-4 justify-between items-start sm:items-center", children: [
       /* @__PURE__ */ e.jsx("div", { className: "flex-1 max-w-md", children: /* @__PURE__ */ e.jsxs("div", { className: "relative", children: [
         /* @__PURE__ */ e.jsx("div", { className: "absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none", children: /* @__PURE__ */ e.jsx("svg", { className: "h-4 w-4 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" }) }) }),
         /* @__PURE__ */ e.jsx(
@@ -691,12 +696,12 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
           {
             type: "text",
             placeholder: "Search across all columns...",
-            value: o,
-            onChange: (r) => c(r.target.value),
+            value: l,
+            onChange: (r) => d(r.target.value),
             className: "block w-full px-10 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent "
           }
         ),
-        o && /* @__PURE__ */ e.jsx(
+        l && /* @__PURE__ */ e.jsx(
           "button",
           {
             onClick: z,
@@ -706,7 +711,7 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
           }
         )
       ] }) }),
-      E && /* @__PURE__ */ e.jsxs(
+      S && /* @__PURE__ */ e.jsxs(
         "button",
         {
           onClick: B,
@@ -722,12 +727,12 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
       /* @__PURE__ */ e.jsx("div", { className: "flex items-center gap-6 text-sm", children: /* @__PURE__ */ e.jsx("span", { className: "flex items-center gap-2", children: /* @__PURE__ */ e.jsxs("span", { className: "text-gray-600", children: [
         "Showing ",
         /* @__PURE__ */ e.jsxs("strong", { className: "text-gray-900", children: [
-          N.currentPageStart,
+          k.currentPageStart,
           "-",
-          N.currentPageEnd
+          k.currentPageEnd
         ] }),
         " of ",
-        /* @__PURE__ */ e.jsx("strong", { className: "text-gray-900", children: N.totalRows }),
+        /* @__PURE__ */ e.jsx("strong", { className: "text-gray-900", children: k.totalRows }),
         " records"
       ] }) }) }),
       /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex justify-end gap-4", children: [
@@ -737,7 +742,7 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
             "select",
             {
               value: n,
-              onChange: (r) => W(Number(r.target.value)),
+              onChange: (r) => I(Number(r.target.value)),
               className: "border border-gray-300 text-gray-900 rounded px-1 py-1 text-sm outline-0",
               children: [
                 /* @__PURE__ */ e.jsx("option", { value: 5, children: "5" }),
@@ -754,23 +759,23 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
           /* @__PURE__ */ e.jsx(
             "button",
             {
-              onClick: () => X(l - 1),
-              disabled: l === 1,
+              onClick: () => X(o - 1),
+              disabled: o === 1,
               className: "flex items-center gap-2 text-sm font-medium text-action cursor-pointer bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors",
               children: /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 19l-7-7 7-7" }) })
             }
           ),
           /* @__PURE__ */ e.jsx("span", { className: "flex items-center gap-2 text-sm", children: /* @__PURE__ */ e.jsxs("span", { className: "text-gray-600", children: [
             "Page ",
-            /* @__PURE__ */ e.jsx("strong", { className: "text-gray-900", children: l }),
+            /* @__PURE__ */ e.jsx("strong", { className: "text-gray-900", children: o }),
             " of ",
-            /* @__PURE__ */ e.jsx("strong", { className: "text-gray-900", children: I })
+            /* @__PURE__ */ e.jsx("strong", { className: "text-gray-900", children: F })
           ] }) }),
           /* @__PURE__ */ e.jsx(
             "button",
             {
-              onClick: () => X(l + 1),
-              disabled: l === I,
+              onClick: () => X(o + 1),
+              disabled: o === F,
               className: "flex items-center gap-2 text-sm font-medium text-action cursor-pointer bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors",
               children: /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 5l7 7-7 7" }) })
             }
@@ -778,14 +783,14 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
         ] })
       ] })
     ] }),
-    A.length === 0 && o.trim() && /* @__PURE__ */ e.jsxs("div", { className: "h-full flex flex-1 flex-col items-center justify-center py-22 text-gray-500", children: [
+    P.length === 0 && l.trim() && /* @__PURE__ */ e.jsxs("div", { className: "h-full flex flex-1 flex-col items-center justify-center py-22 text-gray-500", children: [
       /* @__PURE__ */ e.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ e.jsx("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" }) }) }),
       /* @__PURE__ */ e.jsx("h3", { className: "text-lg font-medium text-gray-900 mb-2", children: "No Results Found" }),
       /* @__PURE__ */ e.jsxs("p", { className: "text-sm text-gray-500 text-center max-w-sm mb-4", children: [
         "No records match your search for ",
         /* @__PURE__ */ e.jsxs("strong", { children: [
           '"',
-          o,
+          l,
           '"'
         ] })
       ] }),
@@ -798,7 +803,7 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
         }
       )
     ] }),
-    A.length > 0 && /* @__PURE__ */ e.jsx(e.Fragment, { children: /* @__PURE__ */ e.jsx("div", { className: "max-h-full overflow-auto min-w-full divide-y divide-gray-200 border border-gray-200 bordr-t", children: /* @__PURE__ */ e.jsxs("table", { className: "min-w-full h-full", children: [
+    P.length > 0 && /* @__PURE__ */ e.jsx(e.Fragment, { children: /* @__PURE__ */ e.jsx("div", { className: " overflow-auto min-w-full divide-y divide-gray-200 border border-gray-200 bordr-t", children: /* @__PURE__ */ e.jsxs("table", { className: "min-w-full h-full", children: [
       /* @__PURE__ */ e.jsx("thead", { className: " text-action", children: /* @__PURE__ */ e.jsxs("tr", { children: [
         L && /* @__PURE__ */ e.jsx(
           "th",
@@ -820,7 +825,7 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
                 onClick: () => se(r),
                 children: [
                   /* @__PURE__ */ e.jsx("span", { className: "truncate", title: s(r), children: s(r) }),
-                  h?.key === r ? h.direction === "asc" ? /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-blue-600", fill: "currentColor", viewBox: "0 0 20 20", children: /* @__PURE__ */ e.jsx("path", { d: "M5 12l5-5 5 5H5z" }) }) : /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-blue-600", fill: "currentColor", viewBox: "0 0 20 20", children: /* @__PURE__ */ e.jsx("path", { d: "M5 8l5 5 5-5H5z" }) }) : /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-gray-400 group-hover:text-gray-600", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" }) })
+                  f?.key === r ? f.direction === "asc" ? /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-blue-600", fill: "currentColor", viewBox: "0 0 20 20", children: /* @__PURE__ */ e.jsx("path", { d: "M5 12l5-5 5 5H5z" }) }) : /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-blue-600", fill: "currentColor", viewBox: "0 0 20 20", children: /* @__PURE__ */ e.jsx("path", { d: "M5 8l5 5 5-5H5z" }) }) : /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-gray-400 group-hover:text-gray-600", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" }) })
                 ]
               }
             )
@@ -833,8 +838,8 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
         {
           className: `hover:bg-secondary transition-colors duration-150 ${x % 2 === 0 ? "bg-white" : "bg-gray-50"}`,
           children: [
-            L && /* @__PURE__ */ e.jsx("td", { className: "px-4 sm:px-6 py-1 whitespace-nowrap text-sm bg-gray-50 text-gray-900 sticky left-0 z-10", children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-2", children: [
-              P && /* @__PURE__ */ e.jsx(
+            L && /* @__PURE__ */ e.jsx("td", { className: "px-4 sm:px-6 py-1 whitespace-nowrap text-sm bg-muted text-gray-900 sticky left-0 z-10", children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-2", children: [
+              A && /* @__PURE__ */ e.jsx(
                 "button",
                 {
                   onClick: () => Z(r),
@@ -890,24 +895,24 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
                 }
               )
             ] }) }),
-            C.map((g) => /* @__PURE__ */ e.jsx(
+            C.map((y) => /* @__PURE__ */ e.jsx(
               "td",
               {
                 className: "px-4 sm:px-6 py-1 text-sm text-gray-900",
                 children: /* @__PURE__ */ e.jsxs("div", { className: "relative group flex items-center", children: [
-                  /* @__PURE__ */ e.jsx("div", { className: "truncate max-w-xs sm:max-w-none", children: m(r[g] ?? "", g) }),
+                  /* @__PURE__ */ e.jsx("div", { className: "truncate max-w-xs sm:max-w-none", children: m(r[y] ?? "", y) }),
                   /* @__PURE__ */ e.jsx(
                     "button",
                     {
-                      onClick: () => p(r[g] || "", `${r.id}-${g}`),
+                      onClick: () => j(r[y] || "", `${r.id}-${y}`),
                       className: "absolute -right-4 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity ml-2 p-1 rounded bg-gray-50 hover:bg-gray-100 cursor-pointer",
                       title: "Copy",
-                      children: j === `${r.id}-${g}` ? /* @__PURE__ */ e.jsx(e.Fragment, { children: /* @__PURE__ */ e.jsx("span", { className: "text-xs text-gray-600", children: "Copied!" }) }) : /* @__PURE__ */ e.jsx("i", { className: "fa-regular fa-copy" })
+                      children: p === `${r.id}-${y}` ? /* @__PURE__ */ e.jsx(e.Fragment, { children: /* @__PURE__ */ e.jsx("span", { className: "text-xs text-gray-600", children: "Copied!" }) }) : /* @__PURE__ */ e.jsx("i", { className: "fa-regular fa-copy" })
                     }
                   )
                 ] })
               },
-              g
+              y
             ))
           ]
         },
@@ -916,7 +921,7 @@ function ie({ tabObj: t, methods: a, tabName: u }) {
     ] }) }) })
   ] });
 }
-const xe = ({ groups: t, groupNames: a, setActiveTabIndex: u, activeTabIndex: l }) => /* @__PURE__ */ e.jsx(
+const xe = ({ groups: t, groupNames: a, setActiveTabIndex: u, activeTabIndex: o }) => /* @__PURE__ */ e.jsx(
   "nav",
   {
     className: "flex flex-col overflow-y-auto h-full px-2 py-1 space-y-1",
@@ -925,7 +930,7 @@ const xe = ({ groups: t, groupNames: a, setActiveTabIndex: u, activeTabIndex: l 
       {
         type: "button",
         onClick: () => u(n),
-        className: `cursor-pointer w-full text-left py-2 px-3 rounded-md text-sm font-semibold transition-all duration-200 ${l === n ? "bg-white shadow text-action" : "text-gray-600 hover:bg-white/50"}`,
+        className: `cursor-pointer w-full text-left py-2 px-3 rounded-md text-sm font-semibold transition-all duration-200 ${o === n ? "bg-white shadow text-action" : "text-gray-600 hover:bg-white/50"}`,
         children: /* @__PURE__ */ e.jsx("span", { className: "truncate", children: t[i]?.label || i })
       },
       i
@@ -935,81 +940,107 @@ const xe = ({ groups: t, groupNames: a, setActiveTabIndex: u, activeTabIndex: l 
   groups: t,
   groupNames: a,
   setActiveTabIndex: u,
-  activeTabIndex: l,
+  activeTabIndex: o,
   layoutConfig: i,
   showScrollHint: n,
-  isCommonInfo: d,
-  tabsNavRef: o
-}) => /* @__PURE__ */ e.jsxs("div", { className: i?.tabNavClass || "relative", children: [
-  n && /* @__PURE__ */ e.jsx(
-    "button",
-    {
-      onClick: () => {
-        o.current && o.current.scrollBy({ left: -200, behavior: "smooth" });
-      },
-      className: "absolute left-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group",
-      children: /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 19l-7-7 7-7" }) })
-    }
-  ),
-  n && /* @__PURE__ */ e.jsx(
-    "button",
-    {
-      onClick: () => {
-        o.current && o.current.scrollBy({ left: 200, behavior: "smooth" });
-      },
-      className: "absolute right-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group",
-      children: /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 5l7 7-7 7" }) })
-    }
-  ),
-  n && /* @__PURE__ */ e.jsxs(e.Fragment, { children: [
-    /* @__PURE__ */ e.jsx("div", { className: "absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-gray-100 via-gray-100/80 to-transparent z-10 pointer-events-none rounded-l-2xl" }),
-    /* @__PURE__ */ e.jsx("div", { className: "absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-gray-100 via-gray-100/80 to-transparent z-10 pointer-events-none rounded-r-2xl" })
-  ] }),
-  /* @__PURE__ */ e.jsx("div", { className: `relative bg-gray-100 ${d ? "" : "rounded-t-lg"} px-1 pt-1 shadow-inner overflow-hidden`, children: /* @__PURE__ */ e.jsx(
-    "nav",
-    {
-      ref: o,
-      className: "relative flex overflow-x-auto scrollbar-hide scroll-smooth",
-      style: {
-        scrollbarWidth: "none",
-        msOverflowStyle: "none",
-        paddingLeft: n ? "35px" : "0",
-        paddingRight: n ? "35px" : "0"
-      },
-      children: a.length > 0 ? a.map((c, w) => /* @__PURE__ */ e.jsx(
+  isCommonInfo: c,
+  tabsNavRef: l
+}) => {
+  const [d, N] = E.useState(!1), w = E.useRef(null);
+  return E.useEffect(() => {
+    const h = (p) => {
+      w.current && !w.current.contains(p.target) && N(!1);
+    };
+    return document.addEventListener("mousedown", h), () => document.removeEventListener("mousedown", h);
+  }, []), /* @__PURE__ */ e.jsxs("div", { className: i?.tabNavClass || "relative z-10", children: [
+    n && /* @__PURE__ */ e.jsx(
+      "button",
+      {
+        onClick: () => {
+          l.current && l.current.scrollBy({ left: -200, behavior: "smooth" });
+        },
+        className: "cursor-pointer absolute left-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group",
+        children: /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 19l-7-7 7-7" }) })
+      }
+    ),
+    n && /* @__PURE__ */ e.jsx(
+      "button",
+      {
+        onClick: () => {
+          l.current && l.current.scrollBy({ left: 200, behavior: "smooth" });
+        },
+        className: "cursor-pointer absolute right-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group",
+        children: /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 5l7 7-7 7" }) })
+      }
+    ),
+    /* @__PURE__ */ e.jsxs("div", { className: "absolute right-10 top-1  z-11", ref: w, children: [
+      /* @__PURE__ */ e.jsx(
+        "button",
+        {
+          onClick: () => N(!d),
+          className: "cursor-pointer ml-1 px-2 py-1 text-gray-600 hover:text-gray-800 bg-white rounded-md transition",
+          children: "⋮"
+        }
+      ),
+      d && /* @__PURE__ */ e.jsx("div", { className: "absolute right-0 mt-2 w-48 max-h-100 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30", children: a.map((h, p) => /* @__PURE__ */ e.jsx(
         "button",
         {
           type: "button",
-          onClick: () => u(w),
-          className: `relative cursor-pointer flex-shrink-0 py-2 px-2 sm:px-4 rounded-t-lg text-xs sm:text-sm font-semibold transition-all duration-300 ease-out focus:outline-none whitespace-nowrap ${l === w ? "text-action bg-white " : "text-gray-600 hover:text-gray-800 hover:bg-white/50"}`,
-          children: /* @__PURE__ */ e.jsx("span", { className: "relative z-10 flex items-center justify-center gap-1 sm:gap-2", children: /* @__PURE__ */ e.jsx("span", { className: "truncate", children: t[c]?.label || c }) })
+          onClick: () => {
+            u(p), N(!1);
+          },
+          className: `w-full text-left px-3 py-2 text-sm truncate hover:bg-gray-100 ${o === p ? "bg-gray-50 font-semibold text-action" : "text-gray-700"}`,
+          children: t[h]?.label || h
         },
-        c
-      )) : /* @__PURE__ */ e.jsx("div", { className: "py-3 px-6 text-sm text-gray-500", children: "No group available" })
-    }
-  ) })
-] }), he = ({
+        h
+      )) })
+    ] }),
+    /* @__PURE__ */ e.jsx("div", { className: `relative bg-gray-100 ${c ? "" : "rounded-t-lg"} px-1 pt-1 shadow-inner overflow-hidden`, children: /* @__PURE__ */ e.jsx(
+      "nav",
+      {
+        ref: l,
+        className: "relative flex overflow-x-auto scrollbar-hide scroll-smooth",
+        style: {
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          paddingLeft: n ? "35px" : "0",
+          paddingRight: n ? "70px" : "0"
+        },
+        children: a.length > 0 ? a.map((h, p) => /* @__PURE__ */ e.jsx(
+          "button",
+          {
+            type: "button",
+            onClick: () => u(p),
+            className: `relative cursor-pointer flex-shrink-0 py-2 px-2 sm:px-4 rounded-t-lg text-xs sm:text-sm font-semibold transition-all duration-300 ease-out focus:outline-none whitespace-nowrap ${o === p ? "text-action bg-white " : "text-gray-600 hover:text-gray-800 hover:bg-white/50"}`,
+            children: /* @__PURE__ */ e.jsx("span", { className: "relative z-10 flex items-center justify-center gap-1 sm:gap-2", children: /* @__PURE__ */ e.jsx("span", { className: "truncate", children: t[h]?.label || h }) })
+          },
+          h
+        )) : /* @__PURE__ */ e.jsx("div", { className: "py-3 px-6 text-sm text-gray-500", children: "No group available" })
+      }
+    ) })
+  ] });
+}, fe = ({
   groupNames: t,
   activeTabIndex: a,
   layoutConfig: u,
-  tabObj: l,
+  tabObj: o,
   infoData: i,
   setActiveTabIndex: n,
-  renderView: d
+  renderView: c
 }) => /* @__PURE__ */ e.jsxs(
   "div",
   {
-    className: "bg-white min-h-0 rounded-b-lg border  border-t-0 border-gray-100 p-3 animate-in fade-in duration-300 flex flex-col h-full",
+    className: "bg-white rounded-b-lg border  border-t-0 border-gray-100 p-3 animate-in fade-in duration-300 flex-1 flex flex-col min-h-0",
     children: [
-      t.length > 0 ? l?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 overflow-y-auto ", children: /* @__PURE__ */ e.jsx("div", { className: u?.fieldGridClass || "grid grid-cols-12 gap-2", children: l.fields.map((o, c) => /* @__PURE__ */ e.jsx(
+      t.length > 0 ? o?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: u?.fieldGridClass || "grid grid-cols-12 gap-2", children: o.fields.map((l, d) => /* @__PURE__ */ e.jsx(
         "div",
         {
-          className: `col-span-12 sm:col-span-6 ${G[J(o.width)] || "lg:col-span-2"}`,
-          children: /* @__PURE__ */ e.jsx(H, { field: o, data: i ?? {} })
+          className: `col-span-12 sm:col-span-6 ${G[H(l.width)] || "lg:col-span-2"}`,
+          children: /* @__PURE__ */ e.jsx(J, { field: l, data: i ?? {} })
         },
-        o?.name ?? `field-${c}`
-      )) }) }) : l ? d(l, t[a] || "") : null : /* @__PURE__ */ e.jsx("div", { className: "flex-1 col-span-full text-center py-8 text-gray-500", children: "No data available" }),
-      t.length > 5 && /* @__PURE__ */ e.jsxs("div", { className: "mt-2 pt-2 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4", children: [
+        l?.name ?? `field-${d}`
+      )) }) }) : o ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: c(o, t[a] || "") }) : null : /* @__PURE__ */ e.jsx("div", { className: "flex-1 col-span-full text-center py-8 text-gray-500", children: "No data available" }),
+      t.length > 5 && /* @__PURE__ */ e.jsxs("div", { className: "mt-2 pt-2 border-t border-gray-100 flex items-center justify-between gap-4", children: [
         /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-2 text-sm text-gray-500", children: [
           /* @__PURE__ */ e.jsxs("span", { children: [
             "Tab ",
@@ -1018,12 +1049,12 @@ const xe = ({ groups: t, groupNames: a, setActiveTabIndex: u, activeTabIndex: l 
             t.length
           ] }),
           /* @__PURE__ */ e.jsxs("div", { className: "flex gap-1", children: [
-            t.slice(0, 5).map((o, c) => /* @__PURE__ */ e.jsx(
+            t.slice(0, 5).map((l, d) => /* @__PURE__ */ e.jsx(
               "div",
               {
-                className: `w-2 h-2 rounded-full transition-all duration-300 ${c === a ? "bg-action w-6" : "bg-gray-300"}`
+                className: `w-2 h-2 rounded-full transition-all duration-300 ${d === a ? "bg-action w-6" : "bg-gray-300"}`
               },
-              c
+              d
             )),
             t.length > 5 && /* @__PURE__ */ e.jsxs("span", { className: "text-xs text-gray-400 ml-1", children: [
               "+",
@@ -1059,126 +1090,130 @@ const xe = ({ groups: t, groupNames: a, setActiveTabIndex: u, activeTabIndex: l 
           " of ",
           t.length
         ] }),
-        /* @__PURE__ */ e.jsx("div", { className: "flex gap-1", children: t.map((o, c) => /* @__PURE__ */ e.jsx(
+        /* @__PURE__ */ e.jsx("div", { className: "flex gap-1", children: t.map((l, d) => /* @__PURE__ */ e.jsx(
           "div",
           {
-            className: `w-2 h-2 rounded-full transition-all duration-300 ${c === a ? "bg-action w-6" : "bg-gray-300"}`
+            className: `w-2 h-2 rounded-full transition-all duration-300 ${d === a ? "bg-action w-6" : "bg-gray-300"}`
           },
-          c
+          d
         )) })
       ] }) })
     ]
   },
   t[a]
 );
-function fe({
+function he({
   groups: t,
   methods: a = {},
   infoData: u,
-  viewRenderers: l = {},
+  viewRenderers: o = {},
   isCommonInfo: i,
   layoutConfig: n = {},
-  viewMode: d
+  viewMode: c
 }) {
-  const [o, c] = R.useState(0), [w, k] = R.useState(!1), v = R.useRef(null), j = Object.keys(t);
-  R.useEffect(() => {
-    const E = () => {
-      if (v.current) {
-        const P = v.current;
-        k(P.scrollWidth > P.clientWidth);
+  const [l, d] = E.useState(0), [N, w] = E.useState(!1), h = E.useRef(null), p = Object.keys(t);
+  E.useEffect(() => {
+    const S = () => {
+      if (h.current) {
+        const A = h.current;
+        w(A.scrollWidth > A.clientWidth);
       }
     };
-    return E(), window.addEventListener("resize", E), () => window.removeEventListener("resize", E);
-  }, [j.length]), R.useEffect(() => {
-    if (v.current && j.length > 0) {
-      const E = v.current.children[o];
-      E && E.scrollIntoView({
+    return S(), window.addEventListener("resize", S), () => window.removeEventListener("resize", S);
+  }, [p.length]), E.useEffect(() => {
+    if (h.current && p.length > 0) {
+      const S = h.current.children[l];
+      S && S.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
         inline: "center"
       });
     }
-  }, [o, j.length]);
-  const _ = d === "tableft", h = d === "tabright", O = !_ && !h, b = t[j[o] ?? ""] || null, T = {
-    single: (E, P) => /* @__PURE__ */ e.jsx(le, { tabObj: E, methods: a, tabName: P }),
-    grid: (E, P) => /* @__PURE__ */ e.jsx(ie, { tabObj: E, methods: a, tabName: P })
-  }, C = ["single", "grid"].includes(b?.config?.uimode) ? b?.config?.uimode : "single", L = l[C] || T[C] || (() => /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }));
-  return O ? /* @__PURE__ */ e.jsxs("div", { className: "flex flex-col w-full h-full overflow-hidden", children: [
+  }, [l, p.length]);
+  const _ = c === "tableft", f = c === "tabright", O = !_ && !f, v = t[p[l] ?? ""] || null;
+  console.log("tabObj", v);
+  const T = {
+    single: (S, A) => /* @__PURE__ */ e.jsx(le, { tabObj: S, methods: a, tabName: A }),
+    grid: (S, A) => /* @__PURE__ */ e.jsx(ie, { tabObj: S, methods: a, tabName: A })
+  }, C = v?.config?.uimode;
+  console.log("uiModeKey", C);
+  const L = o[C] || T[C] || (() => /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex justify-center p-4", children: "No renderer for this type" }));
+  return O ? /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex flex-col min-h-0 max-h-screen", children: [
     /* @__PURE__ */ e.jsx(
       Ce,
       {
-        groupNames: j,
+        groupNames: p,
         groups: t,
-        setActiveTabIndex: c,
-        activeTabIndex: o,
-        tabsNavRef: v,
+        setActiveTabIndex: d,
+        activeTabIndex: l,
+        tabsNavRef: h,
         isCommonInfo: i,
-        showScrollHint: w,
+        showScrollHint: N,
         layoutConfig: n
       }
     ),
-    /* @__PURE__ */ e.jsx("main", { className: "flex-1 overflow-auto", children: /* @__PURE__ */ e.jsx(
-      he,
+    /* @__PURE__ */ e.jsx(
+      fe,
       {
-        groupNames: j,
-        activeTabIndex: o,
+        groupNames: p,
+        activeTabIndex: l,
         layoutConfig: n,
-        tabObj: b,
+        tabObj: v,
         infoData: u,
-        setActiveTabIndex: c,
+        setActiveTabIndex: d,
         renderView: L,
         groups: t
       }
-    ) })
-  ] }) : /* @__PURE__ */ e.jsxs("div", { className: "flex w-full h-full overflow-hidden", children: [
+    )
+  ] }) : /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex min-h-0 max-h-screen", children: [
     _ && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-r border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
       xe,
       {
-        groupNames: j,
+        groupNames: p,
         groups: t,
-        setActiveTabIndex: c,
-        activeTabIndex: o
+        setActiveTabIndex: d,
+        activeTabIndex: l
       }
     ) }),
-    /* @__PURE__ */ e.jsx("main", { className: "flex-1 overflow-auto", children: /* @__PURE__ */ e.jsx(
-      he,
+    /* @__PURE__ */ e.jsx("main", { className: "flex-1 flex flex-col min-h-0 overflow-auto", children: /* @__PURE__ */ e.jsx(
+      fe,
       {
-        groupNames: j,
-        activeTabIndex: o,
+        groupNames: p,
+        activeTabIndex: l,
         layoutConfig: n,
-        tabObj: b,
+        tabObj: v,
         infoData: u,
-        setActiveTabIndex: c,
+        setActiveTabIndex: d,
         renderView: L,
         groups: t
       }
     ) }),
-    h && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-l border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
+    f && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-l border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
       xe,
       {
-        groupNames: j,
+        groupNames: p,
         groups: t,
-        setActiveTabIndex: c,
-        activeTabIndex: o
+        setActiveTabIndex: d,
+        activeTabIndex: l
       }
     ) })
   ] });
 }
 function Ee({ title: t, children: a, isFirst: u }) {
-  const [l, i] = F(u);
-  return /* @__PURE__ */ e.jsx("div", { className: "group relative mt-1", children: /* @__PURE__ */ e.jsxs("div", { className: "relative bg-white rounded-lg border border-gray-100 shadow-xs hover:shadow-sm transition-all duration-300 overflow-hidden ", children: [
+  const [o, i] = W(u);
+  return /* @__PURE__ */ e.jsx("div", { className: "group relative mt-1 flex-1 flex flex-col min-h-0 max-h-screen", children: /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex flex-col min-h-0 relative bg-white rounded-lg border border-gray-100 shadow-xs hover:shadow-sm transition-all duration-300 overflow-hidden ", children: [
     /* @__PURE__ */ e.jsxs(
       "button",
       {
-        onClick: () => i(!l),
+        onClick: () => i(!o),
         className: "w-full bg-gray-50 flex justify-between items-center px-6 py-3 b text-left transition-all duration-300 ",
         children: [
           /* @__PURE__ */ e.jsxs("div", { className: "flex items-center space-x-3", children: [
-            /* @__PURE__ */ e.jsx("div", { className: `w-3 h-3 rounded-full transition-all duration-300 ${l ? "bg-action" : "bg-gray-300"}` }),
-            /* @__PURE__ */ e.jsx("h3", { className: "text-md font-semibold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent", children: t })
+            /* @__PURE__ */ e.jsx("div", { className: `w-3 h-3 rounded-full transition-all duration-300 ${o ? "bg-action" : "bg-gray-300"}` }),
+            /* @__PURE__ */ e.jsx("h3", { className: "text-md capitalize font-semibold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent", children: t })
           ] }),
-          /* @__PURE__ */ e.jsxs("div", { className: `relative transition-all duration-300 ${l ? "rotate-180" : ""}`, children: [
-            /* @__PURE__ */ e.jsx("div", { className: `absolute inset-0 rounded-full blur-md transition-opacity duration-300 ${l ? "bg-action opacity-30" : "bg-transparent opacity-0"}` }),
+          /* @__PURE__ */ e.jsxs("div", { className: `relative transition-all duration-300 ${o ? "rotate-180" : ""}`, children: [
+            /* @__PURE__ */ e.jsx("div", { className: `absolute inset-0 rounded-full blur-md transition-opacity duration-300 ${o ? "bg-action opacity-30" : "bg-transparent opacity-0"}` }),
             /* @__PURE__ */ e.jsx(
               "svg",
               {
@@ -1196,8 +1231,8 @@ function Ee({ title: t, children: a, isFirst: u }) {
     /* @__PURE__ */ e.jsx(
       "div",
       {
-        className: `transition-all duration-500 ease-in-out overflow-hidden ${l ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"}`,
-        children: /* @__PURE__ */ e.jsx("div", { className: "px-6 pb-6 bg-gradient-to-br from-gray-50/50 to-white", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-5 pt-4", children: a }) })
+        className: `flex-1 flex flex-col min-h-0 transition-all  duration-500 ease-in-out overflow-hidden ${o ? "max-h-full opacity-100" : "max-h-0 opacity-0"}`,
+        children: /* @__PURE__ */ e.jsx("div", { className: "px-6 pb-6 bg-gradient-to-br from-gray-50/50 to-white flex-1 flex flex-col min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-5 pt-4 flex-1 flex flex-col min-h-0 overflow-y-auto", children: a }) })
       }
     )
   ] }) });
@@ -1206,39 +1241,39 @@ function Se({
   groups: t,
   methods: a = {},
   infoData: u,
-  viewRenderers: l = {}
+  viewRenderers: o = {}
 }) {
   const i = {
-    single: (n) => /* @__PURE__ */ e.jsx(le, { tabObj: n, methods: a }),
-    grid: (n) => /* @__PURE__ */ e.jsx(ie, { tabObj: n, methods: a })
+    single: (n, c) => /* @__PURE__ */ e.jsx(le, { tabObj: n, methods: a, tabName: c }),
+    grid: (n, c) => /* @__PURE__ */ e.jsx(ie, { tabObj: n, methods: a, tabName: c })
   };
-  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2", children: t && Object.entries(t).map(([n, d], o) => /* @__PURE__ */ e.jsx(Ee, { title: n, isFirst: o === 0, children: d?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 max-h-full overflow-y-auto  custom-scrollbar", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: d.fields.map((c, w) => /* @__PURE__ */ e.jsx(
+  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2 flex flex-col min-h-0", children: t && Object.entries(t).map(([n, c], l) => (console.log("obj", c), /* @__PURE__ */ e.jsx(Ee, { title: n, isFirst: l === 0, children: c?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: c.fields.map((d, N) => /* @__PURE__ */ e.jsx(
     "div",
     {
-      className: `col-span-12 sm:col-span-6 ${G[J(c.width)] || "lg:col-span-2"}`,
-      children: /* @__PURE__ */ e.jsx(H, { field: c, data: u ?? {} })
+      className: `col-span-12 sm:col-span-6 ${G[H(d.width)] || "lg:col-span-2"}`,
+      children: /* @__PURE__ */ e.jsx(J, { field: d, data: u ?? {} })
     },
-    c?.name ?? `field-${w}`
-  )) }) }) : d ? l[d.config?.uimode]?.(d) || i[d.config?.uimode]?.(d) || /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }) : null }, n)) }) }) });
+    d?.name ?? `field-${N}`
+  )) }) }) : c ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: o[c.config?.uimode]?.(c) || i[c.config?.uimode]?.(c, n) || /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }) }) : null }, n))) }) }) });
 }
 function Re({ title: t, children: a }) {
-  return /* @__PURE__ */ e.jsx("div", { className: "group relative mt-1", children: /* @__PURE__ */ e.jsxs("div", { className: "relative bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden ", children: [
+  return /* @__PURE__ */ e.jsx("div", { className: "group relative mt-1 flex-1 flex flex-col min-h-0 max-h-screen", children: /* @__PURE__ */ e.jsxs("div", { className: "flex flex-col min-h-0 relative  bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden ", children: [
     /* @__PURE__ */ e.jsx(
       "button",
       {
         className: "w-full bg-gray-50 flex justify-between items-center px-6 py-3 b text-left transition-all duration-300 ",
         children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center space-x-3", children: [
           /* @__PURE__ */ e.jsx("div", { className: "w-3 h-3 rounded-full transition-all duration-300 bg-action" }),
-          /* @__PURE__ */ e.jsx("h3", { className: "text-md font-semibold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent", children: t })
+          /* @__PURE__ */ e.jsx("h3", { className: "text-md font-semibold bg-gradient-to-r capitalize from-gray-800 to-gray-600 bg-clip-text text-transparent", children: t })
         ] })
       }
     ),
     /* @__PURE__ */ e.jsx(
       "div",
       {
-        className: `transition-all duration-500 ease-in-out overflow-hidden max-h-[2000px] opacity-100'
+        className: `flex flex-col min-h-0 transition-all duration-500 ease-in-out opacity-100'
             }`,
-        children: /* @__PURE__ */ e.jsx("div", { className: "px-6 pb-6 bg-gradient-to-br from-gray-50/50 to-white", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-5 pt-4", children: a }) })
+        children: /* @__PURE__ */ e.jsx("div", { className: "px-6 pb-6 bg-gradient-to-br from-gray-50/50 to-white flex flex-col min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-5 pt-4 flex-1 flex flex-col min-h-0 overflow-y-auto", children: a }) })
       }
     )
   ] }) });
@@ -1247,70 +1282,70 @@ function _e({
   groups: t,
   methods: a = {},
   infoData: u,
-  viewRenderers: l = {}
+  viewRenderers: o = {}
 }) {
   const i = {
-    single: (n) => /* @__PURE__ */ e.jsx(le, { tabObj: n, methods: a }),
-    grid: (n) => /* @__PURE__ */ e.jsx(ie, { tabObj: n, methods: a })
+    single: (n, c) => /* @__PURE__ */ e.jsx(le, { tabObj: n, methods: a, tabName: c }),
+    grid: (n, c) => /* @__PURE__ */ e.jsx(ie, { tabObj: n, methods: a, tabName: c })
   };
-  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2", children: t && Object.entries(t).map(([n, d], o) => /* @__PURE__ */ e.jsx(Re, { title: n, children: d?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 max-h-full overflow-y-auto  custom-scrollbar", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: d.fields.map((c, w) => /* @__PURE__ */ e.jsx(
+  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2  flex flex-col min-h-0", children: t && Object.entries(t).map(([n, c], l) => /* @__PURE__ */ e.jsx(Re, { title: n, children: c?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: c.fields.map((d, N) => /* @__PURE__ */ e.jsx(
     "div",
     {
-      className: `col-span-12 sm:col-span-6 ${G[J(c.width)] || "lg:col-span-2"}`,
-      children: /* @__PURE__ */ e.jsx(H, { field: c, data: u ?? {} })
+      className: `col-span-12 sm:col-span-6 ${G[H(d.width)] || "lg:col-span-2"}`,
+      children: /* @__PURE__ */ e.jsx(J, { field: d, data: u ?? {} })
     },
-    c?.name ?? `field-${w}`
-  )) }) }) : d ? l[d.config?.uimode]?.(d) || i[d.config?.uimode]?.(d) || /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }) : null }, n)) }) }) });
+    d?.name ?? `field-${N}`
+  )) }) }) : c ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: o[c.config?.uimode]?.(c) || i[c.config?.uimode]?.(c, n) || /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }) }) : null }, n)) }) }) });
 }
-function Pe({
+function Ae({
   infoViewJson: t,
   data: a = {},
   hiddenFields: u = [],
-  groupFieldsFn: l = Ne,
+  groupFieldsFn: o = Ne,
   layoutConfig: i = {},
   viewRenderers: n = {},
-  methods: d = {}
+  methods: c = {}
 }) {
-  const [o, c] = R.useState({}), w = ve(t.infoview ?? {});
-  let v = { ...R.useMemo(
-    () => l(t.fields || {}),
-    [t.fields, l]
+  const [l, d] = E.useState({}), N = ve(t.infoview ?? {});
+  let h = { ...E.useMemo(
+    () => o(t.fields || {}),
+    [t.fields, o]
   ) };
-  t.infoview?.groups && (v = { ...v, ...t.infoview.groups }), R.useEffect(() => {
-    let h = !1;
+  t.infoview?.groups && (h = { ...h, ...t.infoview.groups }), E.useEffect(() => {
+    let f = !1;
     return (async () => {
-      const b = t?.source;
-      if (!b?.type) {
-        h || c({});
+      const v = t?.source;
+      if (!v?.type) {
+        f || d({});
         return;
       }
-      if (b.type === "method") {
-        const T = b.method, C = T ? d[T] : void 0;
+      if (v.type === "method") {
+        const T = v.method, C = T ? c[T] : void 0;
         if (C)
           try {
             const L = await Promise.resolve(C());
-            h || c(L || {});
+            f || d(L || {});
           } catch (L) {
-            console.error("Method execution failed:", L), h || c({});
+            console.error("Method execution failed:", L), f || d({});
           }
         else
-          h || c({});
+          f || d({});
       }
-      if (b.type === "api")
+      if (v.type === "api")
         try {
           const T = await oe({
-            method: b.method || "GET",
-            url: b.url,
-            data: b.body || {},
-            params: b.params || {},
-            headers: b.headers || {}
+            method: v.method || "GET",
+            url: v.url,
+            data: v.body || {},
+            params: v.params || {},
+            headers: v.headers || {}
           });
-          h || c(T.data || {});
+          f || d(T.data || {});
         } catch (T) {
-          console.error("API fetch failed:", T), h || c({});
+          console.error("API fetch failed:", T), f || d({});
         }
     })(), () => {
-      h = !0;
+      f = !0;
     };
   }, [
     t?.source?.type || "",
@@ -1320,17 +1355,17 @@ function Pe({
     JSON.stringify(t?.source?.body || {}),
     JSON.stringify(t?.source?.headers || {})
   ]);
-  const j = v.common || null;
-  j && delete v.common;
-  const _ = (h) => {
-    switch (h) {
+  const p = h.common || null;
+  p && delete h.common;
+  const _ = (f) => {
+    switch (f) {
       case "accordion":
         return /* @__PURE__ */ e.jsx(
           Se,
           {
-            groups: v,
-            methods: d,
-            infoData: o,
+            groups: h,
+            methods: c,
+            infoData: l,
             viewRenderers: n
           }
         );
@@ -1338,55 +1373,55 @@ function Pe({
       case "tableft":
       case "tabright":
         return /* @__PURE__ */ e.jsx(
-          fe,
+          he,
           {
-            groups: v,
+            groups: h,
             viewRenderers: n,
             layoutConfig: i,
-            methods: d,
-            infoData: o,
-            isCommonInfo: !!j,
-            viewMode: h
+            methods: c,
+            infoData: l,
+            isCommonInfo: !!p,
+            viewMode: f
           }
         );
       case "cards":
         return /* @__PURE__ */ e.jsx(
           _e,
           {
-            groups: v,
+            groups: h,
             viewRenderers: n,
-            methods: d,
-            infoData: o
+            methods: c,
+            infoData: l
           }
         );
       default:
         return /* @__PURE__ */ e.jsx(
-          fe,
+          he,
           {
-            groups: v,
+            groups: h,
             viewRenderers: n,
             layoutConfig: i,
-            methods: d,
-            infoData: o,
-            isCommonInfo: !!j,
-            viewMode: h
+            methods: c,
+            infoData: l,
+            isCommonInfo: !!p,
+            viewMode: f
           }
         );
     }
   };
-  return /* @__PURE__ */ e.jsxs("div", { className: i.containerClass || "h-screen flex flex-col", children: [
-    j && /* @__PURE__ */ e.jsx(
+  return /* @__PURE__ */ e.jsxs("div", { className: i.containerClass || "flex flex-col ", children: [
+    p && /* @__PURE__ */ e.jsx(
       ke,
       {
-        commonInfo: j,
-        infoData: o,
+        commonInfo: p,
+        infoData: l,
         hiddenFields: u
       }
     ),
-    _(w)
+    _(N)
   ] });
 }
 export {
-  Pe as InfoView,
-  Pe as default
+  Ae as InfoView,
+  Ae as default
 };
