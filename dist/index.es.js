@@ -441,6 +441,7 @@ function ce({ tabObj: t, methods: a, tabName: u, sqlOpsUrls: n, refid: i }) {
             data: {
               operation: "fetch",
               source: { ...f, refid: i },
+              fields: {},
               datahash: d.data.refhash
             },
             headers: {
@@ -552,6 +553,7 @@ function de({ tabObj: t, methods: a, tabName: u, sqlOpsUrls: n, refid: i }) {
             data: {
               operation: "fetch",
               source: { ...h, refid: i },
+              fields: {},
               datahash: y.data.refhash
             },
             headers: {

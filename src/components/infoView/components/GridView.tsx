@@ -94,6 +94,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
                         data: {
                             "operation": "fetch",
                             "source": { ...source, refid },
+                              "fields": {},
                             "datahash": resHashId.data.refhash
                         },
                         headers: {
