@@ -17,6 +17,8 @@ interface TabViewProps {
     };
     isCommonInfo: boolean;
     viewMode: string;
+    sqlOpsUrls?: Record<string, any>;
+    refid: string
 }
 
 
@@ -315,7 +317,9 @@ export default function TabView({
     viewRenderers = {},
     isCommonInfo,
     layoutConfig = {},
-    viewMode
+    viewMode,
+    sqlOpsUrls = {},
+    refid
 }: TabViewProps) {
 
     const [activeTabIndex, setActiveTabIndex] = React.useState(0);
@@ -367,17 +371,15 @@ export default function TabView({
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<string, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView tabObj={tab} methods={methods} tabName={tabName} />
+            <SingleView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
         ),
         grid: (tab, tabName) => (
-            <GridView tabObj={tab} methods={methods} tabName={tabName} />
+            <GridView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
         ),
     };
 
 
     const uiModeKey = tabObj?.config?.uimode
-
-    console.log("uiModeKey", uiModeKey)
 
 
     const renderView = viewRenderers[uiModeKey] || defaultRenderer[uiModeKey] ||

@@ -12,6 +12,8 @@ interface AccordianViewProps {
     methods?: Record<string, Function>;
     infoData: InfoData;
     viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
+    sqlOpsUrls?: Record<string, any>;
+    refid: string
 }
 
 export default function AccordianView({
@@ -19,6 +21,8 @@ export default function AccordianView({
     methods = {},
     infoData,
     viewRenderers = {},
+    sqlOpsUrls = {},
+    refid
 }
     : AccordianViewProps) {
 
@@ -26,10 +30,10 @@ export default function AccordianView({
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView tabObj={tab} methods={methods} tabName={tabName} />
+            <SingleView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
         ),
         grid: (tab, tabName) => (
-            <GridView tabObj={tab} methods={methods} tabName={tabName} />
+            <GridView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid}/>
         ),
     };
 
@@ -43,7 +47,6 @@ export default function AccordianView({
             <div className="p-4 mx-auto">
                 <div className="space-y-2 flex flex-col min-h-0">
                     {groups && Object.entries(groups).map(([group, obj], index) => {
-                        console.log("obj",obj)
                         return <Accordion key={group} title={group} isFirst={index === 0}>
                             {obj?.fields ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
@@ -68,7 +71,7 @@ export default function AccordianView({
 
                             ) : null}
                         </Accordion>
-    })}
+                    })}
                 </div>
 
 

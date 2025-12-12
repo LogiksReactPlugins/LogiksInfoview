@@ -1,10 +1,15 @@
 import React from 'react';
 import axios from "axios";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
-import { tailwindCols, tailwindGrid, toColWidth, toGrid } from '../utils.js'
+import { tailwindCols, tailwindGrid, toColWidth, toGrid, transformedObject } from '../utils.js'
 import type { InfoViewGroup } from '../InfoView.types.js'
 
-export default function SingleView({ tabObj, methods, tabName }: { tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string }) {
+export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid }:
+    {
+        tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string,
+        sqlOpsUrls?: Record<string, any>, refid: string
+    }
+) {
     const [data, setData] = React.useState<Record<string, any> | null>(null);
 
     React.useEffect(() => {
@@ -49,6 +54,56 @@ export default function SingleView({ tabObj, methods, tabName }: { tabObj: InfoV
                 } catch (error) {
                     console.error("API fetch failed:", error);
                     if (!cancelled) setData(null);
+                }
+            }
+
+            if (source.type === "sql" && refid &&
+                refid != "0") {
+
+                if (!sqlOpsUrls) {
+                    console.error("SQL source requires formJson.endPoints but it is missing");
+                    return;
+                }
+
+                try {
+                    const resHashId = await axios({
+                        method: "GET",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetHash,
+                        headers: {
+                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                        },
+                    });
+
+                    const resQueryId = await axios({
+                        method: "POST",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
+                        data: {
+                            "operation": "fetch",
+                            "source": { ...source, refid },
+                            "datahash": resHashId.data.refhash
+                        },
+                        headers: {
+                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                        },
+                    });
+
+                    const res = await axios({
+                        method: "POST",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsFetch,
+                        data: {
+                            "refid": resQueryId.data.refid,
+                            "datahash": resHashId.data.refhash
+                        },
+
+                        headers: {
+                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                        },
+                    });
+                     console.log("res.data",res.data);
+
+                    if (!cancelled) setData(res.data?.data ?? res.data ?? {});
+                } catch (err) {
+                    console.error("API fetch failed:", err);
                 }
             }
         };

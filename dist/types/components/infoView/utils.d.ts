@@ -1,6 +1,10 @@
 import { InfoViewGroup, Infoview } from './InfoView.types.js';
 export declare function determineViewMode(json: Infoview): string;
 export declare function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup>;
+export declare function transformedObject(originalObject: Record<string, any>): Record<string, {
+    label: string;
+    required: boolean;
+}>;
 type ColWidth = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 export declare const tailwindGrid: Record<ColWidth, string>;
 export declare const tailwindCols: Record<ColWidth, string>;

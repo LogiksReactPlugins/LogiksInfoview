@@ -24,6 +24,7 @@ export interface InfoViewProps {
         fields: Record<string, Omit<InfoViewField, "name">>;
         infoview?: Infoview;
         source?: Record<string, any>;
+        endPoints?: Record<string, any>;
     };
     /** Fields to hide */
     hiddenFields?: string[];

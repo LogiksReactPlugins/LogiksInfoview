@@ -12,7 +12,9 @@ interface TabViewProps {
     };
     isCommonInfo: boolean;
     viewMode: string;
+    sqlOpsUrls?: Record<string, any>;
+    refid: string;
 }
-export default function TabView({ groups, methods, infoData, viewRenderers, isCommonInfo, layoutConfig, viewMode }: TabViewProps): import("react/jsx-runtime").JSX.Element;
+export default function TabView({ groups, methods, infoData, viewRenderers, isCommonInfo, layoutConfig, viewMode, sqlOpsUrls, refid }: TabViewProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=TabView.d.ts.map

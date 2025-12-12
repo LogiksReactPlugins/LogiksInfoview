@@ -13,6 +13,8 @@ interface CardViewProps {
     methods?: Record<string, Function>;
     infoData: InfoData;
     viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
+    sqlOpsUrls?: Record<string, any>
+    refid: string
 }
 
 export default function CardView({
@@ -20,6 +22,8 @@ export default function CardView({
     methods = {},
     infoData,
     viewRenderers = {},
+    sqlOpsUrls = {},
+    refid,
 }
     : CardViewProps) {
 
@@ -27,10 +31,10 @@ export default function CardView({
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView tabObj={tab} methods={methods} tabName={tabName} />
+            <SingleView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
         ),
         grid: (tab, tabName) => (
-            <GridView tabObj={tab} methods={methods} tabName={tabName} />
+            <GridView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
         ),
     };
 

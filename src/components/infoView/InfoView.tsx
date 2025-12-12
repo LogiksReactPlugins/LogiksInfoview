@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import { determineViewMode, groupFields } from './utils.js';
+import { determineViewMode, groupFields, transformedObject } from './utils.js';
 
 import type { InfoViewGroup, InfoViewProps, InfoData } from './InfoView.types.js';
 
@@ -25,12 +25,13 @@ export default function LogiksInfoView({
 
     const [infoData, setInfoData] = React.useState<InfoData>({});
     const viewMode = determineViewMode(infoViewJson.infoview ?? {});
+    const sqlOpsUrls = infoViewJson.endPoints ?? {};
     const groupedFields = React.useMemo(
         () => groupFieldsFn(infoViewJson.fields || {}),
         [infoViewJson.fields, groupFieldsFn]
     );
 
-
+    const refid = infoViewJson?.source?.refid;
     let groups: Record<string, InfoViewGroup> = { ...groupedFields };
 
     if (infoViewJson.infoview?.groups) {
@@ -81,6 +82,61 @@ export default function LogiksInfoView({
                     if (!cancelled) setInfoData({});
                 }
             }
+
+
+
+            if (source.type === "sql" && Number.isInteger(Number(source.refid)) &&
+                Number(source.refid) > 0) {
+
+                if (!sqlOpsUrls) {
+                    console.error("SQL source requires formJson.endPoints but it is missing");
+                    return;
+                }
+
+                try {
+                    const resHashId = await axios({
+                        method: "GET",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetHash,
+                        headers: {
+                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                        },
+                    });
+
+                    const resQueryId = await axios({
+                        method: "POST",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
+                        data: {
+                            "operation": "fetch",
+                            "source": source,
+                            "fields": transformedObject(infoViewJson.fields),
+                            "datahash": resHashId.data.refhash
+                        },
+                        headers: {
+                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                        },
+                    });
+
+                    const res = await axios({
+                        method: "POST",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsFetch,
+                        data: {
+                            "refid": resQueryId.data.refid,
+                            "datahash": resHashId.data.refhash
+                        },
+
+                        headers: {
+                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                        },
+                    });
+
+                    console.log("res.data",res.data);
+                    
+
+                    if (!cancelled) setInfoData(res.data?.data ?? res.data ?? {});
+                } catch (err) {
+                    console.error("API fetch failed:", err);
+                }
+            }
         };
 
         fetchData();
@@ -110,6 +166,8 @@ export default function LogiksInfoView({
                     methods={methods}
                     infoData={infoData}
                     viewRenderers={viewRenderers}
+                    sqlOpsUrls={sqlOpsUrls}
+                    refid={refid}
 
                 />
 
@@ -124,6 +182,8 @@ export default function LogiksInfoView({
                     infoData={infoData}
                     isCommonInfo={!!commonInfo}
                     viewMode={viewMode}
+                    sqlOpsUrls={sqlOpsUrls}
+                    refid={refid}
 
 
                 />
@@ -135,6 +195,8 @@ export default function LogiksInfoView({
                     viewRenderers={viewRenderers}
                     methods={methods}
                     infoData={infoData}
+                    sqlOpsUrls={sqlOpsUrls}
+                    refid={refid}
 
 
                 />
@@ -148,6 +210,8 @@ export default function LogiksInfoView({
                     infoData={infoData}
                     isCommonInfo={!!commonInfo}
                     viewMode={viewMode}
+                    sqlOpsUrls={sqlOpsUrls}
+                    refid={refid}
 
 
                 />

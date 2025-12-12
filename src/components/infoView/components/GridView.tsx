@@ -12,7 +12,11 @@ interface SortConfig {
     direction: SortDirection;
 }
 
-export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string }) {
+export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }:
+    {
+        tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string,
+        sqlOpsUrls?: Record<string, any>, refid: string
+    }) {
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -66,6 +70,55 @@ export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoVie
                     if (!cancelled) setData([]);
                 }
             }
+
+            if (source.type === "sql" && refid &&
+                refid != "0") {
+
+                if (!sqlOpsUrls) {
+                    console.error("SQL source requires formJson.endPoints but it is missing");
+                    return;
+                }
+
+                try {
+                    const resHashId = await axios({
+                        method: "GET",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetHash,
+                        headers: {
+                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                        },
+                    });
+
+                    const resQueryId = await axios({
+                        method: "POST",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
+                        data: {
+                            "operation": "fetch",
+                            "source": { ...source, refid },
+                            "datahash": resHashId.data.refhash
+                        },
+                        headers: {
+                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                        },
+                    });
+
+                    const res = await axios({
+                        method: "POST",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsFetch,
+                        data: {
+                            "refid": resQueryId.data.refid,
+                            "datahash": resHashId.data.refhash
+                        },
+
+                        headers: {
+                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                        },
+                    });
+ console.log("res.data",res.data);
+                    if (!cancelled) setData(res.data?.data ?? res.data ?? {});
+                } catch (err) {
+                    console.error("API fetch failed:", err);
+                }
+            }
         };
 
         fetchData();
@@ -104,7 +157,7 @@ export default function GridView({ tabObj, methods, tabName }: { tabObj: InfoVie
     const hasFormConfig = tabObj?.config?.form && Object.keys(tabObj.config.form).length > 0;
     const hasInfoConfig = tabObj?.config?.info && Object.keys(tabObj.config.info).length > 0;
 
-   
+
 
     const handleSort = (column: string) => {
         let direction: SortDirection = 'asc';

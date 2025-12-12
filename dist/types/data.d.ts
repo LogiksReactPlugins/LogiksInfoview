@@ -1,24 +1,194 @@
 export declare const example7: {
-    script: string;
     source: {
         type: string;
         method: string;
-        where: string[];
     };
     forcefill: {
         groupuid: string;
         guid: string;
-        company_id: string;
+    };
+    actions: {
+        newContact: {
+            icon: string;
+            label: string;
+            class: string;
+        };
+    };
+    buttons: {
+        markAsOrder: {
+            label: string;
+            class: string;
+            icon: string;
+            float: string;
+            policy: string;
+        };
+        markAsLost: {
+            label: string;
+            icon: string;
+            class: string;
+            policy: string;
+        };
+        markAsJunk: {
+            label: string;
+            icon: string;
+            class: string;
+            policy: string;
+        };
+        markAsNext: {
+            label: string;
+            icon: string;
+            class: string;
+            policy: string;
+        };
     };
     gotolink: string;
+    script: string;
     fields: {
-        full_name: {
+        id: {
+            label: string;
+            group: string;
+            nodb: boolean;
+        };
+        title: {
             label: string;
             group: string;
             required: boolean;
+        };
+        broker_id: {
+            label: string;
+            type: string;
+            table: string;
+            columns: string;
+            group: string;
+            "no-option": string;
+        };
+        lead_date: {
+            label: string;
+            group: string;
+            type: string;
+            required: boolean;
+        };
+        lead_year: {
+            label: string;
+            group: string;
+            type: string;
+            groupid: string;
+            required: boolean;
+            default: string;
+        };
+        net_amount: {
+            label: string;
+            group: string;
+            type: string;
+            required: boolean;
+        };
+        lead_value: {
+            label: string;
+            group: string;
+            type: string;
+            required: boolean;
+            noview: boolean;
+        };
+        lead_priority: {
+            label: string;
+            group: string;
+            type: string;
+            groupid: string;
+            required: boolean;
+        };
+        lead_source: {
+            label: string;
+            group: string;
+            type: string;
+            groupid: string;
+            required: boolean;
+        };
+        lead_status: {
+            label: string;
+            group: string;
+            type: string;
+            groupid: string;
+            "no-option": string;
+            required: boolean;
+        };
+        lead_type: {
+            label: string;
+            group: string;
+            type: string;
+            groupid: string;
+            suggest: boolean;
+            required: boolean;
+        };
+        enquiry_type: {
+            label: string;
+            group: string;
+            type: string;
+            groupid: string;
+            required: boolean;
+        };
+        marketting_source: {
+            label: string;
+            group: string;
+            type: string;
+            groupid: string;
+            "no-option": string;
+            required: boolean;
+        };
+        marketting_campaign: {
+            label: string;
+            group: string;
+            required: boolean;
+        };
+        enquiry_product_descs: {
+            label: string;
+            group: string;
+            type: string;
+            maxlength: number;
+            required: boolean;
             width: number;
         };
-        organization: {
+        enquiry_due: {
+            label: string;
+            group: string;
+            type: string;
+        };
+        created_on: {
+            label: string;
+            group: string;
+            type: string;
+            hidden: boolean;
+        };
+        blocked: {
+            label: string;
+            group: string;
+            type: string;
+            vmode: string;
+            required: boolean;
+            options: {
+                "": boolean;
+                true: string;
+                false: string;
+            };
+        };
+        created_by: {
+            label: string;
+            group: string;
+            type: string;
+            hidden: boolean;
+        };
+        edited_by: {
+            label: string;
+            group: string;
+            type: string;
+            hidden: boolean;
+        };
+        edited_on: {
+            label: string;
+            group: string;
+            type: string;
+            hidden: boolean;
+        };
+        manager: {
             label: string;
             group: string;
             type: string;
@@ -26,59 +196,21 @@ export declare const example7: {
             columns: string;
             where: {
                 blocked: string;
-                company_id: string;
+                "status in ('active','under_notice','probationary')": string;
+                "loginid <> ''": string;
             };
-            "no-option": string;
-            orderby: string;
-            required: boolean;
         };
-        type: {
-            label: string;
-            group: string;
-            "no-option": string;
-            type: string;
-            groupid: string;
-            required: boolean;
-            multiple: boolean;
-        };
-        category: {
+        open_by: {
             label: string;
             group: string;
             type: string;
-            groupid: string;
-            "no-option": string;
-            required: boolean;
-        };
-        email1: {
-            label: string;
-            group: string;
-            type: string;
-            required: boolean;
-        };
-        email2: {
-            label: string;
-            group: string;
-            type: string;
-        };
-        mobile: {
-            label: string;
-            group: string;
-            type: string;
-            required: boolean;
-            minlength: number;
-        };
-        mobile_others: {
-            label: string;
-            group: string;
-            type: string;
-            minlength: number;
-        };
-        profile_code: {
-            label: string;
-            group: string;
-            type: string;
-            minlength: string;
-            maxlength: string;
+            table: string;
+            columns: string;
+            where: {
+                blocked: string;
+                "status in ('active','under_notice','probationary')": string;
+                "loginid <> ''": string;
+            };
             required: boolean;
         };
         assigned_to: {
@@ -89,423 +221,36 @@ export declare const example7: {
             columns: string;
             where: {
                 blocked: string;
-                "loginid !=''": string;
-                company_id: string;
+                "status in ('active','under_notice','probationary')": string;
+                "loginid <> ''": string;
             };
             required: boolean;
-            width: number;
-            search: boolean;
-        };
-        fax: {
-            label: string;
-            group: string;
-        };
-        owner: {
-            label: string;
-            group: string;
-            width: number;
-        };
-        demography: {
-            label: string;
-            group: string;
-            type: string;
-            groupid: string;
-            width: number;
-            "no-option": string;
-            required: boolean;
-        };
-        website: {
-            label: string;
-            group: string;
-            type: string;
         };
         tags: {
             label: string;
             group: string;
             type: string;
-            width: number;
         };
         remarks: {
             label: string;
             group: string;
-            type: string;
             width: number;
-        };
-        blocked: {
-            label: string;
-            group: string;
-            type: string;
-            groupid: string;
-            vmode: string;
-            required: boolean;
-        };
-        blacklist: {
-            label: string;
-            group: string;
-            type: string;
-            groupid: string;
-            vmode: string;
-            required: boolean;
-        };
-        pan: {
-            label: string;
-            required: boolean;
-            group: string;
             maxlength: number;
-            minlength: number;
-        };
-        gst: {
-            label: string;
-            required: boolean;
-            group: string;
-            maxlength: number;
-            minlength: number;
+            type: string;
         };
     };
     infoview: {
-        template: string;
         script: string;
-        actions: {
-            addRecord: {
-                label: string;
-                icon: string;
-            };
-        };
         groups: {
-            address: {
+            follow_up: {
                 label: string;
                 type: string;
-                src: string;
                 policy: string;
-                script: string;
+                src: string;
                 vmode: string;
                 config: {
-                    policy_create: string;
-                    policy_delete: string;
-                    policy_update: string;
-                    type: string;
-                    method: string;
                     uimode: string;
-                    table: string;
-                    cols: string;
-                    where: string;
-                    form: {
-                        source: {
-                            type: string;
-                            table: string;
-                            where: string[];
-                        };
-                        script: string;
-                        forcefill: {
-                            guid: string;
-                            created_by: string;
-                            profile_id: string;
-                        };
-                        fields: {
-                            address_type: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                groupid: string;
-                                required: boolean;
-                            };
-                            title: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            address: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            street: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            city: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            state: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            country: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                groupid: string;
-                            };
-                            zipcode: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                maxlength: number;
-                                minlength: number;
-                            };
-                        };
-                    };
-                };
-                width: number;
-            };
-            social: {
-                label: string;
-                type: string;
-                src: string;
-                policy: string;
-                vmode: string;
-                config: {
                     type: string;
-                    uimode: string;
-                    policy_create: string;
-                    policy_delete: string;
-                    policy_update: string;
-                    table: string;
-                    cols: string;
-                    where: string;
-                    form: {
-                        source: {
-                            type: string;
-                            table: string;
-                            where: string[];
-                        };
-                        forcefill: {
-                            guid: string;
-                            created_by: string;
-                            profile_id: string;
-                        };
-                        fields: {
-                            social_type: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                groupid: string;
-                                required: boolean;
-                            };
-                            social_weblink: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            social_userid: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            token_key: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                        };
-                    };
-                };
-                width: number;
-            };
-            bank_details: {
-                label: string;
-                type: string;
-                src: string;
-                vmode: string;
-                policy: string;
-                config: {
-                    type: string;
-                    uimode: string;
-                    policy_create: string;
-                    policy_delete: string;
-                    policy_update: string;
-                    table: string;
-                    cols: string;
-                    where: string;
-                    form: {
-                        source: {
-                            type: string;
-                            table: string;
-                            where: string[];
-                        };
-                        forcefill: {
-                            guid: string;
-                            created_by: string;
-                            profile_id: string;
-                        };
-                        fields: {
-                            bank_name: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            bank_acno_name: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            bank_acno: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            bank_ifsc_code: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            bank_branch: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            bank_address: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            bank_state: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            bank_country: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                groupid: string;
-                            };
-                            bank_swift_code: {
-                                label: string;
-                                group: string;
-                                type: string;
-                            };
-                        };
-                    };
-                };
-                width: number;
-            };
-            organization: {
-                label: string;
-                type: string;
-                src: string;
-                policy: string;
-                vmode: string;
-                config: {
-                    DEBUG: boolean;
-                    type: string;
-                    uimode: string;
-                    table: string;
-                    cols: string;
-                    where: string;
-                };
-                width: number;
-            };
-            address_book: {
-                label: string;
-                type: string;
-                src: string;
-                vmode: string;
-                policy: string;
-                config: {
-                    type: string;
-                    policy_create: string;
-                    policy_delete: string;
-                    policy_update: string;
-                    table: string;
-                    cols: string;
-                    where: string;
-                    width: number;
-                    colkey: string;
-                    form: {
-                        source: {
-                            type: string;
-                            table: string;
-                            where: string[];
-                        };
-                        forcefill: {
-                            profile_id: string;
-                        };
-                        fields: {
-                            name: {
-                                label: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            designation: {
-                                label: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            email1: {
-                                label: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            mobile: {
-                                label: string;
-                                type: string;
-                                required: boolean;
-                                minlength: number;
-                                maxlength: number;
-                            };
-                            address: {
-                                label: string;
-                                type: string;
-                            };
-                            state: {
-                                label: string;
-                                type: string;
-                            };
-                            country: {
-                                label: string;
-                                type: string;
-                                groupid: string;
-                            };
-                        };
-                    };
-                };
-                width: number;
-            };
-            leads: {
-                label: string;
-                type: string;
-                src: string;
-                vmode: string;
-                policy: string;
-                config: {
-                    type: string;
-                    uimode: string;
-                    table: string;
-                    cols: string;
-                    where: string;
-                };
-                width: number;
-            };
-            projects: {
-                label: string;
-                type: string;
-                src: string;
-                vmode: string;
-                policy: string;
-                config: {
-                    DEBUG: boolean;
-                    type: string;
-                    uimode: string;
                     table: string;
                     cols: string;
                     where: string;
@@ -513,56 +258,7 @@ export declare const example7: {
                 };
                 width: number;
             };
-            invoices: {
-                label: string;
-                type: string;
-                src: string;
-                vmode: string;
-                policy: string;
-                config: {
-                    DEBUG: boolean;
-                    type: string;
-                    uimode: string;
-                    table: string;
-                    cols: string;
-                    where: string;
-                };
-                width: number;
-                hidden: boolean;
-            };
-            ledger: {
-                label: string;
-                type: string;
-                src: string;
-                vmode: string;
-                policy: string;
-                config: {
-                    type: string;
-                    uimode: string;
-                    table: string;
-                    cols: string;
-                    where: string;
-                };
-                width: number;
-                hidden: boolean;
-            };
-            purchase: {
-                label: string;
-                type: string;
-                src: string;
-                vmode: string;
-                policy: string;
-                config: {
-                    type: string;
-                    uimode: string;
-                    table: string;
-                    cols: string;
-                    where: string;
-                };
-                width: number;
-                hidden: boolean;
-            };
-            postbox: {
+            actions: {
                 label: string;
                 type: string;
                 src: string;
@@ -571,6 +267,9 @@ export declare const example7: {
                 config: {
                     type: string;
                     uimode: string;
+                    policy_create: string;
+                    policy_delete: string;
+                    policy_update: string;
                     table: string;
                     cols: string;
                     where: string;
@@ -584,31 +283,97 @@ export declare const example7: {
                         };
                         forcefill: {
                             groupuid: string;
-                            guid: string;
-                            dated: string;
+                            lead_id: string;
                         };
                         fields: {
-                            comms_type: {
+                            type: {
                                 label: string;
-                                group: string;
                                 type: string;
                                 groupid: string;
-                                "no-option": string;
+                                required: boolean;
                             };
-                            subject: {
+                            date: {
                                 label: string;
-                                group: string;
+                                type: string;
+                                autocomplete: string;
+                                required: boolean;
                             };
-                            profile_id: {
+                            start_time: {
                                 label: string;
-                                group: string;
+                                type: string;
+                                required: boolean;
+                            };
+                            end_time: {
+                                label: string;
+                                type: string;
+                                required: boolean;
+                            };
+                            msg: {
+                                label: string;
+                                type: string;
+                                required: boolean;
+                            };
+                        };
+                    };
+                };
+                width: number;
+            };
+            customer: {
+                label: string;
+                type: string;
+                src: string;
+                policy: string;
+                vmode: string;
+                config: {
+                    type: string;
+                    uimode: string;
+                    table: string;
+                    cols: string;
+                    where: string;
+                    orderby: string;
+                };
+                width: number;
+            };
+            products: {
+                label: string;
+                type: string;
+                src: string;
+                policy: string;
+                vmode: string;
+                config: {
+                    type: string;
+                    policy_create: string;
+                    policy_delete: string;
+                    policy_update: string;
+                    uimode: string;
+                    table: string;
+                    cols: string;
+                    where: string;
+                    orderby: string;
+                    colkey: string;
+                    hidden: string[];
+                    form: {
+                        source: {
+                            type: string;
+                            table: string;
+                            where: string[];
+                        };
+                        forcefill: {
+                            groupuid: string;
+                            guid: string;
+                            created_by: string;
+                            lead_id: string;
+                        };
+                        fields: {
+                            product_id: {
+                                label: string;
                                 type: string;
                                 table: string;
                                 columns: string;
                                 where: {
-                                    "profiletbl.type <> 'employee'": string;
-                                    company_id: string;
+                                    "(service_type <> 'asset')": string;
                                 };
+                                required: boolean;
                                 "no-option": string;
                                 ajaxchain: {
                                     target: string;
@@ -616,43 +381,55 @@ export declare const example7: {
                                         table: string;
                                         columns: string;
                                         where: {
-                                            blocked: string;
-                                            profile_id: string;
+                                            id: string;
                                         };
                                     };
                                 };
                             };
-                            staff_userid: {
+                            product_qty: {
                                 label: string;
-                                group: string;
                                 type: string;
-                                table: string;
-                                columns: string;
-                                where: {
-                                    "profiletbl.type": string;
-                                    company_id: string;
-                                };
-                                "no-option": string;
+                                required: boolean;
                             };
-                            task_id: {
+                            product_price: {
                                 label: string;
-                                group: string;
-                                type: string;
-                                "no-option": string;
-                            };
-                            type: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                groupid: string;
+                                required: boolean;
                             };
                         };
                     };
                 };
                 width: number;
-                noshow: boolean;
             };
-            onsite: {
+            mom: {
+                label: string;
+                type: string;
+                policy: string;
+                src: string;
+                vmode: string;
+                config: {
+                    DEBUG: boolean;
+                    type: string;
+                    uimode: string;
+                    table: string;
+                    cols: string;
+                    where: string;
+                    orderby: string;
+                    unilinks: {
+                        title: {
+                            type: string;
+                            col: string;
+                        };
+                    };
+                    actions: {
+                        "forms@meetingNotes.quick/new?src_id=#id#&src_type=lead": {
+                            label: string;
+                            icon: string;
+                        };
+                    };
+                };
+                width: number;
+            };
+            quotation: {
                 label: string;
                 type: string;
                 src: string;
@@ -662,94 +439,63 @@ export declare const example7: {
                     type: string;
                     uimode: string;
                     DEBUG: boolean;
-                    policy_create: string;
-                    policy_view: string;
-                    policy_delete: string;
-                    policy_update: string;
                     table: string;
                     cols: string;
                     where: string;
-                    form: {
-                        source: {
-                            type: string;
-                            table: string;
-                            where: string[];
-                        };
-                        forcefill: {
-                            groupuid: string;
-                            guid: string;
-                            cust_id: string;
-                        };
-                        fields: {
-                            staff_id: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                table: string;
-                                columns: string;
-                                where: {
-                                    blocked: string;
-                                    "status in ('active','under_notice','probationary')": string;
-                                    company_id: string;
-                                };
-                                "no-option": string;
-                                required: boolean;
-                            };
-                            subject: {
-                                label: string;
-                                group: string;
-                                required: boolean;
-                                autocomplete: string;
-                            };
-                            category: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                groupid: string;
-                                "no-option": string;
-                            };
-                            time_in: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
-                            time_out: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                                vmode: string;
-                            };
-                            projected_income: {
-                                label: string;
-                                group: string;
-                                type: string;
-                                required: boolean;
-                            };
+                    orderby: string;
+                    actions: {
+                        createQuotation: {
+                            label: string;
+                            icon: string;
                         };
                     };
                 };
                 width: number;
-                hidden: boolean;
             };
-            emails: {
+            leadpo: {
                 label: string;
                 type: string;
                 src: string;
                 policy: string;
-                rule: string;
+                vmode: string;
+                config: {
+                    type: string;
+                    uimode: string;
+                    table: string;
+                    cols: string;
+                    where: string;
+                    orderby: string;
+                    actions: {
+                        createPO: {
+                            label: string;
+                            icon: string;
+                        };
+                    };
+                    buttons: {
+                        viewPOAttachment: {
+                            icon: string;
+                        };
+                    };
+                };
                 width: number;
-                hidden: boolean;
             };
-            accounts: {
+            quick_task: {
                 label: string;
                 type: string;
                 src: string;
+                vmode: string;
                 config: {
                     ref_id: string;
-                    type: string;
+                    ref_src: string;
                 };
+                width: number;
+            };
+            email: {
+                label: string;
+                type: string;
+                src: string;
+                rule: string;
+                vmode: string;
                 width: number;
             };
             files: {
@@ -759,12 +505,9 @@ export declare const example7: {
                 policy: string;
                 vmode: string;
                 config: {
-                    ref_rule: string;
-                    ref_col: string;
                     ref_id: string;
                     ref_src: string;
                 };
-                rule: string;
                 width: number;
             };
             comments: {
@@ -772,19 +515,20 @@ export declare const example7: {
                 type: string;
                 src: string;
                 policy: string;
-                vmode: string;
                 config: {
                     ref_id: string;
                     ref_src: string;
                 };
+                vmode: string;
                 width: number;
+                hidden: boolean;
             };
             notes: {
                 label: string;
                 type: string;
                 src: string;
-                policy: string;
                 rule: string;
+                policy: string;
                 vmode: string;
                 width: number;
                 hidden: boolean;
@@ -794,16 +538,16 @@ export declare const example7: {
                 type: string;
                 src: string;
                 rule: string;
+                policy: string;
                 vmode: string;
                 width: number;
-                policy: string;
                 config: {
                     ref_id: string;
                     ref_src: string;
                 };
                 hidden: boolean;
             };
-            extras: {
+            Extras: {
                 label: string;
                 type: string;
                 src: string;

@@ -21,7 +21,18 @@ export function groupFields(fields: Record<string, any>): Record<string, InfoVie
 }
 
 
+ export function transformedObject(originalObject: Record<string, any>) {
 
+    const fields: Record<string, { label: string; required: boolean }> = {}
+
+    Object.keys(originalObject).forEach((key) => {
+      fields[key] = {
+        label: key,
+        required: originalObject[key].required ?? false
+      }
+    })
+    return fields
+  }
 
 
 type ColWidth = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;

@@ -5,7 +5,9 @@ interface AccordianViewProps {
     methods?: Record<string, Function>;
     infoData: InfoData;
     viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
+    sqlOpsUrls?: Record<string, any>;
+    refid: string;
 }
-export default function AccordianView({ groups, methods, infoData, viewRenderers, }: AccordianViewProps): import("react/jsx-runtime").JSX.Element;
+export default function AccordianView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid }: AccordianViewProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=AccordianView.d.ts.map
