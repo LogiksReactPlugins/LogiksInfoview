@@ -16,7 +16,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
     {
         tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string,
         sqlOpsUrls?: Record<string, any>, refid: string
-    }) {
+    }) { 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -273,7 +273,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
 
     const handleView = (row: Record<string, string>) => {
         methods?.viewInfoRecord?.(row, tabObj?.config?.info)
-        // Implement edit logic here
+        // Implement view logic here
     };
 
     const handleDelete = (row: Record<string, string>, index: number) => {
@@ -666,7 +666,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
                                     <th
                                         key={column}
                                         scope="col"
-                                        className="bg-muted sticky top-0 z-10 px-4 sm:px-6 py-2 text-left text-xs font-bold uppercase tracking-wider"
+                                        className="bg-muted sticky top-0 z-0 px-4 sm:px-6 py-2 text-left text-xs font-bold uppercase tracking-wider"
                                     >
 
 
@@ -699,7 +699,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
                         </thead>
 
                         {/* Scrollable Body */}
-                        <tbody className="bg-white divide-y divide-gray-200">
+                        <tbody className="bg-white divide-y divide-gray-200 ">
                             {currentData.map((row, rowIndex) => (
                                 <tr
                                     key={startIndex + rowIndex}
@@ -714,7 +714,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
                                                 {hasInfoConfig && <button
                                                     onClick={() => handleView(row)}
                                                     className="inline-flex items-center px-2 py-1 text-xs font-medium rounded cursor-pointer text-action"
-                                                    title="Edit"
+                                                    title="View"
                                                 >
                                                     <svg
                                                         className="w-4 h-4"

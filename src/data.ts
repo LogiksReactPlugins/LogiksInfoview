@@ -1,7 +1,17 @@
 export const example7 = {
+      "endPoints": {
+        "baseURL": "http://192.168.0.20:9999",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwidXNlcklkIjoxMDEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0ZW5hbnRJZCI6InRlbmFudC0xIiwicm9sZXMiOlsiYWRtaW4iXSwic2NvcGVzIjpbInRlbmFudC0xOm9yZGVyczpyZWFkIiwidGVuYW50LTE6b3JkZXJzOndyaXRlIiwidGVuYW50LTE6ZG9jczpyZWFkIl0sImlwIjoiMTkyLjE2OC4wLjY2IiwiZGV2aWNlVHlwZSI6IndlYiIsImlhdCI6MTc2NTk2Mjk0MiwiZXhwIjoxNzY1OTY2NTQyLCJqdGkiOiJhY2M6MTAxOjE3NjU5NjI5NDI2NTY6d2ViIn0.mRDeeNkSB1sajZ7nY8rT-uxjLXRUUELw48HC_RCSbSY",
+        "dbopsGetHash": "/api/dbops",
+        "dbopsGetRefId": "/api/dbops/save",
+        "dbopsCreate": "/api/dbops/create",
+        "dbopsUpdate": "/api/dbops/update",
+        "dbopsFetch": "/api/dbops/fetch"
+    },
     "source": {
-        "type": "method",
-        "method": "handleCreateAction"
+        "type": "sql",
+    "table": "leads_tbl",  
+       refid:"1"
     },
     "forcefill": {
         "groupuid": "#SESS_GROUP_NAME#",
@@ -270,15 +280,15 @@ export const example7 = {
                     "policy_create": "leadbook.create.access",
                     "policy_delete": "leadbook.delete.access",
                     "policy_update": "leadbook.update.access",
-                    "table": "lead_actions",
-                    "cols": "lead_actions.id,lead_actions.type,lead_actions.date,lead_actions.msg,lead_actions.start_time,lead_actions.end_time,lead_actions.created_by,lead_actions.created_on",
-                    "where": "md5(lead_actions.lead_id)='#refid#'",
+                    "table": "leads_actions",
+                    "cols": "leads_actions.id,leads_actions.type,leads_actions.date,leads_actions.msg,leads_actions.start_time,leads_actions.end_time,leads_actions.created_by,leads_actions.created_on",
+                    "where": {},
                     "orderby": "lead_actions.edited_on DESC",
                     "colkey": "lead_id",
                     "form": {
                         "source": {
                             "type": "sql",
-                            "table": "lead_actions",
+                            "table": "leads_actions",
                             "where": [
                                 "md5(id)"
                             ]

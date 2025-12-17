@@ -104,105 +104,102 @@ const TopNav = ({
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    return <div className={layoutConfig?.tabNavClass || "relative z-10"}>
-        {/* Left scroll button */}
-        {showScrollHint && (
-            <button
-                onClick={() => {
-                    if (tabsNavRef.current) {
-                        tabsNavRef.current.scrollBy({ left: -200, behavior: 'smooth' });
-                    }
-                }}
-                className="cursor-pointer absolute left-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
-            >
-                <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-        )}
+    return<div className={layoutConfig?.tabNavClass || "relative z-10"}>
 
-        {/* Right scroll button */}
-        {showScrollHint && (
-            <button
-                onClick={() => {
-                    if (tabsNavRef.current) {
-                        tabsNavRef.current.scrollBy({ left: 200, behavior: 'smooth' });
-                    }
-                }}
-                className="cursor-pointer absolute right-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
-            >
-                <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-        )}
+  {/* LEFT SCROLL BUTTON */}
+  <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 flex items-center justify-center">
+    <button
+      onClick={() => tabsNavRef.current?.scrollBy({ left: -200, behavior: 'smooth' })}
+      className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
+    >
+      <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+  </div>
 
-        <div className="absolute right-10 top-1  z-11" ref={dropdownRef}>
-            <button
-                onClick={() => setShowAllTabs(!showAllTabs)}
-                className="cursor-pointer ml-1 px-2 py-1 text-gray-600 hover:text-gray-800 bg-white rounded-md transition"
-            >
-                ⋮
-            </button>
+  {/* RIGHT SCROLL BUTTON + DROPDOWN */}
+  <div className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-18 flex items-center justify-between pr-1">
+    
+    {/* Scroll Arrow */}
+    <button
+      onClick={() => tabsNavRef.current?.scrollBy({ left: 200, behavior: 'smooth' })}
+      className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
+    >
+      <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
 
-            {showAllTabs && (
-                <div className="absolute right-0 mt-2 w-48 max-h-100 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30">
-                    {groupNames.map((group, index) => (
-                        <button
-                            key={group}
-                            type="button"
-                            onClick={() => {
-                                setActiveTabIndex(index);
-                                setShowAllTabs(false);
-                            }}
-                            className={`w-full text-left px-3 py-2 text-sm truncate hover:bg-gray-100 ${activeTabIndex === index ? 'bg-gray-50 font-semibold text-action' : 'text-gray-700'
-                                }`}
-                        >
-                            {groups[group]?.label || group}
-                        </button>
-                    ))}
-                </div>
-            )}
+    {/* Dropdown Button */}
+    <div className="relative" ref={dropdownRef}>
+      <button
+        onClick={() => setShowAllTabs(!showAllTabs)}
+        className="ml-1 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200"
+      >
+        ⋮
+      </button>
+
+      {showAllTabs && (
+        <div className="absolute right-0 mt-2 w-48 max-h-100 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30">
+          {groupNames.map((group, index) => (
+            <button
+              key={group}
+              type="button"
+              onClick={() => {
+                setActiveTabIndex(index);
+                setShowAllTabs(false);
+              }}
+              className={`w-full text-left px-3 py-2 text-sm truncate hover:bg-gray-100 ${activeTabIndex === index ? 'bg-gray-50 font-semibold text-action' : 'text-gray-700'}`}
+            >
+              {groups[group]?.label || group}
+            </button>
+          ))}
         </div>
-
-
-        <div className={`relative bg-gray-100 ${isCommonInfo ? "" : "rounded-t-lg"} px-1 pt-1 shadow-inner overflow-hidden`}>
-
-
-            {/* Scrollable Tab buttons */}
-            <nav
-                ref={tabsNavRef}
-                className="relative flex overflow-x-auto scrollbar-hide scroll-smooth"
-                style={{
-                    scrollbarWidth: 'none',
-                    msOverflowStyle: 'none',
-                    paddingLeft: showScrollHint ? '35px' : '0',
-                    paddingRight: showScrollHint ? '70px' : '0'
-                }}
-            >
-                {groupNames.length > 0 ? groupNames.map((group, index) => (
-                    <button
-                        key={group}
-                        type="button"
-                        onClick={() => setActiveTabIndex(index)}
-                        className={`relative cursor-pointer flex-shrink-0 py-2 px-2 sm:px-4 rounded-t-lg text-xs sm:text-sm font-semibold transition-all duration-300 ease-out focus:outline-none whitespace-nowrap ${activeTabIndex === index
-                            ? 'text-action bg-white '
-                            : 'text-gray-600 hover:text-gray-800 hover:bg-white/50'
-                            }`}
-
-                    >
-                        <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">
-                            <span className="truncate">{groups[group]?.label || group}</span>
-                        </span>
-                    </button>
-                )) : (
-                    <div className="py-3 px-6 text-sm text-gray-500">
-                        No group available
-                    </div>
-                )}
-            </nav>
-        </div>
+      )}
     </div>
+  </div>
+
+  {/* SCROLLABLE TABS */}
+  <div className={`relative bg-gray-100 ${isCommonInfo ? "" : "rounded-t-lg"} px-12 pt-1 shadow-inner overflow-hidden`}>
+    <nav
+      ref={tabsNavRef}
+      className="relative flex overflow-x-auto scrollbar-hide scroll-smooth"
+      style={{
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
+      }}
+    >
+      {groupNames.length > 0 ? groupNames.map((group, index) => (
+        <button
+          key={group}
+          type="button"
+          onClick={() => setActiveTabIndex(index)}
+          className={`relative cursor-pointer flex-shrink-0
+            min-w-[8rem]   
+            py-2 px-8
+            rounded-t-lg text-xs sm:text-sm font-semibold
+            transition-all duration-300 ease-out
+            focus:outline-none whitespace-nowrap
+            ${activeTabIndex === index
+              ? 'text-action bg-white'
+              : 'text-gray-600 hover:text-gray-800 hover:bg-white/50'
+            }`}
+        >
+          <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">
+            <span className="truncate">{groups[group]?.label || group}</span>
+          </span>
+        </button>
+      )) : (
+        <div className="py-3 px-6 text-sm text-gray-500">
+          No group available
+        </div>
+      )}
+    </nav>
+  </div>
+</div>
+
+
 }
 
 const ContentArea = (
@@ -250,7 +247,7 @@ const ContentArea = (
 
         {/* Navigation controls for many tabs */}
         {groupNames.length > 5 && (
-            <div className="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between gap-4">
+            <div className="mt-10 pt-2 border-t border-gray-100 flex items-center justify-between gap-4">
                 {/* Progress indicator */}
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                     <span>Tab {activeTabIndex + 1} of {groupNames.length}</span>
@@ -292,7 +289,7 @@ const ContentArea = (
 
         {/* Simple progress for fewer tabs */}
         {groupNames.length <= 5 && (
-            <div className="mt-2 pt-3 border-t border-gray-100">
+            <div className="mt-6 pt-3 border-t border-gray-100">
                 <div className="flex items-center justify-between text-sm text-gray-500">
                     <span>Tab {activeTabIndex + 1} of {groupNames.length}</span>
                     <div className="flex gap-1">

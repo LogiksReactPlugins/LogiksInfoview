@@ -1,7 +1,17 @@
 export declare const example7: {
+    endPoints: {
+        baseURL: string;
+        accessToken: string;
+        dbopsGetHash: string;
+        dbopsGetRefId: string;
+        dbopsCreate: string;
+        dbopsUpdate: string;
+        dbopsFetch: string;
+    };
     source: {
         type: string;
-        method: string;
+        table: string;
+        refid: string;
     };
     forcefill: {
         groupuid: string;
@@ -272,7 +282,7 @@ export declare const example7: {
                     policy_update: string;
                     table: string;
                     cols: string;
-                    where: string;
+                    where: {};
                     orderby: string;
                     colkey: string;
                     form: {
