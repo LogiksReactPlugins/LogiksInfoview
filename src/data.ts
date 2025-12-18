@@ -1,17 +1,25 @@
+
+
+
+
 export const example7 = {
-      "endPoints": {
+    "endPoints": {
         "baseURL": "http://192.168.0.20:9999",
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwidXNlcklkIjoxMDEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0ZW5hbnRJZCI6InRlbmFudC0xIiwicm9sZXMiOlsiYWRtaW4iXSwic2NvcGVzIjpbInRlbmFudC0xOm9yZGVyczpyZWFkIiwidGVuYW50LTE6b3JkZXJzOndyaXRlIiwidGVuYW50LTE6ZG9jczpyZWFkIl0sImlwIjoiMTkyLjE2OC4wLjY2IiwiZGV2aWNlVHlwZSI6IndlYiIsImlhdCI6MTc2NTk2Mjk0MiwiZXhwIjoxNzY1OTY2NTQyLCJqdGkiOiJhY2M6MTAxOjE3NjU5NjI5NDI2NTY6d2ViIn0.mRDeeNkSB1sajZ7nY8rT-uxjLXRUUELw48HC_RCSbSY",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwidXNlcklkIjoxMDEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0ZW5hbnRJZCI6InRlbmFudC0xIiwicm9sZXMiOlsiYWRtaW4iXSwic2NvcGVzIjpbInRlbmFudC0xOm9yZGVyczpyZWFkIiwidGVuYW50LTE6b3JkZXJzOndyaXRlIiwidGVuYW50LTE6ZG9jczpyZWFkIl0sImlwIjoiMTkyLjE2OC4wLjEwMCIsImRldmljZVR5cGUiOiJ3ZWIiLCJpYXQiOjE3NjYwNTkzMDcsImV4cCI6MTc2NjA2MjkwNywianRpIjoiYWNjOjEwMToxNzY2MDU5MzA3NTY3OndlYiJ9.KpK1qZ_k9SN6vdyr3R3gpA54pMDy5RSdagnnOCrjP_0",
         "dbopsGetHash": "/api/dbops",
         "dbopsGetRefId": "/api/dbops/save",
         "dbopsCreate": "/api/dbops/create",
         "dbopsUpdate": "/api/dbops/update",
-        "dbopsFetch": "/api/dbops/fetch"
+        "dbopsFetch": "/api/dbops/fetch",
+        "registerQuery": "/api/query/save",
+        "runQuery": "/api/query/run"
     },
     "source": {
         "type": "sql",
-    "table": "leads_tbl",  
-       refid:"1"
+        "cols": "*",
+        "table": "leads_tbl",
+        "where": { "leads_tbl.id='#refid#'": "RAW" },
+        "refid": "1"
     },
     "forcefill": {
         "groupuid": "#SESS_GROUP_NAME#",
@@ -50,6 +58,7 @@ export const example7 = {
             "class": "btn btn-warning",
             "policy": "leadbook.update.access"
         }
+
     },
     "gotolink": "infoview/lead.main/{hashid}?",
     "script": "lead",
@@ -157,10 +166,12 @@ export const example7 = {
             "required": true,
             "width": 12
         },
+
         "enquiry_due": {
             "label": "Delivery Due On",
             "group": "More",
             "type": "date"
+
         },
         "created_on": {
             "label": "Created On",
@@ -198,6 +209,7 @@ export const example7 = {
             "type": "hidden",
             "hidden": true
         },
+
         "manager": {
             "label": "Manager",
             "group": "More",
@@ -244,7 +256,7 @@ export const example7 = {
         "remarks": {
             "label": "Remarks",
             "group": "More",
-            "width": 12,
+            "width": "12",
             "maxlength": 255,
             "type": "textarea"
         }
@@ -261,9 +273,9 @@ export const example7 = {
                 "config": {
                     "uimode": "grid",
                     "type": "sql",
-                    "table": "lead_followup",
-                    "cols": "lead_followup.id,lead_followup.follow_up_date,lead_followup.follow_up_time,lead_followup.remark",
-                    "where": "md5(lead_followup.lead_id)='#refid#'",
+                    "table": "leads_followup",
+                    "cols": "leads_followup.id,leads_followup.follow_up_date,leads_followup.follow_up_time,leads_followup.remark",
+                    "where": {"leads_followup.lead_id='#refid#'":"RAW"},
                     "orderby": "id desc"
                 },
                 "width": 12
@@ -282,16 +294,14 @@ export const example7 = {
                     "policy_update": "leadbook.update.access",
                     "table": "leads_actions",
                     "cols": "leads_actions.id,leads_actions.type,leads_actions.date,leads_actions.msg,leads_actions.start_time,leads_actions.end_time,leads_actions.created_by,leads_actions.created_on",
-                    "where": {},
-                    "orderby": "lead_actions.edited_on DESC",
+                    "where": {"leads_actions.lead_id='#refid#'":"RAW"},
+                    "orderby": "leads_actions.edited_on DESC",
                     "colkey": "lead_id",
                     "form": {
                         "source": {
                             "type": "sql",
                             "table": "leads_actions",
-                            "where": [
-                                "md5(id)"
-                            ]
+                            "where": ["id"]
                         },
                         "forcefill": {
                             "groupuid": "#SESS_GROUP_NAME#",
@@ -339,10 +349,13 @@ export const example7 = {
                 "config": {
                     "type": "sql",
                     "uimode": "single",
-                    "table": "lead_tbl,profiletbl",
+                    "table": "leads_tbl,profiletbl",
                     "cols": "profiletbl.id,profiletbl.full_name as name,profiletbl.email1 as Email,profiletbl.mobile,profiletbl.nationality,profiletbl.pan,profiletbl.gst",
-                    "where": "lead_tbl.customer_id = profiletbl.id and md5(lead_tbl.id)='#refid#'",
-                    "orderby": "lead_tbl.edited_on DESC"
+                    "where": {"leads_tbl.customer_id = profiletbl.id and leads_tbl.id='#refid#'":"RAW"},
+                    "join": [
+                        { "query": "profiletbl", "condition": "leads_tbl.customer_id=profiletbl.id", "type": "LEFT", "limit": 1 }
+                    ],
+                    "orderby": "leads_tbl.edited_on DESC"
                 },
                 "width": 12
             },
@@ -358,21 +371,17 @@ export const example7 = {
                     "policy_delete": "leadbook.delete.access",
                     "policy_update": "leadbook.update.access",
                     "uimode": "grid",
-                    "table": "lead_products,service_tbl",
-                    "cols": "lead_products.id,lead_products.product_id,service_tbl.service_name as Product_Name,lead_products.product_qty,lead_products.product_price",
-                    "where": "service_tbl.id=lead_products.product_id AND md5(lead_id)='#refid#'",
-                    "orderby": "lead_products.edited_on DESC",
-                    "colkey": "lead_products.lead_id",
-                    "hidden": [
-                        "product_id"
-                    ],
+                    "table": "leads_products,service_tbl",
+                    "cols": "leads_products.id,leads_products.product_id,service_tbl.service_name as Product_Name,leads_products.product_qty,leads_products.product_price",
+                    "where": {"service_tbl.id=leads_products.product_id AND lead_id='#refid#'":"RAW"},
+                    "orderby": "leads_products.edited_on DESC",
+                    "colkey": "leads_products.lead_id",
+                    "hidden": ["product_id"],
                     "form": {
                         "source": {
                             "type": "sql",
-                            "table": "lead_products",
-                            "where": [
-                                "md5(id)"
-                            ]
+                            "table": "leads_products",
+                            "where": ["id"]
                         },
                         "forcefill": {
                             "groupuid": "#SESS_GROUP_NAME#",
@@ -406,6 +415,7 @@ export const example7 = {
                                 "label": "Product Quantity",
                                 "type": "number",
                                 "required": true
+
                             },
                             "product_price": {
                                 "label": "Product Price",
@@ -413,6 +423,7 @@ export const example7 = {
                             }
                         }
                     }
+
                 },
                 "width": 12
             },
@@ -428,7 +439,7 @@ export const example7 = {
                     "uimode": "grid",
                     "table": "meetingnotes_tbl",
                     "cols": "meetingnotes_tbl.id,meetingnotes_tbl.title as agenda,meetingnotes_tbl.start_date as meet_date,meetingnotes_tbl.start_time,meetingnotes_tbl.end_time,meetingnotes_tbl.chairperson as chair_person,meetingnotes_tbl.location as venue,meetingnotes_tbl.participants,meetingnotes_tbl.text_discuss",
-                    "where": "md5(meetingnotes_tbl.src_id)='#refid#' and meetingnotes_tbl.src_type='lead'",
+                    "where": {"meetingnotes_tbl.src_id='#refid#' and meetingnotes_tbl.src_type='lead'":"RAW"},
                     "orderby": "meetingnotes_tbl.start_date DESC",
                     "unilinks": {
                         "title": {
@@ -455,9 +466,9 @@ export const example7 = {
                     "type": "sql",
                     "uimode": "grid",
                     "DEBUG": false,
-                    "table": "quotations_tbl,lead_tbl",
+                    "table": "quotations_tbl,leads_tbl",
                     "cols": "quotations_tbl.id,quotations_tbl.quo_sequence,quotations_tbl.quotation_no,quotations_tbl.date,quotations_tbl.quotation_type,quotations_tbl.supply_type,quotations_tbl.status,quotations_tbl.total_amount",
-                    "where": "quotations_tbl.lead_id=lead_tbl.id AND md5(quotations_tbl.lead_id)='#refid#' ",
+                    "where": {"quotations_tbl.lead_id=leads_tbl.id AND quotations_tbl.lead_id='#refid#'":"RAW"},
                     "orderby": "quotations_tbl.edited_on DESC",
                     "actions": {
                         "createQuotation": {
@@ -477,10 +488,10 @@ export const example7 = {
                 "config": {
                     "type": "sql",
                     "uimode": "grid",
-                    "table": "lead_po",
-                    "cols": "lead_po.id,po_no,po_amount,po_start,po_end,po_billing_type,po_inv_template,po_recurrent",
-                    "where": "md5(lead_po.lead_id)='#refid#' ",
-                    "orderby": "lead_po.po_start DESC",
+                    "table": "leads_po",
+                    "cols": "leads_po.id,po_no,po_amount,po_start,po_end,po_billing_type,po_inv_template,po_recurrent",
+                    "where": {"leads_po.lead_id='#refid#' ":"RAW"},
+                    "orderby": "leads_po.po_start DESC",
                     "actions": {
                         "createPO": {
                             "label": "Create PO",

@@ -362,9 +362,7 @@ export default function TabView({
     const isTop = !isLeft && !isRight;
     const tabObj = groups[groupNames[activeTabIndex] ?? ""] || null;
 
-    console.log("tabObj", tabObj)
-
-
+   
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<string, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
@@ -380,7 +378,7 @@ export default function TabView({
 
 
     const renderView = viewRenderers[uiModeKey] || defaultRenderer[uiModeKey] ||
-        (() => <div className="flex-1 flex justify-center p-4">No renderer for this type</div>);
+        (() => <div className="flex-1 flex justify-center p-4">No UI mode for this type</div>);
 
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
-import { tailwindCols, tailwindGrid, toColWidth, toGrid, transformedObject } from '../utils.js'
+import { normalizeToObject, replacePlaceholders, tailwindCols, tailwindGrid, toColWidth, toGrid, transformedObject } from '../utils.js'
 import type { InfoViewGroup } from '../InfoView.types.js'
 
 export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid }:
@@ -66,43 +66,43 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
                 }
 
                 try {
-                    const resHashId = await axios({
-                        method: "GET",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetHash,
+                    const resQueryId = await axios({
+                        method: "POST",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
+                        data: {
+                            "query": {
+                                "cols": source.cols,
+                                "table": source.table,
+                                "where": replacePlaceholders(source.where, {
+                                    refid: source.refid,
+                                }),
+
+                            }
+                        },
                         headers: {
                             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
                         },
                     });
 
-                    const resQueryId = await axios({
-                        method: "POST",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
-                        data: {
-                            "operation": "fetch",
-                            "source": { ...source, refid },
-                            "fields": {},
-                            "datahash": resHashId.data.refhash
-                        },
-                        headers: {
-                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
-                        },
-                    });
 
                     const res = await axios({
                         method: "POST",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsFetch,
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.runQuery,
                         data: {
-                            "refid": resQueryId.data.refid,
-                            "datahash": resHashId.data.refhash
+                            "queryid": resQueryId.data.queryid,
+                            "filter": {
+
+                            }
                         },
 
                         headers: {
                             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
                         },
                     });
-                     console.log("res.data",res.data);
+                    const data = normalizeToObject(res)
 
-                    if (!cancelled) setData(res.data?.data ?? res.data ?? {});
+
+                    if (!cancelled) setData(data);
                 } catch (err) {
                     console.error("API fetch failed:", err);
                 }
@@ -123,7 +123,7 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
         JSON.stringify(tabObj?.config?.body || {}),
         JSON.stringify(tabObj?.config?.headers || {}),
     ]);
-    console.log("data", data)
+   
 
     return (
         <div className='flex-1 overflow-y-auto'>

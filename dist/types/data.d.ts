@@ -7,10 +7,16 @@ export declare const example7: {
         dbopsCreate: string;
         dbopsUpdate: string;
         dbopsFetch: string;
+        registerQuery: string;
+        runQuery: string;
     };
     source: {
         type: string;
+        cols: string;
         table: string;
+        where: {
+            "leads_tbl.id='#refid#'": string;
+        };
         refid: string;
     };
     forcefill: {
@@ -244,7 +250,7 @@ export declare const example7: {
         remarks: {
             label: string;
             group: string;
-            width: number;
+            width: string;
             maxlength: number;
             type: string;
         };
@@ -263,7 +269,9 @@ export declare const example7: {
                     type: string;
                     table: string;
                     cols: string;
-                    where: string;
+                    where: {
+                        "leads_followup.lead_id='#refid#'": string;
+                    };
                     orderby: string;
                 };
                 width: number;
@@ -282,7 +290,9 @@ export declare const example7: {
                     policy_update: string;
                     table: string;
                     cols: string;
-                    where: {};
+                    where: {
+                        "leads_actions.lead_id='#refid#'": string;
+                    };
                     orderby: string;
                     colkey: string;
                     form: {
@@ -339,7 +349,15 @@ export declare const example7: {
                     uimode: string;
                     table: string;
                     cols: string;
-                    where: string;
+                    where: {
+                        "leads_tbl.customer_id = profiletbl.id and leads_tbl.id='#refid#'": string;
+                    };
+                    join: {
+                        query: string;
+                        condition: string;
+                        type: string;
+                        limit: number;
+                    }[];
                     orderby: string;
                 };
                 width: number;
@@ -358,7 +376,9 @@ export declare const example7: {
                     uimode: string;
                     table: string;
                     cols: string;
-                    where: string;
+                    where: {
+                        "service_tbl.id=leads_products.product_id AND lead_id='#refid#'": string;
+                    };
                     orderby: string;
                     colkey: string;
                     hidden: string[];
@@ -422,7 +442,9 @@ export declare const example7: {
                     uimode: string;
                     table: string;
                     cols: string;
-                    where: string;
+                    where: {
+                        "meetingnotes_tbl.src_id='#refid#' and meetingnotes_tbl.src_type='lead'": string;
+                    };
                     orderby: string;
                     unilinks: {
                         title: {
@@ -451,7 +473,9 @@ export declare const example7: {
                     DEBUG: boolean;
                     table: string;
                     cols: string;
-                    where: string;
+                    where: {
+                        "quotations_tbl.lead_id=leads_tbl.id AND quotations_tbl.lead_id='#refid#'": string;
+                    };
                     orderby: string;
                     actions: {
                         createQuotation: {
@@ -473,7 +497,9 @@ export declare const example7: {
                     uimode: string;
                     table: string;
                     cols: string;
-                    where: string;
+                    where: {
+                        "leads_po.lead_id='#refid#' ": string;
+                    };
                     orderby: string;
                     actions: {
                         createPO: {

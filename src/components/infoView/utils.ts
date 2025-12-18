@@ -102,3 +102,43 @@ export async function copyToClipboard(content: string) {
         document.body.removeChild(textarea);
     }
 }
+
+
+export const  replacePlaceholders = (
+  input: any,
+  vars: Record<string, string | number>
+): any => {
+  if (typeof input === "string") {
+    return input.replace(/#(\w+)#/g, (_, k) =>
+      vars[k] !== undefined ? String(vars[k]) : _
+    );
+  }
+
+  if (Array.isArray(input)) {
+    return input.map(v => replacePlaceholders(v, vars));
+  }
+
+  if (input && typeof input === "object") {
+    return Object.fromEntries(
+      Object.entries(input).map(([k, v]) => [
+        replacePlaceholders(k, vars),
+        replacePlaceholders(v, vars),
+      ])
+    );
+  }
+
+  return input;
+};
+
+
+export const normalizeToObject = (res: any): Record<string, any> | null => {
+  const raw =
+    Array.isArray(res?.data?.data)
+      ? res.data.data[0]
+      : Array.isArray(res?.data)
+      ? res.data[0]
+      : res?.data?.data ?? res?.data;
+
+  return raw && typeof raw === "object" && !Array.isArray(raw) ? raw : null;
+}
+

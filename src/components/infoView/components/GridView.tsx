@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import axios from "axios";
 import type { InfoViewGroup } from '../InfoView.types.js';
-import { copyToClipboard } from '../utils.js';
+import { copyToClipboard, replacePlaceholders } from '../utils.js';
 
 
 
@@ -16,7 +16,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
     {
         tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string,
         sqlOpsUrls?: Record<string, any>, refid: string
-    }) { 
+    }) {
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -80,41 +80,40 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
                 }
 
                 try {
-                    const resHashId = await axios({
-                        method: "GET",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetHash,
+                    const { form, actions, uimode, type, unilinks, DEBUG, ...querySource } = source;
+                    const resQueryId = await axios({
+                        method: "POST",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
+                        data: {
+                            "query": {
+                                ...querySource,
+
+                                "where": replacePlaceholders(source.where, {
+                                    refid: refid,
+                                }),
+
+                            }
+                        },
                         headers: {
                             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
                         },
                     });
 
-                    const resQueryId = await axios({
-                        method: "POST",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
-                        data: {
-                            "operation": "fetch",
-                            "source": { ...source, refid },
-                              "fields": {},
-                            "datahash": resHashId.data.refhash
-                        },
-                        headers: {
-                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
-                        },
-                    });
 
                     const res = await axios({
                         method: "POST",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsFetch,
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.runQuery,
                         data: {
-                            "refid": resQueryId.data.refid,
-                            "datahash": resHashId.data.refhash
+                            "queryid": resQueryId.data.queryid,
+                            "filter": {
+
+                            }
                         },
 
                         headers: {
                             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
                         },
                     });
- console.log("res.data",res.data);
                     if (!cancelled) setData(res.data?.data ?? res.data ?? {});
                 } catch (err) {
                     console.error("API fetch failed:", err);

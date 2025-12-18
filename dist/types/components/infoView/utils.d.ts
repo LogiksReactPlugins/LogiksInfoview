@@ -11,5 +11,7 @@ export declare const tailwindCols: Record<ColWidth, string>;
 export declare function toColWidth(width: number | undefined): ColWidth;
 export declare function toGrid(width: number | undefined): ColWidth;
 export declare function copyToClipboard(content: string): Promise<void>;
+export declare const replacePlaceholders: (input: any, vars: Record<string, string | number>) => any;
+export declare const normalizeToObject: (res: any) => Record<string, any> | null;
 export {};
 //# sourceMappingURL=utils.d.ts.map

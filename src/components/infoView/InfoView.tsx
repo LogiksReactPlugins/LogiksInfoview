@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import { determineViewMode, groupFields, transformedObject } from './utils.js';
+import { determineViewMode, groupFields, normalizeToObject, replacePlaceholders, transformedObject } from './utils.js';
 
 import type { InfoViewGroup, InfoViewProps, InfoData } from './InfoView.types.js';
 
@@ -85,8 +85,8 @@ export default function LogiksInfoView({
 
 
 
-            if (source.type === "sql" && Number.isInteger(Number(source.refid)) &&
-                Number(source.refid) > 0) {
+            if (source.type === "sql" && source.refid &&
+                source.refid != "0") {
 
                 if (!sqlOpsUrls) {
                     console.error("SQL source requires formJson.endPoints but it is missing");
@@ -94,34 +94,34 @@ export default function LogiksInfoView({
                 }
 
                 try {
-                    const resHashId = await axios({
-                        method: "GET",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetHash,
-                        headers: {
-                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
-                        },
-                    });
 
                     const resQueryId = await axios({
                         method: "POST",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
                         data: {
-                            "operation": "fetch",
-                            "source": source,
-                            "fields": transformedObject(infoViewJson.fields),
-                            "datahash": resHashId.data.refhash
+                            "query": {
+                                "cols": source.cols,
+                                "table": source.table,
+                                "where": replacePlaceholders(source.where, {
+                                    refid: source.refid,
+                                }),
+
+                            }
                         },
                         headers: {
                             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
                         },
                     });
+
 
                     const res = await axios({
                         method: "POST",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsFetch,
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.runQuery,
                         data: {
-                            "refid": resQueryId.data.refid,
-                            "datahash": resHashId.data.refhash
+                            "queryid": resQueryId.data.queryid,
+                            "filter": {
+
+                            }
                         },
 
                         headers: {
@@ -129,10 +129,10 @@ export default function LogiksInfoView({
                         },
                     });
 
-                    console.log("res.data",res.data);
-                    
 
-                    if (!cancelled) setInfoData(res.data?.data ?? res.data ?? {});
+                    const data = normalizeToObject(res) ?? {}
+
+                    if (!cancelled) setInfoData(data);
                 } catch (err) {
                     console.error("API fetch failed:", err);
                 }
