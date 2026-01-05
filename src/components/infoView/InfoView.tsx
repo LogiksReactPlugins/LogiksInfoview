@@ -100,6 +100,7 @@ export default function LogiksInfoView({
                         url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
                         data: {
                             "query": {
+                                ...source,
                                 "cols": source.cols,
                                 "table": source.table,
                                 "where": replacePlaceholders(source.where, {

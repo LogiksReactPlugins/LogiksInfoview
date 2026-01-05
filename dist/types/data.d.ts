@@ -250,7 +250,7 @@ export declare const example7: {
         remarks: {
             label: string;
             group: string;
-            width: string;
+            width: number;
             maxlength: number;
             type: string;
         };

@@ -107,7 +107,7 @@ const TopNav = ({
     return<div className={layoutConfig?.tabNavClass || "relative z-10"}>
 
   {/* LEFT SCROLL BUTTON */}
-  <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 flex items-center justify-center">
+ { showScrollHint && <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 flex items-center justify-center">
     <button
       onClick={() => tabsNavRef.current?.scrollBy({ left: -200, behavior: 'smooth' })}
       className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
@@ -116,20 +116,20 @@ const TopNav = ({
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
       </svg>
     </button>
-  </div>
+  </div>}
 
   {/* RIGHT SCROLL BUTTON + DROPDOWN */}
   <div className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-18 flex items-center justify-between pr-1">
     
     {/* Scroll Arrow */}
-    <button
+   { showScrollHint && <button
       onClick={() => tabsNavRef.current?.scrollBy({ left: 200, behavior: 'smooth' })}
       className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
     >
       <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
       </svg>
-    </button>
+    </button>}
 
     {/* Dropdown Button */}
     <div className="relative" ref={dropdownRef}>
@@ -324,6 +324,9 @@ export default function TabView({
     const tabsNavRef = React.useRef<HTMLDivElement | null>(null);
 
     const groupNames = Object.keys(groups);
+
+    console.log("showScrollHint",showScrollHint);
+    
 
 
     React.useEffect(() => {

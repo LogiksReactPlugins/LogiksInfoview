@@ -71,6 +71,7 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
                         url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
                         data: {
                             "query": {
+                                ...source,
                                 "cols": source.cols,
                                 "table": source.table,
                                 "where": replacePlaceholders(source.where, {
@@ -123,7 +124,7 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
         JSON.stringify(tabObj?.config?.body || {}),
         JSON.stringify(tabObj?.config?.headers || {}),
     ]);
-   
+
 
     return (
         <div className='flex-1 overflow-y-auto'>

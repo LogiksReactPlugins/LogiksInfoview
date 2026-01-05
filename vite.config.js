@@ -29,7 +29,8 @@ export default defineConfig(({ mode }) => {
         output: {
           globals: {
             react: 'React',
-            'react-dom': 'ReactDOM'
+            'react-dom': 'ReactDOM',
+            axios: "axios"
           }
         }
       },
