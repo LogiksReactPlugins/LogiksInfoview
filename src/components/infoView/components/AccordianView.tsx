@@ -57,7 +57,7 @@ export default function AccordianView({
                                                 className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-2"
                                                     }`}
                                             >
-                                                <InfoFieldRenderer field={field} data={infoData ?? {}} />
+                                                <InfoFieldRenderer methods={methods} field={field} data={infoData ?? {}} sqlOpsUrls={sqlOpsUrls} refid={refid} />
                                             </div>
                                         ))}
                                     </div>

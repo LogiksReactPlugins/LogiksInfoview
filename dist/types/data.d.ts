@@ -595,4 +595,81 @@ export declare const example7: {
         };
     };
 };
+export declare const example1: {
+    endPoints: {
+        baseURL: string;
+        accessToken: string;
+        dbopsGetHash: string;
+        dbopsGetRefId: string;
+        dbopsCreate: string;
+        dbopsUpdate: string;
+        dbopsFetch: string;
+        registerQuery: string;
+        runQuery: string;
+    };
+    hooks: {
+        postsubmit: {
+            api: string;
+            method: string;
+        };
+    };
+    source: {
+        type: string;
+        table: string;
+        cols: string;
+        where: {
+            "data_spv_tbl.id": string;
+        };
+        refid: string;
+    };
+    forcefill: {
+        groupuid: string;
+        guid: string;
+        last_status: string;
+        company_id: string;
+    };
+    fields: {
+        code: {
+            label: string;
+            group: string;
+            required: boolean;
+            width: number;
+            type: string;
+        };
+        title: {
+            label: string;
+            group: string;
+            required: boolean;
+            width: number;
+            type: string;
+        };
+        company_code_id: {
+            label: string;
+            group: string;
+            required: boolean;
+            type: string;
+            table: string;
+            columns: string;
+            where: {
+                blocked: string;
+            };
+            valueKey: string;
+            labelKey: string;
+        };
+        blocked: {
+            label: string;
+            group: string;
+            type: string;
+            groupid: string;
+            vmode: string;
+            required: boolean;
+        };
+        description: {
+            label: string;
+            group: string;
+            width: number;
+            type: string;
+        };
+    };
+};
 //# sourceMappingURL=data.d.ts.map

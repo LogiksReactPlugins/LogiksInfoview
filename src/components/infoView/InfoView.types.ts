@@ -5,6 +5,16 @@ export interface InfoViewField {
     group?: string;
     type?: string;
     required?: boolean;
+    options?: Record<string, any>;
+    source?: Record<string, any>;
+    valueKey?: string;
+    labelKey?: string;
+    groupKey?: string;
+    table?: string;
+    columns?: string;
+    where?: Record<string, string>;
+    groupid?: string;
+    cols?: string;
 }
 
 export interface InfoViewGroup {
@@ -13,7 +23,7 @@ export interface InfoViewGroup {
     fields?: InfoViewField[];
     config?: Record<string, any>;
     width?: number;
-    vmode?:string
+    vmode?: string
 }
 
 export interface Infoview {
@@ -28,7 +38,7 @@ export interface InfoViewProps {
         fields: Record<string, Omit<InfoViewField, "name">>;
         infoview?: Infoview;
         source?: Record<string, any>,
-         endPoints?: Record<string, any>;
+        endPoints?: Record<string, any>;
     };
     /** Fields to hide */
     hiddenFields?: string[];
@@ -47,7 +57,9 @@ export interface InfoViewProps {
     methods?: Record<string, Function>
 }
 
-
+export type FlatOptions = Record<string, string>;
+export type GroupedOptions = Record<string, Record<string, string>>;
+export type SelectOptions = FlatOptions | GroupedOptions;
 export interface InfoData {
     [key: string]: string | number | boolean | null | undefined;
     // add other fields here...
@@ -55,8 +67,17 @@ export interface InfoData {
 
 export interface InfoFieldRendererProps {
     field: InfoViewField;
+    methods?: Record<string, Function>;
+    sqlOpsUrls?: Record<string, any> | undefined;
     data?: Record<string, string | number | boolean | null | undefined>; // or data?: Record<string, unknown> if optional
+    refid?: string | undefined;
 }
+
+export interface sqlQueryProps {
+    table: string;
+    cols: string;
+    where?: Record<string, string>;
+};
 
 
 

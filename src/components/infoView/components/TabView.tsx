@@ -52,6 +52,9 @@ interface ContentAreaPrps extends VerticalNavProps {
     infoData: InfoData;
     tabObj: InfoViewGroup | null;
     renderView: (tab: InfoViewGroup, tabName: string) => React.ReactNode;
+    methods?: Record<string, Function>;
+    sqlOpsUrls?: Record<string, any> | undefined;
+    refid?: string | undefined;
 
 }
 
@@ -104,100 +107,100 @@ const TopNav = ({
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    return<div className={layoutConfig?.tabNavClass || "relative z-10"}>
+    return <div className={layoutConfig?.tabNavClass || "relative z-10"}>
 
-  {/* LEFT SCROLL BUTTON */}
- { showScrollHint && <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 flex items-center justify-center">
-    <button
-      onClick={() => tabsNavRef.current?.scrollBy({ left: -200, behavior: 'smooth' })}
-      className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
-    >
-      <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-      </svg>
-    </button>
-  </div>}
-
-  {/* RIGHT SCROLL BUTTON + DROPDOWN */}
-  <div className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-18 flex items-center justify-between pr-1">
-    
-    {/* Scroll Arrow */}
-   { showScrollHint && <button
-      onClick={() => tabsNavRef.current?.scrollBy({ left: 200, behavior: 'smooth' })}
-      className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
-    >
-      <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-      </svg>
-    </button>}
-
-    {/* Dropdown Button */}
-    <div className="relative" ref={dropdownRef}>
-      <button
-        onClick={() => setShowAllTabs(!showAllTabs)}
-        className="ml-1 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200"
-      >
-        ⋮
-      </button>
-
-      {showAllTabs && (
-        <div className="absolute right-0 mt-2 w-48 max-h-100 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30">
-          {groupNames.map((group, index) => (
+        {/* LEFT SCROLL BUTTON */}
+        {showScrollHint && <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 flex items-center justify-center">
             <button
-              key={group}
-              type="button"
-              onClick={() => {
-                setActiveTabIndex(index);
-                setShowAllTabs(false);
-              }}
-              className={`w-full text-left px-3 py-2 text-sm truncate hover:bg-gray-100 ${activeTabIndex === index ? 'bg-gray-50 font-semibold text-action' : 'text-gray-700'}`}
+                onClick={() => tabsNavRef.current?.scrollBy({ left: -200, behavior: 'smooth' })}
+                className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
             >
-              {groups[group]?.label || group}
+                <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
             </button>
-          ))}
-        </div>
-      )}
-    </div>
-  </div>
+        </div>}
 
-  {/* SCROLLABLE TABS */}
-  <div className={`relative bg-gray-100 ${isCommonInfo ? "" : "rounded-t-lg"} px-12 pt-1 shadow-inner overflow-hidden`}>
-    <nav
-      ref={tabsNavRef}
-      className="relative flex overflow-x-auto scrollbar-hide scroll-smooth"
-      style={{
-        scrollbarWidth: 'none',
-        msOverflowStyle: 'none',
-      }}
-    >
-      {groupNames.length > 0 ? groupNames.map((group, index) => (
-        <button
-          key={group}
-          type="button"
-          onClick={() => setActiveTabIndex(index)}
-          className={`relative cursor-pointer flex-shrink-0
+        {/* RIGHT SCROLL BUTTON + DROPDOWN */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-18 flex items-center justify-between pr-1">
+
+            {/* Scroll Arrow */}
+            {showScrollHint && <button
+                onClick={() => tabsNavRef.current?.scrollBy({ left: 200, behavior: 'smooth' })}
+                className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group"
+            >
+                <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+            </button>}
+
+            {/* Dropdown Button */}
+            <div className="relative" ref={dropdownRef}>
+                <button
+                    onClick={() => setShowAllTabs(!showAllTabs)}
+                    className="ml-1 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200"
+                >
+                    ⋮
+                </button>
+
+                {showAllTabs && (
+                    <div className="absolute right-0 mt-2 w-48 max-h-100 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30">
+                        {groupNames.map((group, index) => (
+                            <button
+                                key={group}
+                                type="button"
+                                onClick={() => {
+                                    setActiveTabIndex(index);
+                                    setShowAllTabs(false);
+                                }}
+                                className={`w-full text-left px-3 py-2 text-sm truncate hover:bg-gray-100 ${activeTabIndex === index ? 'bg-gray-50 font-semibold text-action' : 'text-gray-700'}`}
+                            >
+                                {groups[group]?.label || group}
+                            </button>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+
+        {/* SCROLLABLE TABS */}
+        <div className={`relative bg-gray-100 ${isCommonInfo ? "" : "rounded-t-lg"} px-12 pt-1 shadow-inner overflow-hidden`}>
+            <nav
+                ref={tabsNavRef}
+                className="relative flex overflow-x-auto scrollbar-hide scroll-smooth"
+                style={{
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                }}
+            >
+                {groupNames.length > 0 ? groupNames.map((group, index) => (
+                    <button
+                        key={group}
+                        type="button"
+                        onClick={() => setActiveTabIndex(index)}
+                        className={`relative cursor-pointer flex-shrink-0
             min-w-[8rem]   
             py-2 px-8
             rounded-t-lg text-xs sm:text-sm font-semibold
             transition-all duration-300 ease-out
             focus:outline-none whitespace-nowrap
             ${activeTabIndex === index
-              ? 'text-action bg-white'
-              : 'text-gray-600 hover:text-gray-800 hover:bg-white/50'
-            }`}
-        >
-          <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">
-            <span className="truncate">{groups[group]?.label || group}</span>
-          </span>
-        </button>
-      )) : (
-        <div className="py-3 px-6 text-sm text-gray-500">
-          No group available
+                                ? 'text-action bg-white'
+                                : 'text-gray-600 hover:text-gray-800 hover:bg-white/50'
+                            }`}
+                    >
+                        <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">
+                            <span className="truncate">{groups[group]?.label || group}</span>
+                        </span>
+                    </button>
+                )) : (
+                    <div className="py-3 px-6 text-sm text-gray-500">
+                        No group available
+                    </div>
+                )}
+            </nav>
         </div>
-      )}
-    </nav>
-  </div>
-</div>
+    </div>
 
 
 }
@@ -210,7 +213,10 @@ const ContentArea = (
         tabObj,
         infoData,
         setActiveTabIndex,
-        renderView
+        renderView,
+        methods = {},
+        refid,
+        sqlOpsUrls
     }: ContentAreaPrps
 ) => (
     <div
@@ -229,7 +235,13 @@ const ContentArea = (
                                 className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-2"
                                     }`}
                             >
-                                <InfoFieldRenderer field={field} data={infoData ?? {}} />
+                                <InfoFieldRenderer
+                                    field={field}
+                                    data={infoData ?? {}}
+                                    methods={methods}
+                                    refid={refid}
+                                    sqlOpsUrls={sqlOpsUrls}
+                                />
                             </div>
                         ))}
                     </div>
@@ -325,9 +337,6 @@ export default function TabView({
 
     const groupNames = Object.keys(groups);
 
-    console.log("showScrollHint",showScrollHint);
-    
-
 
     React.useEffect(() => {
 
@@ -365,7 +374,7 @@ export default function TabView({
     const isTop = !isLeft && !isRight;
     const tabObj = groups[groupNames[activeTabIndex] ?? ""] || null;
 
-   
+
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<string, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
@@ -376,9 +385,7 @@ export default function TabView({
         ),
     };
 
-
-    const uiModeKey = tabObj?.config?.uimode
-
+    const uiModeKey = tabObj?.config?.uimode;
 
     const renderView = viewRenderers[uiModeKey] || defaultRenderer[uiModeKey] ||
         (() => <div className="flex-1 flex justify-center p-4">No UI mode for this type</div>);
@@ -409,6 +416,10 @@ export default function TabView({
                     setActiveTabIndex={setActiveTabIndex}
                     renderView={renderView}
                     groups={groups}
+                    methods={methods}
+                    refid={refid}
+                    sqlOpsUrls={sqlOpsUrls}
+
                 />
 
             </div>
@@ -440,6 +451,9 @@ export default function TabView({
                     setActiveTabIndex={setActiveTabIndex}
                     renderView={renderView}
                     groups={groups}
+                    methods={methods}
+                    refid={refid}
+                    sqlOpsUrls={sqlOpsUrls}
                 />
             </main>
 

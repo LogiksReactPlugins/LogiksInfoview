@@ -140,6 +140,9 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
                                 key={field}
                                 field={{ name: field, label: field }}
                                 data={data ?? {}}
+                                methods={methods}
+                                refid={refid}
+                                sqlOpsUrls={sqlOpsUrls}
                             />
                         </div>
                     }) : <div className="col-span-12 flex flex-col  min-h-0">

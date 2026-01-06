@@ -5,6 +5,16 @@ export interface InfoViewField {
     group?: string;
     type?: string;
     required?: boolean;
+    options?: Record<string, any>;
+    source?: Record<string, any>;
+    valueKey?: string;
+    labelKey?: string;
+    groupKey?: string;
+    table?: string;
+    columns?: string;
+    where?: Record<string, string>;
+    groupid?: string;
+    cols?: string;
 }
 export interface InfoViewGroup {
     label: string;
@@ -42,11 +52,22 @@ export interface InfoViewProps {
     data?: Record<string, any>;
     methods?: Record<string, Function>;
 }
+export type FlatOptions = Record<string, string>;
+export type GroupedOptions = Record<string, Record<string, string>>;
+export type SelectOptions = FlatOptions | GroupedOptions;
 export interface InfoData {
     [key: string]: string | number | boolean | null | undefined;
 }
 export interface InfoFieldRendererProps {
     field: InfoViewField;
+    methods?: Record<string, Function>;
+    sqlOpsUrls?: Record<string, any> | undefined;
     data?: Record<string, string | number | boolean | null | undefined>;
+    refid?: string | undefined;
+}
+export interface sqlQueryProps {
+    table: string;
+    cols: string;
+    where?: Record<string, string>;
 }
 //# sourceMappingURL=InfoView.types.d.ts.map

@@ -1,4 +1,4 @@
-import { InfoViewGroup, Infoview } from './InfoView.types.js';
+import { FlatOptions, InfoViewGroup, Infoview } from './InfoView.types.js';
 export declare function determineViewMode(json: Infoview): string;
 export declare function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup>;
 export declare function transformedObject(originalObject: Record<string, any>): Record<string, {
@@ -13,5 +13,7 @@ export declare function toGrid(width: number | undefined): ColWidth;
 export declare function copyToClipboard(content: string): Promise<void>;
 export declare const replacePlaceholders: (input: any, vars: Record<string, string | number>) => any;
 export declare const normalizeToObject: (res: any) => Record<string, any> | null;
+export declare const formatOptions: (valueKey: string, labelKey: string, res: any) => FlatOptions;
+export declare function resolveDisplayValue(rawVal: unknown, options: Record<string, string>): unknown;
 export {};
 //# sourceMappingURL=utils.d.ts.map
