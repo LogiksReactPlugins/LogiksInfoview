@@ -280,7 +280,7 @@ const ContentArea = (
                 </div>
 
                 {/* Navigation buttons */}
-                <div className="flex gap-2">
+                <div className="hidden sm:flex gap-2">
                     <button
                         onClick={() => setActiveTabIndex(Math.max(0, activeTabIndex - 1))}
                         disabled={activeTabIndex === 0}
@@ -395,7 +395,7 @@ export default function TabView({
 
     if (isTop) {
         return (
-            <div className='flex-1 flex flex-col min-h-0 max-h-screen'>
+            <div className='flex-1 flex flex-col min-h-0 '>
                 <TopNav
                     groupNames={groupNames}
                     groups={groups}
@@ -429,7 +429,7 @@ export default function TabView({
     return (
 
 
-        <div className="flex-1 flex min-h-0 max-h-screen">
+        <div className="flex-1 flex min-h-0">
             {isLeft && (
                 <aside className="flex-shrink-0 w-56 border-r border-gray-200 bg-gray-50 p-2">
                     <VerticalNav

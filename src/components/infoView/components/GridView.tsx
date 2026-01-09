@@ -266,7 +266,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
 
     // Action handlers
     const handleEdit = (row: Record<string, string>, index: number) => {
-        methods?.editInfoRecord?.(row, tabName)
+        methods?.editInfoRecord?.(tabObj?.config?.form,refid, row)
         // Implement edit logic here
     };
 
@@ -281,7 +281,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
     };
 
     const handleAddRecord = () => {
-        methods?.addInfoRecord?.(tabObj?.config?.form, tabName)
+        methods?.addInfoRecord?.(tabObj?.config?.form, refid)
         // Implement add record logic here
     };
 

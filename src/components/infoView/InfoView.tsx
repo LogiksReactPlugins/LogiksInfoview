@@ -225,7 +225,7 @@ export default function LogiksInfoView({
 
 
 
-        <div className={layoutConfig.containerClass || "flex flex-col "}>
+        <div className={layoutConfig.containerClass || "h-screen flex flex-col "}>
 
             {commonInfo && (
                 <CommonInfo

@@ -48,7 +48,7 @@ function Se() {
     function t(s) {
       if (s == null) return null;
       if (typeof s == "function")
-        return s.$$typeof === I ? null : s.displayName || s.name || null;
+        return s.$$typeof === O ? null : s.displayName || s.name || null;
       if (typeof s == "string") return s;
       switch (s) {
         case P:
@@ -77,7 +77,7 @@ function Se() {
           case C:
             var g = s.render;
             return s = s.displayName, s || (s = g.displayName || g.name || "", s = s !== "" ? "ForwardRef(" + s + ")" : "ForwardRef"), s;
-          case O:
+          case D:
             return g = s.displayName || null, g !== null ? g : t(s.type) || "Memo";
           case te:
             g = s._payload, s = s._init;
@@ -151,13 +151,13 @@ function Se() {
         "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
       )), s = this.props.ref, s !== void 0 ? s : null;
     }
-    function c(s, g, N, R, D, $, r, w) {
+    function c(s, g, N, R, I, $, r, w) {
       return N = $.ref, s = {
         $$typeof: k,
         type: s,
         key: g,
         props: $,
-        _owner: D
+        _owner: I
       }, (N !== void 0 ? N : null) !== null ? Object.defineProperty(s, "ref", {
         enumerable: !1,
         get: u
@@ -183,7 +183,7 @@ function Se() {
         value: w
       }), Object.freeze && (Object.freeze(s.props), Object.freeze(s)), s;
     }
-    function d(s, g, N, R, D, $, r, w) {
+    function d(s, g, N, R, I, $, r, w) {
       var h = g.children;
       if (h !== void 0)
         if (R)
@@ -226,7 +226,7 @@ React keys must be passed directly to JSX without using spread:
         s,
         h,
         $,
-        D,
+        I,
         o(),
         N,
         r,
@@ -236,7 +236,7 @@ React keys must be passed directly to JSX without using spread:
     function f(s) {
       typeof s == "object" && s !== null && s.$$typeof === k && s._store && (s._store.validated = 1);
     }
-    var b = L, k = Symbol.for("react.transitional.element"), v = Symbol.for("react.portal"), P = Symbol.for("react.fragment"), x = Symbol.for("react.strict_mode"), E = Symbol.for("react.profiler"), p = Symbol.for("react.consumer"), S = Symbol.for("react.context"), C = Symbol.for("react.forward_ref"), _ = Symbol.for("react.suspense"), A = Symbol.for("react.suspense_list"), O = Symbol.for("react.memo"), te = Symbol.for("react.lazy"), ce = Symbol.for("react.activity"), I = Symbol.for("react.client.reference"), F = b.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, B = Object.prototype.hasOwnProperty, H = Array.isArray, J = console.createTask ? console.createTask : function() {
+    var b = L, k = Symbol.for("react.transitional.element"), v = Symbol.for("react.portal"), P = Symbol.for("react.fragment"), x = Symbol.for("react.strict_mode"), E = Symbol.for("react.profiler"), p = Symbol.for("react.consumer"), S = Symbol.for("react.context"), C = Symbol.for("react.forward_ref"), _ = Symbol.for("react.suspense"), A = Symbol.for("react.suspense_list"), D = Symbol.for("react.memo"), te = Symbol.for("react.lazy"), ce = Symbol.for("react.activity"), O = Symbol.for("react.client.reference"), F = b.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, B = Object.prototype.hasOwnProperty, H = Array.isArray, J = console.createTask ? console.createTask : function() {
       return null;
     };
     b = {
@@ -248,7 +248,7 @@ React keys must be passed directly to JSX without using spread:
       b,
       l
     )(), se = J(a(l)), ne = {};
-    q.Fragment = P, q.jsx = function(s, g, N, R, D) {
+    q.Fragment = P, q.jsx = function(s, g, N, R, I) {
       var $ = 1e4 > F.recentlyCreatedOwnerStacks++;
       return d(
         s,
@@ -256,11 +256,11 @@ React keys must be passed directly to JSX without using spread:
         N,
         !1,
         R,
-        D,
+        I,
         $ ? Error("react-stack-top-frame") : K,
         $ ? J(a(s)) : se
       );
-    }, q.jsxs = function(s, g, N, R, D) {
+    }, q.jsxs = function(s, g, N, R, I) {
       var $ = 1e4 > F.recentlyCreatedOwnerStacks++;
       return d(
         s,
@@ -268,7 +268,7 @@ React keys must be passed directly to JSX without using spread:
         N,
         !0,
         R,
-        D,
+        I,
         $ ? Error("react-stack-top-frame") : K,
         $ ? J(a(s)) : se
       );
@@ -707,7 +707,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
     return r.forEach((h) => {
       h && typeof h == "object" && Object.keys(h).forEach((j) => w.add(j));
     }), Array.from(w);
-  })(p), _ = t?.vmode === "edit", A = t?.config?.form && Object.keys(t.config.form).length > 0, O = t?.config?.info && Object.keys(t.config.info).length > 0, te = (r) => {
+  })(p), _ = t?.vmode === "edit", A = t?.config?.form && Object.keys(t.config.form).length > 0, D = t?.config?.info && Object.keys(t.config.info).length > 0, te = (r) => {
     let w = "asc";
     x.key === r && x.direction === "asc" ? w = "desc" : x.key === r && x.direction === "desc" && (w = null), E({ key: r, direction: w });
   }, ce = (r) => !x.key || !x.direction ? r : [...r].sort((w, h) => {
@@ -724,7 +724,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
       return x.direction === "asc" ? oe - le : le - oe;
     const Q = String(j).toLowerCase(), G = String(T).toLowerCase();
     return x.direction === "asc" ? Q < G ? -1 : Q > G ? 1 : 0 : Q > G ? -1 : Q < G ? 1 : 0;
-  }), I = he(() => {
+  }), O = he(() => {
     let r = p;
     if (c.trim()) {
       const w = c.toLowerCase();
@@ -734,20 +734,20 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
       }));
     }
     return ce(r);
-  }, [p, c, C, x]), F = Math.ceil(I.length / i), B = (l - 1) * i, H = B + i, J = I.slice(B, H), V = (r) => {
+  }, [p, c, C, x]), F = Math.ceil(O.length / i), B = (l - 1) * i, H = B + i, J = O.slice(B, H), V = (r) => {
     y(Math.max(1, Math.min(r, F)));
   }, re = (r) => {
     u(r), y(1);
   }, K = () => {
     d("");
   }, se = (r, w) => {
-    n?.editInfoRecord?.(r, m);
+    n?.editInfoRecord?.(t?.config?.form, o, r);
   }, ne = (r) => {
     n?.viewInfoRecord?.(r, t?.config?.info);
   }, s = (r, w) => {
     n?.deleteInfoRecord?.(r, m);
   }, g = () => {
-    n?.addInfoRecord?.(t?.config?.form, m);
+    n?.addInfoRecord?.(t?.config?.form, o);
   }, N = (r) => r.split("_").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" "), R = (r, w) => {
     if (r == null || r === "")
       return /* @__PURE__ */ e.jsx("span", { className: "text-gray-400 italic", children: "-" });
@@ -859,7 +859,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
       default:
         return String(r);
     }
-  }, D = (r, w) => {
+  }, I = (r, w) => {
     Re(r).then(() => {
       P(w), k.current && clearTimeout(k.current), k.current = setTimeout(() => {
         P("");
@@ -868,12 +868,12 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
       P("");
     });
   }, $ = he(() => ({
-    totalRows: I.length,
+    totalRows: O.length,
     columns: C.length,
     currentPageStart: B + 1,
-    currentPageEnd: Math.min(H, I.length),
+    currentPageEnd: Math.min(H, O.length),
     isFiltered: c.trim().length > 0
-  }), [I, p, C, B, H]);
+  }), [O, p, C, B, H]);
   return p.length === 0 || C.length === 0 ? /* @__PURE__ */ e.jsxs("div", { className: "flex flex-1 flex-col items-center justify-center text-gray-500", children: [
     /* @__PURE__ */ e.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ e.jsxs("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: [
       /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" }),
@@ -988,7 +988,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
         ] })
       ] })
     ] }),
-    I.length === 0 && c.trim() && /* @__PURE__ */ e.jsxs("div", { className: "h-full flex flex-1 flex-col items-center justify-center py-22 text-gray-500", children: [
+    O.length === 0 && c.trim() && /* @__PURE__ */ e.jsxs("div", { className: "h-full flex flex-1 flex-col items-center justify-center py-22 text-gray-500", children: [
       /* @__PURE__ */ e.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ e.jsx("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" }) }) }),
       /* @__PURE__ */ e.jsx("h3", { className: "text-lg font-medium text-gray-900 mb-2", children: "No Results Found" }),
       /* @__PURE__ */ e.jsxs("p", { className: "text-sm text-gray-500 text-center max-w-sm mb-4", children: [
@@ -1008,7 +1008,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
         }
       )
     ] }),
-    I.length > 0 && /* @__PURE__ */ e.jsx(e.Fragment, { children: /* @__PURE__ */ e.jsx("div", { className: " overflow-auto min-w-full divide-y divide-gray-200 border border-gray-200 bordr-t", children: /* @__PURE__ */ e.jsxs("table", { className: "min-w-full h-full", children: [
+    O.length > 0 && /* @__PURE__ */ e.jsx(e.Fragment, { children: /* @__PURE__ */ e.jsx("div", { className: " overflow-auto min-w-full divide-y divide-gray-200 border border-gray-200 bordr-t", children: /* @__PURE__ */ e.jsxs("table", { className: "min-w-full h-full", children: [
       /* @__PURE__ */ e.jsx("thead", { className: " text-action", children: /* @__PURE__ */ e.jsxs("tr", { children: [
         _ && /* @__PURE__ */ e.jsx(
           "th",
@@ -1044,7 +1044,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
           className: `hover:bg-secondary transition-colors duration-150 ${w % 2 === 0 ? "bg-white" : "bg-gray-50"}`,
           children: [
             _ && /* @__PURE__ */ e.jsx("td", { className: "px-4 sm:px-6 py-1 whitespace-nowrap text-sm bg-muted text-gray-900 sticky left-0 z-10", children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-2", children: [
-              O && /* @__PURE__ */ e.jsx(
+              D && /* @__PURE__ */ e.jsx(
                 "button",
                 {
                   onClick: () => ne(r),
@@ -1109,7 +1109,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
                   /* @__PURE__ */ e.jsx(
                     "button",
                     {
-                      onClick: () => D(r[h] || "", `${r.id}-${h}`),
+                      onClick: () => I(r[h] || "", `${r.id}-${h}`),
                       className: "absolute -right-4 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity ml-2 p-1 rounded bg-gray-50 hover:bg-gray-100 cursor-pointer",
                       title: "Copy",
                       children: v === `${r.id}-${h}` ? /* @__PURE__ */ e.jsx(e.Fragment, { children: /* @__PURE__ */ e.jsx("span", { className: "text-xs text-gray-600", children: "Copied!" }) }) : /* @__PURE__ */ e.jsx("i", { className: "fa-regular fa-copy" })
@@ -1281,7 +1281,7 @@ const ye = ({ groups: t, groupNames: n, setActiveTabIndex: m, activeTabIndex: a 
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ e.jsxs("div", { className: "flex gap-2", children: [
+        /* @__PURE__ */ e.jsxs("div", { className: "hidden sm:flex gap-2", children: [
           /* @__PURE__ */ e.jsx(
             "button",
             {
@@ -1336,8 +1336,8 @@ function je({
   L.useEffect(() => {
     const A = () => {
       if (k.current) {
-        const O = k.current;
-        b(O.scrollWidth > O.clientWidth);
+        const D = k.current;
+        b(D.scrollWidth > D.clientWidth);
       }
     };
     return A(), window.addEventListener("resize", A), () => window.removeEventListener("resize", A);
@@ -1352,10 +1352,10 @@ function je({
     }
   }, [c, v.length]);
   const P = y === "tableft", x = y === "tabright", E = !P && !x, p = t[v[c] ?? ""] || null, S = {
-    single: (A, O) => /* @__PURE__ */ e.jsx(de, { tabObj: A, methods: n, tabName: O, sqlOpsUrls: i, refid: u }),
-    grid: (A, O) => /* @__PURE__ */ e.jsx(ue, { tabObj: A, methods: n, tabName: O, sqlOpsUrls: i, refid: u })
+    single: (A, D) => /* @__PURE__ */ e.jsx(de, { tabObj: A, methods: n, tabName: D, sqlOpsUrls: i, refid: u }),
+    grid: (A, D) => /* @__PURE__ */ e.jsx(ue, { tabObj: A, methods: n, tabName: D, sqlOpsUrls: i, refid: u })
   }, C = p?.config?.uimode, _ = a[C] || S[C] || (() => /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex justify-center p-4", children: "No UI mode for this type" }));
-  return E ? /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex flex-col min-h-0 max-h-screen", children: [
+  return E ? /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex flex-col min-h-0 ", children: [
     /* @__PURE__ */ e.jsx(
       Pe,
       {
@@ -1385,7 +1385,7 @@ function je({
         sqlOpsUrls: i
       }
     )
-  ] }) : /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex min-h-0 max-h-screen", children: [
+  ] }) : /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex min-h-0", children: [
     P && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-r border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
       ye,
       {
@@ -1503,7 +1503,7 @@ function Me({ title: t, children: n }) {
     )
   ] }) });
 }
-function Oe({
+function De({
   groups: t,
   methods: n = {},
   infoData: m,
@@ -1655,7 +1655,7 @@ function ze({
         );
       case "cards":
         return /* @__PURE__ */ e.jsx(
-          Oe,
+          De,
           {
             groups: k,
             viewRenderers: l,
@@ -1682,7 +1682,7 @@ function ze({
         );
     }
   };
-  return /* @__PURE__ */ e.jsxs("div", { className: o.containerClass || "flex flex-col ", children: [
+  return /* @__PURE__ */ e.jsxs("div", { className: o.containerClass || "h-screen flex flex-col ", children: [
     v && /* @__PURE__ */ e.jsx(
       Le,
       {
