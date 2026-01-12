@@ -277,7 +277,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
                     : null;
 
         if (!key) return;
-        methods?.editInfoRecord?.({key:tabObj?.config?.[key]}, refid, row)
+        methods?.editInfoRecord?.({[key]:tabObj?.config?.[key]}, refid, row)
         // Implement edit logic here
     };
 

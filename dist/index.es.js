@@ -744,7 +744,7 @@ function ue({ tabObj: r, methods: n, tabName: f, sqlOpsUrls: a, refid: o }) {
     const m = r?.config;
     if (!m) return;
     const j = m["popup.form"] ? "popup.form" : m.form ? "form" : null;
-    j && n?.editInfoRecord?.({ key: r?.config?.[j] }, o, t);
+    j && n?.editInfoRecord?.({ [j]: r?.config?.[j] }, o, t);
   }, ne = (t) => {
     n?.viewInfoRecord?.(t, r?.config?.info);
   }, s = (t, v) => {
