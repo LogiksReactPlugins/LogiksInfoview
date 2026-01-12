@@ -168,13 +168,22 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
   const rawVal =
     typeof key === "string" ? data?.[key] : undefined;
 
-  const displayVal = resolveDisplayValue(rawVal, options);
+  const displayVal =
+  typeof rawVal === "string"
+    ? field.type === "date"
+      ? rawVal.split("T")[0]
+      : field.type === "time"
+        ? rawVal.includes("T")
+          ? rawVal.slice(11, 16)
+          : rawVal.slice(0, 5)
+        : resolveDisplayValue(rawVal, options)
+    : resolveDisplayValue(rawVal, options);
 
   const isImageField =
     typeof key === "string" &&
     (key.toLowerCase().includes("avatar") ||
       key.toLowerCase().includes("logo"));
- 
+
 
   const renderValue =
     displayVal == null

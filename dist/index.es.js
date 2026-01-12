@@ -1,4 +1,4 @@
-import A, { useState as W, useRef as Se, useMemo as xe } from "react";
+import A, { useState as W, useRef as Ce, useMemo as xe } from "react";
 import O from "axios";
 var ce = { exports: {} }, U = {};
 /**
@@ -11,7 +11,7 @@ var ce = { exports: {} }, U = {};
  * LICENSE file in the root directory of this source tree.
  */
 var ge;
-function Ce() {
+function Ee() {
   if (ge) return U;
   ge = 1;
   var t = Symbol.for("react.transitional.element"), n = Symbol.for("react.fragment");
@@ -19,8 +19,8 @@ function Ce() {
     var p = null;
     if (l !== void 0 && (p = "" + l), o.key !== void 0 && (p = "" + o.key), "key" in o) {
       l = {};
-      for (var i in o)
-        i !== "key" && (l[i] = o[i]);
+      for (var c in o)
+        c !== "key" && (l[c] = o[c]);
     } else l = o;
     return o = l.ref, {
       $$typeof: t,
@@ -43,7 +43,7 @@ var ee = {};
  * LICENSE file in the root directory of this source tree.
  */
 var pe;
-function Ee() {
+function Te() {
   return pe || (pe = 1, process.env.NODE_ENV !== "production" && function() {
     function t(s) {
       if (s == null) return null;
@@ -133,7 +133,7 @@ function Ee() {
       }
       return s.key !== void 0;
     }
-    function i(s, x) {
+    function c(s, x) {
       function N() {
         Q || (Q = !0, console.error(
           "%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)",
@@ -151,7 +151,7 @@ function Ee() {
         "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
       )), s = this.props.ref, s !== void 0 ? s : null;
     }
-    function c(s, x, N, R, D, M, Z, B) {
+    function d(s, x, N, R, D, M, Z, B) {
       return N = M.ref, s = {
         $$typeof: k,
         type: s,
@@ -183,7 +183,7 @@ function Ee() {
         value: B
       }), Object.freeze && (Object.freeze(s.props), Object.freeze(s)), s;
     }
-    function d(s, x, N, R, D, M, Z, B) {
+    function i(s, x, N, R, D, M, Z, B) {
       var r = x.children;
       if (r !== void 0)
         if (R)
@@ -219,10 +219,10 @@ React keys must be passed directly to JSX without using spread:
         for (var b in x)
           b !== "key" && (N[b] = x[b]);
       } else N = x;
-      return r && i(
+      return r && c(
         N,
         typeof s == "function" ? s.displayName || s.name || "Unknown" : s
-      ), c(
+      ), d(
         s,
         r,
         M,
@@ -250,7 +250,7 @@ React keys must be passed directly to JSX without using spread:
     )(), ae = z(a(l)), q = {};
     ee.Fragment = L, ee.jsx = function(s, x, N, R, D) {
       var M = 1e4 > V.recentlyCreatedOwnerStacks++;
-      return d(
+      return i(
         s,
         x,
         N,
@@ -262,7 +262,7 @@ React keys must be passed directly to JSX without using spread:
       );
     }, ee.jsxs = function(s, x, N, R, D) {
       var M = 1e4 > V.recentlyCreatedOwnerStacks++;
-      return d(
+      return i(
         s,
         x,
         N,
@@ -276,14 +276,14 @@ React keys must be passed directly to JSX without using spread:
   }()), ee;
 }
 var ye;
-function Te() {
-  return ye || (ye = 1, process.env.NODE_ENV === "production" ? ce.exports = Ce() : ce.exports = Ee()), ce.exports;
+function Re() {
+  return ye || (ye = 1, process.env.NODE_ENV === "production" ? ce.exports = Ee() : ce.exports = Te()), ce.exports;
 }
-var e = Te();
-function Re(t) {
+var e = Re();
+function Ae(t) {
   return t.template ? t.template : "tab";
 }
-function Ae(t) {
+function Le(t) {
   const n = {};
   return Object.entries(t).forEach(([m, a]) => {
     const o = a.group || "General";
@@ -307,7 +307,7 @@ const te = {
 function re(t) {
   return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].includes(t) ? t : 6;
 }
-async function Le(t) {
+async function Pe(t) {
   if (navigator.clipboard && navigator.clipboard.writeText)
     try {
       await navigator.clipboard.writeText(t);
@@ -333,7 +333,7 @@ const Y = (t, n) => typeof t == "string" ? t.replace(
     Y(m, n),
     Y(a, n)
   ])
-) : t, Ne = (t) => {
+) : t, ke = (t) => {
   const n = Array.isArray(t?.data?.data) ? t.data.data[0] : Array.isArray(t?.data) ? t.data[0] : t?.data?.data ?? t?.data;
   return n && typeof n == "object" && !Array.isArray(n) ? n : null;
 }, be = (t, n, m) => {
@@ -345,7 +345,7 @@ const Y = (t, n) => typeof t == "string" ? t.replace(
     l[t] != null && l[n] != null && (o[l[t]] = l[n]);
   }), o;
 };
-function Pe(t, n) {
+function je(t, n) {
   if (!n || Object.keys(n).length === 0) return t;
   if (typeof t == "number")
     return n[String(t)] ?? t;
@@ -355,20 +355,20 @@ function Pe(t, n) {
   }
   return t;
 }
-const ke = "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg";
+const Se = "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg";
 function se({ field: t, data: n, methods: m = {}, sqlOpsUrls: a, refid: o }) {
   const l = t?.name, p = `
     text-sm text-gray-600 break-words
-  `, i = `
+  `, c = `
     block text-sm font-semibold  transition-all duration-300 text-gray-700 capitalize
-  `, [u, c] = W(
+  `, [u, d] = W(
     t.options ?? {}
   );
   A.useEffect(() => {
     let v = !0;
     return (async () => {
       if (t?.options) {
-        c(t.options);
+        d(t.options);
         return;
       }
       const f = t?.source ?? {};
@@ -377,12 +377,12 @@ function se({ field: t, data: n, methods: m = {}, sqlOpsUrls: a, refid: o }) {
         if (g)
           try {
             const S = await Promise.resolve(g());
-            v && c(S ?? {});
+            v && d(S ?? {});
           } catch (S) {
-            console.error("Method execution failed:", S), v && c({});
+            console.error("Method execution failed:", S), v && d({});
           }
         else
-          v && c({});
+          v && d({});
       }
       if (f.type === "api" && f.url)
         try {
@@ -393,9 +393,9 @@ function se({ field: t, data: n, methods: m = {}, sqlOpsUrls: a, refid: o }) {
             params: f.params ?? {},
             headers: f.headers ?? {}
           }), g = t.valueKey || "value", S = t.labelKey || "title", C = be(g, S, T);
-          v && c(C);
+          v && d(C);
         } catch (T) {
-          console.error("API execution failed:", T), v && c({});
+          console.error("API execution failed:", T), v && d({});
         }
       if (t.table || t.type === "dataSelector") {
         if (!a) {
@@ -443,7 +443,7 @@ function se({ field: t, data: n, methods: m = {}, sqlOpsUrls: a, refid: o }) {
               Authorization: `Bearer ${a?.accessToken}`
             }
           }), C = t.valueKey || "value", _ = t.labelKey || "title", E = be(C, _, S);
-          v && c(E);
+          v && d(E);
         } catch (T) {
           console.error("API fetch failed:", T);
         }
@@ -459,9 +459,9 @@ function se({ field: t, data: n, methods: m = {}, sqlOpsUrls: a, refid: o }) {
     t.where,
     o
   ]);
-  const d = typeof l == "string" ? n?.[l] : void 0, h = Pe(d, u), y = typeof l == "string" && (l.toLowerCase().includes("avatar") || l.toLowerCase().includes("logo")), k = h == null ? "" : typeof h == "string" || typeof h == "number" ? h : JSON.stringify(h);
+  const i = typeof l == "string" ? n?.[l] : void 0, h = typeof i == "string" ? t.type === "date" ? i.split("T")[0] : t.type === "time" ? i.includes("T") ? i.slice(11, 16) : i.slice(0, 5) : je(i, u) : je(i, u), y = typeof l == "string" && (l.toLowerCase().includes("avatar") || l.toLowerCase().includes("logo")), k = h == null ? "" : typeof h == "string" || typeof h == "number" ? h : JSON.stringify(h);
   return /* @__PURE__ */ e.jsxs("div", { className: "px-3 py-2 bg-gray-50 rounded-lg", children: [
-    /* @__PURE__ */ e.jsx("label", { className: i, children: t?.label }),
+    /* @__PURE__ */ e.jsx("label", { className: c, children: t?.label }),
     /* @__PURE__ */ e.jsx("div", { className: "relative", children: y ? /* @__PURE__ */ e.jsx(
       "img",
       {
@@ -470,7 +470,7 @@ function se({ field: t, data: n, methods: m = {}, sqlOpsUrls: a, refid: o }) {
         className: "w-16 h-16 rounded-full object-cover border",
         onError: (v) => {
           const L = v.currentTarget;
-          L.onerror = null, L.src = ke;
+          L.onerror = null, L.src = Se;
         }
       }
     ) : /* @__PURE__ */ e.jsx("p", { className: p, children: k }) })
@@ -486,7 +486,7 @@ function _e({ commonInfo: t, infoData: n, hiddenFields: m = [] }) {
         className: " w-full h-full object-cover border-4 rounded-[12px] border-white shadow-lg",
         onError: (a) => {
           const o = a.currentTarget;
-          o.onerror = null, o.src = ke;
+          o.onerror = null, o.src = Se;
         }
       }
     ) }) }),
@@ -506,58 +506,58 @@ function _e({ commonInfo: t, infoData: n, hiddenFields: m = [] }) {
 function me({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
   const [l, p] = A.useState(null);
   return A.useEffect(() => {
-    let i = !1;
+    let c = !1;
     return (async () => {
-      const c = t?.config;
-      if (!c?.type) {
-        i || p(null);
+      const d = t?.config;
+      if (!d?.type) {
+        c || p(null);
         return;
       }
-      if (c.type === "method") {
-        const d = c.method, h = d ? n[d] : void 0;
+      if (d.type === "method") {
+        const i = d.method, h = i ? n[i] : void 0;
         if (h)
           try {
             const y = await Promise.resolve(h());
-            i || p(y || null);
+            c || p(y || null);
           } catch (y) {
-            console.error("Method execution failed:", y), i || p(null);
+            console.error("Method execution failed:", y), c || p(null);
           }
         else
-          i || p(null);
+          c || p(null);
       }
-      if (c.type === "api")
+      if (d.type === "api")
         try {
-          const d = await O({
-            method: c.method || "GET",
+          const i = await O({
+            method: d.method || "GET",
             // GET, POST, etc.
-            url: c.url,
-            data: c.body || {},
+            url: d.url,
+            data: d.body || {},
             // request body
-            params: c.params || {},
+            params: d.params || {},
             // query params
-            headers: c.headers || {}
+            headers: d.headers || {}
             // optional headers
           });
-          i || p(d.data || null);
-        } catch (d) {
-          console.error("API fetch failed:", d), i || p(null);
+          c || p(i.data || null);
+        } catch (i) {
+          console.error("API fetch failed:", i), c || p(null);
         }
-      if (c.type === "sql" && o && o != "0") {
+      if (d.type === "sql" && o && o != "0") {
         if (!a) {
           console.error("SQL source requires formJson.endPoints but it is missing");
           return;
         }
         try {
-          const d = await O({
+          const i = await O({
             method: "POST",
             url: a.baseURL + a.registerQuery,
             data: {
               query: {
-                ...c,
-                cols: c.cols,
-                table: c.table,
-                where: Y(c.where, {
-                  refid: c.refid
+                ...d,
+                cols: d.cols,
+                table: d.table,
+                where: Y(d.where, {
+                  refid: d.refid
                 })
               }
             },
@@ -568,20 +568,20 @@ function me({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
             method: "POST",
             url: a.baseURL + a.runQuery,
             data: {
-              queryid: d.data.queryid,
+              queryid: i.data.queryid,
               filter: {}
             },
             headers: {
               Authorization: `Bearer ${a?.accessToken}`
             }
-          }), y = Ne(h);
-          i || p(y);
-        } catch (d) {
-          console.error("API fetch failed:", d);
+          }), y = ke(h);
+          c || p(y);
+        } catch (i) {
+          console.error("API fetch failed:", i);
         }
       }
     })(), () => {
-      i = !0;
+      c = !0;
     };
   }, [
     t?.config?.type || "",
@@ -590,20 +590,20 @@ function me({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
     JSON.stringify(t?.config?.params || {}),
     JSON.stringify(t?.config?.body || {}),
     JSON.stringify(t?.config?.headers || {})
-  ]), /* @__PURE__ */ e.jsx("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: l ? Object.keys(l).map((i, u) => /* @__PURE__ */ e.jsx(
+  ]), /* @__PURE__ */ e.jsx("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: l ? Object.keys(l).map((c, u) => /* @__PURE__ */ e.jsx(
     "div",
     {
       className: `col-span-12 sm:col-span-6 ${te[re(t.width)] || "lg:col-span-2"}`,
       children: /* @__PURE__ */ e.jsx(
         se,
         {
-          field: { name: i, label: i },
+          field: { name: c, label: c },
           data: l ?? {},
           methods: n,
           refid: o,
           sqlOpsUrls: a
         },
-        i
+        c
       )
     },
     `field-${u}`
@@ -617,7 +617,7 @@ function me({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
   ] }) }) }) });
 }
 function he({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
-  const [l, p] = W(1), [i, u] = W(10), [c, d] = W(""), [h, y] = A.useState([]), k = Se(null), [v, L] = W(null), [f, T] = W({ key: "", direction: null });
+  const [l, p] = W(1), [c, u] = W(10), [d, i] = W(""), [h, y] = A.useState([]), k = Ce(null), [v, L] = W(null), [f, T] = W({ key: "", direction: null });
   A.useEffect(() => {
     let r = !1;
     return (async () => {
@@ -726,20 +726,20 @@ function he({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
     return f.direction === "asc" ? G < H ? -1 : G > H ? 1 : 0 : G > H ? -1 : G < H ? 1 : 0;
   }), I = xe(() => {
     let r = g;
-    if (c.trim()) {
-      const j = c.toLowerCase();
+    if (d.trim()) {
+      const j = d.toLowerCase();
       r = g.filter((b) => C.some((w) => {
         const P = b[w];
         return P == null ? !1 : String(P).toLowerCase().includes(j);
       }));
     }
     return V(r);
-  }, [g, c, C, f]), K = Math.ceil(I.length / i), z = (l - 1) * i, Q = z + i, ne = I.slice(z, Q), X = (r) => {
+  }, [g, d, C, f]), K = Math.ceil(I.length / c), z = (l - 1) * c, Q = z + c, ne = I.slice(z, Q), X = (r) => {
     p(Math.max(1, Math.min(r, K)));
   }, ae = (r) => {
     u(r), p(1);
   }, q = () => {
-    d("");
+    i("");
   }, s = (r, j) => {
     n?.editInfoRecord?.({ [$]: t?.config?.[$] }, o, r);
   }, x = (r) => {
@@ -860,7 +860,7 @@ function he({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
         return String(r);
     }
   }, Z = (r, j) => {
-    Le(r).then(() => {
+    Pe(r).then(() => {
       L(j), k.current && clearTimeout(k.current), k.current = setTimeout(() => {
         L("");
       }, 2e3);
@@ -872,7 +872,7 @@ function he({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
     columns: C.length,
     currentPageStart: z + 1,
     currentPageEnd: Math.min(Q, I.length),
-    isFiltered: c.trim().length > 0
+    isFiltered: d.trim().length > 0
   }), [I, g, C, z, Q]);
   return g.length === 0 || C.length === 0 ? /* @__PURE__ */ e.jsxs("div", { className: "flex flex-1 flex-col items-center justify-center text-gray-500", children: [
     /* @__PURE__ */ e.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ e.jsxs("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: [
@@ -901,12 +901,12 @@ function he({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
           {
             type: "text",
             placeholder: "Search across all columns...",
-            value: c,
-            onChange: (r) => d(r.target.value),
+            value: d,
+            onChange: (r) => i(r.target.value),
             className: "block w-full px-10 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent "
           }
         ),
-        c && /* @__PURE__ */ e.jsx(
+        d && /* @__PURE__ */ e.jsx(
           "button",
           {
             onClick: q,
@@ -946,7 +946,7 @@ function he({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
           /* @__PURE__ */ e.jsxs(
             "select",
             {
-              value: i,
+              value: c,
               onChange: (r) => ae(Number(r.target.value)),
               className: "border border-gray-300 text-gray-900 rounded px-1 py-1 text-sm outline-0",
               children: [
@@ -988,14 +988,14 @@ function he({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
         ] })
       ] })
     ] }),
-    I.length === 0 && c.trim() && /* @__PURE__ */ e.jsxs("div", { className: "h-full flex flex-1 flex-col items-center justify-center py-22 text-gray-500", children: [
+    I.length === 0 && d.trim() && /* @__PURE__ */ e.jsxs("div", { className: "h-full flex flex-1 flex-col items-center justify-center py-22 text-gray-500", children: [
       /* @__PURE__ */ e.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ e.jsx("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" }) }) }),
       /* @__PURE__ */ e.jsx("h3", { className: "text-lg font-medium text-gray-900 mb-2", children: "No Results Found" }),
       /* @__PURE__ */ e.jsxs("p", { className: "text-sm text-gray-500 text-center max-w-sm mb-4", children: [
         "No records match your search for ",
         /* @__PURE__ */ e.jsxs("strong", { children: [
           '"',
-          c,
+          d,
           '"'
         ] })
       ] }),
@@ -1126,7 +1126,7 @@ function he({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
     ] }) }) })
   ] });
 }
-const je = ({ groups: t, groupNames: n, setActiveTabIndex: m, activeTabIndex: a }) => /* @__PURE__ */ e.jsx(
+const ve = ({ groups: t, groupNames: n, setActiveTabIndex: m, activeTabIndex: a }) => /* @__PURE__ */ e.jsx(
   "nav",
   {
     className: "flex flex-col overflow-y-auto h-full px-2 py-1 space-y-1",
@@ -1149,19 +1149,19 @@ const je = ({ groups: t, groupNames: n, setActiveTabIndex: m, activeTabIndex: a 
   layoutConfig: o,
   showScrollHint: l,
   isCommonInfo: p,
-  tabsNavRef: i
+  tabsNavRef: c
 }) => {
-  const [u, c] = A.useState(!1), d = A.useRef(null);
+  const [u, d] = A.useState(!1), i = A.useRef(null);
   return A.useEffect(() => {
     const h = (y) => {
-      d.current && !d.current.contains(y.target) && c(!1);
+      i.current && !i.current.contains(y.target) && d(!1);
     };
     return document.addEventListener("mousedown", h), () => document.removeEventListener("mousedown", h);
   }, []), /* @__PURE__ */ e.jsxs("div", { className: o?.tabNavClass || "relative z-10", children: [
     l && /* @__PURE__ */ e.jsx("div", { className: "absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 flex items-center justify-center", children: /* @__PURE__ */ e.jsx(
       "button",
       {
-        onClick: () => i.current?.scrollBy({ left: -200, behavior: "smooth" }),
+        onClick: () => c.current?.scrollBy({ left: -200, behavior: "smooth" }),
         className: "w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group",
         children: /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 19l-7-7 7-7" }) })
       }
@@ -1170,16 +1170,16 @@ const je = ({ groups: t, groupNames: n, setActiveTabIndex: m, activeTabIndex: a 
       l && /* @__PURE__ */ e.jsx(
         "button",
         {
-          onClick: () => i.current?.scrollBy({ left: 200, behavior: "smooth" }),
+          onClick: () => c.current?.scrollBy({ left: 200, behavior: "smooth" }),
           className: "w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group",
           children: /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 5l7 7-7 7" }) })
         }
       ),
-      /* @__PURE__ */ e.jsxs("div", { className: "relative", ref: d, children: [
+      /* @__PURE__ */ e.jsxs("div", { className: "relative", ref: i, children: [
         /* @__PURE__ */ e.jsx(
           "button",
           {
-            onClick: () => c(!u),
+            onClick: () => d(!u),
             className: "ml-1 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200",
             children: "⋮"
           }
@@ -1189,7 +1189,7 @@ const je = ({ groups: t, groupNames: n, setActiveTabIndex: m, activeTabIndex: a 
           {
             type: "button",
             onClick: () => {
-              m(y), c(!1);
+              m(y), d(!1);
             },
             className: `w-full text-left px-3 py-2 text-sm truncate hover:bg-gray-100 ${a === y ? "bg-gray-50 font-semibold text-action" : "text-gray-700"}`,
             children: t[h]?.label || h
@@ -1201,7 +1201,7 @@ const je = ({ groups: t, groupNames: n, setActiveTabIndex: m, activeTabIndex: a 
     /* @__PURE__ */ e.jsx("div", { className: `relative bg-gray-100 ${p ? "" : "rounded-t-lg"} px-12 pt-1 shadow-inner overflow-hidden`, children: /* @__PURE__ */ e.jsx(
       "nav",
       {
-        ref: i,
+        ref: c,
         className: "relative flex overflow-x-auto scrollbar-hide scroll-smooth",
         style: {
           scrollbarWidth: "none",
@@ -1226,7 +1226,7 @@ const je = ({ groups: t, groupNames: n, setActiveTabIndex: m, activeTabIndex: a 
       }
     ) })
   ] });
-}, ve = ({
+}, we = ({
   groupNames: t,
   activeTabIndex: n,
   layoutConfig: m,
@@ -1234,30 +1234,30 @@ const je = ({ groups: t, groupNames: n, setActiveTabIndex: m, activeTabIndex: a 
   infoData: o,
   setActiveTabIndex: l,
   renderView: p,
-  methods: i = {},
+  methods: c = {},
   refid: u,
-  sqlOpsUrls: c
+  sqlOpsUrls: d
 }) => /* @__PURE__ */ e.jsxs(
   "div",
   {
     className: "bg-white rounded-b-lg border  border-t-0 border-gray-100 p-3 animate-in fade-in duration-300 flex-1 flex flex-col min-h-0",
     children: [
-      t.length > 0 ? a?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: m?.fieldGridClass || "grid grid-cols-12 gap-2", children: a.fields.map((d, h) => /* @__PURE__ */ e.jsx(
+      t.length > 0 ? a?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: m?.fieldGridClass || "grid grid-cols-12 gap-2", children: a.fields.map((i, h) => /* @__PURE__ */ e.jsx(
         "div",
         {
-          className: `col-span-12 sm:col-span-6 ${te[re(d.width)] || "lg:col-span-2"}`,
+          className: `col-span-12 sm:col-span-6 ${te[re(i.width)] || "lg:col-span-2"}`,
           children: /* @__PURE__ */ e.jsx(
             se,
             {
-              field: d,
+              field: i,
               data: o ?? {},
-              methods: i,
+              methods: c,
               refid: u,
-              sqlOpsUrls: c
+              sqlOpsUrls: d
             }
           )
         },
-        d?.name ?? `field-${h}`
+        i?.name ?? `field-${h}`
       )) }) }) : a ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: p(a, t[n] || "") }) : null : /* @__PURE__ */ e.jsx("div", { className: "flex-1 col-span-full text-center py-8 text-gray-500", children: "No data available" }),
       t.length > 5 && /* @__PURE__ */ e.jsxs("div", { className: "mt-10 pt-2 border-t border-gray-100 flex items-center justify-between gap-4", children: [
         /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-2 text-sm text-gray-500", children: [
@@ -1268,7 +1268,7 @@ const je = ({ groups: t, groupNames: n, setActiveTabIndex: m, activeTabIndex: a 
             t.length
           ] }),
           /* @__PURE__ */ e.jsxs("div", { className: "flex gap-1", children: [
-            t.slice(0, 5).map((d, h) => /* @__PURE__ */ e.jsx(
+            t.slice(0, 5).map((i, h) => /* @__PURE__ */ e.jsx(
               "div",
               {
                 className: `w-2 h-2 rounded-full transition-all duration-300 ${h === n ? "bg-action w-6" : "bg-gray-300"}`
@@ -1309,7 +1309,7 @@ const je = ({ groups: t, groupNames: n, setActiveTabIndex: m, activeTabIndex: a 
           " of ",
           t.length
         ] }),
-        /* @__PURE__ */ e.jsx("div", { className: "flex gap-1", children: t.map((d, h) => /* @__PURE__ */ e.jsx(
+        /* @__PURE__ */ e.jsx("div", { className: "flex gap-1", children: t.map((i, h) => /* @__PURE__ */ e.jsx(
           "div",
           {
             className: `w-2 h-2 rounded-full transition-all duration-300 ${h === n ? "bg-action w-6" : "bg-gray-300"}`
@@ -1321,7 +1321,7 @@ const je = ({ groups: t, groupNames: n, setActiveTabIndex: m, activeTabIndex: a 
   },
   t[n]
 );
-function we({
+function Ne({
   groups: t,
   methods: n = {},
   infoData: m,
@@ -1329,10 +1329,10 @@ function we({
   isCommonInfo: o,
   layoutConfig: l = {},
   viewMode: p,
-  sqlOpsUrls: i = {},
+  sqlOpsUrls: c = {},
   refid: u
 }) {
-  const [c, d] = A.useState(0), [h, y] = A.useState(!1), k = A.useRef(null), v = Object.keys(t);
+  const [d, i] = A.useState(0), [h, y] = A.useState(!1), k = A.useRef(null), v = Object.keys(t);
   A.useEffect(() => {
     const E = () => {
       if (k.current) {
@@ -1343,17 +1343,17 @@ function we({
     return E(), window.addEventListener("resize", E), () => window.removeEventListener("resize", E);
   }, [v.length]), A.useEffect(() => {
     if (k.current && v.length > 0) {
-      const E = k.current.children[c];
+      const E = k.current.children[d];
       E && E.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
         inline: "center"
       });
     }
-  }, [c, v.length]);
-  const L = p === "tableft", f = p === "tabright", T = !L && !f, g = t[v[c] ?? ""] || null, S = {
-    single: (E, $) => /* @__PURE__ */ e.jsx(me, { tabObj: E, methods: n, tabName: $, sqlOpsUrls: i, refid: u }),
-    grid: (E, $) => /* @__PURE__ */ e.jsx(he, { tabObj: E, methods: n, tabName: $, sqlOpsUrls: i, refid: u })
+  }, [d, v.length]);
+  const L = p === "tableft", f = p === "tabright", T = !L && !f, g = t[v[d] ?? ""] || null, S = {
+    single: (E, $) => /* @__PURE__ */ e.jsx(me, { tabObj: E, methods: n, tabName: $, sqlOpsUrls: c, refid: u }),
+    grid: (E, $) => /* @__PURE__ */ e.jsx(he, { tabObj: E, methods: n, tabName: $, sqlOpsUrls: c, refid: u })
   }, C = g?.config?.uimode, _ = a[C] || S[C] || (() => /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex justify-center p-4", children: "No UI mode for this type" }));
   return T ? /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex flex-col min-h-0 ", children: [
     /* @__PURE__ */ e.jsx(
@@ -1361,8 +1361,8 @@ function we({
       {
         groupNames: v,
         groups: t,
-        setActiveTabIndex: d,
-        activeTabIndex: c,
+        setActiveTabIndex: i,
+        activeTabIndex: d,
         tabsNavRef: k,
         isCommonInfo: o,
         showScrollHint: h,
@@ -1370,54 +1370,54 @@ function we({
       }
     ),
     /* @__PURE__ */ e.jsx(
-      ve,
+      we,
       {
         groupNames: v,
-        activeTabIndex: c,
+        activeTabIndex: d,
         layoutConfig: l,
         tabObj: g,
         infoData: m,
-        setActiveTabIndex: d,
+        setActiveTabIndex: i,
         renderView: _,
         groups: t,
         methods: n,
         refid: u,
-        sqlOpsUrls: i
+        sqlOpsUrls: c
       }
     )
   ] }) : /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex min-h-0", children: [
     L && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-r border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
-      je,
-      {
-        groupNames: v,
-        groups: t,
-        setActiveTabIndex: d,
-        activeTabIndex: c
-      }
-    ) }),
-    /* @__PURE__ */ e.jsx("main", { className: "flex-1 flex flex-col min-h-0 overflow-auto", children: /* @__PURE__ */ e.jsx(
       ve,
       {
         groupNames: v,
-        activeTabIndex: c,
+        groups: t,
+        setActiveTabIndex: i,
+        activeTabIndex: d
+      }
+    ) }),
+    /* @__PURE__ */ e.jsx("main", { className: "flex-1 flex flex-col min-h-0 overflow-auto", children: /* @__PURE__ */ e.jsx(
+      we,
+      {
+        groupNames: v,
+        activeTabIndex: d,
         layoutConfig: l,
         tabObj: g,
         infoData: m,
-        setActiveTabIndex: d,
+        setActiveTabIndex: i,
         renderView: _,
         groups: t,
         methods: n,
         refid: u,
-        sqlOpsUrls: i
+        sqlOpsUrls: c
       }
     ) }),
     f && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-l border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
-      je,
+      ve,
       {
         groupNames: v,
         groups: t,
-        setActiveTabIndex: d,
-        activeTabIndex: c
+        setActiveTabIndex: i,
+        activeTabIndex: d
       }
     ) })
   ] });
@@ -1469,17 +1469,17 @@ function Oe({
   refid: l
 }) {
   const p = {
-    single: (i, u) => /* @__PURE__ */ e.jsx(me, { tabObj: i, methods: n, tabName: u, sqlOpsUrls: o, refid: l }),
-    grid: (i, u) => /* @__PURE__ */ e.jsx(he, { tabObj: i, methods: n, tabName: u, sqlOpsUrls: o, refid: l })
+    single: (c, u) => /* @__PURE__ */ e.jsx(me, { tabObj: c, methods: n, tabName: u, sqlOpsUrls: o, refid: l }),
+    grid: (c, u) => /* @__PURE__ */ e.jsx(he, { tabObj: c, methods: n, tabName: u, sqlOpsUrls: o, refid: l })
   };
-  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2 flex flex-col min-h-0", children: t && Object.entries(t).map(([i, u], c) => /* @__PURE__ */ e.jsx(Me, { title: i, isFirst: c === 0, children: u?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: u.fields.map((d, h) => /* @__PURE__ */ e.jsx(
+  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2 flex flex-col min-h-0", children: t && Object.entries(t).map(([c, u], d) => /* @__PURE__ */ e.jsx(Me, { title: c, isFirst: d === 0, children: u?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: u.fields.map((i, h) => /* @__PURE__ */ e.jsx(
     "div",
     {
-      className: `col-span-12 sm:col-span-6 ${te[re(d.width)] || "lg:col-span-2"}`,
-      children: /* @__PURE__ */ e.jsx(se, { methods: n, field: d, data: m ?? {}, sqlOpsUrls: o, refid: l })
+      className: `col-span-12 sm:col-span-6 ${te[re(i.width)] || "lg:col-span-2"}`,
+      children: /* @__PURE__ */ e.jsx(se, { methods: n, field: i, data: m ?? {}, sqlOpsUrls: o, refid: l })
     },
-    d?.name ?? `field-${h}`
-  )) }) }) : u ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: a[u.config?.uimode]?.(u) || p[u.config?.uimode]?.(u, i) || /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }) }) : null }, i)) }) }) });
+    i?.name ?? `field-${h}`
+  )) }) }) : u ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: a[u.config?.uimode]?.(u) || p[u.config?.uimode]?.(u, c) || /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }) }) : null }, c)) }) }) });
 }
 function De({ title: t, children: n }) {
   return /* @__PURE__ */ e.jsx("div", { className: "group relative mt-1 flex-1 flex flex-col min-h-0 max-h-screen", children: /* @__PURE__ */ e.jsxs("div", { className: "flex flex-col min-h-0 relative  bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden ", children: [
@@ -1512,28 +1512,28 @@ function Ie({
   refid: l
 }) {
   const p = {
-    single: (i, u) => /* @__PURE__ */ e.jsx(me, { tabObj: i, methods: n, tabName: u, sqlOpsUrls: o, refid: l }),
-    grid: (i, u) => /* @__PURE__ */ e.jsx(he, { tabObj: i, methods: n, tabName: u, sqlOpsUrls: o, refid: l })
+    single: (c, u) => /* @__PURE__ */ e.jsx(me, { tabObj: c, methods: n, tabName: u, sqlOpsUrls: o, refid: l }),
+    grid: (c, u) => /* @__PURE__ */ e.jsx(he, { tabObj: c, methods: n, tabName: u, sqlOpsUrls: o, refid: l })
   };
-  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2  flex flex-col min-h-0", children: t && Object.entries(t).map(([i, u], c) => /* @__PURE__ */ e.jsx(De, { title: i, children: u?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: u.fields.map((d, h) => /* @__PURE__ */ e.jsx(
+  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2  flex flex-col min-h-0", children: t && Object.entries(t).map(([c, u], d) => /* @__PURE__ */ e.jsx(De, { title: c, children: u?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: u.fields.map((i, h) => /* @__PURE__ */ e.jsx(
     "div",
     {
-      className: `col-span-12 sm:col-span-6 ${te[re(d.width)] || "lg:col-span-2"}`,
-      children: /* @__PURE__ */ e.jsx(se, { methods: n, field: d, data: m ?? {}, sqlOpsUrls: o, refid: l })
+      className: `col-span-12 sm:col-span-6 ${te[re(i.width)] || "lg:col-span-2"}`,
+      children: /* @__PURE__ */ e.jsx(se, { methods: n, field: i, data: m ?? {}, sqlOpsUrls: o, refid: l })
     },
-    d?.name ?? `field-${h}`
-  )) }) }) : u ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: a[u.config?.uimode]?.(u) || p[u.config?.uimode]?.(u, i) || /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }) }) : null }, i)) }) }) });
+    i?.name ?? `field-${h}`
+  )) }) }) : u ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: a[u.config?.uimode]?.(u) || p[u.config?.uimode]?.(u, c) || /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }) }) : null }, c)) }) }) });
 }
 function Fe({
   infoViewJson: t,
   data: n = {},
   hiddenFields: m = [],
-  groupFieldsFn: a = Ae,
+  groupFieldsFn: a = Le,
   layoutConfig: o = {},
   viewRenderers: l = {},
   methods: p = {}
 }) {
-  const [i, u] = A.useState({}), c = Re(t.infoview ?? {}), d = t.endPoints ?? {}, h = A.useMemo(
+  const [c, u] = A.useState({}), d = Ae(t.infoview ?? {}), i = t.endPoints ?? {}, h = A.useMemo(
     () => a(t.fields || {}),
     [t.fields, a]
   ), y = t?.source?.refid;
@@ -1572,14 +1572,14 @@ function Fe({
           console.error("API fetch failed:", S), f || u({});
         }
       if (g.type === "sql" && g.refid && g.refid != "0") {
-        if (!d) {
+        if (!i) {
           console.error("SQL source requires formJson.endPoints but it is missing");
           return;
         }
         try {
           const S = await O({
             method: "POST",
-            url: d.baseURL + d.registerQuery,
+            url: i.baseURL + i.registerQuery,
             data: {
               query: {
                 ...g,
@@ -1591,19 +1591,19 @@ function Fe({
               }
             },
             headers: {
-              Authorization: `Bearer ${d?.accessToken}`
+              Authorization: `Bearer ${i?.accessToken}`
             }
           }), C = await O({
             method: "POST",
-            url: d.baseURL + d.runQuery,
+            url: i.baseURL + i.runQuery,
             data: {
               queryid: S.data.queryid,
               filter: {}
             },
             headers: {
-              Authorization: `Bearer ${d?.accessToken}`
+              Authorization: `Bearer ${i?.accessToken}`
             }
-          }), _ = Ne(C) ?? {};
+          }), _ = ke(C) ?? {};
           f || u(_);
         } catch (S) {
           console.error("API fetch failed:", S);
@@ -1630,9 +1630,9 @@ function Fe({
           {
             groups: k,
             methods: p,
-            infoData: i,
+            infoData: c,
             viewRenderers: l,
-            sqlOpsUrls: d,
+            sqlOpsUrls: i,
             refid: y
           }
         );
@@ -1640,16 +1640,16 @@ function Fe({
       case "tableft":
       case "tabright":
         return /* @__PURE__ */ e.jsx(
-          we,
+          Ne,
           {
             groups: k,
             viewRenderers: l,
             layoutConfig: o,
             methods: p,
-            infoData: i,
+            infoData: c,
             isCommonInfo: !!v,
             viewMode: f,
-            sqlOpsUrls: d,
+            sqlOpsUrls: i,
             refid: y
           }
         );
@@ -1660,23 +1660,23 @@ function Fe({
             groups: k,
             viewRenderers: l,
             methods: p,
-            infoData: i,
-            sqlOpsUrls: d,
+            infoData: c,
+            sqlOpsUrls: i,
             refid: y
           }
         );
       default:
         return /* @__PURE__ */ e.jsx(
-          we,
+          Ne,
           {
             groups: k,
             viewRenderers: l,
             layoutConfig: o,
             methods: p,
-            infoData: i,
+            infoData: c,
             isCommonInfo: !!v,
             viewMode: f,
-            sqlOpsUrls: d,
+            sqlOpsUrls: i,
             refid: y
           }
         );
@@ -1687,11 +1687,11 @@ function Fe({
       _e,
       {
         commonInfo: v,
-        infoData: i,
+        infoData: c,
         hiddenFields: m
       }
     ),
-    L(c)
+    L(d)
   ] });
 }
 export {
