@@ -68,7 +68,7 @@ function Se() {
         switch (typeof s.tag == "number" && console.error(
           "Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."
         ), s.$$typeof) {
-          case v:
+          case w:
             return "Portal";
           case S:
             return (s.displayName || "Context") + ".Provider";
@@ -151,7 +151,7 @@ function Se() {
         "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
       )), s = this.props.ref, s !== void 0 ? s : null;
     }
-    function c(s, g, N, R, I, $, r, w) {
+    function c(s, g, N, R, I, $, r, j) {
       return N = $.ref, s = {
         $$typeof: k,
         type: s,
@@ -180,10 +180,10 @@ function Se() {
         configurable: !1,
         enumerable: !1,
         writable: !0,
-        value: w
+        value: j
       }), Object.freeze && (Object.freeze(s.props), Object.freeze(s)), s;
     }
-    function d(s, g, N, R, I, $, r, w) {
+    function d(s, g, N, R, I, $, r, j) {
       var h = g.children;
       if (h !== void 0)
         if (R)
@@ -198,10 +198,10 @@ function Se() {
         else f(h);
       if (B.call(g, "key")) {
         h = t(s);
-        var j = Object.keys(g).filter(function(z) {
+        var v = Object.keys(g).filter(function(z) {
           return z !== "key";
         });
-        R = 0 < j.length ? "{key: someKey, " + j.join(": ..., ") + ": ...}" : "{key: someKey}", ne[h + R] || (j = 0 < j.length ? "{" + j.join(": ..., ") + ": ...}" : "{}", console.error(
+        R = 0 < v.length ? "{key: someKey, " + v.join(": ..., ") + ": ...}" : "{key: someKey}", ne[h + R] || (v = 0 < v.length ? "{" + v.join(": ..., ") + ": ...}" : "{}", console.error(
           `A props object containing a "key" prop is being spread into JSX:
   let props = %s;
   <%s {...props} />
@@ -210,7 +210,7 @@ React keys must be passed directly to JSX without using spread:
   <%s key={someKey} {...props} />`,
           R,
           h,
-          j,
+          v,
           h
         ), ne[h + R] = !0);
       }
@@ -230,13 +230,13 @@ React keys must be passed directly to JSX without using spread:
         o(),
         N,
         r,
-        w
+        j
       );
     }
     function f(s) {
       typeof s == "object" && s !== null && s.$$typeof === k && s._store && (s._store.validated = 1);
     }
-    var b = L, k = Symbol.for("react.transitional.element"), v = Symbol.for("react.portal"), P = Symbol.for("react.fragment"), x = Symbol.for("react.strict_mode"), E = Symbol.for("react.profiler"), p = Symbol.for("react.consumer"), S = Symbol.for("react.context"), C = Symbol.for("react.forward_ref"), _ = Symbol.for("react.suspense"), A = Symbol.for("react.suspense_list"), D = Symbol.for("react.memo"), te = Symbol.for("react.lazy"), ce = Symbol.for("react.activity"), O = Symbol.for("react.client.reference"), F = b.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, B = Object.prototype.hasOwnProperty, H = Array.isArray, J = console.createTask ? console.createTask : function() {
+    var b = L, k = Symbol.for("react.transitional.element"), w = Symbol.for("react.portal"), P = Symbol.for("react.fragment"), x = Symbol.for("react.strict_mode"), E = Symbol.for("react.profiler"), p = Symbol.for("react.consumer"), S = Symbol.for("react.context"), C = Symbol.for("react.forward_ref"), _ = Symbol.for("react.suspense"), A = Symbol.for("react.suspense_list"), D = Symbol.for("react.memo"), te = Symbol.for("react.lazy"), ce = Symbol.for("react.activity"), O = Symbol.for("react.client.reference"), F = b.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, B = Object.prototype.hasOwnProperty, H = Array.isArray, J = console.createTask ? console.createTask : function() {
       return null;
     };
     b = {
@@ -365,7 +365,7 @@ function ee({ field: t, data: n, methods: m = {}, sqlOpsUrls: a, refid: o }) {
     t.options ?? {}
   );
   L.useEffect(() => {
-    let v = !0;
+    let w = !0;
     return (async () => {
       if (t?.options) {
         c(t.options);
@@ -377,12 +377,12 @@ function ee({ field: t, data: n, methods: m = {}, sqlOpsUrls: a, refid: o }) {
         if (p)
           try {
             const S = await Promise.resolve(p());
-            v && c(S ?? {});
+            w && c(S ?? {});
           } catch (S) {
-            console.error("Method execution failed:", S), v && c({});
+            console.error("Method execution failed:", S), w && c({});
           }
         else
-          v && c({});
+          w && c({});
       }
       if (x.type === "api" && x.url)
         try {
@@ -393,9 +393,9 @@ function ee({ field: t, data: n, methods: m = {}, sqlOpsUrls: a, refid: o }) {
             params: x.params ?? {},
             headers: x.headers ?? {}
           }), p = t.valueKey || "value", S = t.labelKey || "title", C = pe(p, S, E);
-          v && c(C);
+          w && c(C);
         } catch (E) {
-          console.error("API execution failed:", E), v && c({});
+          console.error("API execution failed:", E), w && c({});
         }
       if (t.table || t.type === "dataSelector") {
         if (!a) {
@@ -443,13 +443,13 @@ function ee({ field: t, data: n, methods: m = {}, sqlOpsUrls: a, refid: o }) {
               Authorization: `Bearer ${a?.accessToken}`
             }
           }), C = t.valueKey || "value", _ = t.labelKey || "title", A = pe(C, _, S);
-          v && c(A);
+          w && c(A);
         } catch (E) {
           console.error("API fetch failed:", E);
         }
       }
     })(), () => {
-      v = !1;
+      w = !1;
     };
   }, [
     t.options,
@@ -468,8 +468,8 @@ function ee({ field: t, data: n, methods: m = {}, sqlOpsUrls: a, refid: o }) {
         src: String(f),
         alt: "avatar",
         className: "w-16 h-16 rounded-full object-cover border",
-        onError: (v) => {
-          const P = v.currentTarget;
+        onError: (w) => {
+          const P = w.currentTarget;
           P.onerror = null, P.src = we;
         }
       }
@@ -617,7 +617,7 @@ function de({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
   ] }) }) }) });
 }
 function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
-  const [l, y] = W(1), [i, u] = W(10), [c, d] = W(""), [f, b] = L.useState([]), k = Ne(null), [v, P] = W(null), [x, E] = W({ key: "", direction: null });
+  const [l, y] = W(1), [i, u] = W(10), [c, d] = W(""), [f, b] = L.useState([]), k = Ne(null), [w, P] = W(null), [x, E] = W({ key: "", direction: null });
   L.useEffect(() => {
     let r = !1;
     return (async () => {
@@ -627,7 +627,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
         return;
       }
       if (h.type === "method") {
-        const j = h.method, T = j ? n[j] : void 0;
+        const v = h.method, T = v ? n[v] : void 0;
         if (T)
           try {
             const z = await Promise.resolve(T());
@@ -640,7 +640,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
       }
       if (h.type === "api")
         try {
-          const j = await M({
+          const v = await M({
             method: h.method || "GET",
             // GET, POST, etc.
             url: h.url,
@@ -651,9 +651,9 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
             headers: h.headers || {}
             // optional headers
           });
-          r || b(j.data || {});
-        } catch (j) {
-          console.error("API fetch failed:", j), r || b([]);
+          r || b(v.data || {});
+        } catch (v) {
+          console.error("API fetch failed:", v), r || b([]);
         }
       if (h.type === "sql" && o && o != "0") {
         if (!a) {
@@ -661,7 +661,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
           return;
         }
         try {
-          const { form: j, actions: T, uimode: z, type: ae, unilinks: oe, DEBUG: le, ...Q } = h, G = await M({
+          const { form: v, actions: T, uimode: z, type: ae, unilinks: oe, DEBUG: le, ...Q } = h, G = await M({
             method: "POST",
             url: a.baseURL + a.registerQuery,
             data: {
@@ -687,8 +687,8 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
             }
           });
           r || b(me.data?.data ?? me.data ?? {});
-        } catch (j) {
-          console.error("API fetch failed:", j);
+        } catch (v) {
+          console.error("API fetch failed:", v);
         }
       }
     })(), () => {
@@ -703,34 +703,34 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
     JSON.stringify(t?.config?.headers || {})
   ]);
   const p = Array.isArray(f) ? f : [f], C = ((r) => {
-    const w = /* @__PURE__ */ new Set();
+    const j = /* @__PURE__ */ new Set();
     return r.forEach((h) => {
-      h && typeof h == "object" && Object.keys(h).forEach((j) => w.add(j));
-    }), Array.from(w);
+      h && typeof h == "object" && Object.keys(h).forEach((v) => j.add(v));
+    }), Array.from(j);
   })(p), _ = t?.vmode === "edit", A = t?.config?.form && Object.keys(t.config.form).length > 0, D = t?.config?.info && Object.keys(t.config.info).length > 0, te = (r) => {
-    let w = "asc";
-    x.key === r && x.direction === "asc" ? w = "desc" : x.key === r && x.direction === "desc" && (w = null), E({ key: r, direction: w });
-  }, ce = (r) => !x.key || !x.direction ? r : [...r].sort((w, h) => {
-    const j = w[x.key], T = h[x.key];
-    if (j == null) return x.direction === "asc" ? 1 : -1;
+    let j = "asc";
+    x.key === r && x.direction === "asc" ? j = "desc" : x.key === r && x.direction === "desc" && (j = null), E({ key: r, direction: j });
+  }, ce = (r) => !x.key || !x.direction ? r : [...r].sort((j, h) => {
+    const v = j[x.key], T = h[x.key];
+    if (v == null) return x.direction === "asc" ? 1 : -1;
     if (T == null) return x.direction === "asc" ? -1 : 1;
-    if (typeof j == "boolean" && typeof T == "boolean")
-      return x.direction === "asc" ? j === T ? 0 : j ? -1 : 1 : j === T ? 0 : j ? 1 : -1;
-    const z = new Date(j), ae = new Date(T);
+    if (typeof v == "boolean" && typeof T == "boolean")
+      return x.direction === "asc" ? v === T ? 0 : v ? -1 : 1 : v === T ? 0 : v ? 1 : -1;
+    const z = new Date(v), ae = new Date(T);
     if (!isNaN(z.getTime()) && !isNaN(ae.getTime()))
       return x.direction === "asc" ? z.getTime() - ae.getTime() : ae.getTime() - z.getTime();
-    const oe = parseFloat(j), le = parseFloat(T);
+    const oe = parseFloat(v), le = parseFloat(T);
     if (!isNaN(oe) && !isNaN(le))
       return x.direction === "asc" ? oe - le : le - oe;
-    const Q = String(j).toLowerCase(), G = String(T).toLowerCase();
+    const Q = String(v).toLowerCase(), G = String(T).toLowerCase();
     return x.direction === "asc" ? Q < G ? -1 : Q > G ? 1 : 0 : Q > G ? -1 : Q < G ? 1 : 0;
   }), O = he(() => {
     let r = p;
     if (c.trim()) {
-      const w = c.toLowerCase();
-      r = p.filter((h) => C.some((j) => {
-        const T = h[j];
-        return T == null ? !1 : String(T).toLowerCase().includes(w);
+      const j = c.toLowerCase();
+      r = p.filter((h) => C.some((v) => {
+        const T = h[v];
+        return T == null ? !1 : String(T).toLowerCase().includes(j);
       }));
     }
     return ce(r);
@@ -740,20 +740,23 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
     u(r), y(1);
   }, K = () => {
     d("");
-  }, se = (r, w) => {
+  }, se = (r, j) => {
     n?.editInfoRecord?.(t?.config?.form, o, r);
   }, ne = (r) => {
     n?.viewInfoRecord?.(r, t?.config?.info);
-  }, s = (r, w) => {
+  }, s = (r, j) => {
     n?.deleteInfoRecord?.(r, m);
   }, g = () => {
-    n?.addInfoRecord?.(t?.config?.form, o);
-  }, N = (r) => r.split("_").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" "), R = (r, w) => {
+    const r = t?.config;
+    if (!r) return;
+    const j = r["popup.form"] ? "popup.form" : r.form ? "form" : null;
+    j && n?.addInfoRecord?.(t?.config?.[j], o, j);
+  }, N = (r) => r.split("_").map((j) => j.charAt(0).toUpperCase() + j.slice(1)).join(" "), R = (r, j) => {
     if (r == null || r === "")
       return /* @__PURE__ */ e.jsx("span", { className: "text-gray-400 italic", children: "-" });
     if (typeof r == "boolean")
       return /* @__PURE__ */ e.jsx("span", { className: `inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${r ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`, children: r ? "Yes" : "No" });
-    switch (w?.toLowerCase()) {
+    switch (j?.toLowerCase()) {
       case "checkbox":
         return /* @__PURE__ */ e.jsx(
           "input",
@@ -859,9 +862,9 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
       default:
         return String(r);
     }
-  }, I = (r, w) => {
+  }, I = (r, j) => {
     Re(r).then(() => {
-      P(w), k.current && clearTimeout(k.current), k.current = setTimeout(() => {
+      P(j), k.current && clearTimeout(k.current), k.current = setTimeout(() => {
         P("");
       }, 2e3);
     }).catch(() => {
@@ -1018,7 +1021,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
             children: "Actions"
           }
         ),
-        C.map((r, w) => /* @__PURE__ */ e.jsx(
+        C.map((r, j) => /* @__PURE__ */ e.jsx(
           "th",
           {
             scope: "col",
@@ -1038,10 +1041,10 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
           r
         ))
       ] }) }),
-      /* @__PURE__ */ e.jsx("tbody", { className: "bg-white divide-y divide-gray-200 ", children: J.map((r, w) => /* @__PURE__ */ e.jsxs(
+      /* @__PURE__ */ e.jsx("tbody", { className: "bg-white divide-y divide-gray-200 ", children: J.map((r, j) => /* @__PURE__ */ e.jsxs(
         "tr",
         {
-          className: `hover:bg-secondary transition-colors duration-150 ${w % 2 === 0 ? "bg-white" : "bg-gray-50"}`,
+          className: `hover:bg-secondary transition-colors duration-150 ${j % 2 === 0 ? "bg-white" : "bg-gray-50"}`,
           children: [
             _ && /* @__PURE__ */ e.jsx("td", { className: "px-4 sm:px-6 py-1 whitespace-nowrap text-sm bg-muted text-gray-900 sticky left-0 z-10", children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-2", children: [
               D && /* @__PURE__ */ e.jsx(
@@ -1112,7 +1115,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
                       onClick: () => I(r[h] || "", `${r.id}-${h}`),
                       className: "absolute -right-4 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity ml-2 p-1 rounded bg-gray-50 hover:bg-gray-100 cursor-pointer",
                       title: "Copy",
-                      children: v === `${r.id}-${h}` ? /* @__PURE__ */ e.jsx(e.Fragment, { children: /* @__PURE__ */ e.jsx("span", { className: "text-xs text-gray-600", children: "Copied!" }) }) : /* @__PURE__ */ e.jsx("i", { className: "fa-regular fa-copy" })
+                      children: w === `${r.id}-${h}` ? /* @__PURE__ */ e.jsx(e.Fragment, { children: /* @__PURE__ */ e.jsx("span", { className: "text-xs text-gray-600", children: "Copied!" }) }) : /* @__PURE__ */ e.jsx("i", { className: "fa-regular fa-copy" })
                     }
                   )
                 ] })
@@ -1121,7 +1124,7 @@ function ue({ tabObj: t, methods: n, tabName: m, sqlOpsUrls: a, refid: o }) {
             ))
           ]
         },
-        B + w
+        B + j
       )) })
     ] }) }) })
   ] });
@@ -1332,7 +1335,7 @@ function je({
   sqlOpsUrls: i = {},
   refid: u
 }) {
-  const [c, d] = L.useState(0), [f, b] = L.useState(!1), k = L.useRef(null), v = Object.keys(t);
+  const [c, d] = L.useState(0), [f, b] = L.useState(!1), k = L.useRef(null), w = Object.keys(t);
   L.useEffect(() => {
     const A = () => {
       if (k.current) {
@@ -1341,8 +1344,8 @@ function je({
       }
     };
     return A(), window.addEventListener("resize", A), () => window.removeEventListener("resize", A);
-  }, [v.length]), L.useEffect(() => {
-    if (k.current && v.length > 0) {
+  }, [w.length]), L.useEffect(() => {
+    if (k.current && w.length > 0) {
       const A = k.current.children[c];
       A && A.scrollIntoView({
         behavior: "smooth",
@@ -1350,8 +1353,8 @@ function je({
         inline: "center"
       });
     }
-  }, [c, v.length]);
-  const P = y === "tableft", x = y === "tabright", E = !P && !x, p = t[v[c] ?? ""] || null, S = {
+  }, [c, w.length]);
+  const P = y === "tableft", x = y === "tabright", E = !P && !x, p = t[w[c] ?? ""] || null, S = {
     single: (A, D) => /* @__PURE__ */ e.jsx(de, { tabObj: A, methods: n, tabName: D, sqlOpsUrls: i, refid: u }),
     grid: (A, D) => /* @__PURE__ */ e.jsx(ue, { tabObj: A, methods: n, tabName: D, sqlOpsUrls: i, refid: u })
   }, C = p?.config?.uimode, _ = a[C] || S[C] || (() => /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex justify-center p-4", children: "No UI mode for this type" }));
@@ -1359,7 +1362,7 @@ function je({
     /* @__PURE__ */ e.jsx(
       Pe,
       {
-        groupNames: v,
+        groupNames: w,
         groups: t,
         setActiveTabIndex: d,
         activeTabIndex: c,
@@ -1372,7 +1375,7 @@ function je({
     /* @__PURE__ */ e.jsx(
       be,
       {
-        groupNames: v,
+        groupNames: w,
         activeTabIndex: c,
         layoutConfig: l,
         tabObj: p,
@@ -1389,7 +1392,7 @@ function je({
     P && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-r border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
       ye,
       {
-        groupNames: v,
+        groupNames: w,
         groups: t,
         setActiveTabIndex: d,
         activeTabIndex: c
@@ -1398,7 +1401,7 @@ function je({
     /* @__PURE__ */ e.jsx("main", { className: "flex-1 flex flex-col min-h-0 overflow-auto", children: /* @__PURE__ */ e.jsx(
       be,
       {
-        groupNames: v,
+        groupNames: w,
         activeTabIndex: c,
         layoutConfig: l,
         tabObj: p,
@@ -1414,7 +1417,7 @@ function je({
     x && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-l border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
       ye,
       {
-        groupNames: v,
+        groupNames: w,
         groups: t,
         setActiveTabIndex: d,
         activeTabIndex: c
@@ -1620,8 +1623,8 @@ function ze({
     JSON.stringify(t?.source?.body || {}),
     JSON.stringify(t?.source?.headers || {})
   ]);
-  const v = k.common || null;
-  v && delete k.common;
+  const w = k.common || null;
+  w && delete k.common;
   const P = (x) => {
     switch (x) {
       case "accordion":
@@ -1647,7 +1650,7 @@ function ze({
             layoutConfig: o,
             methods: y,
             infoData: i,
-            isCommonInfo: !!v,
+            isCommonInfo: !!w,
             viewMode: x,
             sqlOpsUrls: d,
             refid: b
@@ -1674,7 +1677,7 @@ function ze({
             layoutConfig: o,
             methods: y,
             infoData: i,
-            isCommonInfo: !!v,
+            isCommonInfo: !!w,
             viewMode: x,
             sqlOpsUrls: d,
             refid: b
@@ -1683,10 +1686,10 @@ function ze({
     }
   };
   return /* @__PURE__ */ e.jsxs("div", { className: o.containerClass || "h-screen flex flex-col ", children: [
-    v && /* @__PURE__ */ e.jsx(
+    w && /* @__PURE__ */ e.jsx(
       Le,
       {
-        commonInfo: v,
+        commonInfo: w,
         infoData: i,
         hiddenFields: m
       }
