@@ -154,8 +154,15 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
 
     // Check if edit mode is enabled
     const isEditMode = tabObj?.vmode === "edit";
-    const hasFormConfig = tabObj?.config?.form && Object.keys(tabObj.config.form).length > 0;
-    const hasInfoConfig = tabObj?.config?.info && Object.keys(tabObj.config.info).length > 0;
+    const config = tabObj?.config;
+    const formType =
+        config?.["popup.form"]
+            ? "popup.form"
+            : config?.["form"]
+                ? "form"
+                : "form";
+    const hasFormConfig = config?.[formType] && Object.keys(config?.[formType]).length > 0;
+    const hasInfoConfig = config?.info && Object.keys(config?.info).length > 0;
 
 
 
@@ -266,18 +273,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
 
     // Action handlers
     const handleEdit = (row: Record<string, string>, index: number) => {
-          const config = tabObj?.config;
-        if (!config) return;
-
-        const key =
-            config["popup.form"]
-                ? "popup.form"
-                : config["form"]
-                    ? "form"
-                    : null;
-
-        if (!key) return;
-        methods?.editInfoRecord?.({[key]:tabObj?.config?.[key]}, refid, row)
+        methods?.editInfoRecord?.({ [formType]: tabObj?.config?.[formType] }, refid, row)
         // Implement edit logic here
     };
 
@@ -292,18 +288,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
     };
 
     const handleAddRecord = () => {
-        const config = tabObj?.config;
-        if (!config) return;
-
-        const key =
-            config["popup.form"]
-                ? "popup.form"
-                : config["form"]
-                    ? "form"
-                    : null;
-
-        if (!key) return;
-        methods?.addInfoRecord?.({[key]:tabObj?.config?.[key]}, refid)
+        methods?.addInfoRecord?.({ [formType]: tabObj?.config?.[formType] }, refid)
         // Implement add record logic here
     };
 
