@@ -303,7 +303,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
                     : null;
 
         if (!key) return;
-        methods?.addInfoRecord?.({key:tabObj?.config?.[key]}, refid)
+        methods?.addInfoRecord?.({[key]:tabObj?.config?.[key]}, refid)
         // Implement add record logic here
     };
 

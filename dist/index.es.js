@@ -753,7 +753,7 @@ function ue({ tabObj: r, methods: n, tabName: f, sqlOpsUrls: a, refid: o }) {
     const t = r?.config;
     if (!t) return;
     const v = t["popup.form"] ? "popup.form" : t.form ? "form" : null;
-    v && n?.addInfoRecord?.({ key: r?.config?.[v] }, o);
+    v && n?.addInfoRecord?.({ [v]: r?.config?.[v] }, o);
   }, N = (t) => t.split("_").map((v) => v.charAt(0).toUpperCase() + v.slice(1)).join(" "), R = (t, v) => {
     if (t == null || t === "")
       return /* @__PURE__ */ e.jsx("span", { className: "text-gray-400 italic", children: "-" });
