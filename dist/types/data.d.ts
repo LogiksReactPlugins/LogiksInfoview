@@ -607,68 +607,191 @@ export declare const example1: {
         registerQuery: string;
         runQuery: string;
     };
-    hooks: {
-        postsubmit: {
-            api: string;
-            method: string;
-        };
-    };
     source: {
         type: string;
         table: string;
         cols: string;
+        refid: number;
         where: {
-            "data_spv_tbl.id": string;
+            id: string;
         };
-        refid: string;
     };
     forcefill: {
         groupuid: string;
         guid: string;
-        last_status: string;
-        company_id: string;
     };
     fields: {
-        code: {
-            label: string;
-            group: string;
-            required: boolean;
-            width: number;
-            type: string;
-        };
-        title: {
-            label: string;
-            group: string;
-            required: boolean;
-            width: number;
-            type: string;
-        };
         company_code_id: {
             label: string;
-            group: string;
-            required: boolean;
             type: string;
             table: string;
             columns: string;
-            where: {
-                blocked: string;
-            };
-            valueKey: string;
-            labelKey: string;
+            required: boolean;
+            width: number;
+            ajaxchain: {
+                target: string;
+                src: {
+                    table: string;
+                    columns: string;
+                    where: {
+                        blocked: string;
+                        company_code_id: string;
+                    };
+                };
+            }[];
         };
-        blocked: {
+        spv_id: {
             label: string;
-            group: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+        sector_id: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+            ajaxchain: {
+                target: string;
+                src: {
+                    table: string;
+                    columns: string;
+                    where: {
+                        blocked: string;
+                        sector_id: string;
+                    };
+                };
+            };
+        };
+        project_function_id: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+            ajaxchain: {
+                target: string;
+                src: {
+                    table: string;
+                    columns: string;
+                    where: {
+                        blocked: string;
+                        project_function_id: string;
+                    };
+                };
+            };
+        };
+        location_id: {
+            label: string;
+            type: string;
+            width: number;
+        };
+        date: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+        location: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+        conducted_by_department: {
+            label: string;
             type: string;
             groupid: string;
-            vmode: string;
             required: boolean;
-        };
-        description: {
-            label: string;
-            group: string;
             width: number;
+        };
+        conducted_by_name: {
+            label: string;
             type: string;
+            width: number;
+        };
+        participant_count: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+        photo_attendance: {
+            label: string;
+            type: string;
+            width: number;
+        };
+    };
+    infoview: {
+        groups: {
+            details: {
+                label: string;
+                type: string;
+                src: string;
+                vmode: string;
+                config: {
+                    type: string;
+                    uimode: string;
+                    policy_create: string;
+                    policy_view: string;
+                    policy_delete: string;
+                    policy_update: string;
+                    table: string;
+                    cols: string;
+                    colkey: string;
+                    where: {
+                        blocked: string;
+                    };
+                    "popup.form": {
+                        source: {
+                            type: string;
+                            table: string;
+                            cols: string;
+                            where: {
+                                id: string;
+                            };
+                        };
+                        forcefill: {
+                            guid: string;
+                            created_by: string;
+                            hse_induction_id: string;
+                        };
+                        fields: {
+                            gender: {
+                                label: string;
+                                type: string;
+                                required: boolean;
+                                groupid: string;
+                                width: number;
+                            };
+                            count: {
+                                label: string;
+                                type: string;
+                                required: boolean;
+                                width: number;
+                            };
+                            company_name: {
+                                label: string;
+                                type: string;
+                                required: boolean;
+                                width: number;
+                            };
+                            company: {
+                                label: string;
+                                type: string;
+                                groupid: string;
+                                required: boolean;
+                                width: number;
+                            };
+                            photograph: {
+                                label: string;
+                                type: string;
+                                width: number;
+                            };
+                        };
+                    };
+                };
+                width: number;
+            };
         };
     };
 };

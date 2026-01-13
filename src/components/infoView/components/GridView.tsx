@@ -2,9 +2,12 @@ import React, { useState, useMemo, useRef } from 'react';
 import axios from "axios";
 import type { InfoViewGroup } from '../InfoView.types.js';
 import { copyToClipboard, replacePlaceholders } from '../utils.js';
+import ConfirmModal from './ConfirmationModal.js';
 
-
-
+type AlertState = {
+    type: "success" | "error";
+    message: string;
+};
 type SortDirection = 'asc' | 'desc' | null;
 
 interface SortConfig {
@@ -21,119 +24,108 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [searchQuery, setSearchQuery] = useState("");
+    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [deleteTarget, setDeleteTarget] = useState<Record<string, string> | null>(null);
     // Get the array of data
     const [data, setData] = React.useState<Array<Record<string, any>>>([]);
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [copiedCell, setCopiedCell] = useState<string | null>(null);
     const [sortConfig, setSortConfig] = useState<SortConfig>({ key: '', direction: null });
+    const [alert, setAlert] = useState<AlertState | null>(null);
 
-    React.useEffect(() => {
-        let cancelled = false; // flag for cleanup
 
-        const fetchData = async () => {
-            const source = tabObj?.config;
+    const fetchData = React.useCallback(async () => {
+        const source = tabObj?.config;
 
-            if (!source?.type) {
-                if (!cancelled) setData([]);
+        if (!source?.type) {
+            setData([]);
+            return;
+        }
+
+        if (source.type === "method") {
+            const methodName = source.method as keyof typeof methods | undefined;
+            const methodFn = methodName ? methods[methodName] : undefined;
+
+            if (!methodFn) {
+                setData([]);
                 return;
             }
 
-            if (source.type === "method") {
-                const methodName = source.method as keyof typeof methods | undefined;
-                const methodFn = methodName ? methods[methodName] : undefined;
+            try {
+                const result = await Promise.resolve(methodFn());
+                setData(result || []);
+            } catch {
+                setData([]);
+            }
+        }
 
-                if (methodFn) {
-                    try {
-                        const result = await Promise.resolve(methodFn());
-                        if (!cancelled) setData(result || []);
-                    } catch (err) {
-                        if (!cancelled) setData([]);
+        if (source.type === "api") {
+            try {
+                const response = await axios({
+                    method: source.method || "GET",
+                    url: source.url,
+                    data: source.body || {},
+                    params: source.params || {},
+                    headers: source.headers || {}
+                });
+
+                setData(response.data || []);
+            } catch (error) {
+                console.error("API fetch failed:", error);
+                setData([]);
+            }
+        }
+
+        if (source.type === "sql" && refid && refid !== "0") {
+            if (!sqlOpsUrls) {
+                console.error("SQL source requires formJson.endPoints but it is missing");
+                return;
+            }
+
+            try {
+                const { form, actions, uimode, type, unilinks, DEBUG, ...querySource } = source;
+
+                const resQueryId = await axios({
+                    method: "POST",
+                    url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
+                    data: {
+                        query: {
+                            ...querySource,
+                            where: replacePlaceholders(source.where, { refid })
+                        }
+                    },
+                    headers: {
+                        Authorization: `Bearer ${sqlOpsUrls.accessToken}`
                     }
-                } else {
-                    if (!cancelled) setData([]);
-                }
+                });
+
+                const res = await axios({
+                    method: "POST",
+                    url: sqlOpsUrls.baseURL + sqlOpsUrls.runQuery,
+                    data: {
+                        queryid: resQueryId.data.queryid,
+                        filter: {}
+                    },
+                    headers: {
+                        Authorization: `Bearer ${sqlOpsUrls.accessToken}`
+                    }
+                });
+
+                setData(res.data?.data ?? res.data ?? []);
+            } catch (err) {
+                console.error("SQL fetch failed:", err);
             }
-
-            if (source.type === "api") {
-                try {
-                    const response = await axios({
-                        method: source.method || "GET",  // GET, POST, etc.
-                        url: source.url,
-                        data: source.body || {},         // request body
-                        params: source.params || {},     // query params
-                        headers: source.headers || {},   // optional headers
-                    });
-
-                    if (!cancelled) setData(response.data || {});
-                } catch (error) {
-                    console.error("API fetch failed:", error);
-                    if (!cancelled) setData([]);
-                }
-            }
-
-            if (source.type === "sql" && refid &&
-                refid != "0") {
-
-                if (!sqlOpsUrls) {
-                    console.error("SQL source requires formJson.endPoints but it is missing");
-                    return;
-                }
-
-                try {
-                    const { form, actions, uimode, type, unilinks, DEBUG, ...querySource } = source;
-                    const resQueryId = await axios({
-                        method: "POST",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
-                        data: {
-                            "query": {
-                                ...querySource,
-
-                                "where": replacePlaceholders(source.where, {
-                                    refid: refid,
-                                }),
-
-                            }
-                        },
-                        headers: {
-                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
-                        },
-                    });
-
-
-                    const res = await axios({
-                        method: "POST",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.runQuery,
-                        data: {
-                            "queryid": resQueryId.data.queryid,
-                            "filter": {
-
-                            }
-                        },
-
-                        headers: {
-                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
-                        },
-                    });
-                    if (!cancelled) setData(res.data?.data ?? res.data ?? {});
-                } catch (err) {
-                    console.error("API fetch failed:", err);
-                }
-            }
-        };
-
-        fetchData();
-
-        // cleanup: prevents state update after unmount
-        return () => {
-            cancelled = true;
-        };
+        }
     }, [
-        tabObj?.config?.type || "",
-        tabObj?.config?.method || "",
-        tabObj?.config?.url || "",
-        JSON.stringify(tabObj?.config?.params || {}),
-        JSON.stringify(tabObj?.config?.body || {}),
-        JSON.stringify(tabObj?.config?.headers || {}),
+        tabObj?.config,
+        methods,
+        refid,
+        sqlOpsUrls
+    ]);
+    React.useEffect(() => {
+        fetchData()
+    }, [
+        fetchData
     ]);
 
     // If data is not an array, convert single object to array
@@ -282,9 +274,111 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
         // Implement view logic here
     };
 
-    const handleDelete = (row: Record<string, string>, index: number) => {
-        methods?.deleteInfoRecord?.(row, tabName)
-        // Implement delete logic here
+    // const handleDelete = (row: Record<string, string>, index: number) => {
+    //     methods?.deleteInfoRecord?.(row, tabName)
+    //     // Implement delete logic here
+    // };
+
+
+    const handleDelete = (row: Record<string, string>) => {
+        setDeleteTarget(row);
+        setConfirmOpen(true);
+    };
+
+    const confirmDelete = async () => {
+        if (!deleteTarget?.id) return;
+
+        if (!sqlOpsUrls) {
+            setAlert({ type: "error", message: "Delete configuration missing." });
+            return;
+        }
+
+        try {
+            let config = tabObj?.config;
+            const formType =
+                config?.["popup.form"]
+                    ? "popup.form"
+                    : config?.["form"]
+                        ? "form"
+                        : "form";
+
+            console.log("config?.[formType]", config?.[formType]);
+
+            const form = config?.[formType];
+
+            if (!form?.source) throw new Error("Form source missing");
+            const resHashId = await axios({
+                method: "GET",
+                url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetHash,
+                headers: {
+                    Authorization: `Bearer ${sqlOpsUrls.accessToken}`
+                }
+            });
+
+
+            let query = { ...form.source, refid: deleteTarget.id };
+
+            if (form.source.where) {
+                query = {
+                    ...query,
+                    where: replacePlaceholders(form.source.where, {
+                        refid: deleteTarget.id
+                    })
+                };
+            }
+
+
+            const resQueryId = await axios({
+                method: "POST",
+                url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
+                data: {
+                    operation: "update",
+                    source: query,
+                    fields: form.fields,
+                    forcefill: form.forcefill,
+                    datahash: resHashId.data.refhash
+                },
+                headers: {
+                    Authorization: `Bearer ${sqlOpsUrls.accessToken}`
+                }
+            });
+
+            await axios({
+                method: "POST",
+                url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsUpdate,
+                data: {
+                    refid: resQueryId.data.refid,
+                    fields: { blocked: "true" },
+                    datahash: resHashId.data.refhash
+                },
+                headers: {
+                    Authorization: `Bearer ${sqlOpsUrls.accessToken}`
+                }
+            });
+
+            setAlert({
+                type: "success",
+                message: "Record deleted successfully."
+            });
+            fetchData()
+        } catch (err) {
+            console.error(err);
+            setAlert({
+                type: "error",
+                message: "Failed to delete record. Please try again."
+            });
+        } finally {
+            setDeleteTarget(null);
+            setConfirmOpen(false);
+
+            // auto-hide after 3s
+            setTimeout(() => setAlert(null), 3000);
+        }
+    };
+
+    const cancelDelete = () => {
+        setDeleteTarget(null);
+        setConfirmOpen(false);
     };
 
     const handleAddRecord = () => {
@@ -522,6 +616,17 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
 
     return (
         <div className="w-full overflow-hidden flex-1 flex flex-col">
+            {alert && (
+                <div
+                    className={`mb-3 mx-2 rounded-md px-4 py-2 text-sm font-medium
+      ${alert?.type === "success"
+                            ? "bg-green-100 text-green-800 border border-green-300"
+                            : "bg-red-100 text-red-800 border border-red-300"
+                        }`}
+                >
+                    {alert?.message}
+                </div>
+            )}
             <div className="my-4 mx-2 flex  gap-4 justify-between items-start sm:items-center">
                 <div className="flex-1 max-w-md">
                     <div className="relative">
@@ -752,7 +857,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
                                                     </svg>
                                                 </button>
                                                 <button
-                                                    onClick={() => handleDelete(row, startIndex + rowIndex)}
+                                                    onClick={() => handleDelete(row)}
                                                     className="text-red-600 hover:text-red-800 cursor-pointer transition-colors p-1 hover:bg-red-100 rounded"
                                                     title="Delete"
                                                 >
@@ -799,6 +904,12 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
 
             </>
             )}
+
+            <ConfirmModal
+                open={confirmOpen}
+                onConfirm={confirmDelete}
+                onCancel={cancelDelete}
+            />
         </div>
     );
 }
