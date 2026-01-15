@@ -1,3 +1,5 @@
+import * as Yup from "yup";
+
 
 import type { FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from "./InfoView.types.js";
 
@@ -79,6 +81,16 @@ export function transformedObject(originalObject: Record<string, any>,operation:
     }
   })
   return fields
+}
+
+export function flatFields(
+  fields: Record<string, Omit<FormField, "name">>,
+  operation: string = "create"
+): FormField[] {
+  return Object.entries(fields).filter(([, field]) => !(field.vmode === "edit" && operation === "create")).map(([key, field]) => ({
+    ...field,
+    name: key,
+  }));
 }
 
 
@@ -241,6 +253,244 @@ export function resolveDisplayValue(
   return rawVal;
 }
 
+export const isHidden = (hidden?: boolean | string): boolean =>
+  hidden === true || hidden === "true";
+export const intializeForm = (
+  formFields: FormField[],
+  initialValues: Record<string, any>,
+  validationSchema: Record<string, Yup.AnySchema>,
+  data?: Record<string, any>
+) => {
+  formFields.forEach((field) => {
+    const name = field?.name;
+    if (!name) return;
 
+    let value = data?.[name];
+
+
+
+    if (value === undefined || value === null) {
+      value = field.default;
+    }
+
+    // ---------- Initial Values (NORMALIZED) ----------
+
+
+    if (field.multiple === true || field.type === "checkbox" || field.type === "tags") {
+      initialValues[name] =
+        Array.isArray(value)
+          ? value
+          : typeof value === "string"
+            ? value.split(",").map(v => v.trim()).filter(Boolean)
+            : [];
+    }
+
+
+
+    else if (field.type === "json") {
+      initialValues[name] =
+        typeof value === "object" && value !== null
+          ? JSON.stringify(value, null, 2)
+          : value ?? "";
+    }
+
+    else if (field.type === "date") {
+      initialValues[name] =
+        typeof value === "string" ? value.slice(0, 10) : "";
+    }
+
+    else if (field.type === "time") {
+      if (typeof value === "string") {
+        if (value.includes("T")) {
+          // ISO datetime → extract time
+          initialValues[name] = value.slice(11, 16);
+        } else {
+          // HH:mm or HH:mm:ss
+          initialValues[name] = value.slice(0, 5);
+        }
+      } else {
+        initialValues[name] = "";
+      }
+    }
+
+    else if (name === "blocked" || name === "blacklist") {
+      initialValues[name] = String(value ?? "false");
+    }
+
+    else {
+      initialValues[name] = value ?? "";
+    }
+
+    // ---------- Validation ----------
+    let validator: Yup.AnySchema;
+
+    if (field.type === "file") {
+      validator = field.multiple
+        ? Yup.array().of(Yup.mixed<File>())
+        : Yup.mixed<File>();
+    }
+
+    else if (field.multiple === true || field.type === "checkbox" || field.type === "tags") {
+      validator = Yup.array().of(Yup.string());
+    }
+    else if (field.type === "email") {
+      validator = Yup.string().email("Invalid email");
+    }
+    else if (field.type === "number") {
+      validator = Yup.number().typeError("Must be a number");
+    }
+    else if (field.type === "json") {
+      validator = Yup.string().test("json", "Invalid JSON", (v) => {
+        if (!v) return true;
+        try {
+          JSON.parse(v);
+          return true;
+        } catch {
+          return false;
+        }
+      });
+    }
+    else {
+      validator = Yup.string();
+    }
+
+    if (field.required) {
+      validator = validator.required(
+        field.error_message || `${field.label || name} is required`
+      );
+    }
+
+    // ---------- Direct Regex ----------
+    if (field?.validate?.regex && typeof field.validate.regex === "string") {
+      validator = (validator as Yup.StringSchema).matches(
+        new RegExp(field?.validate?.regex),
+        field?.error_message || "Invalid input format"
+      );
+    }
+
+
+    if (field?.validate) {
+      Object.entries(field.validate).forEach(([rule, val]) => {
+        switch (rule) {
+          case "email":
+            if (val) validator = (validator as Yup.StringSchema).email("Invalid email format");
+            break;
+
+          case "mobile":
+            validator = (validator as Yup.StringSchema).matches(
+              /^[1-9][0-9]*$/,
+              "Invalid mobile number format"
+            );
+            break;
+
+          case "regex":
+            validator = (validator as Yup.StringSchema).matches(
+              new RegExp(val as string),
+              `Must match pattern: ${val}`
+            );
+            break;
+
+          case "date":
+            validator = Yup.date()
+              .typeError("Invalid date format (expected dd/MM/yyyy or dd-MM-yyyy)")
+              .transform((value, originalValue) => {
+                if (typeof originalValue === "string") {
+                  const normalized = originalValue.replace(/-/g, "/");
+                  const [d, m, y] = normalized.split("/");
+                  if (d && m && y) {
+                    return new Date(`${y}-${m}-${d}`);
+                  }
+                }
+                return value;
+              });
+            break;
+
+          case "time":
+            validator = (validator as Yup.StringSchema).matches(
+              /^([0-1][0-9]|2[0-3])[:\-]([0-5][0-9])$/,
+              "Invalid time format (HH:MM)"
+            );
+            break;
+
+          case "timesec":
+            validator = (validator as Yup.StringSchema).matches(
+              /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/,
+              "Invalid time format (HH:MM:SS)"
+            );
+            break;
+
+          case "number":
+          case "numeric":
+            validator = Yup.number().typeError("Must be numeric");
+            break;
+
+          case "float":
+          case "decimal":
+            validator = Yup.number()
+              .typeError("Must be a decimal")
+              .transform((val, original) => {
+                if (original === undefined || original === null || original === "") return undefined;
+                const num = Number(original);
+                if (isNaN(num)) return val;
+                if (typeof val === "number" && !isNaN(val)) {
+                  // format to given decimal places if val is numeric
+                  const decimals = Number(val);
+                  return Number.isInteger(decimals) ? Number(num.toFixed(decimals)) : num;
+                }
+                return num;
+              });
+            break;
+
+          case "alphanumeric":
+            validator = (validator as Yup.StringSchema).matches(
+              /^[a-z0-9]+$/i,
+              "Must be alphanumeric"
+            );
+            break;
+
+          case "alpha":
+            validator = (validator as Yup.StringSchema).matches(
+              /^[a-zA-Z]+$/,
+              "Must contain only letters"
+            );
+            break;
+
+          case "upper":
+            validator = (validator as Yup.StringSchema).transform((val) =>
+              val ? val.toUpperCase() : val
+            );
+            break;
+
+          case "lower":
+            validator = (validator as Yup.StringSchema).transform((val) =>
+              val ? val.toLowerCase() : val
+            );
+            break;
+
+          case "length-min": {
+            const min = Number(val);
+            if (!isNaN(min)) {
+              validator = (validator as Yup.StringSchema).min(min, `Minimum length is ${min}`);
+            }
+            break;
+          }
+
+          case "length-max": {
+            const max = Number(val);
+            if (!isNaN(max)) {
+              validator = (validator as Yup.StringSchema).max(max, `Maximum length is ${max}`);
+            }
+            break;
+          }
+
+          default:
+            break;
+        }
+      });
+    }
+
+    validationSchema[name] = validator;
+  });
+};
 
 

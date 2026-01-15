@@ -644,6 +644,7 @@ const source = tabObj?.config;
                 <Reports
                     methods={{...methods,deleteRecord:handleDelete}}
                     report={{
+                        ...source,
                         source: { table:source?.table, 
                             type:"sql", 
                             cols:source?.cols,

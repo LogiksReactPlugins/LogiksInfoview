@@ -53,5 +53,9 @@
       "require": "./dist/index.umd.js"
     },
     "./style.css": "./dist/logiks-infoview.css"
+  },
+  "dependencies": {
+    "formik": "^2.4.9",
+    "yup": "^1.7.1"
   }
 }

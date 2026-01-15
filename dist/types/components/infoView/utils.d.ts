@@ -1,4 +1,5 @@
 import { FlatOptions, FormField, InfoViewGroup, Infoview } from './InfoView.types.js';
+import * as Yup from "yup";
 export declare function determineViewMode(json: Infoview): string;
 export declare function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup>;
 export declare const getGeoFieldKeys: (fields: Record<string, Omit<FormField, "name">>) => string[];
@@ -7,6 +8,7 @@ export declare function transformedObject(originalObject: Record<string, any>, o
     label: string;
     required: boolean;
 }>;
+export declare function flatFields(fields: Record<string, Omit<FormField, "name">>, operation?: string): FormField[];
 type ColWidth = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 export declare const tailwindGrid: Record<ColWidth, string>;
 export declare const tailwindCols: Record<ColWidth, string>;
@@ -17,5 +19,7 @@ export declare const replacePlaceholders: (input: any, vars: Record<string, stri
 export declare const normalizeToObject: (res: any) => Record<string, any> | null;
 export declare const formatOptions: (valueKey: string, labelKey: string, res: any) => FlatOptions;
 export declare function resolveDisplayValue(rawVal: unknown, options: Record<string, string>): unknown;
+export declare const isHidden: (hidden?: boolean | string) => boolean;
+export declare const intializeForm: (formFields: FormField[], initialValues: Record<string, any>, validationSchema: Record<string, Yup.AnySchema>, data?: Record<string, any>) => void;
 export {};
 //# sourceMappingURL=utils.d.ts.map

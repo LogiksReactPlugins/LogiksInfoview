@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { ComponentType } from "react";
 import type { AxiosRequestConfig } from "axios";
+import type { FormikProps } from "formik";
 
 export interface InfoViewField {
     name: string;
@@ -169,6 +170,37 @@ export interface FormProps {
 
 }
 
+
+export interface BaseFormViewProps {
+    title?: string | undefined;
+    data?: Record<string, any>;
+    onSubmit: (data: Record<string, any>) => void;
+    onCancel: () => void;
+    methods?: Record<string, Function>;
+    components?: Record<string, ReactNode>;
+    widget?: boolean | undefined;
+    sqlOpsUrls?: Record<string, any> | undefined;
+    refid?: string | undefined;
+   
+}
+
+export interface SimpleFormViewProps extends BaseFormViewProps {
+fields: Record<string, Omit<FormField, "name">>;
+}
+
+export interface FieldRendererProps {
+    field: FormField;
+    formik: FormikProps<Record<string, any>>;
+    methods?: Record<string, Function>;
+    components?: Record<string, ReactNode>
+    sqlOpsUrls?: Record<string, any> | undefined;
+    refid?: string | undefined;
+    optionsOverride?: SelectOptions;
+    setFieldOptions?: (
+        fieldName: string,
+        options: SelectOptions
+    ) => void;
+}
 
 
 
