@@ -374,18 +374,19 @@ const source = tabObj?.config;
                     Authorization: `Bearer ${sqlOpsUrls.accessToken}`
                 }
             });
-
-            setAlert({
-                type: "success",
-                message: "Record deleted successfully."
-            });
+ window.alert("Record deleted successfully.")
+            // setAlert({
+            //     type: "success",
+            //     message: "Record deleted successfully."
+            // });
             fetchData()
         } catch (err) {
             console.error(err);
-            setAlert({
-                type: "error",
-                message: "Failed to delete record. Please try again."
-            });
+            window.alert("Failed to delete record. Please try again")
+            // setAlert({
+            //     type: "error",
+            //     message: "Failed to delete record. Please try again."
+            // });
         } finally {
             setDeleteTarget(null);
             setConfirmOpen(false);
@@ -639,8 +640,9 @@ const source = tabObj?.config;
         <>
 
             {Reports ? (
+                <>
                 <Reports
-                    methods={methods}
+                    methods={{...methods,deleteRecord:handleDelete}}
                     report={{
                         source: { table:source?.table, 
                             type:"sql", 
@@ -651,10 +653,17 @@ const source = tabObj?.config;
                         endPoints:sqlOpsUrls,
                         actions: {...source?.actions,...infoViewJson?.buttons,...infoViewJson.actions},
                         datagrid: source?.datagrid,
+                        buttons:source?.buttons
                       
                     }}
                     onButtonClick={handleAction}
                 />
+                  <ConfirmModal
+                        open={confirmOpen}
+                        onConfirm={confirmDelete}
+                        onCancel={cancelDelete}
+                    />
+                    </>
             ) : (
                 <div className="text-sm text-gray-500 text-center py-4">
                     Reports component is not available.

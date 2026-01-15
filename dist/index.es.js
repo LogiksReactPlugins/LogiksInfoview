@@ -1,6 +1,6 @@
-import F, { useState as D, useRef as ce, useMemo as fe, useEffect as ie } from "react";
-import M from "axios";
-var le = { exports: {} }, Z = {};
+import B, { useState as O, useRef as fe, useMemo as xe, useEffect as ue } from "react";
+import I from "axios";
+var de = { exports: {} }, ee = {};
 /**
  * @license React
  * react-jsx-runtime.production.js
@@ -10,29 +10,29 @@ var le = { exports: {} }, Z = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var me;
-function Ne() {
-  if (me) return Z;
-  me = 1;
-  var e = Symbol.for("react.transitional.element"), n = Symbol.for("react.fragment");
-  function u(a, o, l) {
+var ge;
+function Ee() {
+  if (ge) return ee;
+  ge = 1;
+  var r = Symbol.for("react.transitional.element"), n = Symbol.for("react.fragment");
+  function c(a, o, l) {
     var h = null;
     if (l !== void 0 && (h = "" + l), o.key !== void 0 && (h = "" + o.key), "key" in o) {
       l = {};
-      for (var c in o)
-        c !== "key" && (l[c] = o[c]);
+      for (var d in o)
+        d !== "key" && (l[d] = o[d]);
     } else l = o;
     return o = l.ref, {
-      $$typeof: e,
+      $$typeof: r,
       type: a,
       key: h,
       ref: o !== void 0 ? o : null,
       props: l
     };
   }
-  return Z.Fragment = n, Z.jsx = u, Z.jsxs = u, Z;
+  return ee.Fragment = n, ee.jsx = c, ee.jsxs = c, ee;
 }
-var J = {};
+var re = {};
 /**
  * @license React
  * react-jsx-runtime.development.js
@@ -42,255 +42,255 @@ var J = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var he;
-function ke() {
-  return he || (he = 1, process.env.NODE_ENV !== "production" && function() {
-    function e(r) {
-      if (r == null) return null;
-      if (typeof r == "function")
-        return r.$$typeof === $ ? null : r.displayName || r.name || null;
-      if (typeof r == "string") return r;
-      switch (r) {
-        case P:
+var ye;
+function Se() {
+  return ye || (ye = 1, process.env.NODE_ENV !== "production" && function() {
+    function r(t) {
+      if (t == null) return null;
+      if (typeof t == "function")
+        return t.$$typeof === D ? null : t.displayName || t.name || null;
+      if (typeof t == "string") return t;
+      switch (t) {
+        case R:
           return "Fragment";
-        case j:
+        case g:
           return "Profiler";
-        case E:
-          return "StrictMode";
         case k:
+          return "StrictMode";
+        case E:
           return "Suspense";
-        case _:
+        case C:
           return "SuspenseList";
-        case q:
+        case Z:
           return "Activity";
       }
-      if (typeof r == "object")
-        switch (typeof r.tag == "number" && console.error(
+      if (typeof t == "object")
+        switch (typeof t.tag == "number" && console.error(
           "Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."
-        ), r.$$typeof) {
-          case v:
+        ), t.$$typeof) {
+          case w:
             return "Portal";
-          case b:
-            return (r.displayName || "Context") + ".Provider";
+          case j:
+            return (t.displayName || "Context") + ".Provider";
           case T:
-            return (r._context.displayName || "Context") + ".Consumer";
-          case L:
-            var m = r.render;
-            return r = r.displayName, r || (r = m.displayName || m.name || "", r = r !== "" ? "ForwardRef(" + r + ")" : "ForwardRef"), r;
-          case A:
-            return m = r.displayName || null, m !== null ? m : e(r.type) || "Memo";
-          case I:
-            m = r._payload, r = r._init;
+            return (t._context.displayName || "Context") + ".Consumer";
+          case $:
+            var m = t.render;
+            return t = t.displayName, t || (t = m.displayName || m.name || "", t = t !== "" ? "ForwardRef(" + t + ")" : "ForwardRef"), t;
+          case P:
+            return m = t.displayName || null, m !== null ? m : r(t.type) || "Memo";
+          case z:
+            m = t._payload, t = t._init;
             try {
-              return e(r(m));
+              return r(t(m));
             } catch {
             }
         }
       return null;
     }
-    function n(r) {
-      return "" + r;
+    function n(t) {
+      return "" + t;
     }
-    function u(r) {
+    function c(t) {
       try {
-        n(r);
+        n(t);
         var m = !1;
       } catch {
         m = !0;
       }
       if (m) {
         m = console;
-        var w = m.error, C = typeof Symbol == "function" && Symbol.toStringTag && r[Symbol.toStringTag] || r.constructor.name || "Object";
-        return w.call(
+        var N = m.error, L = typeof Symbol == "function" && Symbol.toStringTag && t[Symbol.toStringTag] || t.constructor.name || "Object";
+        return N.call(
           m,
           "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.",
-          C
-        ), n(r);
+          L
+        ), n(t);
       }
     }
-    function a(r) {
-      if (r === P) return "<>";
-      if (typeof r == "object" && r !== null && r.$$typeof === I)
+    function a(t) {
+      if (t === R) return "<>";
+      if (typeof t == "object" && t !== null && t.$$typeof === z)
         return "<...>";
       try {
-        var m = e(r);
+        var m = r(t);
         return m ? "<" + m + ">" : "<...>";
       } catch {
         return "<...>";
       }
     }
     function o() {
-      var r = g.A;
-      return r === null ? null : r.getOwner();
+      var t = y.A;
+      return t === null ? null : t.getOwner();
     }
     function l() {
       return Error("react-stack-top-frame");
     }
-    function h(r) {
-      if (V.call(r, "key")) {
-        var m = Object.getOwnPropertyDescriptor(r, "key").get;
+    function h(t) {
+      if (K.call(t, "key")) {
+        var m = Object.getOwnPropertyDescriptor(t, "key").get;
         if (m && m.isReactWarning) return !1;
       }
-      return r.key !== void 0;
+      return t.key !== void 0;
     }
-    function c(r, m) {
-      function w() {
+    function d(t, m) {
+      function N() {
         Y || (Y = !0, console.error(
           "%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)",
           m
         ));
       }
-      w.isReactWarning = !0, Object.defineProperty(r, "key", {
-        get: w,
+      N.isReactWarning = !0, Object.defineProperty(t, "key", {
+        get: N,
         configurable: !0
       });
     }
-    function p() {
-      var r = e(this.type);
-      return W[r] || (W[r] = !0, console.error(
+    function v() {
+      var t = r(this.type);
+      return W[t] || (W[t] = !0, console.error(
         "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
-      )), r = this.props.ref, r !== void 0 ? r : null;
+      )), t = this.props.ref, t !== void 0 ? t : null;
     }
-    function d(r, m, w, C, N, S, O, R) {
-      return w = S.ref, r = {
+    function u(t, m, N, L, M, F, J, b) {
+      return N = F.ref, t = {
         $$typeof: x,
-        type: r,
+        type: t,
         key: m,
-        props: S,
-        _owner: N
-      }, (w !== void 0 ? w : null) !== null ? Object.defineProperty(r, "ref", {
+        props: F,
+        _owner: M
+      }, (N !== void 0 ? N : null) !== null ? Object.defineProperty(t, "ref", {
         enumerable: !1,
-        get: p
-      }) : Object.defineProperty(r, "ref", { enumerable: !1, value: null }), r._store = {}, Object.defineProperty(r._store, "validated", {
+        get: v
+      }) : Object.defineProperty(t, "ref", { enumerable: !1, value: null }), t._store = {}, Object.defineProperty(t._store, "validated", {
         configurable: !1,
         enumerable: !1,
         writable: !0,
         value: 0
-      }), Object.defineProperty(r, "_debugInfo", {
+      }), Object.defineProperty(t, "_debugInfo", {
         configurable: !1,
         enumerable: !1,
         writable: !0,
         value: null
-      }), Object.defineProperty(r, "_debugStack", {
+      }), Object.defineProperty(t, "_debugStack", {
         configurable: !1,
         enumerable: !1,
         writable: !0,
-        value: O
-      }), Object.defineProperty(r, "_debugTask", {
+        value: J
+      }), Object.defineProperty(t, "_debugTask", {
         configurable: !1,
         enumerable: !1,
         writable: !0,
-        value: R
-      }), Object.freeze && (Object.freeze(r.props), Object.freeze(r)), r;
+        value: b
+      }), Object.freeze && (Object.freeze(t.props), Object.freeze(t)), t;
     }
-    function f(r, m, w, C, N, S, O, R) {
-      var y = m.children;
-      if (y !== void 0)
-        if (C)
-          if (Q(y)) {
-            for (C = 0; C < y.length; C++)
-              s(y[C]);
-            Object.freeze && Object.freeze(y);
+    function f(t, m, N, L, M, F, J, b) {
+      var p = m.children;
+      if (p !== void 0)
+        if (L)
+          if (Q(p)) {
+            for (L = 0; L < p.length; L++)
+              s(p[L]);
+            Object.freeze && Object.freeze(p);
           } else
             console.error(
               "React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead."
             );
-        else s(y);
-      if (V.call(m, "key")) {
-        y = e(r);
-        var z = Object.keys(m).filter(function(H) {
-          return H !== "key";
+        else s(p);
+      if (K.call(m, "key")) {
+        p = r(t);
+        var S = Object.keys(m).filter(function(_) {
+          return _ !== "key";
         });
-        C = 0 < z.length ? "{key: someKey, " + z.join(": ..., ") + ": ...}" : "{key: someKey}", ne[y + C] || (z = 0 < z.length ? "{" + z.join(": ..., ") + ": ...}" : "{}", console.error(
+        L = 0 < S.length ? "{key: someKey, " + S.join(": ..., ") + ": ...}" : "{key: someKey}", le[p + L] || (S = 0 < S.length ? "{" + S.join(": ..., ") + ": ...}" : "{}", console.error(
           `A props object containing a "key" prop is being spread into JSX:
   let props = %s;
   <%s {...props} />
 React keys must be passed directly to JSX without using spread:
   let props = %s;
   <%s key={someKey} {...props} />`,
-          C,
-          y,
-          z,
-          y
-        ), ne[y + C] = !0);
+          L,
+          p,
+          S,
+          p
+        ), le[p + L] = !0);
       }
-      if (y = null, w !== void 0 && (u(w), y = "" + w), h(m) && (u(m.key), y = "" + m.key), "key" in m) {
-        w = {};
-        for (var B in m)
-          B !== "key" && (w[B] = m[B]);
-      } else w = m;
-      return y && c(
-        w,
-        typeof r == "function" ? r.displayName || r.name || "Unknown" : r
-      ), d(
-        r,
-        y,
-        S,
+      if (p = null, N !== void 0 && (c(N), p = "" + N), h(m) && (c(m.key), p = "" + m.key), "key" in m) {
+        N = {};
+        for (var A in m)
+          A !== "key" && (N[A] = m[A]);
+      } else N = m;
+      return p && d(
         N,
+        typeof t == "function" ? t.displayName || t.name || "Unknown" : t
+      ), u(
+        t,
+        p,
+        F,
+        M,
         o(),
-        w,
-        O,
-        R
+        N,
+        J,
+        b
       );
     }
-    function s(r) {
-      typeof r == "object" && r !== null && r.$$typeof === x && r._store && (r._store.validated = 1);
+    function s(t) {
+      typeof t == "object" && t !== null && t.$$typeof === x && t._store && (t._store.validated = 1);
     }
-    var i = F, x = Symbol.for("react.transitional.element"), v = Symbol.for("react.portal"), P = Symbol.for("react.fragment"), E = Symbol.for("react.strict_mode"), j = Symbol.for("react.profiler"), T = Symbol.for("react.consumer"), b = Symbol.for("react.context"), L = Symbol.for("react.forward_ref"), k = Symbol.for("react.suspense"), _ = Symbol.for("react.suspense_list"), A = Symbol.for("react.memo"), I = Symbol.for("react.lazy"), q = Symbol.for("react.activity"), $ = Symbol.for("react.client.reference"), g = i.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, V = Object.prototype.hasOwnProperty, Q = Array.isArray, re = console.createTask ? console.createTask : function() {
+    var i = B, x = Symbol.for("react.transitional.element"), w = Symbol.for("react.portal"), R = Symbol.for("react.fragment"), k = Symbol.for("react.strict_mode"), g = Symbol.for("react.profiler"), T = Symbol.for("react.consumer"), j = Symbol.for("react.context"), $ = Symbol.for("react.forward_ref"), E = Symbol.for("react.suspense"), C = Symbol.for("react.suspense_list"), P = Symbol.for("react.memo"), z = Symbol.for("react.lazy"), Z = Symbol.for("react.activity"), D = Symbol.for("react.client.reference"), y = i.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, K = Object.prototype.hasOwnProperty, Q = Array.isArray, oe = console.createTask ? console.createTask : function() {
       return null;
     };
     i = {
-      react_stack_bottom_frame: function(r) {
-        return r();
+      react_stack_bottom_frame: function(t) {
+        return t();
       }
     };
-    var Y, W = {}, G = i.react_stack_bottom_frame.bind(
+    var Y, W = {}, H = i.react_stack_bottom_frame.bind(
       i,
       l
-    )(), ae = re(a(l)), ne = {};
-    J.Fragment = P, J.jsx = function(r, m, w, C, N) {
-      var S = 1e4 > g.recentlyCreatedOwnerStacks++;
+    )(), se = oe(a(l)), le = {};
+    re.Fragment = R, re.jsx = function(t, m, N, L, M) {
+      var F = 1e4 > y.recentlyCreatedOwnerStacks++;
       return f(
-        r,
+        t,
         m,
-        w,
+        N,
         !1,
-        C,
-        N,
-        S ? Error("react-stack-top-frame") : G,
-        S ? re(a(r)) : ae
+        L,
+        M,
+        F ? Error("react-stack-top-frame") : H,
+        F ? oe(a(t)) : se
       );
-    }, J.jsxs = function(r, m, w, C, N) {
-      var S = 1e4 > g.recentlyCreatedOwnerStacks++;
+    }, re.jsxs = function(t, m, N, L, M) {
+      var F = 1e4 > y.recentlyCreatedOwnerStacks++;
       return f(
-        r,
+        t,
         m,
-        w,
-        !0,
-        C,
         N,
-        S ? Error("react-stack-top-frame") : G,
-        S ? re(a(r)) : ae
+        !0,
+        L,
+        M,
+        F ? Error("react-stack-top-frame") : H,
+        F ? oe(a(t)) : se
       );
     };
-  }()), J;
+  }()), re;
 }
-var xe;
-function Ee() {
-  return xe || (xe = 1, process.env.NODE_ENV === "production" ? le.exports = Ne() : le.exports = ke()), le.exports;
+var be;
+function Ae() {
+  return be || (be = 1, process.env.NODE_ENV === "production" ? de.exports = Ee() : de.exports = Se()), de.exports;
 }
-var t = Ee();
-function Te(e) {
-  return e.template ? e.template : "tab";
+var e = Ae();
+function Re(r) {
+  return r.template ? r.template : "tab";
 }
-function Se(e) {
+function Pe(r) {
   const n = {};
-  return Object.entries(e).forEach(([u, a]) => {
+  return Object.entries(r).forEach(([c, a]) => {
     const o = a.group || "General";
-    n[o] || (n[o] = { label: o, type: "fields", fields: [] }), n[o]?.fields?.push({ name: u, ...a });
+    n[o] || (n[o] = { label: o, type: "fields", fields: [] }), n[o]?.fields?.push({ name: c, ...a });
   }), n;
 }
-const U = {
+const te = {
   12: "lg:col-span-12",
   11: "lg:col-span-11",
   10: "lg:col-span-10",
@@ -304,117 +304,117 @@ const U = {
   2: "lg:col-span-2",
   1: "lg:col-span-1"
 };
-function ee(e) {
-  return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].includes(e) ? e : 6;
+function ae(r) {
+  return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].includes(r) ? r : 6;
 }
-const K = (e, n) => typeof e == "string" ? e.replace(
+const G = (r, n) => typeof r == "string" ? r.replace(
   /#(\w+)#/g,
-  (u, a) => n[a] !== void 0 ? String(n[a]) : u
-) : Array.isArray(e) ? e.map((u) => K(u, n)) : e && typeof e == "object" ? Object.fromEntries(
-  Object.entries(e).map(([u, a]) => [
-    K(u, n),
-    K(a, n)
+  (c, a) => n[a] !== void 0 ? String(n[a]) : c
+) : Array.isArray(r) ? r.map((c) => G(c, n)) : r && typeof r == "object" ? Object.fromEntries(
+  Object.entries(r).map(([c, a]) => [
+    G(c, n),
+    G(a, n)
   ])
-) : e, je = (e) => {
-  const n = Array.isArray(e?.data?.data) ? e.data.data[0] : Array.isArray(e?.data) ? e.data[0] : e?.data?.data ?? e?.data;
+) : r, ke = (r) => {
+  const n = Array.isArray(r?.data?.data) ? r.data.data[0] : Array.isArray(r?.data) ? r.data[0] : r?.data?.data ?? r?.data;
   return n && typeof n == "object" && !Array.isArray(n) ? n : null;
-}, ge = (e, n, u) => {
-  const a = Array.isArray(u?.data?.data) ? u.data.data : Array.isArray(u?.data) ? u.data : u;
+}, pe = (r, n, c) => {
+  const a = Array.isArray(c?.data?.data) ? c.data.data : Array.isArray(c?.data) ? c.data : c;
   if (!Array.isArray(a) || a.length === 0)
     return {};
   const o = {};
   return a.forEach((l) => {
-    l[e] != null && l[n] != null && (o[l[e]] = l[n]);
+    l[r] != null && l[n] != null && (o[l[r]] = l[n]);
   }), o;
 };
-function ye(e, n) {
-  if (!n || Object.keys(n).length === 0) return e;
-  if (typeof e == "number")
-    return n[String(e)] ?? e;
-  if (typeof e == "string") {
-    const a = e.split(",").map((o) => o.trim()).map((o) => n[o]).filter(Boolean);
-    return a.length ? a.join(", ") : e;
+function ve(r, n) {
+  if (!n || Object.keys(n).length === 0) return r;
+  if (typeof r == "number")
+    return n[String(r)] ?? r;
+  if (typeof r == "string") {
+    const a = r.split(",").map((o) => o.trim()).map((o) => n[o]).filter(Boolean);
+    return a.length ? a.join(", ") : r;
   }
-  return e;
+  return r;
 }
-const we = "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg";
-function te({ field: e, data: n, methods: u = {}, sqlOpsUrls: a, refid: o }) {
-  const l = e?.name, h = `
+const Te = "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg";
+function ne({ field: r, data: n, methods: c = {}, sqlOpsUrls: a, refid: o }) {
+  const l = r?.name, h = `
     text-sm text-gray-600 break-words
-  `, c = `
+  `, d = `
     block text-sm font-semibold  transition-all duration-300 text-gray-700 capitalize
-  `, [p, d] = D(
-    e.options ?? {}
+  `, [v, u] = O(
+    r.options ?? {}
   );
-  F.useEffect(() => {
-    let v = !0;
+  B.useEffect(() => {
+    let w = !0;
     return (async () => {
-      if (e?.options) {
-        d(e.options);
+      if (r?.options) {
+        u(r.options);
         return;
       }
-      const E = e?.source ?? {};
-      if (E.type === "method") {
-        const j = E.method, T = j ? u[j] : void 0;
+      const k = r?.source ?? {};
+      if (k.type === "method") {
+        const g = k.method, T = g ? c[g] : void 0;
         if (T)
           try {
-            const b = await Promise.resolve(T());
-            v && d(b ?? {});
-          } catch (b) {
-            console.error("Method execution failed:", b), v && d({});
+            const j = await Promise.resolve(T());
+            w && u(j ?? {});
+          } catch (j) {
+            console.error("Method execution failed:", j), w && u({});
           }
         else
-          v && d({});
+          w && u({});
       }
-      if (E.type === "api" && E.url)
+      if (k.type === "api" && k.url)
         try {
-          const j = await M({
-            method: E.method || "GET",
-            url: E.url,
-            data: E.body ?? {},
-            params: E.params ?? {},
-            headers: E.headers ?? {}
-          }), T = e.valueKey || "value", b = e.labelKey || "title", L = ge(T, b, j);
-          v && d(L);
-        } catch (j) {
-          console.error("API execution failed:", j), v && d({});
+          const g = await I({
+            method: k.method || "GET",
+            url: k.url,
+            data: k.body ?? {},
+            params: k.params ?? {},
+            headers: k.headers ?? {}
+          }), T = r.valueKey || "value", j = r.labelKey || "title", $ = pe(T, j, g);
+          w && u($);
+        } catch (g) {
+          console.error("API execution failed:", g), w && u({});
         }
-      if (e.table || e.type === "dataSelector") {
+      if (r.table || r.type === "dataSelector") {
         if (!a) {
           console.error("SQL source requires formJson.endPoints but it is missing");
           return;
         }
         try {
-          let j;
-          if (e.type === "dataSelector")
-            j = {
-              ...e,
+          let g;
+          if (r.type === "dataSelector")
+            g = {
+              ...r,
               table: "do_lists",
               cols: "title,value",
               where: {
-                groupid: e.groupid ?? ""
+                groupid: r.groupid ?? ""
               }
             };
           else {
-            if (!e.table || !e.columns) {
-              console.error("Invalid SQL field config", e);
+            if (!r.table || !r.columns) {
+              console.error("Invalid SQL field config", r);
               return;
             }
-            j = {
-              ...e,
-              table: e.table,
-              cols: e.columns
+            g = {
+              ...r,
+              table: r.table,
+              cols: r.columns
             };
           }
-          e.where && e.type !== "dataSelector" && (j.where = o ? K(e.where, { refid: o }) : e.where);
-          const T = await M({
+          r.where && r.type !== "dataSelector" && (g.where = o ? G(r.where, { refid: o }) : r.where);
+          const T = await I({
             method: "POST",
             url: a.baseURL + a.registerQuery,
-            data: { query: j },
+            data: { query: g },
             headers: {
               Authorization: `Bearer ${a?.accessToken}`
             }
-          }), b = await M({
+          }), j = await I({
             method: "POST",
             url: a.baseURL + a.runQuery,
             data: {
@@ -424,43 +424,43 @@ function te({ field: e, data: n, methods: u = {}, sqlOpsUrls: a, refid: o }) {
             headers: {
               Authorization: `Bearer ${a?.accessToken}`
             }
-          }), L = e.valueKey || "value", k = e.labelKey || "title", _ = ge(L, k, b);
-          v && d(_);
-        } catch (j) {
-          console.error("API fetch failed:", j);
+          }), $ = r.valueKey || "value", E = r.labelKey || "title", C = pe($, E, j);
+          w && u(C);
+        } catch (g) {
+          console.error("API fetch failed:", g);
         }
       }
     })(), () => {
-      v = !1;
+      w = !1;
     };
   }, [
-    e.options,
-    e.source,
-    e.table,
-    e.columns,
-    e.where,
+    r.options,
+    r.source,
+    r.table,
+    r.columns,
+    r.where,
     o
   ]);
-  const f = typeof l == "string" ? n?.[l] : void 0, s = typeof f == "string" ? e.type === "date" ? f.split("T")[0] : e.type === "time" ? f.includes("T") ? f.slice(11, 16) : f.slice(0, 5) : ye(f, p) : ye(f, p), i = typeof l == "string" && (l.toLowerCase().includes("avatar") || l.toLowerCase().includes("logo")), x = s == null ? "" : typeof s == "string" || typeof s == "number" ? s : JSON.stringify(s);
-  return /* @__PURE__ */ t.jsxs("div", { className: "px-3 py-2 bg-gray-50 rounded-lg", children: [
-    /* @__PURE__ */ t.jsx("label", { className: c, children: e?.label }),
-    /* @__PURE__ */ t.jsx("div", { className: "relative", children: i ? /* @__PURE__ */ t.jsx(
+  const f = typeof l == "string" ? n?.[l] : void 0, s = typeof f == "string" ? r.type === "date" ? f.split("T")[0] : r.type === "time" ? f.includes("T") ? f.slice(11, 16) : f.slice(0, 5) : ve(f, v) : ve(f, v), i = typeof l == "string" && (l.toLowerCase().includes("avatar") || l.toLowerCase().includes("logo")), x = s == null ? "" : typeof s == "string" || typeof s == "number" ? s : JSON.stringify(s);
+  return /* @__PURE__ */ e.jsxs("div", { className: "px-3 py-2 bg-gray-50 rounded-lg", children: [
+    /* @__PURE__ */ e.jsx("label", { className: d, children: r?.label }),
+    /* @__PURE__ */ e.jsx("div", { className: "relative", children: i ? /* @__PURE__ */ e.jsx(
       "img",
       {
         src: String(s),
         alt: "avatar",
         className: "w-16 h-16 rounded-full object-cover border",
-        onError: (v) => {
-          const P = v.currentTarget;
-          P.onerror = null, P.src = we;
+        onError: (w) => {
+          const R = w.currentTarget;
+          R.onerror = null, R.src = Te;
         }
       }
-    ) : /* @__PURE__ */ t.jsx("p", { className: h, children: x }) })
+    ) : /* @__PURE__ */ e.jsx("p", { className: h, children: x }) })
   ] });
 }
-function Ae({ commonInfo: e, infoData: n, hiddenFields: u = [] }) {
-  return /* @__PURE__ */ t.jsx("div", { className: "bg-white border border-gray-100 p-4 min-h-3/10 overflow-auto", children: /* @__PURE__ */ t.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-6", children: [
-    /* @__PURE__ */ t.jsx("div", { className: "lg:col-span-2 flex flex-col items-center", children: /* @__PURE__ */ t.jsx("div", { className: "relative w-42 h-42", children: /* @__PURE__ */ t.jsx(
+function Ce({ commonInfo: r, infoData: n, hiddenFields: c = [] }) {
+  return /* @__PURE__ */ e.jsx("div", { className: "bg-white border border-gray-100 p-4 min-h-3/10 overflow-auto", children: /* @__PURE__ */ e.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-6", children: [
+    /* @__PURE__ */ e.jsx("div", { className: "lg:col-span-2 flex flex-col items-center", children: /* @__PURE__ */ e.jsx("div", { className: "relative w-42 h-42", children: /* @__PURE__ */ e.jsx(
       "img",
       {
         src: String(n.avatar_photo),
@@ -468,14 +468,14 @@ function Ae({ commonInfo: e, infoData: n, hiddenFields: u = [] }) {
         className: " w-full h-full object-cover border-4 rounded-[12px] border-white shadow-lg",
         onError: (a) => {
           const o = a.currentTarget;
-          o.onerror = null, o.src = we;
+          o.onerror = null, o.src = Te;
         }
       }
     ) }) }),
-    /* @__PURE__ */ t.jsx("div", { className: "lg:col-span-10 min-h-0 max-h-40  overflow-y-auto custom-scrollbar", children: /* @__PURE__ */ t.jsx("div", { className: "grid grid-cols-12 gap-2", children: e.fields?.map((a, o) => {
+    /* @__PURE__ */ e.jsx("div", { className: "lg:col-span-10 min-h-0 max-h-40  overflow-y-auto custom-scrollbar", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: r.fields?.map((a, o) => {
       const l = n?.[a.name];
-      return u.includes(a.name) || !l && l !== !1 && l !== 0 ? null : /* @__PURE__ */ t.jsx("div", { className: `hover:bg-gray-100 transition-colors duration-200 col-span-12 sm:col-span-6 ${U[ee(a.width)] || "lg:col-span-4"}`, children: /* @__PURE__ */ t.jsx(
-        te,
+      return c.includes(a.name) || !l && l !== !1 && l !== 0 ? null : /* @__PURE__ */ e.jsx("div", { className: `hover:bg-gray-100 transition-colors duration-200 col-span-12 sm:col-span-6 ${te[ae(a.width)] || "lg:col-span-4"}`, children: /* @__PURE__ */ e.jsx(
+        ne,
         {
           field: a,
           data: n ?? {}
@@ -485,68 +485,68 @@ function Ae({ commonInfo: e, infoData: n, hiddenFields: u = [] }) {
     }) }) })
   ] }) });
 }
-function de({ tabObj: e, methods: n, tabName: u, sqlOpsUrls: a, refid: o }) {
-  const [l, h] = F.useState(null);
-  return F.useEffect(() => {
-    let c = !1;
+function me({ tabObj: r, methods: n, tabName: c, sqlOpsUrls: a, refid: o }) {
+  const [l, h] = B.useState(null);
+  return B.useEffect(() => {
+    let d = !1;
     return (async () => {
-      const d = e?.config;
-      if (!d?.type) {
-        c || h(null);
+      const u = r?.config;
+      if (!u?.type) {
+        d || h(null);
         return;
       }
-      if (d.type === "method") {
-        const f = d.method, s = f ? n[f] : void 0;
+      if (u.type === "method") {
+        const f = u.method, s = f ? n[f] : void 0;
         if (s)
           try {
             const i = await Promise.resolve(s());
-            c || h(i || null);
+            d || h(i || null);
           } catch (i) {
-            console.error("Method execution failed:", i), c || h(null);
+            console.error("Method execution failed:", i), d || h(null);
           }
         else
-          c || h(null);
+          d || h(null);
       }
-      if (d.type === "api")
+      if (u.type === "api")
         try {
-          const f = await M({
-            method: d.method || "GET",
+          const f = await I({
+            method: u.method || "GET",
             // GET, POST, etc.
-            url: d.url,
-            data: d.body || {},
+            url: u.url,
+            data: u.body || {},
             // request body
-            params: d.params || {},
+            params: u.params || {},
             // query params
-            headers: d.headers || {}
+            headers: u.headers || {}
             // optional headers
           });
-          c || h(f.data || null);
+          d || h(f.data || null);
         } catch (f) {
-          console.error("API fetch failed:", f), c || h(null);
+          console.error("API fetch failed:", f), d || h(null);
         }
-      if (d.type === "sql" && o && o != "0") {
+      if (u.type === "sql" && o && o != "0") {
         if (!a) {
           console.error("SQL source requires formJson.endPoints but it is missing");
           return;
         }
         try {
-          const f = await M({
+          const f = await I({
             method: "POST",
             url: a.baseURL + a.registerQuery,
             data: {
               query: {
-                ...d,
-                cols: d.cols,
-                table: d.table,
-                where: K(d.where, {
-                  refid: d.refid
+                ...u,
+                cols: u.cols,
+                table: u.table,
+                where: G(u.where, {
+                  refid: u.refid
                 })
               }
             },
             headers: {
               Authorization: `Bearer ${a?.accessToken}`
             }
-          }), s = await M({
+          }), s = await I({
             method: "POST",
             url: a.baseURL + a.runQuery,
             data: {
@@ -556,299 +556,402 @@ function de({ tabObj: e, methods: n, tabName: u, sqlOpsUrls: a, refid: o }) {
             headers: {
               Authorization: `Bearer ${a?.accessToken}`
             }
-          }), i = je(s);
-          c || h(i);
+          }), i = ke(s);
+          d || h(i);
         } catch (f) {
           console.error("API fetch failed:", f);
         }
       }
     })(), () => {
-      c = !0;
+      d = !0;
     };
   }, [
-    e?.config?.type || "",
-    e?.config?.method || "",
-    e?.config?.url || "",
-    JSON.stringify(e?.config?.params || {}),
-    JSON.stringify(e?.config?.body || {}),
-    JSON.stringify(e?.config?.headers || {})
-  ]), /* @__PURE__ */ t.jsx("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ t.jsx("div", { className: "grid grid-cols-12 gap-2", children: l ? Object.keys(l).map((c, p) => /* @__PURE__ */ t.jsx(
+    r?.config?.type || "",
+    r?.config?.method || "",
+    r?.config?.url || "",
+    JSON.stringify(r?.config?.params || {}),
+    JSON.stringify(r?.config?.body || {}),
+    JSON.stringify(r?.config?.headers || {})
+  ]), /* @__PURE__ */ e.jsx("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: l ? Object.keys(l).map((d, v) => /* @__PURE__ */ e.jsx(
     "div",
     {
-      className: `col-span-12 sm:col-span-6 ${U[ee(e.width)] || "lg:col-span-2"}`,
-      children: /* @__PURE__ */ t.jsx(
-        te,
+      className: `col-span-12 sm:col-span-6 ${te[ae(r.width)] || "lg:col-span-2"}`,
+      children: /* @__PURE__ */ e.jsx(
+        ne,
         {
-          field: { name: c, label: c },
+          field: { name: d, label: d },
           data: l ?? {},
           methods: n,
           refid: o,
           sqlOpsUrls: a
         },
-        c
+        d
       )
     },
-    `field-${p}`
-  )) : /* @__PURE__ */ t.jsx("div", { className: "col-span-12 flex flex-col  min-h-0", children: /* @__PURE__ */ t.jsxs("div", { className: "flex flex-1 flex-col items-center justify-center text-gray-500", children: [
-    /* @__PURE__ */ t.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ t.jsxs("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: [
-      /* @__PURE__ */ t.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" }),
-      /* @__PURE__ */ t.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "m8 7 4-4 4 4" })
+    `field-${v}`
+  )) : /* @__PURE__ */ e.jsx("div", { className: "col-span-12 flex flex-col  min-h-0", children: /* @__PURE__ */ e.jsxs("div", { className: "flex flex-1 flex-col items-center justify-center text-gray-500", children: [
+    /* @__PURE__ */ e.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ e.jsxs("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: [
+      /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" }),
+      /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "m8 7 4-4 4 4" })
     ] }) }),
-    /* @__PURE__ */ t.jsx("h3", { className: "text-lg font-medium text-gray-900 mb-2", children: "No Data Available" }),
-    /* @__PURE__ */ t.jsx("p", { className: "text-sm text-gray-500 text-center max-w-sm", children: "There are no records to display  at the moment." })
+    /* @__PURE__ */ e.jsx("h3", { className: "text-lg font-medium text-gray-900 mb-2", children: "No Data Available" }),
+    /* @__PURE__ */ e.jsx("p", { className: "text-sm text-gray-500 text-center max-w-sm", children: "There are no records to display  at the moment." })
   ] }) }) }) });
 }
-function ue({ tabObj: e, methods: n, tabName: u, sqlOpsUrls: a, refid: o, Reports: l, toast: h, handleAction: c, infoViewJson: p }) {
-  const [d, f] = D(1), [s, i] = D(10), [x, v] = D(""), [P, E] = D(!1), [j, T] = D(null), [b, L] = F.useState([]);
-  ce(null);
-  const [k, _] = D(null), [A, I] = D({ key: "", direction: null }), [q, $] = D(null), g = e?.config;
-  console.log("tabObj", e), console.log("source", g);
-  const V = F.useCallback(async () => {
-    if (!g?.type) {
-      L([]);
+function _e({
+  open: r,
+  title: n = "Confirm Delete",
+  message: c = "Are you sure you want to delete this record?",
+  onConfirm: a,
+  onCancel: o
+}) {
+  return r ? /* @__PURE__ */ e.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-black/40", children: /* @__PURE__ */ e.jsxs("div", { className: "bg-white rounded-lg shadow-lg w-full max-w-sm p-4", children: [
+    /* @__PURE__ */ e.jsx("h3", { className: "text-sm font-semibold text-gray-900", children: n }),
+    /* @__PURE__ */ e.jsx("p", { className: "mt-2 text-sm text-gray-600", children: c }),
+    /* @__PURE__ */ e.jsxs("div", { className: "mt-4 flex justify-end gap-2", children: [
+      /* @__PURE__ */ e.jsx(
+        "button",
+        {
+          onClick: o,
+          className: "px-3 py-1.5 text-sm rounded border border-gray-300 text-gray-700 hover:bg-gray-50",
+          children: "Cancel"
+        }
+      ),
+      /* @__PURE__ */ e.jsx(
+        "button",
+        {
+          onClick: a,
+          className: "px-3 py-1.5 text-sm rounded bg-red-600 text-white hover:bg-red-700",
+          children: "Delete"
+        }
+      )
+    ] })
+  ] }) }) : null;
+}
+function he({ tabObj: r, methods: n, tabName: c, sqlOpsUrls: a, refid: o, Reports: l, toast: h, handleAction: d, infoViewJson: v }) {
+  const [u, f] = O(1), [s, i] = O(10), [x, w] = O(""), [R, k] = O(!1), [g, T] = O(null), [j, $] = B.useState([]);
+  fe(null);
+  const [E, C] = O(null), [P, z] = O({ key: "", direction: null }), [Z, D] = O(null), y = r?.config;
+  console.log("tabObj", r), console.log("source", y);
+  const K = B.useCallback(async () => {
+    if (!y?.type) {
+      $([]);
       return;
     }
-    if (g.type === "method") {
-      const N = g.method, S = N ? n[N] : void 0;
-      if (!S) {
-        L([]);
+    if (y.type === "method") {
+      const b = y.method, p = b ? n[b] : void 0;
+      if (!p) {
+        $([]);
         return;
       }
       try {
-        const O = await Promise.resolve(S());
-        L(O || []);
+        const S = await Promise.resolve(p());
+        $(S || []);
       } catch {
-        L([]);
+        $([]);
       }
     }
-    if (g.type === "api")
+    if (y.type === "api")
       try {
-        const N = await M({
-          method: g.method || "GET",
-          url: g.url,
-          data: g.body || {},
-          params: g.params || {},
-          headers: g.headers || {}
+        const b = await I({
+          method: y.method || "GET",
+          url: y.url,
+          data: y.body || {},
+          params: y.params || {},
+          headers: y.headers || {}
         });
-        L(N.data || []);
-      } catch (N) {
-        console.error("API fetch failed:", N), L([]);
+        $(b.data || []);
+      } catch (b) {
+        console.error("API fetch failed:", b), $([]);
       }
-    if (g.type === "sql" && o && o !== "0") {
+    if (y.type === "sql" && o && o !== "0") {
       if (!a) {
         console.error("SQL source requires formJson.endPoints but it is missing");
         return;
       }
       try {
-        const { form: N, actions: S, uimode: O, type: R, unilinks: y, DEBUG: z, ...B } = g, H = await M({
+        const { form: b, actions: p, uimode: S, type: A, unilinks: _, DEBUG: X, ...q } = y, U = await I({
           method: "POST",
           url: a.baseURL + a.registerQuery,
           data: {
             query: {
-              ...B,
-              where: K(g.where, { refid: o })
+              ...q,
+              where: G(y.where, { refid: o })
             }
           },
           headers: {
             Authorization: `Bearer ${a.accessToken}`
           }
-        }), X = await M({
+        }), V = await I({
           method: "POST",
           url: a.baseURL + a.runQuery,
           data: {
-            queryid: H.data.queryid,
+            queryid: U.data.queryid,
             filter: {}
           },
           headers: {
             Authorization: `Bearer ${a.accessToken}`
           }
         });
-        L(X.data?.data ?? X.data ?? []);
-      } catch (N) {
-        console.error("SQL fetch failed:", N);
+        $(V.data?.data ?? V.data ?? []);
+      } catch (b) {
+        console.error("SQL fetch failed:", b);
       }
     }
   }, [
-    e?.config,
+    r?.config,
     n,
     o,
     a
   ]);
-  F.useEffect(() => {
-    V();
+  B.useEffect(() => {
+    K();
   }, [
-    V
+    K
   ]);
-  const Q = Array.isArray(b) ? b : [b], Y = ((N) => {
-    const S = /* @__PURE__ */ new Set();
-    return N.forEach((O) => {
-      O && typeof O == "object" && Object.keys(O).forEach((R) => S.add(R));
-    }), Array.from(S);
+  const Q = Array.isArray(j) ? j : [j], Y = ((b) => {
+    const p = /* @__PURE__ */ new Set();
+    return b.forEach((S) => {
+      S && typeof S == "object" && Object.keys(S).forEach((A) => p.add(A));
+    }), Array.from(p);
   })(Q);
-  e?.vmode;
-  const W = e?.config, G = W?.["popup.form"] ? "popup.form" : (W?.form, "form"), ae = W?.[G] && Object.keys(W?.[G]).length > 0;
+  r?.vmode;
+  const W = r?.config, H = W?.["popup.form"] ? "popup.form" : (W?.form, "form"), se = W?.[H] && Object.keys(W?.[H]).length > 0;
   W?.info && Object.keys(W?.info).length > 0;
-  const ne = (N) => !A.key || !A.direction ? N : [...N].sort((S, O) => {
-    const R = S[A.key], y = O[A.key];
-    if (R == null) return A.direction === "asc" ? 1 : -1;
-    if (y == null) return A.direction === "asc" ? -1 : 1;
-    if (typeof R == "boolean" && typeof y == "boolean")
-      return A.direction === "asc" ? R === y ? 0 : R ? -1 : 1 : R === y ? 0 : R ? 1 : -1;
-    const z = new Date(R), B = new Date(y);
-    if (!isNaN(z.getTime()) && !isNaN(B.getTime()))
-      return A.direction === "asc" ? z.getTime() - B.getTime() : B.getTime() - z.getTime();
-    const H = parseFloat(R), X = parseFloat(y);
-    if (!isNaN(H) && !isNaN(X))
-      return A.direction === "asc" ? H - X : X - H;
-    const oe = String(R).toLowerCase(), se = String(y).toLowerCase();
-    return A.direction === "asc" ? oe < se ? -1 : oe > se ? 1 : 0 : oe > se ? -1 : oe < se ? 1 : 0;
-  }), r = fe(() => {
-    let N = Q;
+  const le = (b) => !P.key || !P.direction ? b : [...b].sort((p, S) => {
+    const A = p[P.key], _ = S[P.key];
+    if (A == null) return P.direction === "asc" ? 1 : -1;
+    if (_ == null) return P.direction === "asc" ? -1 : 1;
+    if (typeof A == "boolean" && typeof _ == "boolean")
+      return P.direction === "asc" ? A === _ ? 0 : A ? -1 : 1 : A === _ ? 0 : A ? 1 : -1;
+    const X = new Date(A), q = new Date(_);
+    if (!isNaN(X.getTime()) && !isNaN(q.getTime()))
+      return P.direction === "asc" ? X.getTime() - q.getTime() : q.getTime() - X.getTime();
+    const U = parseFloat(A), V = parseFloat(_);
+    if (!isNaN(U) && !isNaN(V))
+      return P.direction === "asc" ? U - V : V - U;
+    const ie = String(A).toLowerCase(), ce = String(_).toLowerCase();
+    return P.direction === "asc" ? ie < ce ? -1 : ie > ce ? 1 : 0 : ie > ce ? -1 : ie < ce ? 1 : 0;
+  }), t = xe(() => {
+    let b = Q;
     if (x.trim()) {
-      const S = x.toLowerCase();
-      N = Q.filter((O) => Y.some((R) => {
-        const y = O[R];
-        return y == null ? !1 : String(y).toLowerCase().includes(S);
+      const p = x.toLowerCase();
+      b = Q.filter((S) => Y.some((A) => {
+        const _ = S[A];
+        return _ == null ? !1 : String(_).toLowerCase().includes(p);
       }));
     }
-    return ne(N);
-  }, [Q, x, Y, A]);
-  Math.ceil(r.length / s);
-  const m = (d - 1) * s, w = m + s;
-  r.slice(m, w);
-  const C = () => {
-    n?.addInfoRecord?.({ [G]: e?.config?.[G] }, o);
+    return le(b);
+  }, [Q, x, Y, P]);
+  Math.ceil(t.length / s);
+  const m = (u - 1) * s, N = m + s;
+  t.slice(m, N);
+  const L = (b) => {
+    T(b), k(!0);
+  }, M = async () => {
+    if (g?.id) {
+      if (!a) {
+        D({ type: "error", message: "Delete configuration missing." });
+        return;
+      }
+      try {
+        let b = r?.config;
+        const p = b?.["popup.form"] ? "popup.form" : (b?.form, "form");
+        console.log("config?.[formType]", b?.[p]);
+        const S = b?.[p];
+        if (!S?.source) throw new Error("Form source missing");
+        const A = await I({
+          method: "GET",
+          url: a.baseURL + a.dbopsGetHash,
+          headers: {
+            Authorization: `Bearer ${a.accessToken}`
+          }
+        });
+        let _ = { ...S.source, refid: g.id };
+        S.source.where && (_ = {
+          ..._,
+          where: G(S.source.where, {
+            refid: g.id
+          })
+        });
+        const X = await I({
+          method: "POST",
+          url: a.baseURL + a.dbopsGetRefId,
+          data: {
+            operation: "update",
+            source: _,
+            fields: S.fields,
+            forcefill: S.forcefill,
+            datahash: A.data.refhash
+          },
+          headers: {
+            Authorization: `Bearer ${a.accessToken}`
+          }
+        });
+        await I({
+          method: "POST",
+          url: a.baseURL + a.dbopsUpdate,
+          data: {
+            refid: X.data.refid,
+            fields: { blocked: "true" },
+            datahash: A.data.refhash
+          },
+          headers: {
+            Authorization: `Bearer ${a.accessToken}`
+          }
+        }), window.alert("Record deleted successfully."), K();
+      } catch (b) {
+        console.error(b), window.alert("Failed to delete record. Please try again");
+      } finally {
+        T(null), k(!1), setTimeout(() => D(null), 3e3);
+      }
+    }
+  }, F = () => {
+    T(null), k(!1);
+  }, J = () => {
+    n?.addInfoRecord?.({ [H]: r?.config?.[H] }, o);
   };
-  return fe(() => ({
-    totalRows: r.length,
+  return xe(() => ({
+    totalRows: t.length,
     columns: Y.length,
     currentPageStart: m + 1,
-    currentPageEnd: Math.min(w, r.length),
+    currentPageEnd: Math.min(N, t.length),
     isFiltered: x.trim().length > 0
-  }), [r, Q, Y, m, w]), Q.length === 0 || Y.length === 0 ? /* @__PURE__ */ t.jsxs("div", { className: "flex flex-1 flex-col items-center justify-center text-gray-500", children: [
-    /* @__PURE__ */ t.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ t.jsxs("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: [
-      /* @__PURE__ */ t.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" }),
-      /* @__PURE__ */ t.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "m8 7 4-4 4 4" })
+  }), [t, Q, Y, m, N]), Q.length === 0 || Y.length === 0 ? /* @__PURE__ */ e.jsxs("div", { className: "flex flex-1 flex-col items-center justify-center text-gray-500", children: [
+    /* @__PURE__ */ e.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ e.jsxs("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: [
+      /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" }),
+      /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "m8 7 4-4 4 4" })
     ] }) }),
-    /* @__PURE__ */ t.jsx("h3", { className: "text-lg font-medium text-gray-900 mb-2", children: "No Data Available" }),
-    /* @__PURE__ */ t.jsx("p", { className: "text-sm text-gray-500 text-center max-w-sm", children: "There are no records to display in the grid view at the moment." }),
-    ae && /* @__PURE__ */ t.jsxs(
+    /* @__PURE__ */ e.jsx("h3", { className: "text-lg font-medium text-gray-900 mb-2", children: "No Data Available" }),
+    /* @__PURE__ */ e.jsx("p", { className: "text-sm text-gray-500 text-center max-w-sm", children: "There are no records to display in the grid view at the moment." }),
+    se && /* @__PURE__ */ e.jsxs(
       "button",
       {
-        onClick: C,
+        onClick: J,
         className: "mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-action cursor-pointer",
         children: [
-          /* @__PURE__ */ t.jsx("svg", { className: "w-4 h-4 mr-2", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ t.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 4v16m8-8H4" }) }),
+          /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 mr-2", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 4v16m8-8H4" }) }),
           "Add Record"
         ]
       }
     )
-  ] }) : /* @__PURE__ */ t.jsx(t.Fragment, { children: l ? /* @__PURE__ */ t.jsx(
-    l,
-    {
-      methods: n,
-      report: {
-        source: {
-          table: g?.table,
-          type: "sql",
-          cols: g?.cols,
-          where: g?.where,
-          orderby: g?.orderby
+  ] }) : /* @__PURE__ */ e.jsx(e.Fragment, { children: l ? /* @__PURE__ */ e.jsxs(e.Fragment, { children: [
+    /* @__PURE__ */ e.jsx(
+      l,
+      {
+        methods: { ...n, deleteRecord: L },
+        report: {
+          source: {
+            table: y?.table,
+            type: "sql",
+            cols: y?.cols,
+            where: y?.where,
+            orderby: y?.orderby
+          },
+          endPoints: a,
+          actions: { ...y?.actions, ...v?.buttons, ...v.actions },
+          datagrid: y?.datagrid,
+          buttons: y?.buttons
         },
-        endPoints: a,
-        actions: { ...g?.actions, ...p?.buttons, ...p.actions },
-        datagrid: g?.datagrid
-      },
-      onButtonClick: c
-    }
-  ) : /* @__PURE__ */ t.jsx("div", { className: "text-sm text-gray-500 text-center py-4", children: "Reports component is not available." }) });
+        onButtonClick: d
+      }
+    ),
+    /* @__PURE__ */ e.jsx(
+      _e,
+      {
+        open: R,
+        onConfirm: M,
+        onCancel: F
+      }
+    )
+  ] }) : /* @__PURE__ */ e.jsx("div", { className: "text-sm text-gray-500 text-center py-4", children: "Reports component is not available." }) });
 }
-const pe = ({ groups: e, groupNames: n, setActiveTabIndex: u, activeTabIndex: a }) => /* @__PURE__ */ t.jsx(
+const je = ({ groups: r, groupNames: n, setActiveTabIndex: c, activeTabIndex: a }) => /* @__PURE__ */ e.jsx(
   "nav",
   {
     className: "flex flex-col overflow-y-auto h-full px-2 py-1 space-y-1",
-    children: n.length > 0 ? n.map((o, l) => /* @__PURE__ */ t.jsx(
+    children: n.length > 0 ? n.map((o, l) => /* @__PURE__ */ e.jsx(
       "button",
       {
         type: "button",
-        onClick: () => u(l),
+        onClick: () => c(l),
         className: `cursor-pointer w-full text-left py-2 px-3 rounded-md text-sm font-semibold transition-all duration-200 ${a === l ? "bg-white shadow text-action" : "text-gray-600 hover:bg-white/50"}`,
-        children: /* @__PURE__ */ t.jsx("span", { className: "truncate", children: e[o]?.label || o })
+        children: /* @__PURE__ */ e.jsx("span", { className: "truncate", children: r[o]?.label || o })
       },
       o
-    )) : /* @__PURE__ */ t.jsx("div", { className: "py-3 px-2 text-sm text-gray-500", children: "No group available" })
+    )) : /* @__PURE__ */ e.jsx("div", { className: "py-3 px-2 text-sm text-gray-500", children: "No group available" })
   }
-), Pe = ({
-  groups: e,
+), Le = ({
+  groups: r,
   groupNames: n,
-  setActiveTabIndex: u,
+  setActiveTabIndex: c,
   activeTabIndex: a,
   layoutConfig: o,
   showScrollHint: l,
   isCommonInfo: h,
-  tabsNavRef: c
+  tabsNavRef: d
 }) => {
-  const [p, d] = D(!1), f = ce(null);
-  return ie(() => {
+  const [v, u] = O(!1), f = fe(null);
+  return ue(() => {
     const s = (i) => {
-      f.current && !f.current.contains(i.target) && d(!1);
+      f.current && !f.current.contains(i.target) && u(!1);
     };
     return document.addEventListener("mousedown", s), () => document.removeEventListener("mousedown", s);
-  }, []), /* @__PURE__ */ t.jsxs("div", { className: o?.tabNavClass || "relative z-10", children: [
-    l && /* @__PURE__ */ t.jsx("div", { className: "absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 flex items-center justify-center", children: /* @__PURE__ */ t.jsx(
+  }, []), /* @__PURE__ */ e.jsxs("div", { className: o?.tabNavClass || "relative z-10", children: [
+    l && /* @__PURE__ */ e.jsx("div", { className: "absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 flex items-center justify-center", children: /* @__PURE__ */ e.jsx(
       "button",
       {
-        onClick: () => c.current?.scrollBy({ left: -200, behavior: "smooth" }),
+        onClick: () => d.current?.scrollBy({ left: -200, behavior: "smooth" }),
         className: "w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group",
-        children: /* @__PURE__ */ t.jsx("svg", { className: "w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ t.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 19l-7-7 7-7" }) })
+        children: /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 19l-7-7 7-7" }) })
       }
     ) }),
-    /* @__PURE__ */ t.jsxs("div", { className: "absolute right-0 top-1/2 -translate-y-1/2 z-20 w-18 flex items-center justify-between pr-1", children: [
-      l && /* @__PURE__ */ t.jsx(
+    /* @__PURE__ */ e.jsxs("div", { className: "absolute right-0 top-1/2 -translate-y-1/2 z-20 w-18 flex items-center justify-between pr-1", children: [
+      l && /* @__PURE__ */ e.jsx(
         "button",
         {
-          onClick: () => c.current?.scrollBy({ left: 200, behavior: "smooth" }),
+          onClick: () => d.current?.scrollBy({ left: 200, behavior: "smooth" }),
           className: "w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200 group",
-          children: /* @__PURE__ */ t.jsx("svg", { className: "w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ t.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 5l7 7-7 7" }) })
+          children: /* @__PURE__ */ e.jsx("svg", { className: "w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 5l7 7-7 7" }) })
         }
       ),
-      /* @__PURE__ */ t.jsxs("div", { className: "relative", ref: f, children: [
-        /* @__PURE__ */ t.jsx(
+      /* @__PURE__ */ e.jsxs("div", { className: "relative", ref: f, children: [
+        /* @__PURE__ */ e.jsx(
           "button",
           {
-            onClick: () => d(!p),
+            onClick: () => u(!v),
             className: "ml-1 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-white hover:shadow-xl transition-all duration-200",
             children: "⋮"
           }
         ),
-        p && /* @__PURE__ */ t.jsx("div", { className: "absolute right-0 mt-2 w-48 max-h-100 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30", children: n.map((s, i) => /* @__PURE__ */ t.jsx(
+        v && /* @__PURE__ */ e.jsx("div", { className: "absolute right-0 mt-2 w-48 max-h-100 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30", children: n.map((s, i) => /* @__PURE__ */ e.jsx(
           "button",
           {
             type: "button",
             onClick: () => {
-              u(i), d(!1);
+              c(i), u(!1);
             },
             className: `w-full text-left px-3 py-2 text-sm truncate hover:bg-gray-100 ${a === i ? "bg-gray-50 font-semibold text-action" : "text-gray-700"}`,
-            children: e[s]?.label || s
+            children: r[s]?.label || s
           },
           s
         )) })
       ] })
     ] }),
-    /* @__PURE__ */ t.jsx("div", { className: `relative bg-gray-100 ${h ? "" : "rounded-t-lg"} px-12 pt-1 shadow-inner overflow-hidden`, children: /* @__PURE__ */ t.jsx(
+    /* @__PURE__ */ e.jsx("div", { className: `relative bg-gray-100 ${h ? "" : "rounded-t-lg"} px-12 pt-1 shadow-inner overflow-hidden`, children: /* @__PURE__ */ e.jsx(
       "nav",
       {
-        ref: c,
+        ref: d,
         className: "relative flex overflow-x-auto scrollbar-hide scroll-smooth",
         style: {
           scrollbarWidth: "none",
           msOverflowStyle: "none"
         },
-        children: n.length > 0 ? n.map((s, i) => /* @__PURE__ */ t.jsx(
+        children: n.length > 0 ? n.map((s, i) => /* @__PURE__ */ e.jsx(
           "button",
           {
             type: "button",
-            onClick: () => u(i),
+            onClick: () => c(i),
             className: `relative cursor-pointer flex-shrink-0
             min-w-[8rem]   
             py-2 px-8
@@ -856,70 +959,70 @@ const pe = ({ groups: e, groupNames: n, setActiveTabIndex: u, activeTabIndex: a 
             transition-all duration-300 ease-out
             focus:outline-none whitespace-nowrap
             ${a === i ? "text-action bg-white" : "text-gray-600 hover:text-gray-800 hover:bg-white/50"}`,
-            children: /* @__PURE__ */ t.jsx("span", { className: "relative z-10 flex items-center justify-center gap-1 sm:gap-2", children: /* @__PURE__ */ t.jsx("span", { className: "truncate", children: e[s]?.label || s }) })
+            children: /* @__PURE__ */ e.jsx("span", { className: "relative z-10 flex items-center justify-center gap-1 sm:gap-2", children: /* @__PURE__ */ e.jsx("span", { className: "truncate", children: r[s]?.label || s }) })
           },
           s
-        )) : /* @__PURE__ */ t.jsx("div", { className: "py-3 px-6 text-sm text-gray-500", children: "No group available" })
+        )) : /* @__PURE__ */ e.jsx("div", { className: "py-3 px-6 text-sm text-gray-500", children: "No group available" })
       }
     ) })
   ] });
-}, be = ({
-  groupNames: e,
+}, we = ({
+  groupNames: r,
   activeTabIndex: n,
-  layoutConfig: u,
+  layoutConfig: c,
   tabObj: a,
   infoData: o,
   setActiveTabIndex: l,
   renderView: h,
-  methods: c = {},
-  refid: p,
-  sqlOpsUrls: d
-}) => /* @__PURE__ */ t.jsxs(
+  methods: d = {},
+  refid: v,
+  sqlOpsUrls: u
+}) => /* @__PURE__ */ e.jsxs(
   "div",
   {
     className: "bg-white rounded-b-lg border  border-t-0 border-gray-100 p-3 animate-in fade-in duration-300 flex-1 flex flex-col min-h-0",
     children: [
-      e.length > 0 ? a?.fields ? /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ t.jsx("div", { className: u?.fieldGridClass || "grid grid-cols-12 gap-2", children: a.fields.map((f, s) => /* @__PURE__ */ t.jsx(
+      r.length > 0 ? a?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: c?.fieldGridClass || "grid grid-cols-12 gap-2", children: a.fields.map((f, s) => /* @__PURE__ */ e.jsx(
         "div",
         {
-          className: `col-span-12 sm:col-span-6 ${U[ee(f.width)] || "lg:col-span-2"}`,
-          children: /* @__PURE__ */ t.jsx(
-            te,
+          className: `col-span-12 sm:col-span-6 ${te[ae(f.width)] || "lg:col-span-2"}`,
+          children: /* @__PURE__ */ e.jsx(
+            ne,
             {
               field: f,
               data: o ?? {},
-              methods: c,
-              refid: p,
-              sqlOpsUrls: d
+              methods: d,
+              refid: v,
+              sqlOpsUrls: u
             }
           )
         },
         f?.name ?? `field-${s}`
-      )) }) }) : a ? /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: h(a, e[n] || "") }) : null : /* @__PURE__ */ t.jsx("div", { className: "flex-1 col-span-full text-center py-8 text-gray-500", children: "No data available" }),
-      e.length > 5 && /* @__PURE__ */ t.jsxs("div", { className: "mt-10 pt-2 border-t border-gray-100 flex items-center justify-between gap-4", children: [
-        /* @__PURE__ */ t.jsxs("div", { className: "flex items-center gap-2 text-sm text-gray-500", children: [
-          /* @__PURE__ */ t.jsxs("span", { children: [
+      )) }) }) : a ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: h(a, r[n] || "") }) : null : /* @__PURE__ */ e.jsx("div", { className: "flex-1 col-span-full text-center py-8 text-gray-500", children: "No data available" }),
+      r.length > 5 && /* @__PURE__ */ e.jsxs("div", { className: "mt-10 pt-2 border-t border-gray-100 flex items-center justify-between gap-4", children: [
+        /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-2 text-sm text-gray-500", children: [
+          /* @__PURE__ */ e.jsxs("span", { children: [
             "Tab ",
             n + 1,
             " of ",
-            e.length
+            r.length
           ] }),
-          /* @__PURE__ */ t.jsxs("div", { className: "flex gap-1", children: [
-            e.slice(0, 5).map((f, s) => /* @__PURE__ */ t.jsx(
+          /* @__PURE__ */ e.jsxs("div", { className: "flex gap-1", children: [
+            r.slice(0, 5).map((f, s) => /* @__PURE__ */ e.jsx(
               "div",
               {
                 className: `w-2 h-2 rounded-full transition-all duration-300 ${s === n ? "bg-action w-6" : "bg-gray-300"}`
               },
               s
             )),
-            e.length > 5 && /* @__PURE__ */ t.jsxs("span", { className: "text-xs text-gray-400 ml-1", children: [
+            r.length > 5 && /* @__PURE__ */ e.jsxs("span", { className: "text-xs text-gray-400 ml-1", children: [
               "+",
-              e.length - 5
+              r.length - 5
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ t.jsxs("div", { className: "hidden sm:flex gap-2", children: [
-          /* @__PURE__ */ t.jsx(
+        /* @__PURE__ */ e.jsxs("div", { className: "hidden sm:flex gap-2", children: [
+          /* @__PURE__ */ e.jsx(
             "button",
             {
               onClick: () => l(Math.max(0, n - 1)),
@@ -928,25 +1031,25 @@ const pe = ({ groups: e, groupNames: n, setActiveTabIndex: u, activeTabIndex: a 
               children: "Previous"
             }
           ),
-          /* @__PURE__ */ t.jsx(
+          /* @__PURE__ */ e.jsx(
             "button",
             {
-              onClick: () => l(Math.min(e.length - 1, n + 1)),
-              disabled: n === e.length - 1,
+              onClick: () => l(Math.min(r.length - 1, n + 1)),
+              disabled: n === r.length - 1,
               className: "px-3 py-1 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors",
               children: "Next"
             }
           )
         ] })
       ] }),
-      e.length <= 5 && /* @__PURE__ */ t.jsx("div", { className: "mt-6 pt-3 border-t border-gray-100", children: /* @__PURE__ */ t.jsxs("div", { className: "flex items-center justify-between text-sm text-gray-500", children: [
-        /* @__PURE__ */ t.jsxs("span", { children: [
+      r.length <= 5 && /* @__PURE__ */ e.jsx("div", { className: "mt-6 pt-3 border-t border-gray-100", children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center justify-between text-sm text-gray-500", children: [
+        /* @__PURE__ */ e.jsxs("span", { children: [
           "Tab ",
           n + 1,
           " of ",
-          e.length
+          r.length
         ] }),
-        /* @__PURE__ */ t.jsx("div", { className: "flex gap-1", children: e.map((f, s) => /* @__PURE__ */ t.jsx(
+        /* @__PURE__ */ e.jsx("div", { className: "flex gap-1", children: r.map((f, s) => /* @__PURE__ */ e.jsx(
           "div",
           {
             className: `w-2 h-2 rounded-full transition-all duration-300 ${s === n ? "bg-action w-6" : "bg-gray-300"}`
@@ -956,187 +1059,187 @@ const pe = ({ groups: e, groupNames: n, setActiveTabIndex: u, activeTabIndex: a 
       ] }) })
     ]
   },
-  e[n]
+  r[n]
 );
-function ve({
-  groups: e,
+function Ne({
+  groups: r,
   methods: n = {},
-  infoData: u,
+  infoData: c,
   viewRenderers: a = {},
   isCommonInfo: o,
   layoutConfig: l = {},
   viewMode: h,
-  sqlOpsUrls: c = {},
-  refid: p,
-  Reports: d,
+  sqlOpsUrls: d = {},
+  refid: v,
+  Reports: u,
   toast: f = {},
   handleAction: s = () => {
   },
   infoViewJson: i
 }) {
-  const [x, v] = D(0), [P, E] = D(!1), j = ce(null), T = Object.keys(e);
-  ie(() => {
-    const $ = () => {
-      if (j.current) {
-        const g = j.current;
-        E(g.scrollWidth > g.clientWidth);
+  const [x, w] = O(0), [R, k] = O(!1), g = fe(null), T = Object.keys(r);
+  ue(() => {
+    const D = () => {
+      if (g.current) {
+        const y = g.current;
+        k(y.scrollWidth > y.clientWidth);
       }
     };
-    return $(), window.addEventListener("resize", $), () => window.removeEventListener("resize", $);
-  }, [T.length]), ie(() => {
-    if (j.current && T.length > 0) {
-      const $ = j.current.children[x];
-      $ && $.scrollIntoView({
+    return D(), window.addEventListener("resize", D), () => window.removeEventListener("resize", D);
+  }, [T.length]), ue(() => {
+    if (g.current && T.length > 0) {
+      const D = g.current.children[x];
+      D && D.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
         inline: "center"
       });
     }
   }, [x, T.length]);
-  const b = h === "tableft", L = h === "tabright", k = !b && !L, _ = e[T[x] ?? ""] || null, A = {
-    single: ($, g) => /* @__PURE__ */ t.jsx(de, { tabObj: $, methods: n, tabName: g, sqlOpsUrls: c, refid: p }),
-    grid: ($, g) => /* @__PURE__ */ t.jsx(
-      ue,
+  const j = h === "tableft", $ = h === "tabright", E = !j && !$, C = r[T[x] ?? ""] || null, P = {
+    single: (D, y) => /* @__PURE__ */ e.jsx(me, { tabObj: D, methods: n, tabName: y, sqlOpsUrls: d, refid: v }),
+    grid: (D, y) => /* @__PURE__ */ e.jsx(
+      he,
       {
-        ...d ? { Reports: d } : {},
+        ...u ? { Reports: u } : {},
         toast: f,
         handleAction: s,
-        tabObj: $,
+        tabObj: D,
         methods: n,
-        tabName: g,
-        sqlOpsUrls: c,
-        refid: p,
+        tabName: y,
+        sqlOpsUrls: d,
+        refid: v,
         infoViewJson: i
       }
     )
-  }, I = _?.config?.uimode, q = a[I] || A[I] || (() => /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex justify-center p-4", children: "No UI mode for this type" }));
-  return k ? /* @__PURE__ */ t.jsxs("div", { className: "flex-1 flex flex-col min-h-0 ", children: [
-    /* @__PURE__ */ t.jsx(
-      Pe,
+  }, z = C?.config?.uimode, Z = a[z] || P[z] || (() => /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex justify-center p-4", children: "No UI mode for this type" }));
+  return E ? /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex flex-col min-h-0 ", children: [
+    /* @__PURE__ */ e.jsx(
+      Le,
       {
         groupNames: T,
-        groups: e,
-        setActiveTabIndex: v,
+        groups: r,
+        setActiveTabIndex: w,
         activeTabIndex: x,
-        tabsNavRef: j,
+        tabsNavRef: g,
         isCommonInfo: o,
-        showScrollHint: P,
+        showScrollHint: R,
         layoutConfig: l
       }
     ),
-    /* @__PURE__ */ t.jsx(
-      be,
+    /* @__PURE__ */ e.jsx(
+      we,
       {
         groupNames: T,
         activeTabIndex: x,
         layoutConfig: l,
-        tabObj: _,
-        infoData: u,
-        setActiveTabIndex: v,
-        renderView: q,
-        groups: e,
+        tabObj: C,
+        infoData: c,
+        setActiveTabIndex: w,
+        renderView: Z,
+        groups: r,
         methods: n,
-        refid: p,
-        sqlOpsUrls: c
+        refid: v,
+        sqlOpsUrls: d
       }
     )
-  ] }) : /* @__PURE__ */ t.jsxs("div", { className: "flex-1 flex min-h-0", children: [
-    b && /* @__PURE__ */ t.jsx("aside", { className: "flex-shrink-0 w-56 border-r border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ t.jsx(
-      pe,
+  ] }) : /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex min-h-0", children: [
+    j && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-r border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
+      je,
       {
         groupNames: T,
-        groups: e,
-        setActiveTabIndex: v,
+        groups: r,
+        setActiveTabIndex: w,
         activeTabIndex: x
       }
     ) }),
-    /* @__PURE__ */ t.jsx("main", { className: "flex-1 flex flex-col min-h-0 overflow-auto", children: /* @__PURE__ */ t.jsx(
-      be,
+    /* @__PURE__ */ e.jsx("main", { className: "flex-1 flex flex-col min-h-0 overflow-auto", children: /* @__PURE__ */ e.jsx(
+      we,
       {
         groupNames: T,
         activeTabIndex: x,
         layoutConfig: l,
-        tabObj: _,
-        infoData: u,
-        setActiveTabIndex: v,
-        renderView: q,
-        groups: e,
+        tabObj: C,
+        infoData: c,
+        setActiveTabIndex: w,
+        renderView: Z,
+        groups: r,
         methods: n,
-        refid: p,
-        sqlOpsUrls: c
+        refid: v,
+        sqlOpsUrls: d
       }
     ) }),
-    L && /* @__PURE__ */ t.jsx("aside", { className: "flex-shrink-0 w-56 border-l border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ t.jsx(
-      pe,
+    $ && /* @__PURE__ */ e.jsx("aside", { className: "flex-shrink-0 w-56 border-l border-gray-200 bg-gray-50 p-2", children: /* @__PURE__ */ e.jsx(
+      je,
       {
         groupNames: T,
-        groups: e,
-        setActiveTabIndex: v,
+        groups: r,
+        setActiveTabIndex: w,
         activeTabIndex: x
       }
     ) })
   ] });
 }
-function _e({ title: e, children: n, isFirst: u }) {
-  const [a, o] = D(u);
-  return /* @__PURE__ */ t.jsx("div", { className: "group relative mt-1 flex-1 flex flex-col min-h-0 max-h-screen", children: /* @__PURE__ */ t.jsxs("div", { className: "flex-1 flex flex-col min-h-0 relative bg-white rounded-lg border border-gray-100 shadow-xs hover:shadow-sm transition-all duration-300 overflow-hidden ", children: [
-    /* @__PURE__ */ t.jsxs(
+function $e({ title: r, children: n, isFirst: c }) {
+  const [a, o] = O(c);
+  return /* @__PURE__ */ e.jsx("div", { className: "group relative mt-1 flex-1 flex flex-col min-h-0 max-h-screen", children: /* @__PURE__ */ e.jsxs("div", { className: "flex-1 flex flex-col min-h-0 relative bg-white rounded-lg border border-gray-100 shadow-xs hover:shadow-sm transition-all duration-300 overflow-hidden ", children: [
+    /* @__PURE__ */ e.jsxs(
       "button",
       {
         onClick: () => o(!a),
         className: "w-full bg-gray-50 flex justify-between items-center px-6 py-3 b text-left transition-all duration-300 ",
         children: [
-          /* @__PURE__ */ t.jsxs("div", { className: "flex items-center space-x-3", children: [
-            /* @__PURE__ */ t.jsx("div", { className: `w-3 h-3 rounded-full transition-all duration-300 ${a ? "bg-action" : "bg-gray-300"}` }),
-            /* @__PURE__ */ t.jsx("h3", { className: "text-md capitalize font-semibold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent", children: e })
+          /* @__PURE__ */ e.jsxs("div", { className: "flex items-center space-x-3", children: [
+            /* @__PURE__ */ e.jsx("div", { className: `w-3 h-3 rounded-full transition-all duration-300 ${a ? "bg-action" : "bg-gray-300"}` }),
+            /* @__PURE__ */ e.jsx("h3", { className: "text-md capitalize font-semibold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent", children: r })
           ] }),
-          /* @__PURE__ */ t.jsxs("div", { className: `relative transition-all duration-300 ${a ? "rotate-180" : ""}`, children: [
-            /* @__PURE__ */ t.jsx("div", { className: `absolute inset-0 rounded-full blur-md transition-opacity duration-300 ${a ? "bg-action opacity-30" : "bg-transparent opacity-0"}` }),
-            /* @__PURE__ */ t.jsx(
+          /* @__PURE__ */ e.jsxs("div", { className: `relative transition-all duration-300 ${a ? "rotate-180" : ""}`, children: [
+            /* @__PURE__ */ e.jsx("div", { className: `absolute inset-0 rounded-full blur-md transition-opacity duration-300 ${a ? "bg-action opacity-30" : "bg-transparent opacity-0"}` }),
+            /* @__PURE__ */ e.jsx(
               "svg",
               {
                 className: "relative w-4 h-4 text-gray-500 group-hover:text-action-500 transition-colors duration-300",
                 fill: "none",
                 stroke: "currentColor",
                 viewBox: "0 0 24 24",
-                children: /* @__PURE__ */ t.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M19 9l-7 7-7-7" })
+                children: /* @__PURE__ */ e.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M19 9l-7 7-7-7" })
               }
             )
           ] })
         ]
       }
     ),
-    /* @__PURE__ */ t.jsx(
+    /* @__PURE__ */ e.jsx(
       "div",
       {
         className: `flex-1 flex flex-col min-h-0 transition-all  duration-500 ease-in-out overflow-hidden ${a ? "max-h-full opacity-100" : "max-h-0 opacity-0"}`,
-        children: /* @__PURE__ */ t.jsx("div", { className: "px-6 pb-6 bg-gradient-to-br from-gray-50/50 to-white flex-1 flex flex-col min-h-0", children: /* @__PURE__ */ t.jsx("div", { className: "space-y-5 pt-4 flex-1 flex flex-col min-h-0 overflow-y-auto", children: n }) })
+        children: /* @__PURE__ */ e.jsx("div", { className: "px-6 pb-6 bg-gradient-to-br from-gray-50/50 to-white flex-1 flex flex-col min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-5 pt-4 flex-1 flex flex-col min-h-0 overflow-y-auto", children: n }) })
       }
     )
   ] }) });
 }
-function Re({
-  groups: e,
+function De({
+  groups: r,
   methods: n = {},
-  infoData: u,
+  infoData: c,
   viewRenderers: a = {},
   sqlOpsUrls: o = {},
   refid: l,
   Reports: h,
-  toast: c = {},
-  handleAction: p = () => {
+  toast: d = {},
+  handleAction: v = () => {
   },
-  infoViewJson: d
+  infoViewJson: u
 }) {
   const f = {
-    single: (s, i) => /* @__PURE__ */ t.jsx(de, { tabObj: s, methods: n, tabName: i, sqlOpsUrls: o, refid: l }),
-    grid: (s, i) => /* @__PURE__ */ t.jsx(
-      ue,
+    single: (s, i) => /* @__PURE__ */ e.jsx(me, { tabObj: s, methods: n, tabName: i, sqlOpsUrls: o, refid: l }),
+    grid: (s, i) => /* @__PURE__ */ e.jsx(
+      he,
       {
         ...h ? { Reports: h } : {},
-        toast: c,
-        infoViewJson: d,
-        handleAction: p,
+        toast: d,
+        infoViewJson: u,
+        handleAction: v,
         tabObj: s,
         methods: n,
         tabName: i,
@@ -1145,266 +1248,266 @@ function Re({
       }
     )
   };
-  return /* @__PURE__ */ t.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ t.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ t.jsx("div", { className: "space-y-2 flex flex-col min-h-0", children: e && Object.entries(e).map(([s, i], x) => /* @__PURE__ */ t.jsx(_e, { title: s, isFirst: x === 0, children: i?.fields ? /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ t.jsx("div", { className: "grid grid-cols-12 gap-2", children: i.fields.map((v, P) => /* @__PURE__ */ t.jsx(
+  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2 flex flex-col min-h-0", children: r && Object.entries(r).map(([s, i], x) => /* @__PURE__ */ e.jsx($e, { title: s, isFirst: x === 0, children: i?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: i.fields.map((w, R) => /* @__PURE__ */ e.jsx(
     "div",
     {
-      className: `col-span-12 sm:col-span-6 ${U[ee(v.width)] || "lg:col-span-2"}`,
-      children: /* @__PURE__ */ t.jsx(te, { methods: n, field: v, data: u ?? {}, sqlOpsUrls: o, refid: l })
+      className: `col-span-12 sm:col-span-6 ${te[ae(w.width)] || "lg:col-span-2"}`,
+      children: /* @__PURE__ */ e.jsx(ne, { methods: n, field: w, data: c ?? {}, sqlOpsUrls: o, refid: l })
     },
-    v?.name ?? `field-${P}`
-  )) }) }) : i ? /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: a[i.config?.uimode]?.(i) || f[i.config?.uimode]?.(i, s) || /* @__PURE__ */ t.jsx("div", { children: "No renderer for this type" }) }) : null }, s)) }) }) });
+    w?.name ?? `field-${R}`
+  )) }) }) : i ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: a[i.config?.uimode]?.(i) || f[i.config?.uimode]?.(i, s) || /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }) }) : null }, s)) }) }) });
 }
-function Ce({ title: e, children: n }) {
-  return /* @__PURE__ */ t.jsx("div", { className: "group relative mt-1 flex-1 flex flex-col min-h-0 max-h-screen", children: /* @__PURE__ */ t.jsxs("div", { className: "flex flex-col min-h-0 relative  bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden ", children: [
-    /* @__PURE__ */ t.jsx(
+function Ie({ title: r, children: n }) {
+  return /* @__PURE__ */ e.jsx("div", { className: "group relative mt-1 flex-1 flex flex-col min-h-0 max-h-screen", children: /* @__PURE__ */ e.jsxs("div", { className: "flex flex-col min-h-0 relative  bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden ", children: [
+    /* @__PURE__ */ e.jsx(
       "button",
       {
         className: "w-full bg-gray-50 flex justify-between items-center px-6 py-3 b text-left transition-all duration-300 ",
-        children: /* @__PURE__ */ t.jsxs("div", { className: "flex items-center space-x-3", children: [
-          /* @__PURE__ */ t.jsx("div", { className: "w-3 h-3 rounded-full transition-all duration-300 bg-action" }),
-          /* @__PURE__ */ t.jsx("h3", { className: "text-md font-semibold bg-gradient-to-r capitalize from-gray-800 to-gray-600 bg-clip-text text-transparent", children: e })
+        children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center space-x-3", children: [
+          /* @__PURE__ */ e.jsx("div", { className: "w-3 h-3 rounded-full transition-all duration-300 bg-action" }),
+          /* @__PURE__ */ e.jsx("h3", { className: "text-md font-semibold bg-gradient-to-r capitalize from-gray-800 to-gray-600 bg-clip-text text-transparent", children: r })
         ] })
       }
     ),
-    /* @__PURE__ */ t.jsx(
+    /* @__PURE__ */ e.jsx(
       "div",
       {
         className: `flex flex-col min-h-0 transition-all duration-500 ease-in-out opacity-100'
             }`,
-        children: /* @__PURE__ */ t.jsx("div", { className: "px-6 pb-6 bg-gradient-to-br from-gray-50/50 to-white flex flex-col min-h-0", children: /* @__PURE__ */ t.jsx("div", { className: "space-y-5 pt-4 flex-1 flex flex-col min-h-0 overflow-y-auto", children: n }) })
+        children: /* @__PURE__ */ e.jsx("div", { className: "px-6 pb-6 bg-gradient-to-br from-gray-50/50 to-white flex flex-col min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-5 pt-4 flex-1 flex flex-col min-h-0 overflow-y-auto", children: n }) })
       }
     )
   ] }) });
 }
-function Le({
-  groups: e,
+function Oe({
+  groups: r,
   methods: n = {},
-  infoData: u,
+  infoData: c,
   viewRenderers: a = {},
   sqlOpsUrls: o = {},
   refid: l,
   Reports: h,
-  toast: c = {},
-  handleAction: p = () => {
+  toast: d = {},
+  handleAction: v = () => {
   },
-  infoViewJson: d
+  infoViewJson: u
 }) {
   const f = {
-    single: (s, i) => /* @__PURE__ */ t.jsx(de, { tabObj: s, methods: n, tabName: i, sqlOpsUrls: o, refid: l }),
-    grid: (s, i) => /* @__PURE__ */ t.jsx(
-      ue,
+    single: (s, i) => /* @__PURE__ */ e.jsx(me, { tabObj: s, methods: n, tabName: i, sqlOpsUrls: o, refid: l }),
+    grid: (s, i) => /* @__PURE__ */ e.jsx(
+      he,
       {
         ...h ? { Reports: h } : {},
-        toast: c,
-        handleAction: p,
+        toast: d,
+        handleAction: v,
         tabObj: s,
         methods: n,
         tabName: i,
         sqlOpsUrls: o,
         refid: l,
-        infoViewJson: d
+        infoViewJson: u
       }
     )
   };
-  return /* @__PURE__ */ t.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ t.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ t.jsx("div", { className: "space-y-2  flex flex-col min-h-0", children: e && Object.entries(e).map(([s, i], x) => /* @__PURE__ */ t.jsx(Ce, { title: s, children: i?.fields ? /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ t.jsx("div", { className: "grid grid-cols-12 gap-2", children: i.fields.map((v, P) => /* @__PURE__ */ t.jsx(
+  return /* @__PURE__ */ e.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ e.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ e.jsx("div", { className: "space-y-2  flex flex-col min-h-0", children: r && Object.entries(r).map(([s, i], x) => /* @__PURE__ */ e.jsx(Ie, { title: s, children: i?.fields ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ e.jsx("div", { className: "grid grid-cols-12 gap-2", children: i.fields.map((w, R) => /* @__PURE__ */ e.jsx(
     "div",
     {
-      className: `col-span-12 sm:col-span-6 ${U[ee(v.width)] || "lg:col-span-2"}`,
-      children: /* @__PURE__ */ t.jsx(te, { methods: n, field: v, data: u ?? {}, sqlOpsUrls: o, refid: l })
+      className: `col-span-12 sm:col-span-6 ${te[ae(w.width)] || "lg:col-span-2"}`,
+      children: /* @__PURE__ */ e.jsx(ne, { methods: n, field: w, data: c ?? {}, sqlOpsUrls: o, refid: l })
     },
-    v?.name ?? `field-${P}`
-  )) }) }) : i ? /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: a[i.config?.uimode]?.(i) || f[i.config?.uimode]?.(i, s) || /* @__PURE__ */ t.jsx("div", { children: "No renderer for this type" }) }) : null }, s)) }) }) });
+    w?.name ?? `field-${R}`
+  )) }) }) : i ? /* @__PURE__ */ e.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: a[i.config?.uimode]?.(i) || f[i.config?.uimode]?.(i, s) || /* @__PURE__ */ e.jsx("div", { children: "No renderer for this type" }) }) : null }, s)) }) }) });
 }
-function De({
-  infoViewJson: e,
+function Me({
+  infoViewJson: r,
   data: n = {},
-  hiddenFields: u = [],
-  groupFieldsFn: a = Se,
+  hiddenFields: c = [],
+  groupFieldsFn: a = Pe,
   layoutConfig: o = {},
   viewRenderers: l = {},
   methods: h = {},
-  Reports: c,
-  toast: p = {},
-  handleAction: d = () => {
+  Reports: d,
+  toast: v = {},
+  handleAction: u = () => {
   }
 }) {
-  const [f, s] = F.useState({}), i = Te(e.infoview ?? {}), x = e.endPoints ?? {}, v = F.useMemo(
-    () => a(e.fields || {}),
-    [e.fields, a]
-  ), P = e?.source?.refid;
-  let E = { ...v };
-  e.infoview?.groups && (E = { ...E, ...e.infoview.groups }), F.useEffect(() => {
-    let b = !1;
+  const [f, s] = B.useState({}), i = Re(r.infoview ?? {}), x = r.endPoints ?? {}, w = B.useMemo(
+    () => a(r.fields || {}),
+    [r.fields, a]
+  ), R = r?.source?.refid;
+  let k = { ...w };
+  r.infoview?.groups && (k = { ...k, ...r.infoview.groups }), B.useEffect(() => {
+    let j = !1;
     return (async () => {
-      const k = e?.source;
-      if (!k?.type) {
-        b || s({});
+      const E = r?.source;
+      if (!E?.type) {
+        j || s({});
         return;
       }
-      if (k.type === "method") {
-        const _ = k.method, A = _ ? h[_] : void 0;
-        if (A)
+      if (E.type === "method") {
+        const C = E.method, P = C ? h[C] : void 0;
+        if (P)
           try {
-            const I = await Promise.resolve(A());
-            b || s(I || {});
-          } catch (I) {
-            console.error("Method execution failed:", I), b || s({});
+            const z = await Promise.resolve(P());
+            j || s(z || {});
+          } catch (z) {
+            console.error("Method execution failed:", z), j || s({});
           }
         else
-          b || s({});
+          j || s({});
       }
-      if (k.type === "api")
+      if (E.type === "api")
         try {
-          const _ = await M({
-            method: k.method || "GET",
-            url: k.url,
-            data: k.body || {},
-            params: k.params || {},
-            headers: k.headers || {}
+          const C = await I({
+            method: E.method || "GET",
+            url: E.url,
+            data: E.body || {},
+            params: E.params || {},
+            headers: E.headers || {}
           });
-          b || s(_.data || {});
-        } catch (_) {
-          console.error("API fetch failed:", _), b || s({});
+          j || s(C.data || {});
+        } catch (C) {
+          console.error("API fetch failed:", C), j || s({});
         }
-      if (k.type === "sql" && k.refid && k.refid != "0") {
+      if (E.type === "sql" && E.refid && E.refid != "0") {
         if (!x) {
           console.error("SQL source requires formJson.endPoints but it is missing");
           return;
         }
         try {
-          const _ = await M({
+          const C = await I({
             method: "POST",
             url: x.baseURL + x.registerQuery,
             data: {
               query: {
-                ...k,
-                cols: k.cols,
-                table: k.table,
-                where: K(k.where, {
-                  refid: k.refid
+                ...E,
+                cols: E.cols,
+                table: E.table,
+                where: G(E.where, {
+                  refid: E.refid
                 })
               }
             },
             headers: {
               Authorization: `Bearer ${x?.accessToken}`
             }
-          }), A = await M({
+          }), P = await I({
             method: "POST",
             url: x.baseURL + x.runQuery,
             data: {
-              queryid: _.data.queryid,
+              queryid: C.data.queryid,
               filter: {}
             },
             headers: {
               Authorization: `Bearer ${x?.accessToken}`
             }
-          }), I = je(A) ?? {};
-          b || s(I);
-        } catch (_) {
-          console.error("API fetch failed:", _);
+          }), z = ke(P) ?? {};
+          j || s(z);
+        } catch (C) {
+          console.error("API fetch failed:", C);
         }
       }
     })(), () => {
-      b = !0;
+      j = !0;
     };
   }, [
-    e?.source?.type || "",
-    e?.source?.method || "",
-    e?.source?.url || "",
-    JSON.stringify(e?.source?.params || {}),
-    JSON.stringify(e?.source?.body || {}),
-    JSON.stringify(e?.source?.headers || {})
+    r?.source?.type || "",
+    r?.source?.method || "",
+    r?.source?.url || "",
+    JSON.stringify(r?.source?.params || {}),
+    JSON.stringify(r?.source?.body || {}),
+    JSON.stringify(r?.source?.headers || {})
   ]);
-  const j = E.common || null;
-  j && delete E.common;
-  const T = (b) => {
-    switch (b) {
+  const g = k.common || null;
+  g && delete k.common;
+  const T = (j) => {
+    switch (j) {
       case "accordion":
-        return /* @__PURE__ */ t.jsx(
-          Re,
+        return /* @__PURE__ */ e.jsx(
+          De,
           {
-            groups: E,
+            groups: k,
             methods: h,
             infoData: f,
             viewRenderers: l,
             sqlOpsUrls: x,
-            refid: P,
-            ...c ? { Reports: c } : {},
-            toast: p,
-            handleAction: d,
-            infoViewJson: e
+            refid: R,
+            ...d ? { Reports: d } : {},
+            toast: v,
+            handleAction: u,
+            infoViewJson: r
           }
         );
       case "tab":
       case "tableft":
       case "tabright":
-        return /* @__PURE__ */ t.jsx(
-          ve,
+        return /* @__PURE__ */ e.jsx(
+          Ne,
           {
-            groups: E,
+            groups: k,
             viewRenderers: l,
             layoutConfig: o,
             methods: h,
             infoData: f,
-            isCommonInfo: !!j,
-            viewMode: b,
+            isCommonInfo: !!g,
+            viewMode: j,
             sqlOpsUrls: x,
-            refid: P,
-            ...c ? { Reports: c } : {},
-            toast: p,
-            handleAction: d,
-            infoViewJson: e
+            refid: R,
+            ...d ? { Reports: d } : {},
+            toast: v,
+            handleAction: u,
+            infoViewJson: r
           }
         );
       case "cards":
-        return /* @__PURE__ */ t.jsx(
-          Le,
+        return /* @__PURE__ */ e.jsx(
+          Oe,
           {
-            groups: E,
+            groups: k,
             viewRenderers: l,
             methods: h,
             infoData: f,
             sqlOpsUrls: x,
-            refid: P,
-            ...c ? { Reports: c } : {},
-            toast: p,
-            handleAction: d,
-            infoViewJson: e
+            refid: R,
+            ...d ? { Reports: d } : {},
+            toast: v,
+            handleAction: u,
+            infoViewJson: r
           }
         );
       default:
-        return /* @__PURE__ */ t.jsx(
-          ve,
+        return /* @__PURE__ */ e.jsx(
+          Ne,
           {
-            groups: E,
+            groups: k,
             viewRenderers: l,
             layoutConfig: o,
             methods: h,
             infoData: f,
-            isCommonInfo: !!j,
-            viewMode: b,
+            isCommonInfo: !!g,
+            viewMode: j,
             sqlOpsUrls: x,
-            refid: P,
-            ...c ? { Reports: c } : {},
-            toast: p,
-            handleAction: d,
-            infoViewJson: e
+            refid: R,
+            ...d ? { Reports: d } : {},
+            toast: v,
+            handleAction: u,
+            infoViewJson: r
           }
         );
     }
   };
-  return /* @__PURE__ */ t.jsxs("div", { className: o.containerClass || "h-screen flex flex-col ", children: [
-    j && /* @__PURE__ */ t.jsx(
-      Ae,
+  return /* @__PURE__ */ e.jsxs("div", { className: o.containerClass || "h-screen flex flex-col ", children: [
+    g && /* @__PURE__ */ e.jsx(
+      Ce,
       {
-        commonInfo: j,
+        commonInfo: g,
         infoData: f,
-        hiddenFields: u
+        hiddenFields: c
       }
     ),
     T(i)
   ] });
 }
 export {
-  De as InfoView
+  Me as InfoView
 };

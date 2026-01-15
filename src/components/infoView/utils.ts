@@ -1,5 +1,5 @@
 
-import type { FlatOptions, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from "./InfoView.types.js";
+import type { FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from "./InfoView.types.js";
 
 export function determineViewMode(json: Infoview) {
 
@@ -19,13 +19,60 @@ export function groupFields(fields: Record<string, any>): Record<string, InfoVie
 
   return grouped;
 }
+export const getGeoFieldKeys = (fields: Record<string, Omit<FormField, "name">>) => {
+  return Object.entries(fields ?? {})
+    .filter(([, field]: any) => field.type === "geolocation")
+    .map(([key]) => key);
+};
 
+export async function fetchGeolocation(): Promise<string | null> {
+  if (!("geolocation" in navigator)) {
+    throw new Error(
+      "Geolocation is not supported by this browser. You cannot access this portal."
+    );
+  }
 
-export function transformedObject(originalObject: Record<string, any>) {
+  try {
+    const position = await new Promise<GeolocationPosition>(
+      (resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: false,
+          timeout: 30000,
+          maximumAge: 120000,
+        });
+      }
+    );
+
+    const { latitude, longitude } = position.coords;
+    return `${latitude},${longitude}`;
+  } catch (error) {
+    if (!(error instanceof GeolocationPositionError)) {
+      throw new Error("Failed to get your location.");
+    }
+
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        throw new Error("Please allow location access in browser settings.");
+      case error.POSITION_UNAVAILABLE:
+        throw new Error(
+          "Unable to detect your location. Try connecting to Wi-Fi."
+        );
+      case error.TIMEOUT:
+        throw new Error("Your device took too long to fetch GPS position.");
+      default:
+        throw new Error("Failed to get your location.");
+    }
+  }
+}
+
+export function transformedObject(originalObject: Record<string, any>,operation:string = "create") {
 
   const fields: Record<string, { label: string; required: boolean }> = {}
 
   Object.keys(originalObject).forEach((key) => {
+
+    if (originalObject[key].vmode === "edit" && operation==="create") return;
+
     fields[key] = {
       label: key,
       required: originalObject[key].required ?? false

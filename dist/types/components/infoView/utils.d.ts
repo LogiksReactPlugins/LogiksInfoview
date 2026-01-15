@@ -1,7 +1,9 @@
-import { FlatOptions, InfoViewGroup, Infoview } from './InfoView.types.js';
+import { FlatOptions, FormField, InfoViewGroup, Infoview } from './InfoView.types.js';
 export declare function determineViewMode(json: Infoview): string;
 export declare function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup>;
-export declare function transformedObject(originalObject: Record<string, any>): Record<string, {
+export declare const getGeoFieldKeys: (fields: Record<string, Omit<FormField, "name">>) => string[];
+export declare function fetchGeolocation(): Promise<string | null>;
+export declare function transformedObject(originalObject: Record<string, any>, operation?: string): Record<string, {
     label: string;
     required: boolean;
 }>;

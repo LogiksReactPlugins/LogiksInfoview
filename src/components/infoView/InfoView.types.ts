@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { ComponentType } from "react";
+import type { AxiosRequestConfig } from "axios";
 
 export interface InfoViewField {
     name: string;
@@ -86,6 +87,87 @@ export interface sqlQueryProps {
     cols: string;
     where?: Record<string, string>;
 };
+
+export interface SqlEndpoints {
+    baseURL: string;
+    dbopsGetRefId: string;
+    accessToken: string;
+    operation: string;
+    dbopsGetHash: string;
+    dbopsFetch?: string;
+    dbopsUpdate?: string;
+    dbopsCreate?: string;
+};
+
+export type AutocompleteConfig = {
+    target: string;
+    src: {
+        table: string;
+        columns?: string;
+        where?: Record<string, string>;
+    };
+};
+
+ export interface FormField {
+    name: string;
+    label?: string;
+    width?: number | string;
+    options?: Record<string, any>;
+    group?: string;
+    type?: string;
+    regex?: string;
+    required?: boolean;
+    disabled?: boolean;
+    error_message?: string;      // error message if regex fails
+    placeholder?: string;        // input placeholder
+    field_error?: string;
+    axiosObject?: AxiosRequestConfig,
+    valueKey?: string;
+    labelKey?: string;
+    groupKey?: string;
+    source?: Record<string, any>;
+    multiple?: boolean;
+    icon?: string;
+    table?: string;
+    columns?: string;
+    where?: Record<string, string>;
+    autocomplete?: "off" | AutocompleteConfig;
+    ajaxchain?: AutocompleteConfig | AutocompleteConfig[];
+    validate?: Record<string, string | number>;
+    groupid?: string;
+    hidden?: boolean;
+    value?: string | undefined;
+    default?: string | number | boolean | string[] | number[] | null;
+    cols?: string;
+    search?: boolean;
+    method?:string;
+    vmode?:string;
+
+}
+
+export interface FormJson {
+    title?: string | undefined;
+    template?: string;
+    endPoints?: SqlEndpoints;
+    forcefill?: Record<string, string>;
+    fields: Record<string, Omit<FormField, "name">>;
+    source: Record<string, any>;
+    widget?: boolean
+
+   
+}
+
+export interface FormProps {
+
+    formJson: FormJson;
+    userid?: string | null;
+    methods?: Record<string, Function>
+    onCancel?: () => void;
+    callback?: (res: any) => void;
+    components?: Record<string, ReactNode>
+    initialvalues?: Record<string, any>
+
+}
 
 
 
