@@ -51,7 +51,7 @@ function ke() {
         return r.$$typeof === $ ? null : r.displayName || r.name || null;
       if (typeof r == "string") return r;
       switch (r) {
-        case _:
+        case P:
           return "Fragment";
         case j:
           return "Profiler";
@@ -59,7 +59,7 @@ function ke() {
           return "StrictMode";
         case k:
           return "Suspense";
-        case P:
+        case _:
           return "SuspenseList";
         case q:
           return "Activity";
@@ -109,7 +109,7 @@ function ke() {
       }
     }
     function a(r) {
-      if (r === _) return "<>";
+      if (r === P) return "<>";
       if (typeof r == "object" && r !== null && r.$$typeof === I)
         return "<...>";
       try {
@@ -236,7 +236,7 @@ React keys must be passed directly to JSX without using spread:
     function s(r) {
       typeof r == "object" && r !== null && r.$$typeof === x && r._store && (r._store.validated = 1);
     }
-    var i = F, x = Symbol.for("react.transitional.element"), v = Symbol.for("react.portal"), _ = Symbol.for("react.fragment"), E = Symbol.for("react.strict_mode"), j = Symbol.for("react.profiler"), T = Symbol.for("react.consumer"), b = Symbol.for("react.context"), L = Symbol.for("react.forward_ref"), k = Symbol.for("react.suspense"), P = Symbol.for("react.suspense_list"), A = Symbol.for("react.memo"), I = Symbol.for("react.lazy"), q = Symbol.for("react.activity"), $ = Symbol.for("react.client.reference"), g = i.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, V = Object.prototype.hasOwnProperty, Q = Array.isArray, re = console.createTask ? console.createTask : function() {
+    var i = F, x = Symbol.for("react.transitional.element"), v = Symbol.for("react.portal"), P = Symbol.for("react.fragment"), E = Symbol.for("react.strict_mode"), j = Symbol.for("react.profiler"), T = Symbol.for("react.consumer"), b = Symbol.for("react.context"), L = Symbol.for("react.forward_ref"), k = Symbol.for("react.suspense"), _ = Symbol.for("react.suspense_list"), A = Symbol.for("react.memo"), I = Symbol.for("react.lazy"), q = Symbol.for("react.activity"), $ = Symbol.for("react.client.reference"), g = i.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, V = Object.prototype.hasOwnProperty, Q = Array.isArray, re = console.createTask ? console.createTask : function() {
       return null;
     };
     i = {
@@ -248,7 +248,7 @@ React keys must be passed directly to JSX without using spread:
       i,
       l
     )(), ae = re(a(l)), ne = {};
-    J.Fragment = _, J.jsx = function(r, m, w, C, N) {
+    J.Fragment = P, J.jsx = function(r, m, w, C, N) {
       var S = 1e4 > g.recentlyCreatedOwnerStacks++;
       return f(
         r,
@@ -424,8 +424,8 @@ function te({ field: e, data: n, methods: u = {}, sqlOpsUrls: a, refid: o }) {
             headers: {
               Authorization: `Bearer ${a?.accessToken}`
             }
-          }), L = e.valueKey || "value", k = e.labelKey || "title", P = ge(L, k, b);
-          v && d(P);
+          }), L = e.valueKey || "value", k = e.labelKey || "title", _ = ge(L, k, b);
+          v && d(_);
         } catch (j) {
           console.error("API fetch failed:", j);
         }
@@ -451,8 +451,8 @@ function te({ field: e, data: n, methods: u = {}, sqlOpsUrls: a, refid: o }) {
         alt: "avatar",
         className: "w-16 h-16 rounded-full object-cover border",
         onError: (v) => {
-          const _ = v.currentTarget;
-          _.onerror = null, _.src = we;
+          const P = v.currentTarget;
+          P.onerror = null, P.src = we;
         }
       }
     ) : /* @__PURE__ */ t.jsx("p", { className: h, children: x }) })
@@ -599,9 +599,9 @@ function de({ tabObj: e, methods: n, tabName: u, sqlOpsUrls: a, refid: o }) {
   ] }) }) }) });
 }
 function ue({ tabObj: e, methods: n, tabName: u, sqlOpsUrls: a, refid: o, Reports: l, toast: h, handleAction: c, infoViewJson: p }) {
-  const [d, f] = D(1), [s, i] = D(10), [x, v] = D(""), [_, E] = D(!1), [j, T] = D(null), [b, L] = F.useState([]);
+  const [d, f] = D(1), [s, i] = D(10), [x, v] = D(""), [P, E] = D(!1), [j, T] = D(null), [b, L] = F.useState([]);
   ce(null);
-  const [k, P] = D(null), [A, I] = D({ key: "", direction: null }), [q, $] = D(null), g = e?.config;
+  const [k, _] = D(null), [A, I] = D({ key: "", direction: null }), [q, $] = D(null), g = e?.config;
   console.log("tabObj", e), console.log("source", g);
   const V = F.useCallback(async () => {
     if (!g?.type) {
@@ -755,7 +755,7 @@ function ue({ tabObj: e, methods: n, tabName: u, sqlOpsUrls: a, refid: o, Report
           where: g?.where,
           orderby: g?.orderby
         },
-        endpoints: a,
+        endPoints: a,
         actions: { ...g?.actions, ...p?.buttons, ...p.actions },
         datagrid: g?.datagrid
       },
@@ -778,7 +778,7 @@ const pe = ({ groups: e, groupNames: n, setActiveTabIndex: u, activeTabIndex: a 
       o
     )) : /* @__PURE__ */ t.jsx("div", { className: "py-3 px-2 text-sm text-gray-500", children: "No group available" })
   }
-), _e = ({
+), Pe = ({
   groups: e,
   groupNames: n,
   setActiveTabIndex: u,
@@ -974,7 +974,7 @@ function ve({
   },
   infoViewJson: i
 }) {
-  const [x, v] = D(0), [_, E] = D(!1), j = ce(null), T = Object.keys(e);
+  const [x, v] = D(0), [P, E] = D(!1), j = ce(null), T = Object.keys(e);
   ie(() => {
     const $ = () => {
       if (j.current) {
@@ -993,7 +993,7 @@ function ve({
       });
     }
   }, [x, T.length]);
-  const b = h === "tableft", L = h === "tabright", k = !b && !L, P = e[T[x] ?? ""] || null, A = {
+  const b = h === "tableft", L = h === "tabright", k = !b && !L, _ = e[T[x] ?? ""] || null, A = {
     single: ($, g) => /* @__PURE__ */ t.jsx(de, { tabObj: $, methods: n, tabName: g, sqlOpsUrls: c, refid: p }),
     grid: ($, g) => /* @__PURE__ */ t.jsx(
       ue,
@@ -1009,10 +1009,10 @@ function ve({
         infoViewJson: i
       }
     )
-  }, I = P?.config?.uimode, q = a[I] || A[I] || (() => /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex justify-center p-4", children: "No UI mode for this type" }));
+  }, I = _?.config?.uimode, q = a[I] || A[I] || (() => /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex justify-center p-4", children: "No UI mode for this type" }));
   return k ? /* @__PURE__ */ t.jsxs("div", { className: "flex-1 flex flex-col min-h-0 ", children: [
     /* @__PURE__ */ t.jsx(
-      _e,
+      Pe,
       {
         groupNames: T,
         groups: e,
@@ -1020,7 +1020,7 @@ function ve({
         activeTabIndex: x,
         tabsNavRef: j,
         isCommonInfo: o,
-        showScrollHint: _,
+        showScrollHint: P,
         layoutConfig: l
       }
     ),
@@ -1030,7 +1030,7 @@ function ve({
         groupNames: T,
         activeTabIndex: x,
         layoutConfig: l,
-        tabObj: P,
+        tabObj: _,
         infoData: u,
         setActiveTabIndex: v,
         renderView: q,
@@ -1056,7 +1056,7 @@ function ve({
         groupNames: T,
         activeTabIndex: x,
         layoutConfig: l,
-        tabObj: P,
+        tabObj: _,
         infoData: u,
         setActiveTabIndex: v,
         renderView: q,
@@ -1077,7 +1077,7 @@ function ve({
     ) })
   ] });
 }
-function Pe({ title: e, children: n, isFirst: u }) {
+function _e({ title: e, children: n, isFirst: u }) {
   const [a, o] = D(u);
   return /* @__PURE__ */ t.jsx("div", { className: "group relative mt-1 flex-1 flex flex-col min-h-0 max-h-screen", children: /* @__PURE__ */ t.jsxs("div", { className: "flex-1 flex flex-col min-h-0 relative bg-white rounded-lg border border-gray-100 shadow-xs hover:shadow-sm transition-all duration-300 overflow-hidden ", children: [
     /* @__PURE__ */ t.jsxs(
@@ -1145,13 +1145,13 @@ function Re({
       }
     )
   };
-  return /* @__PURE__ */ t.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ t.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ t.jsx("div", { className: "space-y-2 flex flex-col min-h-0", children: e && Object.entries(e).map(([s, i], x) => /* @__PURE__ */ t.jsx(Pe, { title: s, isFirst: x === 0, children: i?.fields ? /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ t.jsx("div", { className: "grid grid-cols-12 gap-2", children: i.fields.map((v, _) => /* @__PURE__ */ t.jsx(
+  return /* @__PURE__ */ t.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ t.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ t.jsx("div", { className: "space-y-2 flex flex-col min-h-0", children: e && Object.entries(e).map(([s, i], x) => /* @__PURE__ */ t.jsx(_e, { title: s, isFirst: x === 0, children: i?.fields ? /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ t.jsx("div", { className: "grid grid-cols-12 gap-2", children: i.fields.map((v, P) => /* @__PURE__ */ t.jsx(
     "div",
     {
       className: `col-span-12 sm:col-span-6 ${U[ee(v.width)] || "lg:col-span-2"}`,
       children: /* @__PURE__ */ t.jsx(te, { methods: n, field: v, data: u ?? {}, sqlOpsUrls: o, refid: l })
     },
-    v?.name ?? `field-${_}`
+    v?.name ?? `field-${P}`
   )) }) }) : i ? /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: a[i.config?.uimode]?.(i) || f[i.config?.uimode]?.(i, s) || /* @__PURE__ */ t.jsx("div", { children: "No renderer for this type" }) }) : null }, s)) }) }) });
 }
 function Ce({ title: e, children: n }) {
@@ -1206,13 +1206,13 @@ function Le({
       }
     )
   };
-  return /* @__PURE__ */ t.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ t.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ t.jsx("div", { className: "space-y-2  flex flex-col min-h-0", children: e && Object.entries(e).map(([s, i], x) => /* @__PURE__ */ t.jsx(Ce, { title: s, children: i?.fields ? /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ t.jsx("div", { className: "grid grid-cols-12 gap-2", children: i.fields.map((v, _) => /* @__PURE__ */ t.jsx(
+  return /* @__PURE__ */ t.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ t.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ t.jsx("div", { className: "space-y-2  flex flex-col min-h-0", children: e && Object.entries(e).map(([s, i], x) => /* @__PURE__ */ t.jsx(Ce, { title: s, children: i?.fields ? /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ t.jsx("div", { className: "grid grid-cols-12 gap-2", children: i.fields.map((v, P) => /* @__PURE__ */ t.jsx(
     "div",
     {
       className: `col-span-12 sm:col-span-6 ${U[ee(v.width)] || "lg:col-span-2"}`,
       children: /* @__PURE__ */ t.jsx(te, { methods: n, field: v, data: u ?? {}, sqlOpsUrls: o, refid: l })
     },
-    v?.name ?? `field-${_}`
+    v?.name ?? `field-${P}`
   )) }) }) : i ? /* @__PURE__ */ t.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: a[i.config?.uimode]?.(i) || f[i.config?.uimode]?.(i, s) || /* @__PURE__ */ t.jsx("div", { children: "No renderer for this type" }) }) : null }, s)) }) }) });
 }
 function De({
@@ -1231,7 +1231,7 @@ function De({
   const [f, s] = F.useState({}), i = Te(e.infoview ?? {}), x = e.endPoints ?? {}, v = F.useMemo(
     () => a(e.fields || {}),
     [e.fields, a]
-  ), _ = e?.source?.refid;
+  ), P = e?.source?.refid;
   let E = { ...v };
   e.infoview?.groups && (E = { ...E, ...e.infoview.groups }), F.useEffect(() => {
     let b = !1;
@@ -1242,7 +1242,7 @@ function De({
         return;
       }
       if (k.type === "method") {
-        const P = k.method, A = P ? h[P] : void 0;
+        const _ = k.method, A = _ ? h[_] : void 0;
         if (A)
           try {
             const I = await Promise.resolve(A());
@@ -1255,16 +1255,16 @@ function De({
       }
       if (k.type === "api")
         try {
-          const P = await M({
+          const _ = await M({
             method: k.method || "GET",
             url: k.url,
             data: k.body || {},
             params: k.params || {},
             headers: k.headers || {}
           });
-          b || s(P.data || {});
-        } catch (P) {
-          console.error("API fetch failed:", P), b || s({});
+          b || s(_.data || {});
+        } catch (_) {
+          console.error("API fetch failed:", _), b || s({});
         }
       if (k.type === "sql" && k.refid && k.refid != "0") {
         if (!x) {
@@ -1272,7 +1272,7 @@ function De({
           return;
         }
         try {
-          const P = await M({
+          const _ = await M({
             method: "POST",
             url: x.baseURL + x.registerQuery,
             data: {
@@ -1292,7 +1292,7 @@ function De({
             method: "POST",
             url: x.baseURL + x.runQuery,
             data: {
-              queryid: P.data.queryid,
+              queryid: _.data.queryid,
               filter: {}
             },
             headers: {
@@ -1300,8 +1300,8 @@ function De({
             }
           }), I = je(A) ?? {};
           b || s(I);
-        } catch (P) {
-          console.error("API fetch failed:", P);
+        } catch (_) {
+          console.error("API fetch failed:", _);
         }
       }
     })(), () => {
@@ -1328,7 +1328,7 @@ function De({
             infoData: f,
             viewRenderers: l,
             sqlOpsUrls: x,
-            refid: _,
+            refid: P,
             ...c ? { Reports: c } : {},
             toast: p,
             handleAction: d,
@@ -1349,7 +1349,7 @@ function De({
             isCommonInfo: !!j,
             viewMode: b,
             sqlOpsUrls: x,
-            refid: _,
+            refid: P,
             ...c ? { Reports: c } : {},
             toast: p,
             handleAction: d,
@@ -1365,7 +1365,7 @@ function De({
             methods: h,
             infoData: f,
             sqlOpsUrls: x,
-            refid: _,
+            refid: P,
             ...c ? { Reports: c } : {},
             toast: p,
             handleAction: d,
@@ -1384,7 +1384,7 @@ function De({
             isCommonInfo: !!j,
             viewMode: b,
             sqlOpsUrls: x,
-            refid: _,
+            refid: P,
             ...c ? { Reports: c } : {},
             toast: p,
             handleAction: d,

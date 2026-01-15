@@ -648,7 +648,7 @@ const source = tabObj?.config;
                             where:source?.where ,
                             orderby:source?.orderby
                         },
-                        endpoints:sqlOpsUrls,
+                        endPoints:sqlOpsUrls,
                         actions: {...source?.actions,...infoViewJson?.buttons,...infoViewJson.actions},
                         datagrid: source?.datagrid,
                       
