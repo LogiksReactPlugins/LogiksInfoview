@@ -1,3 +1,6 @@
+import type { ReactNode } from "react";
+import type { ComponentType } from "react";
+
 export interface InfoViewField {
     name: string;
     label?: string;
@@ -39,6 +42,7 @@ export interface InfoViewProps {
         infoview?: Infoview;
         source?: Record<string, any>,
         endPoints?: Record<string, any>;
+        buttons?:Record<string, any>;
     };
     /** Fields to hide */
     hiddenFields?: string[];
@@ -54,7 +58,11 @@ export interface InfoViewProps {
     viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
     /** Whether to show scroll buttons */
     data?: Record<string, any>;
-    methods?: Record<string, Function>
+    methods?: Record<string, Function>,
+   Reports?: ComponentType<any>;
+ 
+  toast?: Record<string, Function>; 
+  handleAction?: Function;
 }
 
 export type FlatOptions = Record<string, string>;

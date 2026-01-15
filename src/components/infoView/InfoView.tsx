@@ -18,7 +18,10 @@ export default function LogiksInfoView({
     groupFieldsFn = groupFields,
     layoutConfig = {},
     viewRenderers = {},
-    methods = {}
+    methods = {},
+    Reports,
+    toast={},
+    handleAction=()=>{}
 }: InfoViewProps) {
 
 
@@ -169,6 +172,10 @@ export default function LogiksInfoView({
                     viewRenderers={viewRenderers}
                     sqlOpsUrls={sqlOpsUrls}
                     refid={refid}
+                     {...(Reports ? { Reports } : {})}
+                    toast={toast}
+                    handleAction={handleAction}
+                    infoViewJson={infoViewJson}
 
                 />
 
@@ -185,6 +192,10 @@ export default function LogiksInfoView({
                     viewMode={viewMode}
                     sqlOpsUrls={sqlOpsUrls}
                     refid={refid}
+                   {...(Reports ? { Reports } : {})}
+                     toast={toast}
+                    handleAction={handleAction}
+                    infoViewJson={infoViewJson}
 
 
                 />
@@ -198,6 +209,10 @@ export default function LogiksInfoView({
                     infoData={infoData}
                     sqlOpsUrls={sqlOpsUrls}
                     refid={refid}
+                    {...(Reports ? { Reports } : {})}
+                     toast={toast}
+                    handleAction={handleAction}
+                    infoViewJson={infoViewJson}
 
 
                 />
@@ -213,6 +228,10 @@ export default function LogiksInfoView({
                     viewMode={viewMode}
                     sqlOpsUrls={sqlOpsUrls}
                     refid={refid}
+                    {...(Reports ? { Reports } : {})}
+                     toast={toast}
+                    handleAction={handleAction}
+                    infoViewJson={infoViewJson}
 
 
                 />

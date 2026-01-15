@@ -1,11 +1,12 @@
-import React from 'react'
+import React from 'react';
+import type { ComponentType } from "react";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
 import Accordion from './Accordian.js';
 import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 
 import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData } from '../InfoView.types.js';
+import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview } from '../InfoView.types.js';
 import Card from './Card.js';
 
 interface CardViewProps {
@@ -14,7 +15,17 @@ interface CardViewProps {
     infoData: InfoData;
     viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
     sqlOpsUrls?: Record<string, any>
-    refid: string
+    refid: string;
+    Reports?: ComponentType<any>;
+        toast?: Record<string, Function>;
+        handleAction?: Function;
+         infoViewJson: {
+                        script?: string;
+                        fields: Record<string, Omit<InfoViewField, "name">>;
+                        infoview?: Infoview;
+                        source?: Record<string, any>,
+                        endPoints?: Record<string, any>;
+                    };
 }
 
 export default function CardView({
@@ -24,6 +35,10 @@ export default function CardView({
     viewRenderers = {},
     sqlOpsUrls = {},
     refid,
+     Reports,
+    toast={},
+    handleAction=()=>{},
+    infoViewJson
 }
     : CardViewProps) {
 
@@ -34,7 +49,17 @@ export default function CardView({
             <SingleView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
         ),
         grid: (tab, tabName) => (
-            <GridView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
+            <GridView  
+              {...(Reports ? { Reports } : {})}
+                toast={toast}
+                handleAction={handleAction} 
+                tabObj={tab} 
+                methods={methods} 
+                tabName={tabName} 
+                sqlOpsUrls={sqlOpsUrls} 
+                refid={refid} 
+                infoViewJson={infoViewJson}
+                />
         ),
     };
 

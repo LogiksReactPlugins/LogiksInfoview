@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import axios from "axios";
-import type { InfoViewGroup } from '../InfoView.types.js';
+import type { ComponentType } from "react";
+import type { Infoview, InfoViewField, InfoViewGroup } from '../InfoView.types.js';
 import { copyToClipboard, replacePlaceholders } from '../utils.js';
 import ConfirmModal from './ConfirmationModal.js';
 
@@ -15,10 +16,25 @@ interface SortConfig {
     direction: SortDirection;
 }
 
-export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }:
+export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson }:
     {
-        tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string,
-        sqlOpsUrls?: Record<string, any>, refid: string
+        tabObj: InfoViewGroup,
+        methods: Record<string, Function>,
+        tabName: string,
+        sqlOpsUrls?: Record<string, any>,
+        refid: string;
+        Reports?: ComponentType<any>;
+        toast?: Record<string, Function>;
+        handleAction?: Function;
+        infoViewJson: {
+            script?: string;
+            fields: Record<string, Omit<InfoViewField, "name">>;
+            infoview?: Infoview;
+            source?: Record<string, any>,
+            endPoints?: Record<string, any>;
+            buttons?:Record<string, any>;
+            actions?:Record<string, any>;
+        };
     }) {
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
@@ -32,10 +48,13 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
     const [copiedCell, setCopiedCell] = useState<string | null>(null);
     const [sortConfig, setSortConfig] = useState<SortConfig>({ key: '', direction: null });
     const [alert, setAlert] = useState<AlertState | null>(null);
+const source = tabObj?.config;
+    console.log("tabObj",tabObj);
+     console.log("source",source);
 
 
     const fetchData = React.useCallback(async () => {
-        const source = tabObj?.config;
+        
 
         if (!source?.type) {
             setData([]);
@@ -613,303 +632,34 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid }
             </div>
         );
     }
+   
+    
 
     return (
-        <div className="w-full overflow-hidden flex-1 flex flex-col">
-            {alert && (
-                <div
-                    className={`mb-3 mx-2 rounded-md px-4 py-2 text-sm font-medium
-      ${alert?.type === "success"
-                            ? "bg-green-100 text-green-800 border border-green-300"
-                            : "bg-red-100 text-red-800 border border-red-300"
-                        }`}
-                >
-                    {alert?.message}
+        <>
+
+            {Reports ? (
+                <Reports
+                    methods={methods}
+                    report={{
+                        source: { table:source?.table, 
+                            type:"sql", 
+                            cols:source?.cols,
+                            where:source?.where ,
+                            orderby:source?.orderby
+                        },
+                        endpoints:sqlOpsUrls,
+                        actions: {...source?.actions,...infoViewJson?.buttons,...infoViewJson.actions},
+                        datagrid: source?.datagrid,
+                      
+                    }}
+                    onButtonClick={handleAction}
+                />
+            ) : (
+                <div className="text-sm text-gray-500 text-center py-4">
+                    Reports component is not available.
                 </div>
             )}
-            <div className="my-4 mx-2 flex  gap-4 justify-between items-start sm:items-center">
-                <div className="flex-1 max-w-md">
-                    <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                        </div>
-                        <input
-                            type="text"
-                            placeholder="Search across all columns..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="block w-full px-10 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent "
-                        />
-                        {searchQuery && (
-                            <button
-                                onClick={handleClearSearch}
-                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
-                                title="Clear search"
-                            >
-                                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        )}
-                    </div>
-                </div>
-                {hasFormConfig && (
-
-                    <button
-                        onClick={handleAddRecord}
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-action cursor-pointer"
-                    >
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                        </svg>
-                        Add Record
-                    </button>
-
-                )}
-            </div>
-
-            <div className="flex items-center justify-between py-1 border-t border-gray-200 ">
-                {/* Stats */}
-                <div className="flex items-center gap-6 text-sm">
-                    <span className="flex items-center gap-2">
-                        <span className="text-gray-600">
-                            Showing <strong className="text-gray-900">{stats.currentPageStart}-{stats.currentPageEnd}</strong> of <strong className="text-gray-900">{stats.totalRows}</strong> records
-                        </span>
-                    </span>
-                </div>
-
-                <div className="flex-1 flex justify-end gap-4">
-                    <div className="flex items-center gap-4">
-                        {/* Items per page selector */}
-                        <div className="flex items-center gap-2 text-sm">
-                            <span className="text-gray-600">Show:</span>
-                            <select
-                                value={itemsPerPage}
-                                onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
-                                className="border border-gray-300 text-gray-900 rounded px-1 py-1 text-sm outline-0"
-                            >
-                                <option value={5}>5</option>
-                                <option value={10}>10</option>
-                                <option value={25}>25</option>
-                                <option value={50}>50</option>
-                                <option value={100}>100</option>
-                            </select>
-                            <span className="text-gray-600">per page</span>
-                        </div>
-                    </div>
-
-                    {/* Simple Pagination - Previous/Next only */}
-
-                    <div className="flex items-center gap-2">
-                        <button
-                            onClick={() => goToPage(currentPage - 1)}
-                            disabled={currentPage === 1}
-                            className="flex items-center gap-2 text-sm font-medium text-action cursor-pointer bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </button>
-                        <span className="flex items-center gap-2 text-sm">
-                            <span className="text-gray-600">
-                                Page <strong className="text-gray-900">{currentPage}</strong> of <strong className="text-gray-900">{totalPages}</strong>
-                            </span>
-                        </span>
-                        <button
-                            onClick={() => goToPage(currentPage + 1)}
-                            disabled={currentPage === totalPages}
-                            className="flex items-center gap-2 text-sm font-medium text-action cursor-pointer bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-
-
-            {/* No Results Found */}
-            {filteredAndSortedData.length === 0 && searchQuery.trim() && (
-                <div className="h-full flex flex-1 flex-col items-center justify-center py-22 text-gray-500">
-                    <div className="w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-                        <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">No Results Found</h3>
-                    <p className="text-sm text-gray-500 text-center max-w-sm mb-4">
-                        No records match your search for <strong>"{searchQuery}"</strong>
-                    </p>
-                    <button
-                        onClick={handleClearSearch}
-                        className="inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
-                    >
-                        Clear Search
-                    </button>
-                </div>
-            )}
-
-
-            {/* Table Container */}
-            {filteredAndSortedData.length > 0 && (<>
-                <div className=" overflow-auto min-w-full divide-y divide-gray-200 border border-gray-200 bordr-t">
-                    <table className="min-w-full h-full">
-                        {/* Fixed Header */}
-                        <thead className=" text-action">
-                            <tr>
-                                {/* Actions column - only show in edit mode */}
-
-                                {isEditMode && (
-                                    <th
-                                        scope="col"
-                                        className="bg-muted px-4 sm:px-6 py-2 text-left text-xs font-bold uppercase tracking-wider w-32 sticky top-0 left-0 z-20"
-                                    >
-                                        Actions
-                                    </th>
-                                )}
-
-                                {/* Dynamic columns */}
-                                {columns.map((column, index) => (
-                                    <th
-                                        key={column}
-                                        scope="col"
-                                        className="bg-muted sticky top-0 z-0 px-4 sm:px-6 py-2 text-left text-xs font-bold uppercase tracking-wider"
-                                    >
-
-
-                                        <div
-                                            className="flex items-center gap-1 cursor-pointer select-none"
-                                            onClick={() => handleSort(column)}
-                                        >
-                                            <span className="truncate" title={formatFieldName(column)}>
-                                                {formatFieldName(column)}
-                                            </span>
-                                            {sortConfig?.key === column ? (
-                                                sortConfig.direction === "asc" ? (
-                                                    <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path d="M5 12l5-5 5 5H5z" />
-                                                    </svg>
-                                                ) : (
-                                                    <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path d="M5 8l5 5 5-5H5z" />
-                                                    </svg>
-                                                )
-                                            ) : (
-                                                <svg className="w-4 h-4 text-gray-400 group-hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                                </svg>
-                                            )}
-                                        </div>
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-
-                        {/* Scrollable Body */}
-                        <tbody className="bg-white divide-y divide-gray-200 ">
-                            {currentData.map((row, rowIndex) => (
-                                <tr
-                                    key={startIndex + rowIndex}
-                                    className={`hover:bg-secondary transition-colors duration-150 ${rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'
-                                        }`}
-                                >
-                                    {/* Actions column - only show in edit mode */}
-
-                                    {isEditMode && (
-                                        <td className="px-4 sm:px-6 py-1 whitespace-nowrap text-sm bg-muted text-gray-900 sticky left-0 z-10">
-                                            <div className="flex items-center gap-2">
-                                                {hasInfoConfig && <button
-                                                    onClick={() => handleView(row)}
-                                                    className="inline-flex items-center px-2 py-1 text-xs font-medium rounded cursor-pointer text-action"
-                                                    title="View"
-                                                >
-                                                    <svg
-                                                        className="w-4 h-4"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2}
-                                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                                        />
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2}
-                                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                                                        />
-                                                    </svg>
-                                                </button>}
-                                                <button
-                                                    onClick={() => handleEdit(row, startIndex + rowIndex)}
-                                                    className="inline-flex items-center px-2 py-1 text-xs font-medium rounded cursor-pointer text-action"
-                                                    title="Edit"
-                                                >
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                    </svg>
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDelete(row)}
-                                                    className="text-red-600 hover:text-red-800 cursor-pointer transition-colors p-1 hover:bg-red-100 rounded"
-                                                    title="Delete"
-                                                >
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    )}
-
-                                    {/* Data columns */}
-                                    {columns.map((column) => (
-                                        <td
-                                            key={column}
-                                            className="px-4 sm:px-6 py-1 text-sm text-gray-900"
-                                        >
-                                            <div className="relative group flex items-center">
-                                                <div className="truncate max-w-xs sm:max-w-none">
-                                                    {formatCellValue(row[column] ?? "", column)}
-                                                </div>
-                                                <button
-                                                    onClick={() => handleCopy(row[column] || "", `${row.id}-${column}`)}
-                                                    className="absolute -right-4 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity ml-2 p-1 rounded bg-gray-50 hover:bg-gray-100 cursor-pointer"
-                                                    title="Copy"
-                                                >
-                                                    {copiedCell === `${row.id}-${column}` ? (
-                                                        <>
-                                                            <span className="text-xs text-gray-600">Copied!</span>
-                                                        </>
-                                                    ) : (
-                                                        <i className="fa-regular fa-copy"></i>
-                                                    )}
-                                                </button>
-                                            </div>
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-
-
-            </>
-            )}
-
-            <ConfirmModal
-                open={confirmOpen}
-                onConfirm={confirmDelete}
-                onCancel={cancelDelete}
-            />
-        </div>
+                 </>
     );
 }

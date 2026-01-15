@@ -1,9 +1,11 @@
-import React from 'react'
+import react, { useEffect, useRef, useState } from 'react';
+
+import type { ComponentType } from "react";
 import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 import InfoFieldRenderer from './InfoFieldRenderer.js';
 import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData } from '../InfoView.types.js';
+import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview } from '../InfoView.types.js';
 
 interface TabViewProps {
     groups: Record<string, InfoViewGroup>;
@@ -18,7 +20,17 @@ interface TabViewProps {
     isCommonInfo: boolean;
     viewMode: string;
     sqlOpsUrls?: Record<string, any>;
-    refid: string
+    refid: string;
+    Reports?: ComponentType<any>;
+    toast?: Record<string, Function>;
+    handleAction?: Function;
+      infoViewJson: {
+                    script?: string;
+                    fields: Record<string, Omit<InfoViewField, "name">>;
+                    infoview?: Infoview;
+                    source?: Record<string, any>,
+                    endPoints?: Record<string, any>;
+                };
 }
 
 
@@ -94,10 +106,10 @@ const TopNav = ({
     isCommonInfo,
     tabsNavRef
 }: TopNavProps) => {
-    const [showAllTabs, setShowAllTabs] = React.useState(false);
-    const dropdownRef = React.useRef(null);
+    const [showAllTabs, setShowAllTabs] = useState(false);
+    const dropdownRef = useRef(null);
     // Close dropdown on outside click
-    React.useEffect(() => {
+    useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (dropdownRef.current && !(dropdownRef.current as HTMLElement).contains(e.target as Node)) {
                 setShowAllTabs(false);
@@ -328,17 +340,21 @@ export default function TabView({
     layoutConfig = {},
     viewMode,
     sqlOpsUrls = {},
-    refid
+    refid,
+    Reports,
+    toast={},
+    handleAction=()=>{},
+    infoViewJson
 }: TabViewProps) {
 
-    const [activeTabIndex, setActiveTabIndex] = React.useState(0);
-    const [showScrollHint, setShowScrollHint] = React.useState(false);
-    const tabsNavRef = React.useRef<HTMLDivElement | null>(null);
+    const [activeTabIndex, setActiveTabIndex] = useState(0);
+    const [showScrollHint, setShowScrollHint] = useState(false);
+    const tabsNavRef = useRef<HTMLDivElement | null>(null);
 
     const groupNames = Object.keys(groups);
 
 
-    React.useEffect(() => {
+    useEffect(() => {
 
         const checkOverflow = () => {
             if (tabsNavRef.current) {
@@ -353,7 +369,7 @@ export default function TabView({
     }, [groupNames.length]);
 
     // Auto-scroll active tab into view
-    React.useEffect(() => {
+    useEffect(() => {
 
         if (tabsNavRef.current && groupNames.length > 0) {
             const activeButton = tabsNavRef.current.children[activeTabIndex];
@@ -381,7 +397,17 @@ export default function TabView({
             <SingleView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
         ),
         grid: (tab, tabName) => (
-            <GridView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
+            <GridView
+                  {...(Reports ? { Reports } : {})}
+                toast={toast}
+                handleAction={handleAction}
+                tabObj={tab}
+                methods={methods}
+                tabName={tabName}
+                sqlOpsUrls={sqlOpsUrls}
+                refid={refid} 
+                infoViewJson={infoViewJson}
+                />
         ),
     };
 

@@ -1,11 +1,11 @@
-import React from 'react'
+import type { ComponentType } from "react";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
 import Accordion from './Accordian.js';
 import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 
 import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData } from '../InfoView.types.js';
+import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview } from '../InfoView.types.js';
 
 interface AccordianViewProps {
     groups: Record<string, InfoViewGroup>;
@@ -13,7 +13,17 @@ interface AccordianViewProps {
     infoData: InfoData;
     viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
     sqlOpsUrls?: Record<string, any>;
-    refid: string
+    refid: string;
+      Reports?: ComponentType<any>;
+        toast?: Record<string, Function>;
+        handleAction?: Function;
+          infoViewJson: {
+                script?: string;
+                fields: Record<string, Omit<InfoViewField, "name">>;
+                infoview?: Infoview;
+                source?: Record<string, any>,
+                endPoints?: Record<string, any>;
+            };
 }
 
 export default function AccordianView({
@@ -22,7 +32,11 @@ export default function AccordianView({
     infoData,
     viewRenderers = {},
     sqlOpsUrls = {},
-    refid
+    refid,
+      Reports,
+    toast={},
+    handleAction=()=>{},
+    infoViewJson
 }
     : AccordianViewProps) {
 
@@ -33,7 +47,11 @@ export default function AccordianView({
             <SingleView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
         ),
         grid: (tab, tabName) => (
-            <GridView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid}/>
+            <GridView
+               {...(Reports ? { Reports } : {})}
+                toast={toast}
+                infoViewJson={infoViewJson}
+                handleAction={handleAction} tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid}/>
         ),
     };
 

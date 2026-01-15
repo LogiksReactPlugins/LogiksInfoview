@@ -458,6 +458,12 @@ export declare const example7: {
                             icon: string;
                         };
                     };
+                    datagrid: {
+                        title: {
+                            label: string;
+                            hidden: boolean;
+                        };
+                    };
                 };
                 width: number;
             };
