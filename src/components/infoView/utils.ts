@@ -67,13 +67,13 @@ export async function fetchGeolocation(): Promise<string | null> {
   }
 }
 
-export function transformedObject(originalObject: Record<string, any>,operation:string = "create") {
+export function transformedObject(originalObject: Record<string, any>, operation: string = "create") {
 
   const fields: Record<string, { label: string; required: boolean }> = {}
 
   Object.keys(originalObject).forEach((key) => {
 
-    if (originalObject[key].vmode === "edit" && operation==="create") return;
+    if (originalObject[key].vmode === "edit" && operation === "create") return;
 
     fields[key] = {
       label: key,
@@ -597,26 +597,31 @@ export const flattenOptions = (options: SelectOptions): FlatEntry[] => {
 export async function fetchDataByquery(
   sqlOpsUrls: Record<string, any>,
   query: Record<string, any>,
+  querid: string | undefined,
   filter: Record<string, any> = {}
 ): Promise<AxiosResponse<any>> {
   try {
 
-    const resQueryId = await axios({
-      method: "POST",
-      url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
-      data: { "query": query },
-      headers: {
-        "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
-      },
-    });
+    let queryId = querid;
+
+    if (!queryId) {
+      const resQueryId = await axios({
+        method: "POST",
+        url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
+        data: { "query": query },
+        headers: {
+          "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+        },
+      });
+      queryId = resQueryId.data.queryid;
+    }
 
     const res = await axios({
       method: "POST",
       url: sqlOpsUrls.baseURL + sqlOpsUrls.runQuery,
       data: {
-        "queryid": resQueryId.data.queryid,
+        "queryid": queryId,
         "filter": filter
-
       },
       headers: {
         "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`

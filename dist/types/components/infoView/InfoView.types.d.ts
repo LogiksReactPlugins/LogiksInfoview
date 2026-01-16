@@ -39,6 +39,7 @@ export interface InfoViewProps {
         source?: Record<string, any>;
         endPoints?: SqlEndpoints;
         buttons?: Record<string, any>;
+        forcefill?: Record<string, any>;
     };
     /** Fields to hide */
     hiddenFields?: string[];
@@ -132,6 +133,7 @@ export interface FormField {
     search?: boolean;
     method?: string;
     vmode?: string;
+    queryid?: string;
 }
 export interface FormJson {
     title?: string | undefined;

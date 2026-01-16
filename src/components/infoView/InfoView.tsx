@@ -97,45 +97,70 @@ export default function LogiksInfoView({
                 }
 
                 try {
+                    let skipquery = false;
+                    let dbopsId;
 
-                    const resQueryId = await axios({
-                        method: "POST",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
-                        data: {
-                            "query": {
-                                ...source,
-                                "cols": source.cols,
-                                "table": source.table,
-                                "where": replacePlaceholders(source.where, {
-                                    refid: source.refid,
-                                }),
+                    if (source?.dbopsid) {
+                        skipquery = true;
+                        dbopsId = source?.dbopsid;
+                    }
 
-                            }
-                        },
+                    const resHashId = await axios({
+                        method: "GET",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetHash,
                         headers: {
                             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
                         },
                     });
 
+                    if (!skipquery) {
 
+                        let query = {
+                            ...source
+                        }
+
+                        if (source.where) {
+                            query = {
+                                ...source,
+                                "where": replacePlaceholders(source.where, {
+                                    refid: refid,
+                                }),
+                            }
+                        }
+
+                        const resQueryId = await axios({
+                            method: "POST",
+                            url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
+                            data: {
+                                "operation": "fetch",
+                                "source": query,
+                                "fields": transformedObject(infoViewJson.fields, sqlOpsUrls.operation),
+                                "forcefill": infoViewJson.forcefill,
+                                "datahash": resHashId.data.refhash
+                            },
+
+                            headers: {
+                                "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                            },
+                        });
+                        dbopsId = resQueryId?.data.refid;
+
+                    }
                     const res = await axios({
                         method: "POST",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.runQuery,
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls["dbopsFetch"],
                         data: {
-                            "queryid": resQueryId.data.queryid,
-                            "filter": {
+                            "refid": dbopsId,
+                            "datahash": resHashId.data.refhash
 
-                            }
                         },
-
                         headers: {
                             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
                         },
                     });
 
+            
                     const data = normalizeToObject(res) ?? {};
-
-
 
                     if (!cancelled) setInfoData(data);
                 } catch (err) {

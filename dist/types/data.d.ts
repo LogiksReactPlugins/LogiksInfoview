@@ -618,7 +618,6 @@ export declare const example1: {
         type: string;
         table: string;
         cols: string;
-        refid: number;
         where: {
             id: string;
         };

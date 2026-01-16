@@ -28,7 +28,7 @@ export declare function getSearchColumns(columns: string): string[];
 export declare const getOptionLabel: (options: SelectOptions, value: string) => string | undefined;
 type FlatEntry = [string, string];
 export declare const flattenOptions: (options: SelectOptions) => FlatEntry[];
-export declare function fetchDataByquery(sqlOpsUrls: Record<string, any>, query: Record<string, any>, filter?: Record<string, any>): Promise<AxiosResponse<any>>;
+export declare function fetchDataByquery(sqlOpsUrls: Record<string, any>, query: Record<string, any>, querid: string | undefined, filter?: Record<string, any>): Promise<AxiosResponse<any>>;
 export declare function normalizeOptions(options?: SelectOptions): FlatOptions;
 export {};
 //# sourceMappingURL=utils.d.ts.map
