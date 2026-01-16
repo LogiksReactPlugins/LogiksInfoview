@@ -81,7 +81,7 @@ export interface SqlEndpoints {
     baseURL: string;
     dbopsGetRefId: string;
     accessToken: string;
-    operation: string;
+    operation?: string;
     dbopsGetHash: string;
     dbopsFetch?: string;
     dbopsUpdate?: string;
