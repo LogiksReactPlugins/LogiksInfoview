@@ -18,6 +18,13 @@ export interface InfoViewField {
     where?: Record<string, string>;
     groupid?: string;
     cols?: string;
+    method?: string;
+    queryid?: string;
+}
+export interface sqlQueryProps {
+    table: string;
+    cols: string;
+    where?: Record<string, string>;
 }
 export interface InfoViewGroup {
     label: string;

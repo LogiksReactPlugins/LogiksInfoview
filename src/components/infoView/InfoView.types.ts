@@ -20,7 +20,16 @@ export interface InfoViewField {
     where?: Record<string, string>;
     groupid?: string;
     cols?: string;
+    method?: string;
+      queryid?:string;
 }
+
+export interface sqlQueryProps {
+    table: string;
+    cols: string;
+    where?: Record<string, string>;
+};
+
 
 export interface InfoViewGroup {
     label: string;
@@ -45,7 +54,7 @@ export interface InfoViewProps {
         source?: Record<string, any>,
         endPoints?: SqlEndpoints;
         buttons?: Record<string, any>;
-        forcefill?:Record<string, any>;
+        forcefill?: Record<string, any>;
     };
     /** Fields to hide */
     hiddenFields?: string[];
@@ -147,7 +156,7 @@ export interface FormField {
     search?: boolean;
     method?: string;
     vmode?: string;
-    queryid?:string;
+    queryid?: string;
 
 }
 
@@ -169,10 +178,10 @@ export interface FormProps {
     userid?: string | null;
     methods?: Record<string, Function>
     onCancel?: () => void;
-  
-  setEditData?: React.Dispatch<
-    React.SetStateAction<Record<string, any> | null>
-  >;
+
+    setEditData?: React.Dispatch<
+        React.SetStateAction<Record<string, any> | null>
+    >;
     callback?: (res: any) => void;
     components?: Record<string, ReactNode>
     initialvalues?: Record<string, any>;

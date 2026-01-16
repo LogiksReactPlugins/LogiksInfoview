@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import type { InfoFieldRendererProps, InfoViewField, SelectOptions } from '../InfoView.types.js';
+import type { InfoFieldRendererProps, InfoViewField, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
 import { DEFAULT_LOGO } from '../constant.js';
-import { formatOptions, normalizeOptions, replacePlaceholders, resolveDisplayValue } from '../utils.js';
+import { fetchDataByquery, formatOptions, normalizeOptions, replacePlaceholders, resolveDisplayValue } from '../utils.js';
 
 
 export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrls, refid }: InfoFieldRendererProps) {
@@ -22,10 +22,10 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
     field.options ?? {}
   );
 
-const flatOptions = React.useMemo(
-  () => normalizeOptions(options),
-  [options]
-);
+  const flatOptions = React.useMemo(
+    () => normalizeOptions(options),
+    [options]
+  );
   React.useEffect(() => {
     let isMounted = true;
 
@@ -35,17 +35,26 @@ const flatOptions = React.useMemo(
         return;
       }
 
+      let valueKey = field.valueKey ?
+        field.valueKey :
+        field.type === "dataSelector" ?
+          "do_lists.value" : `${field.table}.value`;
+
+      let labelKey = field.labelKey ? field.labelKey :
+        field.type === "dataSelector" ?
+          "do_lists.title" : `${field.table}.title`;
+
       const source = field?.source ?? {};
 
       // Case 1: Method source
-      if (source.type === "method") {
-        const methodName = source.method as keyof typeof methods | undefined;
+      if (field.type === "dataMethod") {
+        const methodName = field.method as keyof typeof methods | undefined;
         const methodFn = methodName ? methods[methodName] : undefined;
         if (methodFn) {
           try {
             const result = await Promise.resolve(methodFn());
-
-            if (isMounted) setOptions(result ?? {});
+            const mapped = formatOptions(valueKey, labelKey, result, field.groupKey);
+            if (isMounted) setOptions(mapped);
           } catch (err) {
             console.error("Method execution failed:", err);
             if (isMounted) setOptions({});
@@ -66,9 +75,8 @@ const flatOptions = React.useMemo(
             headers: source.headers ?? {},
           });
 
-          const valueKey = field.valueKey || "value";
-          const labelKey = field.labelKey || "title";
-          const mapped = formatOptions(valueKey, labelKey, res)
+
+          const mapped = formatOptions(valueKey, labelKey, res, field.groupKey)
 
           if (isMounted) setOptions(mapped);
 
@@ -89,11 +97,11 @@ const flatOptions = React.useMemo(
 
         try {
 
-          let query: InfoViewField;
+          let query: sqlQueryProps;
 
           if (field.type === "dataSelector") {
             query = {
-              ...field,
+
               table: "do_lists",
               cols: "title,value",
               where: {
@@ -108,7 +116,7 @@ const flatOptions = React.useMemo(
             }
 
             query = {
-              ...field,
+
               table: field.table,
               cols: field.columns,
             };
@@ -121,31 +129,9 @@ const flatOptions = React.useMemo(
               : field.where;
           }
 
-          const resQueryId = await axios({
-            method: "POST",
-            url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
-            data: { "query": query },
-            headers: {
-              "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
-            },
-          });
+          const res = await fetchDataByquery(sqlOpsUrls, query, field?.queryid);
 
-          const res = await axios({
-            method: "POST",
-            url: sqlOpsUrls.baseURL + sqlOpsUrls.runQuery,
-            data: {
-              "queryid": resQueryId.data.queryid,
-              "filter": {}
-            },
-            headers: {
-              "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
-            },
-          });
-
-          const valueKey = field.valueKey || "value";
-          const labelKey = field.labelKey || "title";
-
-          const mapped = formatOptions(valueKey, labelKey, res)
+          const mapped = formatOptions(valueKey, labelKey, res, field.groupKey);
           if (isMounted) setOptions(mapped);
 
         } catch (err) {
