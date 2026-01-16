@@ -14,16 +14,16 @@ interface AccordianViewProps {
     viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
     sqlOpsUrls?: SqlEndpoints;
     refid: string;
-      Reports?: ComponentType<any>;
-        toast?: Record<string, Function>;
-        handleAction?: Function;
-          infoViewJson: {
-                script?: string;
-                fields: Record<string, Omit<InfoViewField, "name">>;
-                infoview?: Infoview;
-                source?: Record<string, any>,
-                endPoints?: Record<string, any>;
-            };
+    Reports?: ComponentType<any>;
+    toast?: Record<string, Function>;
+    handleAction?: Function;
+    infoViewJson: {
+        script?: string;
+        fields: Record<string, Omit<InfoViewField, "name">>;
+        infoview?: Infoview;
+        source?: Record<string, any>,
+        endPoints?: Record<string, any>;
+    };
 }
 
 export default function AccordianView({
@@ -31,11 +31,11 @@ export default function AccordianView({
     methods = {},
     infoData,
     viewRenderers = {},
-    sqlOpsUrls ,
+    sqlOpsUrls,
     refid,
-      Reports,
-    toast={},
-    handleAction=()=>{},
+    Reports,
+    toast = {},
+    handleAction = () => { },
     infoViewJson
 }
     : AccordianViewProps) {
@@ -44,14 +44,25 @@ export default function AccordianView({
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView tabObj={tab} methods={methods} tabName={tabName}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
+            <SingleView
+                tabObj={tab}
+                methods={methods}
+                tabName={tabName}
+                {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                refid={refid}
+            />
         ),
         grid: (tab, tabName) => (
             <GridView
-               {...(Reports ? { Reports } : {})}
+                {...(Reports ? { Reports } : {})}
                 toast={toast}
                 infoViewJson={infoViewJson}
-                handleAction={handleAction} tabObj={tab} methods={methods} tabName={tabName}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})}refid={refid}/>
+                handleAction={handleAction}
+                tabObj={tab}
+                methods={methods}
+                tabName={tabName}
+                {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid}
+            />
         ),
     };
 
@@ -75,7 +86,7 @@ export default function AccordianView({
                                                 className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-2"
                                                     }`}
                                             >
-                                                <InfoFieldRenderer methods={methods} field={field} data={infoData ?? {}}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})}refid={refid} />
+                                                <InfoFieldRenderer methods={methods} field={field} data={infoData ?? {}}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
                                             </div>
                                         ))}
                                     </div>

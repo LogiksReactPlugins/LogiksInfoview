@@ -24,13 +24,13 @@ interface TabViewProps {
     Reports?: ComponentType<any>;
     toast?: Record<string, Function>;
     handleAction?: Function;
-      infoViewJson: {
-                    script?: string;
-                    fields: Record<string, Omit<InfoViewField, "name">>;
-                    infoview?: Infoview;
-                    source?: Record<string, any>,
-                    endPoints?: Record<string, any>;
-                };
+    infoViewJson: {
+        script?: string;
+        fields: Record<string, Omit<InfoViewField, "name">>;
+        infoview?: Infoview;
+        source?: Record<string, any>,
+        endPoints?: Record<string, any>;
+    };
 }
 
 
@@ -65,10 +65,34 @@ interface ContentAreaPrps extends VerticalNavProps {
     tabObj: InfoViewGroup | null;
     renderView: (tab: InfoViewGroup, tabName: string) => React.ReactNode;
     methods?: Record<string, Function>;
-    sqlOpsUrls?: SqlEndpoints ;
+    sqlOpsUrls?: SqlEndpoints;
     refid?: string | undefined;
 
 }
+
+const VerticalNav = ({ groups, groupNames, setActiveTabIndex, activeTabIndex }: VerticalNavProps) => (
+    <nav
+
+        className="flex flex-col overflow-y-auto h-full px-2 py-1 space-y-1"
+    >
+        {groupNames.length > 0 ? groupNames.map((group, index) => (
+            <button
+                key={group}
+                type="button"
+                onClick={() => setActiveTabIndex(index)}
+                className={`cursor-pointer w-full text-left py-2 px-3 rounded-md text-sm font-semibold transition-all duration-200 ${activeTabIndex === index
+                    ? 'bg-white shadow text-action'
+                    : 'text-gray-600 hover:bg-white/50'
+                    }`}
+            >
+                <span className="truncate">{groups[group]?.label || group}</span>
+            </button>
+        )) : (
+            <div className="py-3 px-2 text-sm text-gray-500">No group available</div>
+        )}
+    </nav>
+);
+
 
 
 
@@ -228,14 +252,14 @@ const ContentArea = (
                                     data={infoData ?? {}}
                                     methods={methods}
                                     refid={refid}
-                                     {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                                 />
                             </div>
                         ))}
                     </div>
                 </div>
             ) : tabObj ? (
-                <div className="flex-1 overflow-y-auto">
+                <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                     {renderView(tabObj, groupNames[activeTabIndex] || "")}
                 </div>
             ) : null
@@ -318,8 +342,8 @@ export default function TabView({
     sqlOpsUrls,
     refid,
     Reports,
-    toast={},
-    handleAction=()=>{},
+    toast = {},
+    handleAction = () => { },
     infoViewJson
 }: TabViewProps) {
 
@@ -374,16 +398,16 @@ export default function TabView({
         ),
         grid: (tab, tabName) => (
             <GridView
-                  {...(Reports ? { Reports } : {})}
+                {...(Reports ? { Reports } : {})}
                 toast={toast}
                 handleAction={handleAction}
                 tabObj={tab}
                 methods={methods}
                 tabName={tabName}
                 {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
-                refid={refid} 
+                refid={refid}
                 infoViewJson={infoViewJson}
-                />
+            />
         ),
     };
 
@@ -394,7 +418,9 @@ export default function TabView({
 
 
 
-    return (
+
+    if (isTop) {
+        return (
             <div className='flex-1 flex flex-col min-h-0 '>
                 <TopNav
                     groupNames={groupNames}
@@ -424,4 +450,50 @@ export default function TabView({
 
             </div>
         );
+    }
+
+    return (
+
+
+        <div className="flex-1 flex min-h-0">
+            {isLeft && (
+                <aside className="flex-shrink-0 w-56 border-r border-gray-200 bg-gray-50 p-2">
+                    <VerticalNav
+                        groupNames={groupNames}
+                        groups={groups}
+                        setActiveTabIndex={setActiveTabIndex}
+                        activeTabIndex={activeTabIndex}
+                    />
+                </aside>
+            )}
+
+            <main className="flex-1 flex flex-col min-h-0 overflow-auto">
+                <ContentArea
+                    groupNames={groupNames}
+                    activeTabIndex={activeTabIndex}
+                    layoutConfig={layoutConfig}
+                    tabObj={tabObj}
+                    infoData={infoData}
+                    setActiveTabIndex={setActiveTabIndex}
+                    renderView={renderView}
+                    groups={groups}
+                    methods={methods}
+                    refid={refid}
+                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                />
+            </main>
+
+            {isRight && (
+                <aside className="flex-shrink-0 w-56 border-l border-gray-200 bg-gray-50 p-2">
+                    <VerticalNav
+                        groupNames={groupNames}
+                        groups={groups}
+                        setActiveTabIndex={setActiveTabIndex}
+                        activeTabIndex={activeTabIndex}
+                    />
+                </aside>
+            )}
+        </div>
+
+    )
 }

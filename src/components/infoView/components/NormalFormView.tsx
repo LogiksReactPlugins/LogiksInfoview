@@ -66,7 +66,7 @@ export default function NormalFormView({
     <div className="relative z-10 max-w-full  m-4">
       <div className="bg-white border border-gray-100 rounded-md animate-in fade-in duration-300">
         <form onSubmit={formik.handleSubmit} className="p-4  mx-auto">
-          <div className="grid grid-flow-col auto-cols-max gap-4 items-end overflow-x-auto">
+          <div className="grid grid-flow-col auto-cols-max gap-4  overflow-x-auto">
             {flatfields.map((field, index) => {
               if (isHidden(field.hidden) || field.type === "geolocation" || (field.vmode === "edit" && sqlOpsUrls?.operation === "create")) {
                 return null;

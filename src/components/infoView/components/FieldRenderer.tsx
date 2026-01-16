@@ -108,8 +108,8 @@ export default function FieldRenderer({
             headers: source.headers ?? {},
           });
 
-          const valueKey = field.valueKey || "value";
-          const labelKey = field.labelKey || "title";
+          const valueKey = field.valueKey || `${field.table}.value`;
+          const labelKey = field.labelKey || `${field.table}.title`;
           const mapped = formatOptions(valueKey, labelKey, res, field.groupKey)
 
           if (isMounted) setOptions(mapped);

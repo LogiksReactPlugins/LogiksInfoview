@@ -20,15 +20,15 @@ export default function LogiksInfoView({
     viewRenderers = {},
     methods = {},
     Reports,
-    toast={},
-    handleAction=()=>{}
+    toast = {},
+    handleAction = () => { }
 }: InfoViewProps) {
 
 
 
     const [infoData, setInfoData] = React.useState<InfoData>({});
     const viewMode = determineViewMode(infoViewJson.infoview ?? {});
-    const sqlOpsUrls = infoViewJson.endPoints ;
+    const sqlOpsUrls = infoViewJson.endPoints;
     const groupedFields = React.useMemo(
         () => groupFieldsFn(infoViewJson.fields || {}),
         [infoViewJson.fields, groupFieldsFn]
@@ -41,7 +41,6 @@ export default function LogiksInfoView({
         groups = { ...groups, ...infoViewJson.infoview.groups };
     }
 
-console.log("source",infoViewJson.source);
 
 
     React.useEffect(() => {
@@ -136,7 +135,7 @@ console.log("source",infoViewJson.source);
 
                     const data = normalizeToObject(res) ?? {};
 
-               
+
 
                     if (!cancelled) setInfoData(data);
                 } catch (err) {
@@ -174,7 +173,7 @@ console.log("source",infoViewJson.source);
                     viewRenderers={viewRenderers}
                     {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                     refid={refid}
-                     {...(Reports ? { Reports } : {})}
+                    {...(Reports ? { Reports } : {})}
                     toast={toast}
                     handleAction={handleAction}
                     infoViewJson={infoViewJson}
@@ -192,10 +191,10 @@ console.log("source",infoViewJson.source);
                     infoData={infoData}
                     isCommonInfo={!!commonInfo}
                     viewMode={viewMode}
-                   {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                     refid={refid}
-                   {...(Reports ? { Reports } : {})}
-                     toast={toast}
+                    {...(Reports ? { Reports } : {})}
+                    toast={toast}
                     handleAction={handleAction}
                     infoViewJson={infoViewJson}
 
@@ -209,10 +208,10 @@ console.log("source",infoViewJson.source);
                     viewRenderers={viewRenderers}
                     methods={methods}
                     infoData={infoData}
-                   {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                     refid={refid}
                     {...(Reports ? { Reports } : {})}
-                     toast={toast}
+                    toast={toast}
                     handleAction={handleAction}
                     infoViewJson={infoViewJson}
 
@@ -228,10 +227,10 @@ console.log("source",infoViewJson.source);
                     infoData={infoData}
                     isCommonInfo={!!commonInfo}
                     viewMode={viewMode}
-                   {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                     refid={refid}
                     {...(Reports ? { Reports } : {})}
-                     toast={toast}
+                    toast={toast}
                     handleAction={handleAction}
                     infoViewJson={infoViewJson}
 
