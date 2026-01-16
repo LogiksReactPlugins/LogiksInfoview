@@ -8,7 +8,7 @@ import NormalFormView from "./NormalFormView.js";
 import type { FormProps } from "../InfoView.types.js";
 
 import { sqlClient } from "../service.js";
-type ViewMode = "accordion" | "cards" | "tab" | "simple";
+
 export default function LogiksForm({
   formJson = { title: "", fields: {}, source: {} },
   methods = {},
@@ -16,11 +16,16 @@ export default function LogiksForm({
   onCancel = () => { },
   components = {},
   callback = () => { },
-  initialvalues = {}
+  initialvalues = {},
+  setEditData
+  
 }: FormProps) {
+
+  
 
   const sqlOpsUrls = formJson.endPoints;
   const refid = formJson?.source?.refid;
+
  
   const [resolvedData, setResolvedData] = React.useState<Record<string, any>>(initialvalues);
 
@@ -148,7 +153,9 @@ export default function LogiksForm({
       if (methodFn) {
         try {
           const res = await Promise.resolve(methodFn(finalValues));
-          callback?.(res)
+          setEditData?.(null);
+          callback?.(res);
+          
         } catch (err) {
           callback?.(err)
           console.error("Method execution failed:", err);
@@ -170,6 +177,7 @@ export default function LogiksForm({
             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
           },
         });
+         setEditData?.(null);
         callback?.(res)
       } catch (err) {
         callback?.(err)
@@ -238,6 +246,7 @@ export default function LogiksForm({
             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
           },
         });
+         setEditData?.(null);
         callback?.(res)
       } catch (err) {
         callback?.(err)
@@ -259,7 +268,7 @@ export default function LogiksForm({
       onCancel={onCancel}
       methods={methods}
       components={components}
-      sqlOpsUrls={sqlOpsUrls}
+     {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
       refid={refid}
     />
   };

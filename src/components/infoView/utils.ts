@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
-
-import type { FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from "./InfoView.types.js";
+import axios, { type AxiosResponse } from "axios";
+import type { AutocompleteConfig, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from "./InfoView.types.js";
 
 export function determineViewMode(json: Infoview) {
 
@@ -204,8 +204,9 @@ export const normalizeToObject = (res: any): Record<string, any> | null => {
 export const formatOptions = (
   valueKey: string,
   labelKey: string,
-  res: any
-): FlatOptions => {
+  res: any,
+  groupKey?: string
+): SelectOptions => {
   const items = Array.isArray(res?.data?.data)
     ? res.data.data
     : Array.isArray(res?.data)
@@ -216,8 +217,15 @@ export const formatOptions = (
     return {};
   }
 
-  // ---- flat options ----
+  // auto-detect group key
+  const resolvedGroupKey =
+    groupKey ??
+    (items[0] && typeof items[0] === "object" && "category" in items[0]
+      ? "category"
+      : undefined);
 
+  // ---- flat options ----
+  if (!resolvedGroupKey) {
     const mapped: FlatOptions = {};
     items.forEach((item: any) => {
       if (item[valueKey] != null && item[labelKey] != null) {
@@ -225,14 +233,28 @@ export const formatOptions = (
       }
     });
     return mapped;
-  
+  }
 
+  // ---- grouped options ----
+  const grouped: GroupedOptions = {};
 
+  items.forEach((item: any) => {
+    const group = item[resolvedGroupKey] ?? "Others";
+    const value = item[valueKey];
+    const label = item[labelKey];
+
+    if (value == null || label == null) return;
+
+    if (!grouped[group]) grouped[group] = {};
+    grouped[group][value] = label;
+  });
+
+  return grouped;
 };
 
 export function resolveDisplayValue(
   rawVal: unknown,
-  options: Record<string, string>
+  options: FlatOptions
 ) {
   if (!options || Object.keys(options).length === 0) return rawVal;
 
@@ -252,6 +274,9 @@ export function resolveDisplayValue(
 
   return rawVal;
 }
+
+
+
 
 export const isHidden = (hidden?: boolean | string): boolean =>
   hidden === true || hidden === "true";
@@ -494,3 +519,127 @@ export const intializeForm = (
 };
 
 
+
+export const isGroupedOptions = (
+  options: SelectOptions
+): options is GroupedOptions => {
+  if (!options || typeof options !== "object") return false;
+
+  return Object.values(options).every(
+    v => typeof v === "object" && v !== null
+  );
+};
+
+export function isAutocompleteConfig(ac: unknown): ac is AutocompleteConfig {
+  return (
+    typeof ac === "object" &&
+    ac !== null &&
+    typeof (ac as any).target === "string" &&
+    typeof (ac as any).src === "object" &&
+    (ac as any).src !== null &&
+    typeof (ac as any).src.table === "string"
+  );
+}
+
+export function getSearchColumns(columns: string): string[] {
+  return columns
+    .split(",")
+    .map(c => c.trim())
+    .map(c => {
+      const match = c.match(/^(.+?)\s+as\s+.+$/i);
+      return match ? match[1]?.trim() : c;
+    })
+    .filter((c): c is string => Boolean(c));
+}
+
+export const getOptionLabel = (
+  options: SelectOptions,
+  value: string
+): string | undefined => {
+  if (!options || value == null) return;
+
+  const first = Object.values(options)[0];
+
+  // flat
+  if (typeof first === "string") {
+    return (options as FlatOptions)[value];
+  }
+
+  // grouped
+  for (const group of Object.values(options as GroupedOptions)) {
+    if (value in group) {
+      return group[value];
+    }
+  }
+
+  return;
+};
+
+type FlatEntry = [string, string];
+export const flattenOptions = (options: SelectOptions): FlatEntry[] => {
+  if (!options) return [];
+
+  const first = Object.values(options)[0];
+
+  // flat
+  if (typeof first === "string") {
+    return Object.entries(options as Record<string, string>);
+  }
+
+  // grouped
+  return Object.values(options as GroupedOptions).flatMap(group =>
+    Object.entries(group)
+  );
+};
+
+
+
+export async function fetchDataByquery(
+  sqlOpsUrls: Record<string, any>,
+  query: Record<string, any>,
+  filter: Record<string, any> = {}
+): Promise<AxiosResponse<any>> {
+  try {
+
+    const resQueryId = await axios({
+      method: "POST",
+      url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
+      data: { "query": query },
+      headers: {
+        "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+      },
+    });
+
+    const res = await axios({
+      method: "POST",
+      url: sqlOpsUrls.baseURL + sqlOpsUrls.runQuery,
+      data: {
+        "queryid": resQueryId.data.queryid,
+        "filter": filter
+
+      },
+      headers: {
+        "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+      },
+    });
+
+    return res
+  } catch (error) {
+    throw error;
+  }
+}
+
+export function normalizeOptions(
+  options?: SelectOptions
+): FlatOptions {
+  if (!options) return {};
+
+  if (!isGroupedOptions(options)) {
+    return options;
+  }
+
+  return Object.values(options).reduce<FlatOptions>((acc, group) => {
+    Object.assign(acc, group);
+    return acc;
+  }, {});
+}

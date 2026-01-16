@@ -1,5 +1,5 @@
 import { ComponentType } from 'react';
-import { InfoViewGroup, InfoViewField, InfoData, Infoview } from '../InfoView.types.js';
+import { InfoViewGroup, InfoViewField, InfoData, Infoview, SqlEndpoints } from '../InfoView.types.js';
 interface TabViewProps {
     groups: Record<string, InfoViewGroup>;
     methods?: Record<string, Function>;
@@ -12,7 +12,7 @@ interface TabViewProps {
     };
     isCommonInfo: boolean;
     viewMode: string;
-    sqlOpsUrls?: Record<string, any>;
+    sqlOpsUrls?: SqlEndpoints;
     refid: string;
     Reports?: ComponentType<any>;
     toast?: Record<string, Function>;

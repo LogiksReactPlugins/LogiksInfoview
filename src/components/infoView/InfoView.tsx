@@ -28,7 +28,7 @@ export default function LogiksInfoView({
 
     const [infoData, setInfoData] = React.useState<InfoData>({});
     const viewMode = determineViewMode(infoViewJson.infoview ?? {});
-    const sqlOpsUrls = infoViewJson.endPoints ?? {};
+    const sqlOpsUrls = infoViewJson.endPoints ;
     const groupedFields = React.useMemo(
         () => groupFieldsFn(infoViewJson.fields || {}),
         [infoViewJson.fields, groupFieldsFn]
@@ -41,6 +41,7 @@ export default function LogiksInfoView({
         groups = { ...groups, ...infoViewJson.infoview.groups };
     }
 
+console.log("source",infoViewJson.source);
 
 
     React.useEffect(() => {
@@ -133,8 +134,9 @@ export default function LogiksInfoView({
                         },
                     });
 
+                    const data = normalizeToObject(res) ?? {};
 
-                    const data = normalizeToObject(res) ?? {}
+               
 
                     if (!cancelled) setInfoData(data);
                 } catch (err) {
@@ -170,7 +172,7 @@ export default function LogiksInfoView({
                     methods={methods}
                     infoData={infoData}
                     viewRenderers={viewRenderers}
-                    sqlOpsUrls={sqlOpsUrls}
+                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                     refid={refid}
                      {...(Reports ? { Reports } : {})}
                     toast={toast}
@@ -190,7 +192,7 @@ export default function LogiksInfoView({
                     infoData={infoData}
                     isCommonInfo={!!commonInfo}
                     viewMode={viewMode}
-                    sqlOpsUrls={sqlOpsUrls}
+                   {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                     refid={refid}
                    {...(Reports ? { Reports } : {})}
                      toast={toast}
@@ -207,7 +209,7 @@ export default function LogiksInfoView({
                     viewRenderers={viewRenderers}
                     methods={methods}
                     infoData={infoData}
-                    sqlOpsUrls={sqlOpsUrls}
+                   {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                     refid={refid}
                     {...(Reports ? { Reports } : {})}
                      toast={toast}
@@ -226,7 +228,7 @@ export default function LogiksInfoView({
                     infoData={infoData}
                     isCommonInfo={!!commonInfo}
                     viewMode={viewMode}
-                    sqlOpsUrls={sqlOpsUrls}
+                   {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                     refid={refid}
                     {...(Reports ? { Reports } : {})}
                      toast={toast}

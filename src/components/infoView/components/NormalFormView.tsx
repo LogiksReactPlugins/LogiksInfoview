@@ -15,10 +15,10 @@ export default function NormalFormView({
   onSubmit = (values) => { },
   onCancel = () => { },
   methods = {},
-  sqlOpsUrls = {},
+  sqlOpsUrls,
   refid
 }: SimpleFormViewProps) {
-  const flatfields = flatFields(fields,sqlOpsUrls.operation);
+  const flatfields = flatFields(fields, sqlOpsUrls?.operation);
 
   const [fieldOptions, setFieldOptions] = React.useState<
     Record<string, SelectOptions>
@@ -53,7 +53,8 @@ export default function NormalFormView({
     enableReinitialize: true,
     validationSchema: Yup.object().shape(validationSchema),
     onSubmit: (values) => {
-      onSubmit(values)
+      onSubmit(values);
+      formik.resetForm();
     }
   })
 
@@ -65,20 +66,19 @@ export default function NormalFormView({
     <div className="relative z-10 max-w-full  m-4">
       <div className="bg-white border border-gray-100 rounded-md animate-in fade-in duration-300">
         <form onSubmit={formik.handleSubmit} className="p-4  mx-auto">
-          <div className='grid grid-cols-12 gap-4'>
+          <div className="grid grid-flow-col auto-cols-max gap-4 items-end overflow-x-auto">
             {flatfields.map((field, index) => {
-              if (isHidden(field.hidden) || field.type === "geolocation" || (field.vmode === "edit" && sqlOpsUrls.operation === "create")) {
+              if (isHidden(field.hidden) || field.type === "geolocation" || (field.vmode === "edit" && sqlOpsUrls?.operation === "create")) {
                 return null;
               }
 
               return <div
                 key={field?.name ?? `field-${index}`}
-                className={`col-span-12 md:col-span-6 ${tailwindCols[toColWidth(Number(field.width))] || "lg:col-span-4"
-                  }`}
+
               >
                 <FieldRenderer
                   refid={refid}
-                  sqlOpsUrls={sqlOpsUrls}
+                  {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                   field={field}
                   formik={formik}
                   methods={methods}
@@ -90,17 +90,17 @@ export default function NormalFormView({
               </div>
             })}
 
-          </div>
-          <div className="mt-8 flex justify-between space-x-3">
-            <p className='text-sm text-gray-700'>All fields marked (*) are required</p>
-            <div className='space-x-3'>
-              <button type="button" onClick={onCancel} className="px-5 py-2 bg-white text-gray-700 font-semibold rounded-lg border-2 border-gray-200  shadow-sm hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
-                Cancel
-              </button>
+            <div className="pl-2">
+              <div> &nbsp;</div>
               <button type="submit" className="px-5 py-2 bg-action font-semibold rounded-lg border-2 border-gray-200 shadow-sm hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
                 Save
               </button>
+              {Object.keys(formik.errors).length > 0 && <div> &nbsp;</div>}
             </div>
+
+          </div>
+          <div className="mt-8 flex justify-between space-x-3">
+            <p className='text-sm text-gray-700'>All fields marked (*) are required</p>
           </div>
         </form>
       </div>

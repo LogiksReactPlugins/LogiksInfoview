@@ -43,8 +43,8 @@ export interface InfoViewProps {
         fields: Record<string, Omit<InfoViewField, "name">>;
         infoview?: Infoview;
         source?: Record<string, any>,
-        endPoints?: Record<string, any>;
-        buttons?:Record<string, any>;
+        endPoints?: SqlEndpoints;
+        buttons?: Record<string, any>;
     };
     /** Fields to hide */
     hiddenFields?: string[];
@@ -61,10 +61,10 @@ export interface InfoViewProps {
     /** Whether to show scroll buttons */
     data?: Record<string, any>;
     methods?: Record<string, Function>,
-   Reports?: ComponentType<any>;
- 
-  toast?: Record<string, Function>; 
-  handleAction?: Function;
+    Reports?: ComponentType<any>;
+
+    toast?: Record<string, Function>;
+    handleAction?: Function;
 }
 
 export type FlatOptions = Record<string, string>;
@@ -78,7 +78,7 @@ export interface InfoData {
 export interface InfoFieldRendererProps {
     field: InfoViewField;
     methods?: Record<string, Function>;
-    sqlOpsUrls?: Record<string, any> | undefined;
+    sqlOpsUrls?: SqlEndpoints;
     data?: Record<string, string | number | boolean | null | undefined>; // or data?: Record<string, unknown> if optional
     refid?: string | undefined;
 }
@@ -98,6 +98,9 @@ export interface SqlEndpoints {
     dbopsFetch?: string;
     dbopsUpdate?: string;
     dbopsCreate?: string;
+    registerQuery?: string;
+    runQuery?: string;
+    uploadURL?: string;
 };
 
 export type AutocompleteConfig = {
@@ -109,7 +112,7 @@ export type AutocompleteConfig = {
     };
 };
 
- export interface FormField {
+export interface FormField {
     name: string;
     label?: string;
     width?: number | string;
@@ -141,8 +144,8 @@ export type AutocompleteConfig = {
     default?: string | number | boolean | string[] | number[] | null;
     cols?: string;
     search?: boolean;
-    method?:string;
-    vmode?:string;
+    method?: string;
+    vmode?: string;
 
 }
 
@@ -155,7 +158,7 @@ export interface FormJson {
     source: Record<string, any>;
     widget?: boolean
 
-   
+
 }
 
 export interface FormProps {
@@ -164,9 +167,13 @@ export interface FormProps {
     userid?: string | null;
     methods?: Record<string, Function>
     onCancel?: () => void;
+  
+  setEditData?: React.Dispatch<
+    React.SetStateAction<Record<string, any> | null>
+  >;
     callback?: (res: any) => void;
     components?: Record<string, ReactNode>
-    initialvalues?: Record<string, any>
+    initialvalues?: Record<string, any>;
 
 }
 
@@ -179,13 +186,13 @@ export interface BaseFormViewProps {
     methods?: Record<string, Function>;
     components?: Record<string, ReactNode>;
     widget?: boolean | undefined;
-    sqlOpsUrls?: Record<string, any> | undefined;
+    sqlOpsUrls?: SqlEndpoints;
     refid?: string | undefined;
-   
+
 }
 
 export interface SimpleFormViewProps extends BaseFormViewProps {
-fields: Record<string, Omit<FormField, "name">>;
+    fields: Record<string, Omit<FormField, "name">>;
 }
 
 export interface FieldRendererProps {
@@ -193,7 +200,7 @@ export interface FieldRendererProps {
     formik: FormikProps<Record<string, any>>;
     methods?: Record<string, Function>;
     components?: Record<string, ReactNode>
-    sqlOpsUrls?: Record<string, any> | undefined;
+    sqlOpsUrls?: SqlEndpoints;
     refid?: string | undefined;
     optionsOverride?: SelectOptions;
     setFieldOptions?: (

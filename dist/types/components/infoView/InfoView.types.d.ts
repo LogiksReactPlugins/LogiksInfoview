@@ -37,7 +37,7 @@ export interface InfoViewProps {
         fields: Record<string, Omit<InfoViewField, "name">>;
         infoview?: Infoview;
         source?: Record<string, any>;
-        endPoints?: Record<string, any>;
+        endPoints?: SqlEndpoints;
         buttons?: Record<string, any>;
     };
     /** Fields to hide */
@@ -68,7 +68,7 @@ export interface InfoData {
 export interface InfoFieldRendererProps {
     field: InfoViewField;
     methods?: Record<string, Function>;
-    sqlOpsUrls?: Record<string, any> | undefined;
+    sqlOpsUrls?: SqlEndpoints;
     data?: Record<string, string | number | boolean | null | undefined>;
     refid?: string | undefined;
 }
@@ -86,6 +86,9 @@ export interface SqlEndpoints {
     dbopsFetch?: string;
     dbopsUpdate?: string;
     dbopsCreate?: string;
+    registerQuery?: string;
+    runQuery?: string;
+    uploadURL?: string;
 }
 export type AutocompleteConfig = {
     target: string;
@@ -144,6 +147,7 @@ export interface FormProps {
     userid?: string | null;
     methods?: Record<string, Function>;
     onCancel?: () => void;
+    setEditData?: React.Dispatch<React.SetStateAction<Record<string, any> | null>>;
     callback?: (res: any) => void;
     components?: Record<string, ReactNode>;
     initialvalues?: Record<string, any>;
@@ -156,7 +160,7 @@ export interface BaseFormViewProps {
     methods?: Record<string, Function>;
     components?: Record<string, ReactNode>;
     widget?: boolean | undefined;
-    sqlOpsUrls?: Record<string, any> | undefined;
+    sqlOpsUrls?: SqlEndpoints;
     refid?: string | undefined;
 }
 export interface SimpleFormViewProps extends BaseFormViewProps {
@@ -167,7 +171,7 @@ export interface FieldRendererProps {
     formik: FormikProps<Record<string, any>>;
     methods?: Record<string, Function>;
     components?: Record<string, ReactNode>;
-    sqlOpsUrls?: Record<string, any> | undefined;
+    sqlOpsUrls?: SqlEndpoints;
     refid?: string | undefined;
     optionsOverride?: SelectOptions;
     setFieldOptions?: (fieldName: string, options: SelectOptions) => void;

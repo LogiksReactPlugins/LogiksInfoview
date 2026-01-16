@@ -2,12 +2,12 @@ import React from 'react';
 import axios from "axios";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
 import { normalizeToObject, replacePlaceholders, tailwindCols, tailwindGrid, toColWidth, toGrid, transformedObject } from '../utils.js'
-import type { InfoViewGroup } from '../InfoView.types.js'
+import type { InfoViewGroup, SqlEndpoints } from '../InfoView.types.js'
 
 export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid }:
     {
         tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string,
-        sqlOpsUrls?: Record<string, any>, refid: string
+        sqlOpsUrls?: SqlEndpoints, refid: string
     }
 ) {
     const [data, setData] = React.useState<Record<string, any> | null>(null);
@@ -142,7 +142,7 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
                                 data={data ?? {}}
                                 methods={methods}
                                 refid={refid}
-                                sqlOpsUrls={sqlOpsUrls}
+                                 {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                             />
                         </div>
                     }) : <div className="col-span-12 flex flex-col  min-h-0">

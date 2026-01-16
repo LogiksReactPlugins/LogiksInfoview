@@ -6,7 +6,7 @@ import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 
 import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview } from '../InfoView.types.js';
+import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints } from '../InfoView.types.js';
 import Card from './Card.js';
 
 interface CardViewProps {
@@ -14,7 +14,7 @@ interface CardViewProps {
     methods?: Record<string, Function>;
     infoData: InfoData;
     viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
-    sqlOpsUrls?: Record<string, any>
+    sqlOpsUrls?: SqlEndpoints
     refid: string;
     Reports?: ComponentType<any>;
         toast?: Record<string, Function>;
@@ -33,7 +33,7 @@ export default function CardView({
     methods = {},
     infoData,
     viewRenderers = {},
-    sqlOpsUrls = {},
+    sqlOpsUrls,
     refid,
      Reports,
     toast={},
@@ -46,7 +46,7 @@ export default function CardView({
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
+            <SingleView tabObj={tab} methods={methods} tabName={tabName}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
         ),
         grid: (tab, tabName) => (
             <GridView  
@@ -56,7 +56,7 @@ export default function CardView({
                 tabObj={tab} 
                 methods={methods} 
                 tabName={tabName} 
-                sqlOpsUrls={sqlOpsUrls} 
+               {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                 refid={refid} 
                 infoViewJson={infoViewJson}
                 />
@@ -83,7 +83,7 @@ export default function CardView({
                                                 className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-2"
                                                     }`}
                                             >
-                                                <InfoFieldRenderer methods={methods} field={field} data={infoData ?? {}} sqlOpsUrls={sqlOpsUrls} refid={refid}  />
+                                                <InfoFieldRenderer methods={methods} field={field} data={infoData ?? {}}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})}refid={refid}  />
                                             </div>
                                         ))}
                                     </div>

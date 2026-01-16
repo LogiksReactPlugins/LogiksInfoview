@@ -5,7 +5,7 @@ import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 import InfoFieldRenderer from './InfoFieldRenderer.js';
 import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview } from '../InfoView.types.js';
+import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints } from '../InfoView.types.js';
 
 interface TabViewProps {
     groups: Record<string, InfoViewGroup>;
@@ -19,7 +19,7 @@ interface TabViewProps {
     };
     isCommonInfo: boolean;
     viewMode: string;
-    sqlOpsUrls?: Record<string, any>;
+    sqlOpsUrls?: SqlEndpoints;
     refid: string;
     Reports?: ComponentType<any>;
     toast?: Record<string, Function>;
@@ -65,34 +65,10 @@ interface ContentAreaPrps extends VerticalNavProps {
     tabObj: InfoViewGroup | null;
     renderView: (tab: InfoViewGroup, tabName: string) => React.ReactNode;
     methods?: Record<string, Function>;
-    sqlOpsUrls?: Record<string, any> | undefined;
+    sqlOpsUrls?: SqlEndpoints ;
     refid?: string | undefined;
 
 }
-
-const VerticalNav = ({ groups, groupNames, setActiveTabIndex, activeTabIndex }: VerticalNavProps) => (
-    <nav
-
-        className="flex flex-col overflow-y-auto h-full px-2 py-1 space-y-1"
-    >
-        {groupNames.length > 0 ? groupNames.map((group, index) => (
-            <button
-                key={group}
-                type="button"
-                onClick={() => setActiveTabIndex(index)}
-                className={`cursor-pointer w-full text-left py-2 px-3 rounded-md text-sm font-semibold transition-all duration-200 ${activeTabIndex === index
-                    ? 'bg-white shadow text-action'
-                    : 'text-gray-600 hover:bg-white/50'
-                    }`}
-            >
-                <span className="truncate">{groups[group]?.label || group}</span>
-            </button>
-        )) : (
-            <div className="py-3 px-2 text-sm text-gray-500">No group available</div>
-        )}
-    </nav>
-);
-
 
 
 
@@ -252,14 +228,14 @@ const ContentArea = (
                                     data={infoData ?? {}}
                                     methods={methods}
                                     refid={refid}
-                                    sqlOpsUrls={sqlOpsUrls}
+                                     {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                                 />
                             </div>
                         ))}
                     </div>
                 </div>
             ) : tabObj ? (
-                <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
+                <div className="flex-1 overflow-y-auto">
                     {renderView(tabObj, groupNames[activeTabIndex] || "")}
                 </div>
             ) : null
@@ -339,7 +315,7 @@ export default function TabView({
     isCommonInfo,
     layoutConfig = {},
     viewMode,
-    sqlOpsUrls = {},
+    sqlOpsUrls,
     refid,
     Reports,
     toast={},
@@ -394,7 +370,7 @@ export default function TabView({
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<string, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
+            <SingleView tabObj={tab} methods={methods} tabName={tabName}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
         ),
         grid: (tab, tabName) => (
             <GridView
@@ -404,7 +380,7 @@ export default function TabView({
                 tabObj={tab}
                 methods={methods}
                 tabName={tabName}
-                sqlOpsUrls={sqlOpsUrls}
+                {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                 refid={refid} 
                 infoViewJson={infoViewJson}
                 />
@@ -418,9 +394,7 @@ export default function TabView({
 
 
 
-
-    if (isTop) {
-        return (
+    return (
             <div className='flex-1 flex flex-col min-h-0 '>
                 <TopNav
                     groupNames={groupNames}
@@ -444,56 +418,10 @@ export default function TabView({
                     groups={groups}
                     methods={methods}
                     refid={refid}
-                    sqlOpsUrls={sqlOpsUrls}
+                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
 
                 />
 
             </div>
         );
-    }
-
-    return (
-
-
-        <div className="flex-1 flex min-h-0">
-            {isLeft && (
-                <aside className="flex-shrink-0 w-56 border-r border-gray-200 bg-gray-50 p-2">
-                    <VerticalNav
-                        groupNames={groupNames}
-                        groups={groups}
-                        setActiveTabIndex={setActiveTabIndex}
-                        activeTabIndex={activeTabIndex}
-                    />
-                </aside>
-            )}
-
-            <main className="flex-1 flex flex-col min-h-0 overflow-auto">
-                <ContentArea
-                    groupNames={groupNames}
-                    activeTabIndex={activeTabIndex}
-                    layoutConfig={layoutConfig}
-                    tabObj={tabObj}
-                    infoData={infoData}
-                    setActiveTabIndex={setActiveTabIndex}
-                    renderView={renderView}
-                    groups={groups}
-                    methods={methods}
-                    refid={refid}
-                    sqlOpsUrls={sqlOpsUrls}
-                />
-            </main>
-
-            {isRight && (
-                <aside className="flex-shrink-0 w-56 border-l border-gray-200 bg-gray-50 p-2">
-                    <VerticalNav
-                        groupNames={groupNames}
-                        groups={groups}
-                        setActiveTabIndex={setActiveTabIndex}
-                        activeTabIndex={activeTabIndex}
-                    />
-                </aside>
-            )}
-        </div>
-
-    )
 }

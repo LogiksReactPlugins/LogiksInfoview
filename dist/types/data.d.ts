@@ -10,6 +10,7 @@ export declare const example7: {
         registerQuery: string;
         runQuery: string;
     };
+    template: string;
     source: {
         type: string;
         cols: string;
@@ -65,7 +66,7 @@ export declare const example7: {
             group: string;
             nodb: boolean;
         };
-        title: {
+        "leads_tbl.title": {
             label: string;
             group: string;
             required: boolean;

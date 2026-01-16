@@ -1,11 +1,11 @@
 import { default as React, ComponentType } from 'react';
-import { InfoViewGroup, InfoViewField, InfoData, Infoview } from '../InfoView.types.js';
+import { InfoViewGroup, InfoViewField, InfoData, Infoview, SqlEndpoints } from '../InfoView.types.js';
 interface CardViewProps {
     groups: Record<string, InfoViewGroup>;
     methods?: Record<string, Function>;
     infoData: InfoData;
     viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
-    sqlOpsUrls?: Record<string, any>;
+    sqlOpsUrls?: SqlEndpoints;
     refid: string;
     Reports?: ComponentType<any>;
     toast?: Record<string, Function>;

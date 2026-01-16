@@ -1,4 +1,5 @@
-import { FlatOptions, FormField, InfoViewGroup, Infoview } from './InfoView.types.js';
+import { AxiosResponse } from 'axios';
+import { AutocompleteConfig, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from './InfoView.types.js';
 import * as Yup from "yup";
 export declare function determineViewMode(json: Infoview): string;
 export declare function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup>;
@@ -17,9 +18,17 @@ export declare function toGrid(width: number | undefined): ColWidth;
 export declare function copyToClipboard(content: string): Promise<void>;
 export declare const replacePlaceholders: (input: any, vars: Record<string, string | number>) => any;
 export declare const normalizeToObject: (res: any) => Record<string, any> | null;
-export declare const formatOptions: (valueKey: string, labelKey: string, res: any) => FlatOptions;
-export declare function resolveDisplayValue(rawVal: unknown, options: Record<string, string>): unknown;
+export declare const formatOptions: (valueKey: string, labelKey: string, res: any, groupKey?: string) => SelectOptions;
+export declare function resolveDisplayValue(rawVal: unknown, options: FlatOptions): unknown;
 export declare const isHidden: (hidden?: boolean | string) => boolean;
 export declare const intializeForm: (formFields: FormField[], initialValues: Record<string, any>, validationSchema: Record<string, Yup.AnySchema>, data?: Record<string, any>) => void;
+export declare const isGroupedOptions: (options: SelectOptions) => options is GroupedOptions;
+export declare function isAutocompleteConfig(ac: unknown): ac is AutocompleteConfig;
+export declare function getSearchColumns(columns: string): string[];
+export declare const getOptionLabel: (options: SelectOptions, value: string) => string | undefined;
+type FlatEntry = [string, string];
+export declare const flattenOptions: (options: SelectOptions) => FlatEntry[];
+export declare function fetchDataByquery(sqlOpsUrls: Record<string, any>, query: Record<string, any>, filter?: Record<string, any>): Promise<AxiosResponse<any>>;
+export declare function normalizeOptions(options?: SelectOptions): FlatOptions;
 export {};
 //# sourceMappingURL=utils.d.ts.map

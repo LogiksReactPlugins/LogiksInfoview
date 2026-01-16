@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import type { InfoFieldRendererProps, InfoViewField } from '../InfoView.types.js';
+import type { InfoFieldRendererProps, InfoViewField, SelectOptions } from '../InfoView.types.js';
 import { DEFAULT_LOGO } from '../constant.js';
-import { formatOptions, replacePlaceholders, resolveDisplayValue } from '../utils.js';
+import { formatOptions, normalizeOptions, replacePlaceholders, resolveDisplayValue } from '../utils.js';
 
 
 export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrls, refid }: InfoFieldRendererProps) {
@@ -18,11 +18,14 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
   `;
 
 
-  const [options, setOptions] = useState<Record<string, string>>(
+  const [options, setOptions] = useState<SelectOptions>(
     field.options ?? {}
   );
 
-
+const flatOptions = React.useMemo(
+  () => normalizeOptions(options),
+  [options]
+);
   React.useEffect(() => {
     let isMounted = true;
 
@@ -169,15 +172,15 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
     typeof key === "string" ? data?.[key] : undefined;
 
   const displayVal =
-  typeof rawVal === "string"
-    ? field.type === "date"
-      ? rawVal.split("T")[0]
-      : field.type === "time"
-        ? rawVal.includes("T")
-          ? rawVal.slice(11, 16)
-          : rawVal.slice(0, 5)
-        : resolveDisplayValue(rawVal, options)
-    : resolveDisplayValue(rawVal, options);
+    typeof rawVal === "string"
+      ? field.type === "date"
+        ? rawVal.split("T")[0]
+        : field.type === "time"
+          ? rawVal.includes("T")
+            ? rawVal.slice(11, 16)
+            : rawVal.slice(0, 5)
+          : resolveDisplayValue(rawVal, flatOptions)
+      : resolveDisplayValue(rawVal, flatOptions);
 
   const isImageField =
     typeof key === "string" &&
