@@ -258,6 +258,7 @@ export default function LogiksForm({
           url: sqlOpsUrls.baseURL + sqlOpsUrls[sqlOpsUrls.operation === "update" ? "dbopsUpdate" : "dbopsCreate"],
           data: {
             "refid": dbopsId,
+            "refid1": sqlOpsUrls?.refid,
             "fields": finalValues,
             "datahash": resHashId.data.refhash
           },

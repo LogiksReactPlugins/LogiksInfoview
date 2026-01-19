@@ -101,6 +101,7 @@ export interface SqlEndpoints {
     registerQuery?: string;
     runQuery?: string;
     uploadURL?: string;
+    refid?: string;
 }
 type SqlSrcByTable = {
     table: string;

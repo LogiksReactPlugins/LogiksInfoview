@@ -337,6 +337,7 @@ export declare const example10: {
         registerQuery: string;
         runQuery: string;
         uploadURL: string;
+        refid: string;
     };
     source: {
         type: string;

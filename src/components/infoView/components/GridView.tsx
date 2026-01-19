@@ -639,9 +639,6 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     //     );
     // }
 
-   
-    
-
 
 
     return (
