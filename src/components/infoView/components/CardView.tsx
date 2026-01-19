@@ -25,6 +25,7 @@ interface CardViewProps {
                         infoview?: Infoview;
                         source?: Record<string, any>,
                         endPoints?: Record<string, any>;
+                         module_refid?: string;
                     };
 }
 
@@ -46,7 +47,7 @@ export default function CardView({
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView tabObj={tab} methods={methods} tabName={tabName}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
+            <SingleView module_refid={infoViewJson?.module_refid} tabObj={tab} methods={methods} tabName={tabName}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
         ),
         grid: (tab, tabName) => (
             <GridView  
@@ -73,7 +74,7 @@ export default function CardView({
             <div className="p-4 mx-auto">
                 <div className="space-y-2  flex flex-col min-h-0">
                     {groups && Object.entries(groups).map(([group, obj], index) => (
-                        <Card key={group} title={group} >
+                        <Card key={group} title={obj.label} >
                             {obj?.fields ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                                     <div className={"grid grid-cols-12 gap-2"}>
@@ -83,7 +84,7 @@ export default function CardView({
                                                 className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-2"
                                                     }`}
                                             >
-                                                <InfoFieldRenderer methods={methods} field={field} data={infoData ?? {}}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})}refid={refid}  />
+                                                <InfoFieldRenderer module_refid={infoViewJson?.module_refid} methods={methods} field={field} data={infoData ?? {}}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})}refid={refid}  />
                                             </div>
                                         ))}
                                     </div>

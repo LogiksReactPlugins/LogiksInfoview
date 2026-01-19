@@ -40,9 +40,9 @@ export default function LogiksInfoView({
     if (infoViewJson.infoview?.groups) {
         groups = { ...groups, ...infoViewJson.infoview.groups };
     }
-        const source = infoViewJson?.source;
+    const source = infoViewJson?.source;
 
-console.log("source",source);
+    console.log("module_refid", infoViewJson.module_refid);
 
 
     React.useEffect(() => {
@@ -90,8 +90,9 @@ console.log("source",source);
 
 
 
-            if (source.type === "sql" && source.refid &&
-                source.refid != "0") {
+            if ((source.type === "sql" && source.refid &&
+                source.refid != "0") ||
+                source.dbopsid) {
 
                 if (!sqlOpsUrls) {
                     console.error("SQL source requires formJson.endPoints but it is missing");
@@ -138,7 +139,8 @@ console.log("source",source);
                                 "source": query,
                                 "fields": transformedObject(infoViewJson.fields, sqlOpsUrls.operation),
                                 "forcefill": infoViewJson.forcefill,
-                                "datahash": resHashId.data.refhash
+                                "datahash": resHashId.data.refhash,
+                                "srcid": infoViewJson?.module_refid
                             },
 
                             headers: {
@@ -153,7 +155,8 @@ console.log("source",source);
                         url: sqlOpsUrls.baseURL + sqlOpsUrls["dbopsFetch"],
                         data: {
                             "refid": dbopsId,
-                            "datahash": resHashId.data.refhash
+                            "datahash": resHashId.data.refhash,
+                            "module_refid": infoViewJson.module_refid
 
                         },
                         headers: {
@@ -161,7 +164,7 @@ console.log("source",source);
                         },
                     });
 
-            
+
                     const data = normalizeToObject(res) ?? {};
 
                     if (!cancelled) setInfoData(data);

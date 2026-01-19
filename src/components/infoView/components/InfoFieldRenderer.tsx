@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import type { InfoFieldRendererProps, InfoViewField, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
 import { DEFAULT_LOGO } from '../constant.js';
-import { fetchDataByquery, formatOptions, normalizeOptions, replacePlaceholders, resolveDisplayValue } from '../utils.js';
+import { fetchDataByquery, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue } from '../utils.js';
 
 
-export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrls, refid }: InfoFieldRendererProps) {
+export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrls, refid, module_refid }: InfoFieldRendererProps) {
 
   const key = field?.name;
 
@@ -28,21 +28,43 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
   );
   React.useEffect(() => {
     let isMounted = true;
+    let valueKey = field.valueKey ?? "value";
+
+    let labelKey = field.labelKey ?? "title";
 
     const fetchData = async () => {
       if (field?.options) {
-        setOptions(field.options);
+        //  CASE 1: flat or grouped object
+        // { "1": "WEL" } OR { quarter1: { "1": "January" } }
+        if (
+          typeof field.options === "object" &&
+          !Array.isArray(field.options)
+        ) {
+          const values = Object.values(field.options);
+          if (values.length && typeof values[0] === "string") {
+            setOptions(field.options as SelectOptions);
+            return;
+          }
+        }
+
+        // CASE 2 / 3: array of rows (flat or grouped via `category`)
+        const rawItems = Array.isArray(field.options)
+          ? field.options
+          : [field.options];
+
+        const normalizedItems = rawItems.map(normalizeRowSafe);
+
+        const mapped = formatOptions(
+          valueKey,
+          labelKey,
+          normalizedItems,
+          field.groupKey // auto-uses `category` if present
+        );
+        setOptions(mapped);
         return;
       }
 
-      let valueKey = field.valueKey ?
-        field.valueKey :
-        field.type === "dataSelector" ?
-          "do_lists.value" : `${field.table}.value`;
 
-      let labelKey = field.labelKey ? field.labelKey :
-        field.type === "dataSelector" ?
-          "do_lists.title" : `${field.table}.title`;
 
       const source = field?.source ?? {};
 
@@ -52,8 +74,18 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
         const methodFn = methodName ? methods[methodName] : undefined;
         if (methodFn) {
           try {
-            const result = await Promise.resolve(methodFn());
-            const mapped = formatOptions(valueKey, labelKey, result, field.groupKey);
+            const res = await Promise.resolve(methodFn());
+
+            const rawItems = Array.isArray(res?.data?.data)
+              ? res.data.data
+              : Array.isArray(res?.data)
+                ? res.data
+                : res;
+
+            const normalizedItems = Array.isArray(rawItems)
+              ? rawItems.map(normalizeRowSafe)
+              : [];
+            const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
             if (isMounted) setOptions(mapped);
           } catch (err) {
             console.error("Method execution failed:", err);
@@ -74,9 +106,17 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
             params: source.params ?? {},
             headers: source.headers ?? {},
           });
+          const rawItems = Array.isArray(res?.data?.data)
+            ? res.data.data
+            : Array.isArray(res?.data)
+              ? res.data
+              : res;
 
+          const normalizedItems = Array.isArray(rawItems)
+            ? rawItems.map(normalizeRowSafe)
+            : [];
 
-          const mapped = formatOptions(valueKey, labelKey, res, field.groupKey)
+          const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey)
 
           if (isMounted) setOptions(mapped);
 
@@ -88,7 +128,7 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
 
       // Case 3: Sql source
 
-      if (field.table || field.type === "dataSelector") {
+      if (field.table || field.type === "dataSelector" || field.queryid) {
 
         if (!sqlOpsUrls) {
           console.error("SQL source requires formJson.endPoints but it is missing");
@@ -97,7 +137,8 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
 
         try {
 
-          let query: sqlQueryProps;
+          let query: sqlQueryProps | undefined;
+
 
           if (field.type === "dataSelector") {
             query = {
@@ -108,7 +149,7 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
                 groupid: field.groupid ?? "",
               },
             };
-          } else {
+          } else if (!field.queryid) {
 
             if (!field.table || !field.columns) {
               console.error("Invalid SQL field config", field);
@@ -116,22 +157,29 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
             }
 
             query = {
-
               table: field.table,
               cols: field.columns,
+              where: field.where
+                ? refid
+                  ? replacePlaceholders(field.where, { refid })
+                  : field.where
+                : undefined,
             };
           }
 
-          //  Optional where — added only if present
-          if (field.where && field.type !== "dataSelector") {
-            query.where = refid
-              ? replacePlaceholders(field.where, { refid })
-              : field.where;
-          }
+          const res = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, module_refid);
 
-          const res = await fetchDataByquery(sqlOpsUrls, query, field?.queryid);
+          const rawItems = Array.isArray(res?.data?.data)
+            ? res.data.data
+            : Array.isArray(res?.data)
+              ? res.data
+              : res;
 
-          const mapped = formatOptions(valueKey, labelKey, res, field.groupKey);
+          const normalizedItems = Array.isArray(rawItems)
+            ? rawItems.map(normalizeRowSafe)
+            : [];
+
+          const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
           if (isMounted) setOptions(mapped);
 
         } catch (err) {

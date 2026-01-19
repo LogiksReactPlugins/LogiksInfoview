@@ -11,20 +11,21 @@ export declare const getRefId: (endpoints: SqlEndpoints, payload: {
     source: SqlSource;
     fields?: any;
     datahash: string;
+    srcid: string | undefined;
 }) => Promise<any>;
 export declare const sqlClient: {
     fetch(endpoints: SqlEndpoints, payload: {
         source: SqlSource;
         fields?: any;
-    }): Promise<any>;
+    }, dbopsid: string | undefined, module_refid: string | undefined): Promise<any>;
     create(endpoints: SqlEndpoints, payload: {
         source: SqlSource;
         values: any;
-    }): Promise<any>;
+    }, module_refid: string | undefined): Promise<any>;
     update(endpoints: SqlEndpoints, payload: {
         source: SqlSource;
         values: any;
-    }): Promise<any>;
+    }, module_refid: string | undefined): Promise<any>;
 };
 export {};
 //# sourceMappingURL=service.d.ts.map

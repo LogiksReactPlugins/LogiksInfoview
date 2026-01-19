@@ -17,6 +17,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
         endPoints?: Record<string, any>;
         buttons?: Record<string, any>;
         actions?: Record<string, any>;
+        module_refid?: string | undefined;
     };
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=GridView.d.ts.map

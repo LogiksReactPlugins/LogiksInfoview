@@ -23,6 +23,7 @@ interface AccordianViewProps {
         infoview?: Infoview;
         source?: Record<string, any>,
         endPoints?: Record<string, any>;
+        module_refid?: string | undefined;
     };
 }
 
@@ -50,6 +51,7 @@ export default function AccordianView({
                 tabName={tabName}
                 {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                 refid={refid}
+                module_refid={infoViewJson?.module_refid}
             />
         ),
         grid: (tab, tabName) => (
@@ -74,9 +76,13 @@ export default function AccordianView({
         <div className="bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100">
 
             <div className="p-4 mx-auto">
-                <div className="space-y-2 flex flex-col min-h-0">
+                <div className="space-y-1 flex flex-col min-h-0">
                     {groups && Object.entries(groups).map(([group, obj], index) => {
-                        return <Accordion key={group} title={group} isFirst={index === 0}>
+                        console.log(
+                            "group", group
+                        );
+
+                        return <Accordion key={group} title={obj.label} isFirst={index === 0}>
                             {obj?.fields ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                                     <div className={"grid grid-cols-12 gap-2"}>
@@ -86,7 +92,7 @@ export default function AccordianView({
                                                 className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-2"
                                                     }`}
                                             >
-                                                <InfoFieldRenderer methods={methods} field={field} data={infoData ?? {}}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
+                                                <InfoFieldRenderer module_refid={infoViewJson?.module_refid} methods={methods} field={field} data={infoData ?? {}}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
                                             </div>
                                         ))}
                                     </div>

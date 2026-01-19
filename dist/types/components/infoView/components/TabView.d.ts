@@ -23,6 +23,7 @@ interface TabViewProps {
         infoview?: Infoview;
         source?: Record<string, any>;
         endPoints?: Record<string, any>;
+        module_refid?: string | undefined;
     };
 }
 export default function TabView({ groups, methods, infoData, viewRenderers, isCommonInfo, layoutConfig, viewMode, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson }: TabViewProps): import("react/jsx-runtime").JSX.Element;

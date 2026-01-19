@@ -4,10 +4,10 @@ import InfoFieldRenderer from './InfoFieldRenderer.js'
 import { normalizeToObject, replacePlaceholders, tailwindCols, tailwindGrid, toColWidth, toGrid, transformedObject } from '../utils.js'
 import type { InfoViewGroup, SqlEndpoints } from '../InfoView.types.js'
 
-export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid }:
+export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid, module_refid }:
     {
         tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string,
-        sqlOpsUrls?: SqlEndpoints, refid: string
+        sqlOpsUrls?: SqlEndpoints, refid: string, module_refid: string | undefined;
     }
 ) {
     const [data, setData] = React.useState<Record<string, any> | null>(null);
@@ -57,8 +57,8 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
                 }
             }
 
-            if (source.type === "sql" && refid &&
-                refid != "0") {
+            if ((source.type === "sql" && refid &&
+                refid != "0") || source?.dbopsid) {
 
                 if (!sqlOpsUrls) {
                     console.error("SQL source requires formJson.endPoints but it is missing");
@@ -66,40 +66,69 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
                 }
 
                 try {
-                    const resQueryId = await axios({
-                        method: "POST",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
-                        data: {
-                            "query": {
-                                ...source,
-                                "cols": source.cols,
-                                "table": source.table,
-                                "where": replacePlaceholders(source.where, {
-                                    refid: source.refid,
-                                }),
+                    let skipquery = false;
+                    let dbopsId;
 
-                            }
-                        },
+                    if (source?.dbopsid) {
+                        skipquery = true;
+                        dbopsId = source?.dbopsid;
+                    }
+
+                    const resHashId = await axios({
+                        method: "GET",
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetHash,
                         headers: {
                             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
                         },
                     });
 
+                    if (!skipquery) {
 
+                        let query = {
+                            ...source
+                        }
+
+                        if (source.where) {
+                            query = {
+                                ...source,
+                                "where": replacePlaceholders(source.where, {
+                                    refid: refid,
+                                }),
+                            }
+                        }
+
+                        const resQueryId = await axios({
+                            method: "POST",
+                            url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
+                            data: {
+                                "operation": "fetch",
+                                "source": query,
+                                "fields": transformedObject(source.fields, sqlOpsUrls.operation),
+                                "forcefill": source.forcefill,
+                                "datahash": resHashId.data.refhash,
+                                "srcid": module_refid
+                            },
+
+                            headers: {
+                                "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                            },
+                        });
+                        dbopsId = resQueryId?.data.refid;
+
+                    }
                     const res = await axios({
                         method: "POST",
-                        url: sqlOpsUrls.baseURL + sqlOpsUrls.runQuery,
+                        url: sqlOpsUrls.baseURL + sqlOpsUrls["dbopsFetch"],
                         data: {
-                            "queryid": resQueryId.data.queryid,
-                            "filter": {
-
-                            }
+                            "refid": dbopsId,
+                            "datahash": resHashId.data.refhash
                         },
-
                         headers: {
                             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
                         },
                     });
+
+
                     const data = normalizeToObject(res)
 
 
@@ -107,6 +136,8 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
                 } catch (err) {
                     console.error("API fetch failed:", err);
                 }
+
+
             }
         };
 
@@ -142,7 +173,7 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
                                 data={data ?? {}}
                                 methods={methods}
                                 refid={refid}
-                                 {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                                {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                             />
                         </div>
                     }) : <div className="col-span-12 flex flex-col  min-h-0">

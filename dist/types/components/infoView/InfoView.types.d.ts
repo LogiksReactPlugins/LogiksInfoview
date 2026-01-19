@@ -47,6 +47,7 @@ export interface InfoViewProps {
         endPoints?: SqlEndpoints;
         buttons?: Record<string, any>;
         forcefill?: Record<string, any>;
+        module_refid?: string;
     };
     /** Fields to hide */
     hiddenFields?: string[];
@@ -79,6 +80,7 @@ export interface InfoFieldRendererProps {
     sqlOpsUrls?: SqlEndpoints;
     data?: Record<string, string | number | boolean | null | undefined>;
     refid?: string | undefined;
+    module_refid?: string | undefined;
 }
 export interface sqlQueryProps {
     table: string;
@@ -98,13 +100,22 @@ export interface SqlEndpoints {
     runQuery?: string;
     uploadURL?: string;
 }
+type SqlSrcByTable = {
+    table: string;
+    columns: string;
+    where?: Record<string, string>;
+    queryid?: never;
+};
+type SqlSrcByQueryId = {
+    queryid: string;
+    where?: Record<string, string>;
+    table?: never;
+    columns?: never;
+};
+type AutocompleteSrc = SqlSrcByTable | SqlSrcByQueryId;
 export type AutocompleteConfig = {
     target: string;
-    src: {
-        table: string;
-        columns?: string;
-        where?: Record<string, string>;
-    };
+    src: AutocompleteSrc;
 };
 export interface FormField {
     name: string;
@@ -160,6 +171,7 @@ export interface FormProps {
     callback?: (res: any) => void;
     components?: Record<string, ReactNode>;
     initialvalues?: Record<string, any>;
+    module_refid?: string | undefined;
 }
 export interface BaseFormViewProps {
     title?: string | undefined;
@@ -171,6 +183,7 @@ export interface BaseFormViewProps {
     widget?: boolean | undefined;
     sqlOpsUrls?: SqlEndpoints;
     refid?: string | undefined;
+    module_refid?: string | undefined;
 }
 export interface SimpleFormViewProps extends BaseFormViewProps {
     fields: Record<string, Omit<FormField, "name">>;
@@ -182,7 +195,9 @@ export interface FieldRendererProps {
     components?: Record<string, ReactNode>;
     sqlOpsUrls?: SqlEndpoints;
     refid?: string | undefined;
+    module_refid?: string | undefined;
     optionsOverride?: SelectOptions;
     setFieldOptions?: (fieldName: string, options: SelectOptions) => void;
 }
+export {};
 //# sourceMappingURL=InfoView.types.d.ts.map

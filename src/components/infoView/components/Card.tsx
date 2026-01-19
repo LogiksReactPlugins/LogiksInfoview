@@ -18,7 +18,7 @@ export default function Card({ title, children }: CardProps) {
                 {/* Header with gradient background */}
                 <button
 
-                    className="w-full bg-gray-50 flex justify-between items-center px-6 py-3 b text-left transition-all duration-300 "
+                    className="w-full bg-gray-50 flex justify-between items-center px-2 py-1 b text-left transition-all duration-300 "
                 >
                     <div className="flex items-center space-x-3">
                         {/* Animated dot indicator */}
@@ -36,8 +36,8 @@ export default function Card({ title, children }: CardProps) {
                     className={`flex flex-col min-h-0 transition-all duration-500 ease-in-out opacity-100'
             }`}
                 >
-                    <div className="px-6 pb-6 bg-gradient-to-br from-gray-50/50 to-white flex flex-col min-h-0">
-                        <div className="space-y-5 pt-4 flex-1 flex flex-col min-h-0 overflow-y-auto">{children}</div>
+                    <div className="px-1 pb-1 bg-gradient-to-br from-gray-50/50 to-white flex flex-col min-h-0">
+                        <div className="space-y-5 pt-1 flex-1 flex flex-col min-h-0 overflow-y-auto">{children}</div>
                     </div>
                 </div>
             </div>

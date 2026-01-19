@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import axios from 'axios';
 
 import type { FieldRendererProps, FormField, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
-import { fetchDataByquery, flattenOptions, formatOptions, getOptionLabel, getSearchColumns, isAutocompleteConfig, isGroupedOptions, replacePlaceholders } from '../utils.js';
+import { fetchDataByquery, flattenOptions, formatOptions, getOptionLabel, getSearchColumns, isAutocompleteConfig, isGroupedOptions, normalizeRowSafe, replacePlaceholders } from '../utils.js';
 import { DropdownPortal } from './DropdownPortal.js';
 
 
@@ -14,7 +14,8 @@ export default function FieldRenderer({
   sqlOpsUrls,
   refid,
   optionsOverride,
-  setFieldOptions
+  setFieldOptions,
+  module_refid
 }: FieldRendererProps) {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -71,11 +72,39 @@ export default function FieldRenderer({
     let isMounted = true;
 
     const fetchData = async () => {
-      let valueKey = field.valueKey ? field.valueKey : field.type === "dataSelector" ? "do_lists.value" : `${field.table}.value`;
-      let labelKey = field.labelKey ? field.labelKey : field.type === "dataSelector" ? "do_lists.title" : `${field.table}.title`;
+      let valueKey = field.valueKey ?? "value";
+
+      let labelKey = field.labelKey ?? "title";
 
       if (field?.options) {
-        setOptions(field.options);
+
+        //  CASE 1: flat or grouped object
+        // { "1": "WEL" } OR { quarter1: { "1": "January" } }
+        if (
+          typeof field.options === "object" &&
+          !Array.isArray(field.options)
+        ) {
+          const values = Object.values(field.options);
+          if (values.length && typeof values[0] === "string") {
+            setOptions(field.options as SelectOptions);
+            return;
+          }
+        }
+
+        // CASE 2 / 3: array of rows (flat or grouped via `category`)
+        const rawItems = Array.isArray(field.options)
+          ? field.options
+          : [field.options];
+
+        const normalizedItems = rawItems.map(normalizeRowSafe);
+
+        const mapped = formatOptions(
+          valueKey,
+          labelKey,
+          normalizedItems,
+          field.groupKey // auto-uses `category` if present
+        );
+        setOptions(mapped);
         return;
       }
 
@@ -87,9 +116,19 @@ export default function FieldRenderer({
         const methodFn = methodName ? methods[methodName] : undefined;
         if (methodFn) {
           try {
-            const result = await Promise.resolve(methodFn());
+            const res = await Promise.resolve(methodFn());
 
-            const mapped = formatOptions(valueKey, labelKey, result, field.groupKey);
+            const rawItems = Array.isArray(res?.data?.data)
+              ? res.data.data
+              : Array.isArray(res?.data)
+                ? res.data
+                : res;
+
+            const normalizedItems = Array.isArray(rawItems)
+              ? rawItems.map(normalizeRowSafe)
+              : [];
+
+            const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
 
             if (isMounted) setOptions(mapped);
           } catch (err) {
@@ -112,8 +151,16 @@ export default function FieldRenderer({
             headers: source.headers ?? {},
           });
 
+          const rawItems = Array.isArray(res?.data?.data)
+            ? res.data.data
+            : Array.isArray(res?.data)
+              ? res.data
+              : res;
 
-          const mapped = formatOptions(valueKey, labelKey, res, field.groupKey)
+          const normalizedItems = Array.isArray(rawItems)
+            ? rawItems.map(normalizeRowSafe)
+            : [];
+          const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey)
 
           if (isMounted) setOptions(mapped);
 
@@ -125,7 +172,7 @@ export default function FieldRenderer({
 
       // Case 3: Sql source
 
-      if (field.table || field.type === "dataSelector") {
+      if (field.table || field.type === "dataSelector" || field.queryid) {
 
         if (!sqlOpsUrls) {
           console.error("SQL source requires formJson.endPoints but it is missing");
@@ -134,7 +181,7 @@ export default function FieldRenderer({
 
         try {
 
-          let query: sqlQueryProps;
+          let query: sqlQueryProps | undefined;
 
           if (field.type === "dataSelector") {
             query = {
@@ -144,7 +191,7 @@ export default function FieldRenderer({
                 groupid: field.groupid ?? "",
               },
             };
-          } else {
+          } else if (!field.queryid) {
 
             if (!field.table || !field.columns) {
               console.error("Invalid SQL field config", field);
@@ -152,23 +199,30 @@ export default function FieldRenderer({
             }
 
             query = {
-              ...field,
               table: field.table,
               cols: field.columns,
+              where: field.where
+                ? refid
+                  ? replacePlaceholders(field.where, { refid })
+                  : field.where
+                : undefined,
             };
           }
 
-          //  Optional where — added only if present
-          if (field.where && field.type !== "dataSelector") {
-            query.where = refid
-              ? replacePlaceholders(field.where, { refid })
-              : field.where;
-          }
-
-          const res = await fetchDataByquery(sqlOpsUrls, query, field?.queryid);
 
 
-          const mapped = formatOptions(valueKey, labelKey, res, field.groupKey);
+          const res = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, undefined, module_refid);
+
+          const rawItems = Array.isArray(res?.data?.data)
+            ? res.data.data
+            : Array.isArray(res?.data)
+              ? res.data
+              : res;
+
+          const normalizedItems = Array.isArray(rawItems)
+            ? rawItems.map(normalizeRowSafe)
+            : [];
+          const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
 
           if (isMounted) setOptions(mapped);
 
@@ -307,7 +361,7 @@ export default function FieldRenderer({
             where: resolvedWhere,
           };
 
-          const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid);
+          const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid,undefined, module_refid);
 
           const row = Array.isArray(res?.data) ? res.data[0] : res?.data;
 
@@ -330,32 +384,43 @@ export default function FieldRenderer({
           if (!src || typeof src !== "object") continue;
           if (!sqlOpsUrls) continue;
 
-          const resolvedWhere = replacePlaceholders(src?.where ?? {}, {
-            refid: value,
-          });
+          let query: sqlQueryProps | undefined;
 
-          const query = {
-            ...src,
-            table: src.table,
-            cols: src.columns,
-            where: resolvedWhere,
-          };
+          if (!src.queryid) {
+            if (!src.table || !src.columns) {
+              throw new Error("SQL query requires field.table");
+            }
+            const resolvedWhere = replacePlaceholders(src?.where ?? {}, {
+              refid: value,
+            });
+            query = {
+              ...src,
+              table: src.table,
+              cols: src.columns,
+              where: resolvedWhere,
+            };
+          }
 
-          const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid);
 
-          let valueKey = field.valueKey ?
-            field.valueKey :
-            field.type === "dataSelector" ?
-              "do_lists.value" : `${field.table}.value`;
+          const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid,undefined, module_refid);
 
-          let labelKey = field.labelKey ? field.labelKey :
-            field.type === "dataSelector" ?
-              "do_lists.title" : `${field.table}.title`;
+          let valueKey = field.valueKey ?? "value";
+          let labelKey = field.labelKey ?? "title";
+
+          const rawItems = Array.isArray(res?.data?.data)
+            ? res.data.data
+            : Array.isArray(res?.data)
+              ? res.data
+              : res;
+
+          const normalizedItems = Array.isArray(rawItems)
+            ? rawItems.map(normalizeRowSafe)
+            : [];
 
           const mapped = formatOptions(
             valueKey,
             labelKey,
-            res,
+            normalizedItems,
             field.groupKey
           );
 
@@ -379,18 +444,26 @@ export default function FieldRenderer({
     const controller = new AbortController();
     const timer = setTimeout(async () => {
       try {
+        let query: sqlQueryProps | undefined;
+        if (!field.queryid) {
 
-        const resolvedWhere = refid ? replacePlaceholders(field.where ?? {}, {
-          refid: refid,
-        }) : field.where
+          if (!field.table || !field.cols) {
+            throw new Error("SQL query requires field.table");
+          }
 
-        const query = {
-          ...field,
-          table: field.table,
-          cols: field.columns || field.cols,
-          where: resolvedWhere
+          const resolvedWhere = refid ? replacePlaceholders(field.where ?? {}, {
+            refid: refid,
+          }) : field.where
 
-        };
+          query = {
+            ...field,
+            table: field.table,
+            cols: field.columns || field.cols,
+            where: resolvedWhere
+
+          };
+        }
+
 
         let filter: Record<string, [string, string]> = {};
 
@@ -400,21 +473,26 @@ export default function FieldRenderer({
           })
         }
 
-        const { data } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, filter);
+        const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, undefined, module_refid, filter);
 
-        let valueKey = field.valueKey ?
-          field.valueKey :
-          field.type === "dataSelector" ?
-            "do_lists.value" : `${field.table}.value`;
+        let valueKey = field.valueKey ?? "value";
 
-        let labelKey = field.labelKey ? field.labelKey :
-          field.type === "dataSelector" ?
-            "do_lists.title" : `${field.table}.title`;
+        let labelKey = field.labelKey ?? "title";
+
+        const rawItems = Array.isArray(res?.data?.data)
+          ? res.data.data
+          : Array.isArray(res?.data)
+            ? res.data
+            : res;
+
+        const normalizedItems = Array.isArray(rawItems)
+          ? rawItems.map(normalizeRowSafe)
+          : [];
 
         const mapped = formatOptions(
           valueKey,
           labelKey,
-          data,
+          normalizedItems,
           field.groupKey
         );
 

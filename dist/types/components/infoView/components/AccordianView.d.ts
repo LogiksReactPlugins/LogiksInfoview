@@ -16,6 +16,7 @@ interface AccordianViewProps {
         infoview?: Infoview;
         source?: Record<string, any>;
         endPoints?: Record<string, any>;
+        module_refid?: string | undefined;
     };
 }
 export default function AccordianView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson }: AccordianViewProps): import("react/jsx-runtime").JSX.Element;

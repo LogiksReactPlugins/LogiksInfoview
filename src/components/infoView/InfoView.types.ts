@@ -21,7 +21,7 @@ export interface InfoViewField {
     groupid?: string;
     cols?: string;
     method?: string;
-      queryid?:string;
+    queryid?: string;
 }
 
 export interface sqlQueryProps {
@@ -55,7 +55,9 @@ export interface InfoViewProps {
         endPoints?: SqlEndpoints;
         buttons?: Record<string, any>;
         forcefill?: Record<string, any>;
+        module_refid?: string;
     };
+
     /** Fields to hide */
     hiddenFields?: string[];
     /** Custom grouping function */
@@ -91,6 +93,7 @@ export interface InfoFieldRendererProps {
     sqlOpsUrls?: SqlEndpoints;
     data?: Record<string, string | number | boolean | null | undefined>; // or data?: Record<string, unknown> if optional
     refid?: string | undefined;
+    module_refid?: string | undefined;
 }
 
 export interface sqlQueryProps {
@@ -113,13 +116,25 @@ export interface SqlEndpoints {
     uploadURL?: string;
 };
 
+type SqlSrcByTable = {
+    table: string;
+    columns: string;
+    where?: Record<string, string>;
+    queryid?: never;
+};
+
+type SqlSrcByQueryId = {
+    queryid: string;
+    where?: Record<string, string>;
+    table?: never;
+    columns?: never;
+};
+
+type AutocompleteSrc = SqlSrcByTable | SqlSrcByQueryId;
+
 export type AutocompleteConfig = {
     target: string;
-    src: {
-        table: string;
-        columns?: string;
-        where?: Record<string, string>;
-    };
+    src: AutocompleteSrc;
 };
 
 export interface FormField {
@@ -185,6 +200,7 @@ export interface FormProps {
     callback?: (res: any) => void;
     components?: Record<string, ReactNode>
     initialvalues?: Record<string, any>;
+    module_refid?: string | undefined
 
 }
 
@@ -199,6 +215,7 @@ export interface BaseFormViewProps {
     widget?: boolean | undefined;
     sqlOpsUrls?: SqlEndpoints;
     refid?: string | undefined;
+    module_refid?: string | undefined
 
 }
 
@@ -213,6 +230,7 @@ export interface FieldRendererProps {
     components?: Record<string, ReactNode>
     sqlOpsUrls?: SqlEndpoints;
     refid?: string | undefined;
+    module_refid?:string | undefined;
     optionsOverride?: SelectOptions;
     setFieldOptions?: (
         fieldName: string,

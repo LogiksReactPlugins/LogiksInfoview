@@ -30,6 +30,7 @@ interface TabViewProps {
         infoview?: Infoview;
         source?: Record<string, any>,
         endPoints?: Record<string, any>;
+        module_refid?: string | undefined;
     };
 }
 
@@ -67,6 +68,7 @@ interface ContentAreaPrps extends VerticalNavProps {
     methods?: Record<string, Function>;
     sqlOpsUrls?: SqlEndpoints;
     refid?: string | undefined;
+    module_refid?: string | undefined;
 
 }
 
@@ -228,7 +230,8 @@ const ContentArea = (
         renderView,
         methods = {},
         refid,
-        sqlOpsUrls
+        sqlOpsUrls,
+        module_refid
     }: ContentAreaPrps
 ) => (
     <div
@@ -253,6 +256,7 @@ const ContentArea = (
                                     methods={methods}
                                     refid={refid}
                                     {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                                    module_refid={module_refid}
                                 />
                             </div>
                         ))}
@@ -390,11 +394,14 @@ export default function TabView({
     const isTop = !isLeft && !isRight;
     const tabObj = groups[groupNames[activeTabIndex] ?? ""] || null;
 
+    console.log("tabObj", tabObj);
+
+
 
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<string, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView tabObj={tab} methods={methods} tabName={tabName}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
+            <SingleView module_refid={infoViewJson.module_refid} tabObj={tab} methods={methods} tabName={tabName}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
         ),
         grid: (tab, tabName) => (
             <GridView
@@ -417,6 +424,7 @@ export default function TabView({
         (() => <div className="flex-1 flex justify-center p-4">No UI mode for this type</div>);
 
 
+    console.log("tabObjjjjjjjjjjjjjjjjjjjjjj", tabObj);
 
 
     if (isTop) {
@@ -445,6 +453,7 @@ export default function TabView({
                     methods={methods}
                     refid={refid}
                     {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                    module_refid={infoViewJson.module_refid}
 
                 />
 
@@ -479,6 +488,7 @@ export default function TabView({
                     groups={groups}
                     methods={methods}
                     refid={refid}
+                    module_refid={infoViewJson.module_refid}
                     {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                 />
             </main>

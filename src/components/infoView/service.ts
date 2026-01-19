@@ -30,6 +30,7 @@ export const getRefId = async (
         source: SqlSource;
         fields?: any;
         datahash: string;
+        srcid: string | undefined;
     }
 ) => {
     const res = await axios.post(
@@ -43,20 +44,39 @@ export const getRefId = async (
 export const sqlClient = {
     async fetch(
         endpoints: SqlEndpoints,
-        payload: { source: SqlSource; fields?: any }
+        payload: { source: SqlSource; fields?: any },
+        dbopsid: string | undefined,
+        module_refid: string | undefined,
     ) {
         const datahash = await getHash(endpoints);
 
-        const refid = await getRefId(endpoints, {
-            operation: "fetch",
-            source: payload.source,
-            fields: payload.fields ?? {},
-            datahash,
-        });
+        let skipquery = false;
+        let dbopsId;
+
+        if (dbopsid) {
+            skipquery = true;
+            dbopsId = dbopsid;
+        }
+
+        console.log("skipquery,dbopsid", skipquery, dbopsid);
+
+
+        if (!skipquery) {
+
+            const refid = await getRefId(endpoints, {
+                operation: "fetch",
+                source: payload.source,
+                fields: payload.fields ?? {},
+                datahash,
+                srcid: module_refid
+            });
+            dbopsId = refid;
+        }
+
 
         const res = await axios.post(
             endpoints.baseURL + endpoints.dbopsFetch,
-            { refid, datahash },
+            { refid: dbopsId, datahash },
             { headers: authHeaders(endpoints) }
         );
 
@@ -65,7 +85,8 @@ export const sqlClient = {
 
     async create(
         endpoints: SqlEndpoints,
-        payload: { source: SqlSource; values: any }
+        payload: { source: SqlSource; values: any },
+        module_refid: string | undefined,
     ) {
         const datahash = await getHash(endpoints);
 
@@ -74,6 +95,7 @@ export const sqlClient = {
             source: payload.source,
             fields: payload.values,
             datahash,
+            srcid: module_refid
         });
 
         const res = await axios.post(
@@ -87,7 +109,8 @@ export const sqlClient = {
 
     async update(
         endpoints: SqlEndpoints,
-        payload: { source: SqlSource; values: any }
+        payload: { source: SqlSource; values: any },
+        module_refid: string | undefined,
     ) {
         const datahash = await getHash(endpoints);
 
@@ -96,6 +119,7 @@ export const sqlClient = {
             source: payload.source,
             fields: payload.values,
             datahash,
+            srcid: module_refid
         });
 
         const res = await axios.post(

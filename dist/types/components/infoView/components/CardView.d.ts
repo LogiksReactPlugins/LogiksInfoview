@@ -16,6 +16,7 @@ interface CardViewProps {
         infoview?: Infoview;
         source?: Record<string, any>;
         endPoints?: Record<string, any>;
+        module_refid?: string;
     };
 }
 export default function CardView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson }: CardViewProps): import("react/jsx-runtime").JSX.Element;

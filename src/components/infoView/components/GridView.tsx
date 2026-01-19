@@ -35,6 +35,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
             endPoints?: Record<string, any>;
             buttons?: Record<string, any>;
             actions?: Record<string, any>;
+            module_refid?: string | undefined
         };
     }) {
     // Pagination state
@@ -151,7 +152,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     // ]);
 
     // If data is not an array, convert single object to array
-   // const tableData: Array<Record<string, string>> = Array.isArray(data) ? data : [data];
+    // const tableData: Array<Record<string, string>> = Array.isArray(data) ? data : [data];
 
     // Extract all unique column names from all rows
     // const getAllColumns = (dataArray: Array<Record<string, string>>): string[] => {
@@ -164,10 +165,10 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     //     return Array.from(columnSet);
     // };
 
-   // const columns = getAllColumns(tableData);
+    // const columns = getAllColumns(tableData);
 
     // Check if edit mode is enabled
-   // const isEditMode = tabObj?.vmode === "edit";
+    // const isEditMode = tabObj?.vmode === "edit";
     const config = tabObj?.config;
     const formType =
         config?.["popup.form"]
@@ -396,7 +397,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
             setConfirmOpen(false);
 
             // auto-hide after 3s
-            setTimeout(() => setAlert(null), 3000);
+            //setTimeout(() => setAlert(null), 3000);
         }
     };
 
@@ -638,6 +639,9 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     //     );
     // }
 
+   
+    
+
 
 
     return (
@@ -667,7 +671,19 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
 
 
                     {
-                        hasFormConfig && <LogiksForm formJson={{ ...config[formType], endPoints: sqlOpsUrls }} initialvalues={editData ?? {}} />
+                        hasFormConfig && <LogiksForm
+                            formJson={{
+                                ...config[formType],
+                                endPoints: {
+                                    ...sqlOpsUrls,
+                                    operation: editData ? "update" : "create"
+
+                                }
+                            }}
+                            initialvalues={editData ?? {}}
+                            setEditData={setEditData}
+                            module_refid={infoViewJson?.module_refid}
+                        />
                     }
                     <ConfirmModal
                         open={confirmOpen}
@@ -677,17 +693,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                 </>
             ) : (
 
-                hasFormConfig && <LogiksForm formJson={{
-                    ...config[formType],
-                    endPoints: {
-                        ...sqlOpsUrls,
-                        operation: editData ? "update" : "create"
-
-                    }
-                }}
-                    initialvalues={editData ?? {}}
-                    setEditData={setEditData}
-                />
+               <div>Report not found</div>
 
             )}
         </>

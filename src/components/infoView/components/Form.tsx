@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import { fetchGeolocation, getGeoFieldKeys,replacePlaceholders, transformedObject } from "../utils.js";
+import { fetchGeolocation, getGeoFieldKeys, replacePlaceholders, transformedObject } from "../utils.js";
 
 
 import NormalFormView from "./NormalFormView.js";
@@ -17,16 +17,17 @@ export default function LogiksForm({
   components = {},
   callback = () => { },
   initialvalues = {},
-  setEditData
-  
+  setEditData,
+  module_refid
+
 }: FormProps) {
 
-  
+
 
   const sqlOpsUrls = formJson.endPoints;
   const refid = formJson?.source?.refid;
 
- 
+
   const [resolvedData, setResolvedData] = React.useState<Record<string, any>>(initialvalues);
 
 
@@ -77,8 +78,11 @@ export default function LogiksForm({
         }
       }
 
-      if (source.type === "sql" && source.refid &&
-        source.refid != "0" && sqlOpsUrls?.operation !== "create") {
+      if ((source.type === "sql" &&
+        source.refid &&
+        source.refid !== "0" &&
+        sqlOpsUrls?.operation !== "create") ||
+        (sqlOpsUrls?.operation !== "create" && source.dbopsid)) {
 
         if (!sqlOpsUrls) {
           console.error("SQL source requires formJson.endPoints but it is missing");
@@ -98,7 +102,7 @@ export default function LogiksForm({
             },
             fields: transformedObject(formJson.fields, sqlOpsUrls.operation),
 
-          });
+          }, source?.dbopsid, module_refid);
 
           if (isMounted) setResolvedData(data);
         } catch (err) {
@@ -155,7 +159,7 @@ export default function LogiksForm({
           const res = await Promise.resolve(methodFn(finalValues));
           setEditData?.(null);
           callback?.(res);
-          
+
         } catch (err) {
           callback?.(err)
           console.error("Method execution failed:", err);
@@ -177,7 +181,7 @@ export default function LogiksForm({
             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
           },
         });
-         setEditData?.(null);
+        setEditData?.(null);
         callback?.(res)
       } catch (err) {
         callback?.(err)
@@ -196,6 +200,14 @@ export default function LogiksForm({
 
       try {
 
+        let skipquery = false;
+        let dbopsId;
+
+        if (source?.dbopsid) {
+          skipquery = true;
+          dbopsId = source?.dbopsid;
+        }
+
         const resHashId = await axios({
           method: "GET",
           url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetHash,
@@ -204,41 +216,48 @@ export default function LogiksForm({
           },
         });
 
-        let query = {
-          ...source
-        }
 
-        if (source.where) {
-          query = {
-            ...source,
-            "where": replacePlaceholders(source.where, {
-              refid: refid,
-            }),
+        if (!skipquery) {
+
+          let query = {
+            ...source
           }
+
+          if (source.where) {
+            query = {
+              ...source,
+              "where": replacePlaceholders(source.where, {
+                refid: refid,
+              }),
+            }
+          }
+
+          const resQueryId = await axios({
+            method: "POST",
+            url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
+            data: {
+              "operation": sqlOpsUrls.operation,
+              "source": query,
+              "fields": transformedObject(formJson.fields, sqlOpsUrls.operation),
+              "forcefill": formJson.forcefill,
+              "datahash": resHashId.data.refhash,
+              "scrid": module_refid
+
+            },
+
+            headers: {
+              "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+            },
+          });
+          dbopsId = resQueryId?.data.refid;
+
         }
-
-        const resQueryId = await axios({
-          method: "POST",
-          url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
-          data: {
-            "operation": sqlOpsUrls.operation,
-            "source": query,
-            "fields": transformedObject(formJson.fields, sqlOpsUrls.operation),
-            "forcefill": formJson.forcefill,
-            "datahash": resHashId.data.refhash
-          },
-
-          headers: {
-            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
-          },
-        });
-
 
         const res = await axios({
           method: "POST",
           url: sqlOpsUrls.baseURL + sqlOpsUrls[sqlOpsUrls.operation === "update" ? "dbopsUpdate" : "dbopsCreate"],
           data: {
-            "refid": resQueryId.data.refid,
+            "refid": dbopsId,
             "fields": finalValues,
             "datahash": resHashId.data.refhash
           },
@@ -246,7 +265,7 @@ export default function LogiksForm({
             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
           },
         });
-         setEditData?.(null);
+        setEditData?.(null);
         callback?.(res)
       } catch (err) {
         callback?.(err)
@@ -258,8 +277,8 @@ export default function LogiksForm({
 
 
   const formView = {
-  
-   
+
+
     "simple": <NormalFormView
       title={formJson?.title ?? ""}
       fields={formJson.fields}
@@ -268,14 +287,16 @@ export default function LogiksForm({
       onCancel={onCancel}
       methods={methods}
       components={components}
-     {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+      {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
       refid={refid}
+      module_refid={module_refid}
+
     />
   };
 
   return (
     <div className="relative">
-      { formView.simple}
+      {formView.simple}
     </div>
   );
 }

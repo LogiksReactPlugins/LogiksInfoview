@@ -16,7 +16,8 @@ export default function NormalFormView({
   onCancel = () => { },
   methods = {},
   sqlOpsUrls,
-  refid
+  refid,
+  module_refid
 }: SimpleFormViewProps) {
   const flatfields = flatFields(fields, sqlOpsUrls?.operation);
 
@@ -63,7 +64,7 @@ export default function NormalFormView({
 
 
   return (
-    <div className="relative z-10 max-w-full  m-4">
+    <div className="relative z-10 max-w-full ">
       <div className="bg-white border border-gray-100 rounded-md animate-in fade-in duration-300">
         <form onSubmit={formik.handleSubmit} className="p-4  mx-auto">
           <div className="grid grid-flow-col auto-cols-max gap-4  overflow-x-auto">
@@ -78,6 +79,7 @@ export default function NormalFormView({
               >
                 <FieldRenderer
                   refid={refid}
+                  module_refid={module_refid}
                   {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                   field={field}
                   formik={formik}

@@ -204,20 +204,11 @@ export const normalizeToObject = (res: any): Record<string, any> | null => {
 export const formatOptions = (
   valueKey: string,
   labelKey: string,
-  res: any,
+  items: any[],
   groupKey?: string
 ): SelectOptions => {
-  const items = Array.isArray(res?.data?.data)
-    ? res.data.data
-    : Array.isArray(res?.data)
-      ? res.data
-      : res;
+  if (!Array.isArray(items) || items.length === 0) return {};
 
-  if (!Array.isArray(items) || items.length === 0) {
-    return {};
-  }
-
-  // auto-detect group key
   const resolvedGroupKey =
     groupKey ??
     (items[0] && typeof items[0] === "object" && "category" in items[0]
@@ -227,9 +218,11 @@ export const formatOptions = (
   // ---- flat options ----
   if (!resolvedGroupKey) {
     const mapped: FlatOptions = {};
-    items.forEach((item: any) => {
-      if (item[valueKey] != null && item[labelKey] != null) {
-        mapped[item[valueKey]] = item[labelKey];
+    items.forEach(item => {
+      const value = item[valueKey];
+      const label = item[labelKey];
+      if (value != null && label != null) {
+        mapped[String(value)] = String(label);
       }
     });
     return mapped;
@@ -238,7 +231,7 @@ export const formatOptions = (
   // ---- grouped options ----
   const grouped: GroupedOptions = {};
 
-  items.forEach((item: any) => {
+  items.forEach(item => {
     const group = item[resolvedGroupKey] ?? "Others";
     const value = item[valueKey];
     const label = item[labelKey];
@@ -246,11 +239,13 @@ export const formatOptions = (
     if (value == null || label == null) return;
 
     if (!grouped[group]) grouped[group] = {};
-    grouped[group][value] = label;
+    grouped[group][String(value)] = String(label);
   });
 
   return grouped;
 };
+
+
 
 export function resolveDisplayValue(
   rawVal: unknown,
@@ -558,17 +553,18 @@ export const getOptionLabel = (
 ): string | undefined => {
   if (!options || value == null) return;
 
+  const key = String(value);
   const first = Object.values(options)[0];
 
   // flat
   if (typeof first === "string") {
-    return (options as FlatOptions)[value];
+    return (options as FlatOptions)[key];
   }
 
   // grouped
   for (const group of Object.values(options as GroupedOptions)) {
-    if (value in group) {
-      return group[value];
+    if (key in group) {
+      return group[key];
     }
   }
 
@@ -576,28 +572,50 @@ export const getOptionLabel = (
 };
 
 type FlatEntry = [string, string];
+
+
+
 export const flattenOptions = (options: SelectOptions): FlatEntry[] => {
   if (!options) return [];
 
-  const first = Object.values(options)[0];
-
-  // flat
-  if (typeof first === "string") {
-    return Object.entries(options as Record<string, string>);
+  //  array options: [{ value, title/label }]
+  if (Array.isArray(options)) {
+    return options.map(
+      (o): FlatEntry => [
+        String(o.value),
+        String(o.title ?? o.label ?? o.value),
+      ]
+    );
   }
 
-  // grouped
-  return Object.values(options as GroupedOptions).flatMap(group =>
-    Object.entries(group)
-  );
+  const values = Object.values(options);
+  if (!values.length) return [];
+
+  const first = values[0];
+
+  //  flat object: { value: label }
+  if (typeof first === "string") {
+    return Object.entries(options as Record<string, string>)
+      .map(([v, l]): FlatEntry => [String(v), l]);
+  }
+
+  // grouped object: { group: { value: label } }
+  return Object.values(options as Record<string, Record<string, string>>)
+    .flatMap(group =>
+      Object.entries(group).map(
+        ([v, l]): FlatEntry => [String(v), l]
+      )
+    );
 };
 
 
 
 export async function fetchDataByquery(
   sqlOpsUrls: Record<string, any>,
-  query: Record<string, any>,
+  query: Record<string, any> | undefined,
   querid: string | undefined,
+  refid: string | undefined = undefined,
+  module_refid: string | undefined = undefined,
   filter: Record<string, any> = {}
 ): Promise<AxiosResponse<any>> {
   try {
@@ -608,7 +626,7 @@ export async function fetchDataByquery(
       const resQueryId = await axios({
         method: "POST",
         url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
-        data: { "query": query },
+        data: { "query": query, "srcid": module_refid },
         headers: {
           "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
         },
@@ -621,7 +639,10 @@ export async function fetchDataByquery(
       url: sqlOpsUrls.baseURL + sqlOpsUrls.runQuery,
       data: {
         "queryid": queryId,
-        "filter": filter
+        "filter": filter,
+        "refid": refid,
+        "page": 0,
+        "limit": 10000
       },
       headers: {
         "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
@@ -648,3 +669,23 @@ export function normalizeOptions(
     return acc;
   }, {});
 }
+type Row = Record<string, unknown>;
+
+export const normalizeRowSafe = (row: Row): Row => {
+  const result: Row = {};
+
+  for (const [key, value] of Object.entries(row)) {
+    const normalizedKey = key.includes(".")
+      ? key.split(".").pop()!
+      : key;
+
+    if (normalizedKey in result) {
+      console.warn(`Duplicate key after normalization: ${normalizedKey}`);
+      continue;
+    }
+
+    result[normalizedKey] = value;
+  }
+
+  return result;
+};
