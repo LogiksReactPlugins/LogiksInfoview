@@ -32,5 +32,11 @@ export declare function fetchDataByquery(sqlOpsUrls: Record<string, any>, query:
 export declare function normalizeOptions(options?: SelectOptions): FlatOptions;
 type Row = Record<string, unknown>;
 export declare const normalizeRowSafe: (row: Row) => Row;
+export declare function runAjaxChain({ field, value, sqlOpsUrls, setFieldOptions, }: {
+    field: any;
+    value: any;
+    sqlOpsUrls: any;
+    setFieldOptions: (name: string, options: SelectOptions) => void;
+}): Promise<void>;
 export {};
 //# sourceMappingURL=utils.d.ts.map

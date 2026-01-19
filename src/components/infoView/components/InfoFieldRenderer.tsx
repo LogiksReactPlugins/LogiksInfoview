@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import type { InfoFieldRendererProps, InfoViewField, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
 import { DEFAULT_LOGO } from '../constant.js';
-import { fetchDataByquery, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue } from '../utils.js';
+import { fetchDataByquery, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, runAjaxChain } from '../utils.js';
 
 
-export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrls, refid, module_refid }: InfoFieldRendererProps) {
+export default function InfoFieldRenderer({
+  field,
+  data,
+  methods = {},
+  sqlOpsUrls,
+  refid, module_refid, optionsOverride, setFieldOptions }: InfoFieldRendererProps) {
 
   const key = field?.name;
 
@@ -19,8 +24,14 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
 
 
   const [options, setOptions] = useState<SelectOptions>(
-    field.options ?? {}
+    optionsOverride ?? field.options ?? {}
   );
+  const ranRef = React.useRef(false);
+
+  React.useEffect(() => {
+    if (!optionsOverride) return;
+    setOptions(optionsOverride);
+  }, [optionsOverride]);
 
   const flatOptions = React.useMemo(
     () => normalizeOptions(options),
@@ -200,6 +211,22 @@ export default function InfoFieldRenderer({ field, data, methods = {}, sqlOpsUrl
     field.where,
     refid
   ]);
+
+  const fieldValue = field?.name ? data?.[field.name] : undefined;
+
+  React.useEffect(() => {
+    if (ranRef.current) return;
+    if (!setFieldOptions || !fieldValue) return;
+
+    ranRef.current = true;
+
+    runAjaxChain({
+      field,
+      value: fieldValue,
+      sqlOpsUrls,
+      setFieldOptions,
+    });
+  }, [fieldValue, sqlOpsUrls, setFieldOptions]);
 
 
   const rawVal =

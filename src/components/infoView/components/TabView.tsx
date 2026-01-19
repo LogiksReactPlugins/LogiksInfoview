@@ -5,7 +5,7 @@ import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 import InfoFieldRenderer from './InfoFieldRenderer.js';
 import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints } from '../InfoView.types.js';
+import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
 
 interface TabViewProps {
     groups: Record<string, InfoViewGroup>;
@@ -69,6 +69,8 @@ interface ContentAreaPrps extends VerticalNavProps {
     sqlOpsUrls?: SqlEndpoints;
     refid?: string | undefined;
     module_refid?: string | undefined;
+    fieldOptions: Record<string, SelectOptions>;
+    setFieldOptions: (name: string, options: SelectOptions) => void;
 
 }
 
@@ -231,7 +233,9 @@ const ContentArea = (
         methods = {},
         refid,
         sqlOpsUrls,
-        module_refid
+        module_refid,
+        fieldOptions,
+        setFieldOptions
     }: ContentAreaPrps
 ) => (
     <div
@@ -257,6 +261,10 @@ const ContentArea = (
                                     refid={refid}
                                     {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                                     module_refid={module_refid}
+                                    setFieldOptions={setFieldOptions}
+                                    {...(fieldOptions[field.name]
+                                        ? { optionsOverride: fieldOptions[field.name] }
+                                        : {})}
                                 />
                             </div>
                         ))}
@@ -354,6 +362,17 @@ export default function TabView({
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [showScrollHint, setShowScrollHint] = useState(false);
     const tabsNavRef = useRef<HTMLDivElement | null>(null);
+
+    const [fieldOptions, setFieldOptions] = useState<
+        Record<string, SelectOptions>
+    >({});
+
+    const setOptionsForField = (name: string, options: SelectOptions) => {
+        setFieldOptions(prev => ({
+            ...prev,
+            [name]: options,
+        }));
+    };
 
     const groupNames = Object.keys(groups);
 
@@ -454,6 +473,8 @@ export default function TabView({
                     refid={refid}
                     {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
                     module_refid={infoViewJson.module_refid}
+                    fieldOptions={fieldOptions}
+                    setFieldOptions={setOptionsForField}
 
                 />
 
@@ -490,6 +511,8 @@ export default function TabView({
                     refid={refid}
                     module_refid={infoViewJson.module_refid}
                     {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                    fieldOptions={fieldOptions}
+                    setFieldOptions={setOptionsForField}
                 />
             </main>
 

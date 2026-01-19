@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 import axios, { type AxiosResponse } from "axios";
-import type { AutocompleteConfig, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from "./InfoView.types.js";
+import type { AutocompleteConfig, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions, sqlQueryProps } from "./InfoView.types.js";
 
 export function determineViewMode(json: Infoview) {
 
@@ -689,3 +689,69 @@ export const normalizeRowSafe = (row: Row): Row => {
 
   return result;
 };
+
+
+// utils/runAjaxChain.ts
+
+
+
+export async function runAjaxChain({
+  field,
+  value,
+  sqlOpsUrls,
+  setFieldOptions,
+}: {
+  field: any;
+  value: any;
+  sqlOpsUrls: any;
+  setFieldOptions: (name: string, options: SelectOptions) => void;
+}) {
+  if (!field.ajaxchain || !value || !sqlOpsUrls) return;
+
+  const chains = Array.isArray(field.ajaxchain)
+    ? field.ajaxchain
+    : [field.ajaxchain];
+
+  for (const chain of chains) {
+    const src = chain.src;
+    if (!src) continue;
+
+    let query: sqlQueryProps | undefined;
+
+    if (!src.queryid) {
+      const resolvedWhere = replacePlaceholders(src.where ?? {}, { refid: value });
+      query = {
+        ...src,
+        table: src.table,
+        cols: src.columns,
+        where: resolvedWhere,
+      };
+    }
+
+    const { data: res } = await fetchDataByquery(
+      sqlOpsUrls,
+      query,
+      src.queryid,
+      value
+    );
+
+    const rawItems = Array.isArray(res?.data?.data)
+      ? res.data.data
+      : Array.isArray(res?.data)
+      ? res.data
+      : res;
+
+    const normalized = Array.isArray(rawItems)
+      ? rawItems.map(normalizeRowSafe)
+      : [];
+
+    const mapped = formatOptions(
+      field.valueKey ?? "value",
+      field.labelKey ?? "title",
+      normalized,
+      field.groupKey
+    );
+
+    setFieldOptions(chain.target, mapped);
+  }
+}

@@ -94,6 +94,11 @@ export interface InfoFieldRendererProps {
     data?: Record<string, string | number | boolean | null | undefined>; // or data?: Record<string, unknown> if optional
     refid?: string | undefined;
     module_refid?: string | undefined;
+    optionsOverride?: SelectOptions;
+    setFieldOptions?: (
+        fieldName: string,
+        options: SelectOptions
+    ) => void;
 }
 
 export interface sqlQueryProps {
@@ -230,7 +235,7 @@ export interface FieldRendererProps {
     components?: Record<string, ReactNode>
     sqlOpsUrls?: SqlEndpoints;
     refid?: string | undefined;
-    module_refid?:string | undefined;
+    module_refid?: string | undefined;
     optionsOverride?: SelectOptions;
     setFieldOptions?: (
         fieldName: string,

@@ -1,11 +1,11 @@
-import type { ComponentType } from "react";
+import { useState, type ComponentType } from "react";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
 import Accordion from './Accordian.js';
 import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 
 import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints } from '../InfoView.types.js';
+import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
 
 interface AccordianViewProps {
     groups: Record<string, InfoViewGroup>;
@@ -40,6 +40,14 @@ export default function AccordianView({
     infoViewJson
 }
     : AccordianViewProps) {
+
+    const [fieldOptions, setFieldOptions] = useState<
+        Record<string, SelectOptions>
+    >({});
+
+    const setOptionsForField = (name: string, options: SelectOptions) => {
+        setFieldOptions(prev => ({ ...prev, [name]: options }));
+    };
 
 
     type RendererKey = "single" | "grid";
@@ -92,7 +100,16 @@ export default function AccordianView({
                                                 className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-2"
                                                     }`}
                                             >
-                                                <InfoFieldRenderer module_refid={infoViewJson?.module_refid} methods={methods} field={field} data={infoData ?? {}}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
+                                                <InfoFieldRenderer
+                                                    module_refid={infoViewJson?.module_refid}
+                                                    methods={methods}
+                                                    field={field} data={infoData ?? {}}
+                                                    setFieldOptions={setOptionsForField}
+                                                    {...(fieldOptions[field.name]
+                                                        ? { optionsOverride: fieldOptions[field.name] }
+                                                        : {})}
+                                                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid}
+                                                />
                                             </div>
                                         ))}
                                     </div>

@@ -81,6 +81,8 @@ export interface InfoFieldRendererProps {
     data?: Record<string, string | number | boolean | null | undefined>;
     refid?: string | undefined;
     module_refid?: string | undefined;
+    optionsOverride?: SelectOptions;
+    setFieldOptions?: (fieldName: string, options: SelectOptions) => void;
 }
 export interface sqlQueryProps {
     table: string;
