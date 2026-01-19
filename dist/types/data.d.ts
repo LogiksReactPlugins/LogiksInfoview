@@ -336,6 +336,7 @@ export declare const example10: {
         dbopsFetch: string;
         registerQuery: string;
         runQuery: string;
+        uploadURL: string;
     };
     source: {
         type: string;
@@ -449,7 +450,6 @@ export declare const example10: {
         };
     };
     infoview: {
-        template: string;
         groups: {
             participant_details: {
                 label: string;

@@ -738,8 +738,8 @@ export async function runAjaxChain({
     const rawItems = Array.isArray(res?.data?.data)
       ? res.data.data
       : Array.isArray(res?.data)
-      ? res.data
-      : res;
+        ? res.data
+        : res;
 
     const normalized = Array.isArray(rawItems)
       ? rawItems.map(normalizeRowSafe)

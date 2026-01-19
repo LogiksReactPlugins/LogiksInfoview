@@ -1157,7 +1157,12 @@ export default function FieldRenderer({
     case "photo":
     case "avatar":
     case "file":
-      const isMultiple = field.multiple === true;
+        const isMultiple = field.multiple === true;
+      const files = Array.isArray(formik.values[key])
+        ? formik.values[key]
+        : formik.values[key]
+          ? [formik.values[key]]
+          : [];
       return (
         <div className="relative">
           <label className={labelClasses}>
@@ -1194,11 +1199,18 @@ export default function FieldRenderer({
               }`} style={{ zIndex: -1, filter: 'blur(8px)' }}></div>
           </div>
 
-          {formik.values[key]?.split("/").pop() &&
-            <div className='mt-1'>
-              <span className="text-sm ">{String(formik.values[key]?.split("/").pop())}</span>
-            </div>
-          }
+        
+
+          {files.map((file) => {
+            const name = file?.split("/").pop();
+            if (!name) return null;
+
+            return (
+              <div key={file} className="mt-1">
+                <span className="text-sm">{name}</span>
+              </div>
+            );
+          })}
 
           {formik.touched[key] && formik.errors[key] &&
 
