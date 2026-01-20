@@ -63,6 +63,8 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     };
 
     const confirmDelete = async () => {
+        console.log("deleteTarget",deleteTarget);
+        
         if (!deleteTarget?.id) return;
 
         if (!sqlOpsUrls) {

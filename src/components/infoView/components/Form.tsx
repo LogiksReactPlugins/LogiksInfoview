@@ -5,7 +5,7 @@ import { fetchGeolocation, getGeoFieldKeys, replacePlaceholders, transformedObje
 
 
 import NormalFormView from "./NormalFormView.js";
-import type { FormProps, DbOpsPayload } from "../InfoView.types.js";
+import type { FormProps } from "../InfoView.types.js";
 
 import { sqlClient } from "../service.js";
 
@@ -36,10 +36,13 @@ export default function LogiksForm({
   }, [formJson.fields]);
 
 
+  console.log("initialvalues", initialvalues);
+  console.log("resolvedData", resolvedData);
 
- React.useEffect(() => {
-  setResolvedData(initialvalues ?? {});
-}, [initialvalues]);
+
+  React.useEffect(() => {
+    setResolvedData(initialvalues ?? {});
+  }, [initialvalues]);
 
   const safeSetResolvedData = React.useCallback(
     (data?: Record<string, any>) => {
@@ -141,6 +144,7 @@ export default function LogiksForm({
 
 
 
+  console.log("source?.refid", formJson?.source?.refid);
 
 
 
@@ -270,10 +274,11 @@ export default function LogiksForm({
 
         }
 
-        let payload: DbOpsPayload = {
+        let payload = {
           "refid": dbopsId,
           "fields": finalValues,
-          "datahash": resHashId.data.refhash
+          "datahash": resHashId.data.refhash,
+          "refid1": sqlOpsUrls.refid
         }
 
         if (source?.refid) {
