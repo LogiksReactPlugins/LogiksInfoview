@@ -361,7 +361,7 @@ export default function FieldRenderer({
             where: resolvedWhere,
           };
 
-          const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid,undefined, module_refid);
+          const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, undefined, module_refid);
 
           const row = Array.isArray(res?.data) ? res.data[0] : res?.data;
 
@@ -402,7 +402,7 @@ export default function FieldRenderer({
           }
 
 
-          const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid,undefined, module_refid);
+          const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, undefined, module_refid);
 
           let valueKey = field.valueKey ?? "value";
           let labelKey = field.labelKey ?? "title";
@@ -1157,7 +1157,7 @@ export default function FieldRenderer({
     case "photo":
     case "avatar":
     case "file":
-        const isMultiple = field.multiple === true;
+      const isMultiple = field.multiple === true;
       const files = Array.isArray(formik.values[key])
         ? formik.values[key]
         : formik.values[key]
@@ -1199,7 +1199,7 @@ export default function FieldRenderer({
               }`} style={{ zIndex: -1, filter: 'blur(8px)' }}></div>
           </div>
 
-        
+
 
           {files.map((file) => {
             const name = file?.split("/").pop();

@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef } from 'react';
 import axios from "axios";
 import type { ComponentType } from "react";
 import type { Infoview, InfoViewField, InfoViewGroup } from '../InfoView.types.js';
-import { copyToClipboard, replacePlaceholders } from '../utils.js';
+import { copyToClipboard, normalizeRowSafe, replacePlaceholders } from '../utils.js';
 import ConfirmModal from './ConfirmationModal.js';
 import LogiksForm from './Form.js';
 
@@ -50,7 +50,13 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     const [copiedCell, setCopiedCell] = useState<string | null>(null);
     const [sortConfig, setSortConfig] = useState<SortConfig>({ key: '', direction: null });
     const [alert, setAlert] = useState<AlertState | null>(null);
-    const [editData, setEditData] = React.useState<Record<string, any> | null>(null);
+    const [editData, setEditData] = React.useState<Record<string, any> | null>({
+    "hse_induction_details.id": 12,
+    "hse_induction_details.gender": "male",
+    "hse_induction_details.count": 5,
+    "hse_induction_details.company": "wel",
+    "hse_induction_details.company_name": "SSSffg"
+});
     const source = tabObj?.config;
     console.log("tabObj", tabObj);
     console.log("source", source);
@@ -288,9 +294,9 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
 
     // Action handlers
     const handleEdit = (row: Record<string, any>, index: number) => {
-        console.log("row",row);
-        
-        setEditData(row?.data)
+        let data = normalizeRowSafe(row.data)
+    
+        setEditData(data)
         // methods?.editInfoRecord?.({ [formType]: tabObj?.config?.[formType] }, refid, row)
         // Implement edit logic here
     };
@@ -700,7 +706,19 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                 </>
             ) : (
 
-                <p>Report Not found</p>
+               hasFormConfig && <LogiksForm
+                            formJson={{
+                                ...config[formType],
+                                endPoints: {
+                                    ...sqlOpsUrls,
+                                    operation: editData ? "update" : "create"
+
+                                }
+                            }}
+                            initialvalues={editData ?? {}}
+                            setEditData={setEditData}
+                            module_refid={infoViewJson?.module_refid}
+                        />
 
             )}
         </>

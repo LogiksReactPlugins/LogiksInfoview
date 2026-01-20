@@ -178,7 +178,7 @@ export default function InfoFieldRenderer({
             };
           }
 
-          const res = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, module_refid);
+          const res = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, undefined, module_refid);
 
           const rawItems = Array.isArray(res?.data?.data)
             ? res.data.data
