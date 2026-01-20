@@ -36,13 +36,29 @@ export default function LogiksForm({
   }, [formJson.fields]);
 
 
+
+  React.useEffect(() => {
+    if (initialvalues && Object.keys(initialvalues).length > 0) {
+      setResolvedData(initialvalues);
+    }
+  }, [initialvalues]);
+
+  const safeSetResolvedData = React.useCallback(
+  (data?: Record<string, any>) => {
+    if (data && Object.keys(data).length > 0) {
+      setResolvedData(data);
+    }
+  },
+  []
+);
+
   // ---------- Fetch Initial Data ----------
   React.useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
       const source = formJson?.source ?? {};
       if (!source?.type) {
-        if (isMounted) setResolvedData({});
+
         return;
       }
 
@@ -52,14 +68,12 @@ export default function LogiksForm({
         if (methodFn) {
           try {
             const result = await Promise.resolve(methodFn());
-            if (isMounted) setResolvedData(result ?? {});
+            if (isMounted) safeSetResolvedData(result);
           } catch (err) {
             console.error("Method execution failed:", err);
-            if (isMounted) setResolvedData({});
+           
           }
-        } else {
-          if (isMounted) setResolvedData({});
-        }
+        } 
       }
 
       if (source.type === "api" && sqlOpsUrls?.operation !== "create") {
@@ -71,12 +85,14 @@ export default function LogiksForm({
             params: source.params ?? {},
             headers: source.headers ?? {},
           });
-          if (isMounted) setResolvedData(response.data ?? {});
+          if (isMounted) safeSetResolvedData(response.data);
         } catch (err) {
           console.error("API fetch failed:", err);
-          if (isMounted) setResolvedData({});
+          
         }
       }
+
+
 
       if ((source.type === "sql" &&
         source.refid &&
@@ -104,7 +120,7 @@ export default function LogiksForm({
 
           }, source?.dbopsid, module_refid);
 
-          if (isMounted) setResolvedData(data);
+          if (isMounted) safeSetResolvedData(data);
         } catch (err) {
           console.error("API fetch failed:", err);
         }
@@ -115,6 +131,7 @@ export default function LogiksForm({
     return () => { isMounted = false; };
   }, [
     userid,
+    sqlOpsUrls,
     formJson?.source?.type || "",
     formJson?.source?.method || "",
     formJson?.source?.url || "",
@@ -122,6 +139,8 @@ export default function LogiksForm({
     JSON.stringify(formJson?.source?.body ?? {}),
     JSON.stringify(formJson?.source?.headers ?? {})
   ]);
+
+  
 
 
 

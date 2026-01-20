@@ -86,9 +86,7 @@ export default function AccordianView({
             <div className="p-4 mx-auto">
                 <div className="space-y-1 flex flex-col min-h-0">
                     {groups && Object.entries(groups).map(([group, obj], index) => {
-                        console.log(
-                            "group", group
-                        );
+                   
 
                         return <Accordion key={group} title={obj.label} isFirst={index === 0}>
                             {obj?.fields ? (

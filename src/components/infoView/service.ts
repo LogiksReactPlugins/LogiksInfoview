@@ -58,9 +58,6 @@ export const sqlClient = {
             dbopsId = dbopsid;
         }
 
-        console.log("skipquery,dbopsid", skipquery, dbopsid);
-
-
         if (!skipquery) {
 
             const refid = await getRefId(endpoints, {

@@ -413,7 +413,7 @@ export default function TabView({
     const isTop = !isLeft && !isRight;
     const tabObj = groups[groupNames[activeTabIndex] ?? ""] || null;
 
-    console.log("tabObj", tabObj);
+
 
 
 
@@ -443,7 +443,7 @@ export default function TabView({
         (() => <div className="flex-1 flex justify-center p-4">No UI mode for this type</div>);
 
 
-    console.log("tabObjjjjjjjjjjjjjjjjjjjjjj", tabObj);
+
 
 
     if (isTop) {
