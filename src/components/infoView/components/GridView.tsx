@@ -32,7 +32,9 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     // Pagination state
 
     const [confirmOpen, setConfirmOpen] = useState(false);
-    const [deleteTarget, setDeleteTarget] = useState<Record<string, string> | null>(null);
+    const [deleteTarget, setDeleteTarget] = useState<Record<string, any> | null>(null);
+    const [refreshCounter, setRefreshCounter] = React.useState(0);
+
     // Get the array of data
 
 
@@ -55,16 +57,20 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
 
     };
 
+    const handleFormClose = (data: Record<string, any> | null) => {
+        setEditData(data);
+        setRefreshCounter(c => c + 1);
+    };
 
-
-    const handleDelete = (row: Record<string, string>) => {
-        setDeleteTarget(row);
+    const handleDelete = (row: Record<string, any>) => {
+        let data = normalizeRowSafe(row.data)
+        setDeleteTarget(data);
         setConfirmOpen(true);
     };
 
     const confirmDelete = async () => {
-        console.log("deleteTarget",deleteTarget);
-        
+        console.log("deleteTarget", deleteTarget);
+
         if (!deleteTarget?.id) return;
 
         if (!sqlOpsUrls) {
@@ -135,7 +141,8 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                     Authorization: `Bearer ${sqlOpsUrls.accessToken}`
                 }
             });
-            window.alert("Record deleted successfully.")
+            window.alert("Record deleted successfully.");
+            setRefreshCounter(c => c + 1);
 
         } catch (err) {
             console.error(err);
@@ -177,7 +184,8 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                             endPoints: sqlOpsUrls,
                             actions: { ...source?.actions, ...infoViewJson?.buttons, ...infoViewJson.actions },
                             datagrid: source?.datagrid,
-                            buttons: source?.buttons
+                            buttons: source?.buttons,
+                            refresh: refreshCounter
 
                         }}
                         onButtonClick={handleAction}
@@ -199,7 +207,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                                 }
                             }}
                             initialvalues={editData ?? {}}
-                            setEditData={setEditData}
+                            setEditData={handleFormClose}
                             module_refid={infoViewJson?.module_refid}
                         />
                     }
