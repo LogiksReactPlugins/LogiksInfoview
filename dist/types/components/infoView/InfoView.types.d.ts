@@ -1,6 +1,12 @@
 import { ReactNode, ComponentType } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import { FormikProps } from 'formik';
+export type DbOpsPayload = {
+    refid: string | number;
+    fields: Record<string, any>;
+    datahash: string;
+    refid1?: string | number;
+};
 export interface InfoViewField {
     name: string;
     label?: string;

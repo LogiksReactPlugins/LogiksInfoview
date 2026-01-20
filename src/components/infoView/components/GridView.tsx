@@ -1,21 +1,12 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 import type { ComponentType } from "react";
 import type { Infoview, InfoViewField, InfoViewGroup } from '../InfoView.types.js';
-import { copyToClipboard, normalizeRowSafe, replacePlaceholders } from '../utils.js';
+import { normalizeRowSafe, replacePlaceholders } from '../utils.js';
 import ConfirmModal from './ConfirmationModal.js';
 import LogiksForm from './Form.js';
 
-type AlertState = {
-    type: "success" | "error";
-    message: string;
-};
-type SortDirection = 'asc' | 'desc' | null;
 
-interface SortConfig {
-    key: string;
-    direction: SortDirection;
-}
 
 export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson }:
     {
@@ -47,7 +38,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
 
     const [editData, setEditData] = React.useState<Record<string, any> | null>(null);
     const source = tabObj?.config;
-   
+
     const config = tabObj?.config;
     const formType =
         config?.["popup.form"]
@@ -89,7 +80,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                         ? "form"
                         : "form";
 
-        
+
 
             const form = config?.[formType];
 
@@ -195,6 +186,10 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                         hasFormConfig && <LogiksForm
                             formJson={{
                                 ...config[formType],
+                                source: {
+                                    ...config?.[formType].source,
+                                    refid: editData?.id
+                                },
                                 endPoints: {
                                     ...sqlOpsUrls,
                                     operation: editData ? "update" : "create"

@@ -5,7 +5,7 @@ import { fetchGeolocation, getGeoFieldKeys, replacePlaceholders, transformedObje
 
 
 import NormalFormView from "./NormalFormView.js";
-import type { FormProps } from "../InfoView.types.js";
+import type { FormProps, DbOpsPayload } from "../InfoView.types.js";
 
 import { sqlClient } from "../service.js";
 
@@ -44,13 +44,13 @@ export default function LogiksForm({
   }, [initialvalues]);
 
   const safeSetResolvedData = React.useCallback(
-  (data?: Record<string, any>) => {
-    if (data && Object.keys(data).length > 0) {
-      setResolvedData(data);
-    }
-  },
-  []
-);
+    (data?: Record<string, any>) => {
+      if (data && Object.keys(data).length > 0) {
+        setResolvedData(data);
+      }
+    },
+    []
+  );
 
   // ---------- Fetch Initial Data ----------
   React.useEffect(() => {
@@ -71,9 +71,9 @@ export default function LogiksForm({
             if (isMounted) safeSetResolvedData(result);
           } catch (err) {
             console.error("Method execution failed:", err);
-           
+
           }
-        } 
+        }
       }
 
       if (source.type === "api" && sqlOpsUrls?.operation !== "create") {
@@ -88,7 +88,7 @@ export default function LogiksForm({
           if (isMounted) safeSetResolvedData(response.data);
         } catch (err) {
           console.error("API fetch failed:", err);
-          
+
         }
       }
 
@@ -140,7 +140,7 @@ export default function LogiksForm({
     JSON.stringify(formJson?.source?.headers ?? {})
   ]);
 
-  
+
 
 
 
@@ -272,15 +272,20 @@ export default function LogiksForm({
 
         }
 
+        let payload: DbOpsPayload = {
+          "refid": dbopsId,
+          "fields": finalValues,
+          "datahash": resHashId.data.refhash
+        }
+
+        if (source?.refid) {
+          payload.refid1 = source?.refid
+        }
+
         const res = await axios({
           method: "POST",
           url: sqlOpsUrls.baseURL + sqlOpsUrls[sqlOpsUrls.operation === "update" ? "dbopsUpdate" : "dbopsCreate"],
-          data: {
-            "refid": dbopsId,
-            "refid1": sqlOpsUrls?.refid,
-            "fields": finalValues,
-            "datahash": resHashId.data.refhash
-          },
+          data: payload,
           headers: {
             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
           },
