@@ -639,6 +639,10 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     //     );
     // }
 
+    console.log("source",source);
+    
+
+console.log("source?.querid",source?.querid);
 
 
     return (
@@ -656,7 +660,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                                 cols: source?.cols,
                                 where: source?.where,
                                 orderby: source?.orderby,
-                                queryid:source?.querid
+                                queryid:source?.queryid
                             },
                             endPoints: sqlOpsUrls,
                             actions: { ...source?.actions, ...infoViewJson?.buttons, ...infoViewJson.actions },
