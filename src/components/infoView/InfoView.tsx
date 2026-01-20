@@ -40,7 +40,7 @@ export default function LogiksInfoView({
     if (infoViewJson.infoview?.groups) {
         groups = { ...groups, ...infoViewJson.infoview.groups };
     }
-    const source = infoViewJson?.source;
+   
 
     console.log("module_refid", infoViewJson.module_refid);
 

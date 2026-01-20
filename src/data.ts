@@ -417,18 +417,17 @@ export const example9 = {
 
 
 export const example10 = {
-      "endPoints": {
+
+    "endPoints": {
         "baseURL": "http://192.168.0.20:9999",
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6ImNaTU9lYm4rRWZUYzJ4RHV4VDVkcVpDZkhvdEVYSkxmQ05JekM0a2EzUHh6Vzl3KzFXQTFUY1MrRHRsOU5KQ1B3YklsNXZyc3Uyc2tpTGRSWG5Tc3dBd3F4cDAwRm5hZXhCZlc1VmpyeTJKT29HUTc3T01ldHdOZTd4ZDJwUnF5ODdMVUR1Z0hyNTBOSk1tQnpla3Y4eWk4WHN3c0tGMlAveWFoSTlkd3Z4YjBOMkVBQmM2UDIwTE9yVk1VQ3prMEc4Z2FyNS81Mkw1dmtVTnloYmdrL0J6ZDNHTU5ZNWJaZHNmNUw3VW5pczhmRzF4S2JpLzNNS3c4dFo4WG1NWTZIN0xiVWlTL2p0Ymw4VzRKZ3kyaVN0VEhTWWJtQkI0UWd6VDVJWms9IiwiaWF0IjoxNzY4ODM3MTExLCJleHAiOjE3Njg4NDA3MTEsImp0aSI6ImFjYzoxOjE3Njg4MzcxMTExNzI6d2ViIn0.WXpa82QJJ3m0fNLQZn8V-SjVBqkpThV1KRD8Ph50tLo",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6InJsakY4Yk1ISzNkSlpxNmZ2SGJucVA2bm92cTBHWW1WSEJzdk9hUmUydnZFM3I5bGRLWkNHMUhtQmU0SGl4d0p5cHdoa2lXTTlWM2JrcFZJVGxpVm0yUGY5ZXpKMTFhMnQrQVRHWmpTNUxCT1FSNjVCVWJrYTAzSS9nWlpESDBMNE9jY0kwR2NsMzkyc2pCVnRVSDRsQmNMUzZsQVdMRFpuU1J1RU9WcENhV1dyNU9pNzhVSzRvOVhGeEZzbGxPUFVNM3NML0YwcmZjdHpjekRwQ3hhbW5JWGVqSE1Vcit6WU83YWhHSCt5dGZZY3RZbXBxd0NJOWQ0ejdsZWdCbTQ5eTJ1bGgvczJwM25EaEVGZ2xKZFJmajFJWGtUZkJQbFBnUGJydz09IiwiaWF0IjoxNzY4ODg2Mzg2LCJleHAiOjE3Njg4ODk5ODYsImp0aSI6ImFjYzoxOjE3Njg4ODYzODY1MTg6d2ViIn0.mcel4I1PkOSDAlo9fVPaSkqCfn9CPtZmhSaHbiW7wbU",
         "dbopsGetHash": "/api/dbops",
         "dbopsGetRefId": "/api/dbops/save",
         "dbopsCreate": "/api/dbops/create",
         "dbopsUpdate": "/api/dbops/update",
         "dbopsFetch": "/api/dbops/fetch",
         "registerQuery": "/api/query/save",
-        "runQuery": "/api/query/run",
-        "uploadURL":"/api/files/upload",
-       "refid":"1"
+        "runQuery": "/api/query/run"
     },
     "source": {
         "type": "sql",
@@ -552,7 +551,7 @@ export const example10 = {
             "width": 4
         },
         "participant_count": {
-            "onChange": "pcount",
+            "onChange": "testfunc2",
             "label": "Participant Count",
             "type": "number",
             "required": true,
@@ -565,7 +564,7 @@ export const example10 = {
         }
     },
     "infoview": {
-       
+        "template": "cards",
         "groups": {
             "participant_details": {
                 "label": "Participant Details",
@@ -595,11 +594,10 @@ export const example10 = {
                         "forcefill": {
                             "guid": "#SESS_GUID#",
                             "created_by": "#SESS_USER_ID#",
-                            "hse_induction_id": "#refid#"
+                            "hse_induction_id": "#refid1#"
                         },
                         "fields": {
                             "gender": {
-                                "onChange": "genderfunc",
                                 "label": "Gender",
                                 "type": "select",
                                 "required": true,
@@ -607,18 +605,6 @@ export const example10 = {
                                 "width": 4,
                                 "formatter": "pretty",
                                 "options": [
-                                     {
-                                        "title": "Male",
-                                        "value": "male",
-                                        "class": null,
-                                        "privilege": "*"
-                                    },
-                                      {
-                                        "title": "Female",
-                                        "value": "female",
-                                        "class": null,
-                                        "privilege": "*"
-                                    },
                                     {
                                         "title": "Other",
                                         "value": "other",
@@ -630,12 +616,6 @@ export const example10 = {
                             "count": {
                                 "label": "Count",
                                 "type": "number",
-                                "required": true,
-                                "width": 4
-                            },
-                            "company_name": {
-                                "label": "Company Name",
-                                "type": "text",
                                 "required": true,
                                 "width": 4
                             },
@@ -671,6 +651,13 @@ export const example10 = {
                                         "privilege": "*"
                                     }
                                 ]
+                            },
+                            "company_name": {
+                                "label": "Company Name",
+                                "onChange": "company_required",
+                                "type": "text",
+                                "required": true,
+                                "width": 4
                             },
                             "photograph": {
                                 "label": "Photograph",
@@ -725,7 +712,308 @@ export const example10 = {
             }
         }
     },
-    "script": "ZnVuY3Rpb24gZ2VuZGVyZnVuYyhkYXRhKXsKICAgIGNvbnNvbGUud2FybigiLS0tIitkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKS52YWx1ZSkKfQoKZnVuY3Rpb24gcGNvdW50KGRhdGEpewogICAgY29uc29sZS53YXJuKGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGRhdGEpLnZhbHVlKQp9",
+    "script": "ZnVuY3Rpb24gdGVzdGZ1bmMoZGF0YSl7CiAgICBjb25zb2xlLndhcm4oIi0tLSIrZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoZGF0YSkudmFsdWUpCn0KCmZ1bmN0aW9uIHRlc3RmdW5jMihkYXRhKXsKICAgIGNvbnNvbGUud2Fybihkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKS52YWx1ZSkKfQoKZnVuY3Rpb24gY29tcGFueV9yZXF1aXJlZChkYXRhKXsKICAgIGNvbnNvbGUud2Fybihkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKS52YWx1ZSkKfQo=",
+    "module_refid": "hse.induction",
+    "module_type": "forms"
+}
+
+
+export const example11 = {
+      "endPoints": {
+        "baseURL": "http://192.168.0.20:9999",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6InJsakY4Yk1ISzNkSlpxNmZ2SGJucVA2bm92cTBHWW1WSEJzdk9hUmUydnZFM3I5bGRLWkNHMUhtQmU0SGl4d0p5cHdoa2lXTTlWM2JrcFZJVGxpVm0yUGY5ZXpKMTFhMnQrQVRHWmpTNUxCT1FSNjVCVWJrYTAzSS9nWlpESDBMNE9jY0kwR2NsMzkyc2pCVnRVSDRsQmNMUzZsQVdMRFpuU1J1RU9WcENhV1dyNU9pNzhVSzRvOVhGeEZzbGxPUFVNM3NML0YwcmZjdHpjekRwQ3hhbW5JWGVqSE1Vcit6WU83YWhHSCt5dGZZY3RZbXBxd0NJOWQ0ejdsZWdCbTQ5eTJ1bGgvczJwM25EaEVGZ2xKZFJmajFJWGtUZkJQbFBnUGJydz09IiwiaWF0IjoxNzY4ODg2Mzg2LCJleHAiOjE3Njg4ODk5ODYsImp0aSI6ImFjYzoxOjE3Njg4ODYzODY1MTg6d2ViIn0.mcel4I1PkOSDAlo9fVPaSkqCfn9CPtZmhSaHbiW7wbU",
+        "dbopsGetHash": "/api/dbops",
+        "dbopsGetRefId": "/api/dbops/save",
+        "dbopsCreate": "/api/dbops/create",
+        "dbopsUpdate": "/api/dbops/update",
+        "dbopsFetch": "/api/dbops/fetch",
+        "registerQuery": "/api/query/save",
+        "runQuery": "/api/query/run"
+    },
+    "source": {
+        "type": "sql",
+        "dbopsid": "forms%40hse.induction%403"
+    },
+    "forcefill": {
+        "groupuid": "#SESS_GROUP_NAME#",
+        "guid": "#SESS_GUID#"
+    },
+    "fields": {
+        "company_code_id": {
+            "onChange": "testfunc",
+            "label": "Company",
+            "type": "select",
+            "no-option": "Select Company",
+            "required": true,
+            "width": 4,
+            "ajaxchain": [
+                {
+                    "target": "spv_id",
+                    "src": {
+                        "type": "sql",
+                        "queryid": "forms%40hse.induction%40fields.company_code_id.ajaxchain.0"
+                    }
+                },
+                {
+                    "target": "sector_id",
+                    "src": {
+                        "type": "sql",
+                        "queryid": "forms%40hse.induction%40fields.company_code_id.ajaxchain.1"
+                    }
+                }
+            ],
+            "options": [
+                {
+                    "title": "WEL",
+                    "value": 1
+                },
+                {
+                    "title": "WMEL",
+                    "value": 2
+                }
+            ]
+        },
+        "spv_id": {
+            "label": "SPV",
+            "no-option": "Select SPV",
+            "type": "select",
+            "required": true,
+            "width": 4,
+            "options": []
+        },
+        "sector_id": {
+            "label": "Sector",
+            "type": "select",
+            "no-option": "Select Sector",
+            "required": true,
+            "width": 4,
+            "ajaxchain": {
+                "target": "project_function_id",
+                "src": {
+                    "type": "sql",
+                    "queryid": "forms%40hse.induction%40fields.sector_id.ajaxchain.0"
+                }
+            },
+            "options": []
+        },
+        "project_function_id": {
+            "label": "Project Function",
+            "type": "select",
+            "no-option": "Select Project Function",
+            "required": true,
+            "width": 4,
+            "ajaxchain": {
+                "target": "location_id",
+                "src": {
+                    "type": "sql",
+                    "queryid": "forms%40hse.induction%40fields.project_function_id.ajaxchain.0"
+                }
+            },
+            "options": []
+        },
+        "location_id": {
+            "label": "Location",
+            "type": "select",
+            "no-option": "Select Location",
+            "required": true,
+            "width": 4,
+            "options": []
+        },
+        "date": {
+            "label": "Date",
+            "type": "date",
+            "required": true,
+            "width": 4
+        },
+        "conducted_by_department": {
+            "label": "Conducted By Department",
+            "type": "select",
+            "groupid": "hse_conducted_by_department",
+            "required": true,
+            "width": 4,
+            "options": [
+                {
+                    "title": "WEL HSE",
+                    "value": "wel_hse",
+                    "class": null,
+                    "privilege": "*"
+                },
+                {
+                    "title": "Contractor",
+                    "value": "contractor",
+                    "class": null,
+                    "privilege": "*"
+                }
+            ]
+        },
+        "conducted_by_name": {
+            "label": "Conducted By (Name)",
+            "type": "text",
+            "width": 4
+        },
+        "participant_count": {
+            "onChange": "testfunc2",
+            "label": "Participant Count",
+            "type": "number",
+            "required": true,
+            "width": 4
+        },
+        "photo_attendance": {
+            "label": "Induction Photo/Attendance (Max. Sizes:10MB)",
+            "type": "file",
+            "width": 4
+        }
+    },
+    "infoview": {
+        "template": "cards",
+        "groups": {
+            "participant_details": {
+                "label": "Participant Details",
+                "type": "module",
+                "src": "infoviewTable",
+                "vmode": "edit",
+                "config": {
+                    "type": "sql",
+                    "uimode": "grid",
+                    "uiswitcher": false,
+                    "policy_create": "hse.create.access",
+                    "policy_view": "hse.view.access",
+                    "policy_delete": "hse.delete.access",
+                    "policy_update": "hse.update.access",
+                    "toolbar": {
+                        "search": true,
+                        "print": false,
+                        "export": false,
+                        "email": false
+                    },
+                    "colkey": "hse_induction_id",
+                    "popup.form": {
+                        "source": {
+                            "type": "sql",
+                            "dbopsid": "forms%40hse.induction%40"
+                        },
+                        "forcefill": {
+                            "guid": "#SESS_GUID#",
+                            "created_by": "#SESS_USER_ID#",
+                            "hse_induction_id": "#refid1#"
+                        },
+                        "fields": {
+                            "gender": {
+                                "label": "Gender",
+                                "type": "select",
+                                "required": true,
+                                "groupid": "user_gender",
+                                "width": 4,
+                                "formatter": "pretty",
+                                "options": [
+                                    {
+                                        "title": "Other",
+                                        "value": "other",
+                                        "class": null,
+                                        "privilege": "*"
+                                    }
+                                ]
+                            },
+                            "count": {
+                                "label": "Count",
+                                "type": "number",
+                                "required": true,
+                                "width": 4
+                            },
+                            "company": {
+                                "label": "Company",
+                                "type": "select",
+                                "groupid": "company_type",
+                                "required": true,
+                                "width": 4,
+                                "options": [
+                                    {
+                                        "title": "Wel",
+                                        "value": "wel",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Contractor Staff",
+                                        "value": "contractor_staff",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Contractor Workers",
+                                        "value": "contractor_workers",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Visitor",
+                                        "value": "visitor",
+                                        "class": null,
+                                        "privilege": "*"
+                                    }
+                                ]
+                            },
+                            "company_name": {
+                                "label": "Company Name",
+                                "onChange": "company_required",
+                                "type": "text",
+                                "required": true,
+                                "width": 4
+                            },
+                            "photograph": {
+                                "label": "Photograph",
+                                "type": "file",
+                                "width": 6
+                            }
+                        }
+                    },
+                    "datagrid": {
+                        "id": {
+                            "label": "ID",
+                            "searchable": true
+                        },
+                        "gender": {
+                            "label": "Gender",
+                            "searchable": true,
+                            "sortable": true,
+                            "formatter": "pretty"
+                        },
+                        "company_name": {
+                            "label": "Company Name",
+                            "searchable": true
+                        },
+                        "company": {
+                            "label": "Company",
+                            "searchable": true
+                        },
+                        "photograph": {
+                            "label": "Photograph",
+                            "searchable": true,
+                            "formatter": "pretty"
+                        }
+                    },
+                    "actions1": {
+                        "addInfoRecord": {
+                            "label": "Add Record"
+                        }
+                    },
+                    "buttons": {
+                        "editRecord": {
+                            "label": "Edit Record",
+                            "icon": "fa fa-pen"
+                        },
+                        "deleteRecord": {
+                            "label": "Delete Record",
+                            "icon": "fa fa-trash text-red-500"
+                        }
+                    },
+                    "queryid": "forms%40hse.induction%40infoview.groups.participant_details"
+                },
+                "width": 12
+            }
+        }
+    },
+    "script": "ZnVuY3Rpb24gdGVzdGZ1bmMoZGF0YSl7CiAgICBjb25zb2xlLndhcm4oIi0tLSIrZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoZGF0YSkudmFsdWUpCn0KCmZ1bmN0aW9uIHRlc3RmdW5jMihkYXRhKXsKICAgIGNvbnNvbGUud2Fybihkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKS52YWx1ZSkKfQoKZnVuY3Rpb24gY29tcGFueV9yZXF1aXJlZChkYXRhKXsKICAgIGNvbnNvbGUud2Fybihkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKS52YWx1ZSkKfQo=",
     "module_refid": "hse.induction",
     "module_type": "forms"
 }

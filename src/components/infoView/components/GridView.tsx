@@ -655,7 +655,8 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                                 type: "sql",
                                 cols: source?.cols,
                                 where: source?.where,
-                                orderby: source?.orderby
+                                orderby: source?.orderby,
+                                queryid:source?.querid
                             },
                             endPoints: sqlOpsUrls,
                             actions: { ...source?.actions, ...infoViewJson?.buttons, ...infoViewJson.actions },
@@ -690,7 +691,19 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                 </>
             ) : (
 
-               <div>Report not found</div>
+               hasFormConfig && <LogiksForm
+                            formJson={{
+                                ...config[formType],
+                                endPoints: {
+                                    ...sqlOpsUrls,
+                                    operation: editData ? "update" : "create"
+
+                                }
+                            }}
+                            initialvalues={editData ?? {}}
+                            setEditData={setEditData}
+                            module_refid={infoViewJson?.module_refid}
+                        />
 
             )}
         </>
