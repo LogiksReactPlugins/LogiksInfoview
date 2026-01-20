@@ -42,9 +42,6 @@ export default function LogiksInfoView({
     }
    
 
-    console.log("module_refid", infoViewJson.module_refid);
-
-
     React.useEffect(() => {
         let cancelled = false;
 

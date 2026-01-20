@@ -287,11 +287,16 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     // };
 
     // Action handlers
-    const handleEdit = (row: Record<string, string>, index: number) => {
-        setEditData(row)
+    const handleEdit = (row: Record<string, any>, index: number) => {
+        console.log("row",row);
+        
+        setEditData(row?.data)
         // methods?.editInfoRecord?.({ [formType]: tabObj?.config?.[formType] }, refid, row)
         // Implement edit logic here
     };
+
+    console.log("editData",editData);
+    
 
     // const handleView = (row: Record<string, string>) => {
     //     methods?.viewInfoRecord?.(row, tabObj?.config?.info)
@@ -639,10 +644,10 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     //     );
     // }
 
-    console.log("source",source);
-    
+    console.log("source", source);
 
-console.log("source?.querid",source?.querid);
+
+    console.log("source?.querid", source?.querid);
 
 
     return (
@@ -660,7 +665,7 @@ console.log("source?.querid",source?.querid);
                                 cols: source?.cols,
                                 where: source?.where,
                                 orderby: source?.orderby,
-                                queryid:source?.queryid
+                                queryid: source?.queryid
                             },
                             endPoints: sqlOpsUrls,
                             actions: { ...source?.actions, ...infoViewJson?.buttons, ...infoViewJson.actions },
@@ -695,19 +700,7 @@ console.log("source?.querid",source?.querid);
                 </>
             ) : (
 
-               hasFormConfig && <LogiksForm
-                            formJson={{
-                                ...config[formType],
-                                endPoints: {
-                                    ...sqlOpsUrls,
-                                    operation: editData ? "update" : "create"
-
-                                }
-                            }}
-                            initialvalues={editData ?? {}}
-                            setEditData={setEditData}
-                            module_refid={infoViewJson?.module_refid}
-                        />
+                <p>Report Not found</p>
 
             )}
         </>
