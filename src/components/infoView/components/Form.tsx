@@ -37,11 +37,9 @@ export default function LogiksForm({
 
 
 
-  React.useEffect(() => {
-    if (initialvalues && Object.keys(initialvalues).length > 0) {
-      setResolvedData(initialvalues);
-    }
-  }, [initialvalues]);
+ React.useEffect(() => {
+  setResolvedData(initialvalues ?? {});
+}, [initialvalues]);
 
   const safeSetResolvedData = React.useCallback(
     (data?: Record<string, any>) => {

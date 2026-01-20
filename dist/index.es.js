@@ -5386,7 +5386,7 @@ function Bc({
 }) {
   const f = e.endPoints, d = e?.source?.refid, [y, h] = re.useState(i), p = re.useMemo(() => cs(e.fields), [e.fields]);
   re.useEffect(() => {
-    i && Object.keys(i).length > 0 && h(i);
+    h(i ?? {});
   }, [i]);
   const v = re.useCallback(
     (g) => {
