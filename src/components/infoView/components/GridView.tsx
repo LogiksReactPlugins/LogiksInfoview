@@ -68,6 +68,9 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
         setConfirmOpen(true);
     };
 
+    console.log("config?.[formType]", config?.[formType]);
+
+
     const confirmDelete = async () => {
         console.log("deleteTarget", deleteTarget);
 
@@ -93,6 +96,15 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
             const form = config?.[formType];
 
             if (!form?.source) throw new Error("Form source missing");
+
+            let skipquery = false;
+            let dbopsId;
+
+            if (form?.source?.dbopsid) {
+                skipquery = true;
+                dbopsId = form?.source?.dbopsid;
+            }
+
             const resHashId = await axios({
                 method: "GET",
                 url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetHash,
@@ -101,41 +113,48 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                 }
             });
 
+            if (!skipquery) {
 
-            let query = { ...form.source, refid: deleteTarget.id };
+                let query = { ...form.source, refid: deleteTarget.id };
 
-            if (form.source.where) {
-                query = {
-                    ...query,
-                    where: replacePlaceholders(form.source.where, {
-                        refid: deleteTarget.id
-                    })
-                };
+                if (form.source.where) {
+                    query = {
+                        ...query,
+                        "where": replacePlaceholders(form.source.where, {
+                            refid: deleteTarget?.id,
+                        }),
+                    }
+                }
+
+                const resQueryId = await axios({
+                    method: "POST",
+                    url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
+                    data: {
+                        operation: "update",
+                        source: query,
+                        fields: form.fields,
+                        forcefill: form.forcefill,
+                        datahash: resHashId.data.refhash,
+                        "scrid": infoViewJson?.module_refid
+                    },
+
+                    headers: {
+                        "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                    },
+                });
+                dbopsId = resQueryId?.data.refid;
+
             }
 
-
-            const resQueryId = await axios({
-                method: "POST",
-                url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsGetRefId,
-                data: {
-                    operation: "update",
-                    source: query,
-                    fields: form.fields,
-                    forcefill: form.forcefill,
-                    datahash: resHashId.data.refhash
-                },
-                headers: {
-                    Authorization: `Bearer ${sqlOpsUrls.accessToken}`
-                }
-            });
 
             await axios({
                 method: "POST",
                 url: sqlOpsUrls.baseURL + sqlOpsUrls.dbopsUpdate,
                 data: {
-                    refid: resQueryId.data.refid,
+                    "refid": dbopsId,
                     fields: { blocked: "true" },
-                    datahash: resHashId.data.refhash
+                    "datahash": resHashId.data.refhash,
+                    "refid1": deleteTarget?.id
                 },
                 headers: {
                     Authorization: `Bearer ${sqlOpsUrls.accessToken}`
@@ -219,7 +238,23 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                 </>
             ) : (
 
-                <p>Report not available</p>
+                hasFormConfig && <LogiksForm
+                    formJson={{
+                        ...config[formType],
+                        source: {
+                            ...config?.[formType].source,
+                            refid: editData?.id
+                        },
+                        endPoints: {
+                            ...sqlOpsUrls,
+                            operation: editData ? "update" : "create"
+
+                        }
+                    }}
+                    initialvalues={editData ?? {}}
+                    setEditData={handleFormClose}
+                    module_refid={infoViewJson?.module_refid}
+                />
 
             )}
         </>
