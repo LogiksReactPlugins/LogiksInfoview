@@ -238,23 +238,8 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                 </>
             ) : (
 
-                hasFormConfig && <LogiksForm
-                    formJson={{
-                        ...config[formType],
-                        source: {
-                            ...config?.[formType].source,
-                            refid: editData?.id
-                        },
-                        endPoints: {
-                            ...sqlOpsUrls,
-                            operation: editData ? "update" : "create"
-
-                        }
-                    }}
-                    initialvalues={editData ?? {}}
-                    setEditData={handleFormClose}
-                    module_refid={infoViewJson?.module_refid}
-                />
+               
+               <p>Report not available</p>
 
             )}
         </>
