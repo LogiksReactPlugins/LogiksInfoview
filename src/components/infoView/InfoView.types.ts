@@ -185,6 +185,15 @@ export interface FormField {
     method?: string;
     vmode?: string;
     queryid?: string;
+    min?: number | string;
+    max?: number | string;
+    minlength?: number;
+    maxlength?: number;
+    onChange?: string;
+    onBlur?: string;
+    onFocus?: string;
+    onClick?: string;
+    step?: string | number;
 
 }
 
@@ -213,7 +222,7 @@ export interface FormProps {
     callback?: (res: any) => void;
     components?: Record<string, ReactNode>
     initialvalues?: Record<string, any>;
-    module_refid?: string | undefined
+    module_refid?: string | undefined;
 
 }
 

@@ -402,7 +402,7 @@ export default function FieldRenderer({
           }
 
 
-          const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, undefined, module_refid);
+          const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, value, module_refid);
 
           let valueKey = field.valueKey ?? "value";
           let labelKey = field.labelKey ?? "title";
@@ -554,6 +554,27 @@ export default function FieldRenderer({
     }
   };
 
+  const executeFieldMethod = async (
+    trigger: "onChange" | "onBlur" | "onFocus" | "onClick",
+    field: FormField,
+    value?: any
+  ) => {
+    const methodName = field[trigger] as keyof typeof methods | undefined;
+    if (!methodName) return;
+
+    const fn = methods?.[methodName];
+    if (typeof fn !== "function") {
+      console.error(`Method "${String(methodName)}" not found`);
+      return;
+    }
+
+    try {
+      await Promise.resolve(fn(value));
+    } catch (err) {
+      console.error(`Method "${String(methodName)}" failed`, err);
+    }
+  };
+
 
   switch (field.type) {
 
@@ -584,6 +605,7 @@ export default function FieldRenderer({
         formik.setFieldValue(key, val); // store selected value
         setSearch("");
         setOpen(false);
+        executeFieldMethod("onChange", field, `${key}-${val}`)
       };
 
       return (
@@ -636,6 +658,7 @@ export default function FieldRenderer({
               {filteredOptions.length > 0 ? (
                 filteredOptions.map(([val, label], idx) => (
                   <div
+                    id={`${key}-${val}`}
                     key={val}
                     data-index={idx}
                     className={`px-3 py-2 cursor-pointer text-sm
@@ -748,6 +771,7 @@ export default function FieldRenderer({
                             : "hover:bg-gray-50"}`}
                     >
                       <input
+                        id={`${key}-${val}`}
                         type="checkbox"
                         checked={valueArray.includes(val)}
                         onChange={(e) => {
@@ -755,6 +779,7 @@ export default function FieldRenderer({
                             ? [...valueArray, val]
                             : valueArray.filter(v => v !== val);
                           formik.setFieldValue(key, next);
+                          executeFieldMethod("onChange", field, `${key}-${val}`)
                         }}
                         className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
                       />
@@ -852,6 +877,7 @@ export default function FieldRenderer({
               {filteredOptions.length > 0 ? (
                 filteredOptions.map(([val, label], idx) => (
                   <div
+                    id={`${key}-${val}`}
                     key={val}
                     data-index={idx}
                     onMouseDown={() => {
@@ -859,6 +885,7 @@ export default function FieldRenderer({
                       setOpen(false);
                       setSearch("");
                       setHighlightedIndex(0);
+                      executeFieldMethod("onChange", field, `${key}-${val}`)
                     }}
                     className={`px-2 py-1 rounded cursor-pointer text-sm
                   ${formik.values[key] === val
@@ -895,13 +922,20 @@ export default function FieldRenderer({
             </label>
             <div className="relative">
               <textarea
-
+                id={key}
                 className={`${baseInputClasses} ${focusClasses} min-h-[120px] resize-none`}
                 onFocus={() => setIsFocused(true)}
                 name={key}
                 value={formik.values[key]}
                 onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  formik.setFieldValue(
+                    key,
+                    e.target.value
+                  )
+                  executeFieldMethod("onChange", field, `${key}`)
+                }
+                }
                 placeholder={field.placeholder}
                 disabled={field.disabled}
               />
@@ -921,6 +955,110 @@ export default function FieldRenderer({
 
     case "select":
 
+      if (field.multiple === true) {
+        const valueArray: string[] = formik.values[key] ?? [];
+
+        return (
+          <div className="relative">
+            <label className={labelClasses}>
+              {field.label}
+              {field.required && <span className="text-red-500 ml-1">*</span>}
+            </label>
+
+            {/* TRIGGER */}
+            <div
+              ref={triggerRef}
+              tabIndex={0}
+              className="cursor-pointer select-none border border-gray-300 rounded-lg px-4 py-2.5 bg-white flex justify-between items-center"
+              onClick={() => {
+                setOpen(v => !v);
+                setHighlightedIndex(0);
+              }}
+              onKeyDown={(e) => handleKeyDown(e, false)}
+              onBlur={() => {
+                if (field.multiple) return;
+                setTimeout(() => {
+                  setOpen(false);
+                  setSearch("");
+                }, 150);
+              }}
+            >
+              <span className="text-sm text-gray-700 truncate">
+                {valueArray.length > 0
+                  ? valueArray.join(", ")
+                  : `Select ${field.label}`}
+              </span>
+
+              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+
+            {/* DROPDOWN */}
+            <DropdownPortal anchorRef={triggerRef} open={open}>
+              <div
+                ref={listRef}
+                className="bg-white border border-gray-200 rounded-lg shadow-md max-h-60 overflow-y-auto p-2"
+              >
+                {/* SEARCH */}
+                {field.search && (
+                  <div className="sticky top-0 bg-white p-1">
+                    <input
+                      type="text"
+                      value={search}
+                      onChange={(e) => {
+                        setSearch(e.target.value);
+                        setHighlightedIndex(0);
+                      }}
+                      placeholder="Search..."
+                      className="px-2 py-[5px] rounded w-full border border-gray-200 focus:outline-none"
+                    />
+                  </div>
+                )}
+
+                {/* OPTIONS */}
+                {filteredOptions.length > 0 ? (
+                  filteredOptions.map(([val, label], idx) => (
+                    <label
+                      key={val}
+                      data-index={idx}
+                      className={`flex items-center gap-x-2 px-2 py-1 rounded cursor-pointer text-sm
+                    ${valueArray.includes(val)
+                          ? "bg-indigo-50 text-indigo-600 font-medium"
+                          : highlightedIndex === idx
+                            ? "bg-gray-100"
+                            : "hover:bg-gray-50"}`}
+                    >
+                      <input
+                        id={`${key}-${val}`}
+                        type="checkbox"
+                        checked={valueArray.includes(val)}
+                        onChange={(e) => {
+                          const next = e.target.checked
+                            ? [...valueArray, val]
+                            : valueArray.filter(v => v !== val);
+                          formik.setFieldValue(key, next);
+                          executeFieldMethod("onChange", field, `${key}-${val}`)
+                        }}
+                        className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                      />
+                      {label}
+                    </label>
+                  ))
+                ) : (
+                  <div className="px-2 py-1 text-gray-400 text-sm">No results</div>
+                )}
+              </div>
+            </DropdownPortal>
+
+            {formik.touched[key] && formik.errors[key] && (
+              <span className="text-xs text-red-500 ml-2">{String(formik.errors[key])}</span>
+            )}
+          </div>
+        );
+      }
+
+
       return (
         <div className="relative">
           <label className={labelClasses}>
@@ -932,9 +1070,17 @@ export default function FieldRenderer({
               className={`${baseInputClasses} ${focusClasses} appearance-none cursor-pointer pr-12`}
               onFocus={() => setIsFocused(true)}
               name={key}
+              id={key}
               value={formik.values[key]}
               onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              onChange={(e) => {
+                formik.setFieldValue(
+                  key,
+                  e.target.value === "" ? "" : e.target.value
+                )
+                executeFieldMethod("onChange", field, `${key}`)
+              }
+              }
               disabled={field.disabled}
             >
               <option value="" disabled>
@@ -1001,7 +1147,14 @@ export default function FieldRenderer({
                   name={key}
                   checked={formik.values[key] === val}
                   value={val}
-                  onChange={formik.handleChange}
+                  onChange={(e) => {
+                    formik.setFieldValue(
+                      key,
+                      e.target.value === "" ? "" : e.target.value
+                    )
+                    executeFieldMethod("onChange", field, `${key}-${val}`)
+                  }
+                  }
                   onBlur={formik.handleBlur}
                   disabled={field.disabled}
                   className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
@@ -1035,6 +1188,7 @@ export default function FieldRenderer({
                 className="flex items-center gap-x-2 text-sm font-medium text-gray-700 cursor-pointer"
               >
                 <input
+                  id={`${key}-${val}`}
                   type="checkbox"
                   checked={valueArray.includes(val)}
                   onChange={(e) => {
@@ -1043,6 +1197,7 @@ export default function FieldRenderer({
                       : valueArray.filter((v) => v !== val);
 
                     formik.setFieldValue(key, next);
+                    executeFieldMethod("onChange", field, `${key}-${val}`)
                   }}
                   onBlur={formik.handleBlur}
                   disabled={field.disabled}
@@ -1179,6 +1334,7 @@ export default function FieldRenderer({
             )}
 
             <input
+              id={key}
               type="file"
               className={`${baseInputClasses} ${focusClasses} ${field.icon ? "pl-9" : ""} `}
               onFocus={() => setIsFocused(true)}
@@ -1187,6 +1343,7 @@ export default function FieldRenderer({
               onChange={(e) => {
                 const files = e.currentTarget.files;
                 if (files) handleFileUpload(files);
+                executeFieldMethod("onChange", field, `${key}`)
               }}
               onBlur={formik.handleBlur}
 
@@ -1231,10 +1388,17 @@ export default function FieldRenderer({
 
           <div className="relative">
             <textarea
-              id={`${key}-json`}
+              id={key}
               name={key}
               value={formik.values[key]}
-              onChange={(e) => formik.setFieldValue(key, e.target.value)}
+              onChange={(e) => {
+                formik.setFieldValue(
+                  key,
+                  e.target.value
+                )
+                executeFieldMethod("onChange", field, `${key}`)
+              }
+              }
               onBlur={formik.handleBlur}
               placeholder={field.placeholder || "Enter valid JSON"}
               disabled={field.disabled}
@@ -1273,10 +1437,20 @@ export default function FieldRenderer({
             )}
 
             <input
+              id={key}
               type="date"
               name={key}
+              min={field.min}
+              max={field.max}
               value={formik.values[key]}
-              onChange={formik.handleChange}
+              onChange={(e) => {
+                formik.setFieldValue(
+                  key,
+                  e.target.value
+                )
+                executeFieldMethod("onChange", field, `${key}`)
+              }
+              }
               onBlur={formik.handleBlur}
               placeholder={field.placeholder}
               disabled={field.disabled}
@@ -1300,6 +1474,58 @@ export default function FieldRenderer({
       );
     }
 
+    case "number":
+      return (
+        <div className="relative">
+          <label className={labelClasses}>
+            {field.label}
+            {field.required && <span className="text-red-500 ml-1">*</span>}
+
+          </label>
+          <div className="relative">
+
+            {field.icon && (
+              <div className="absolute z-10 left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                {renderIcon(field)}
+              </div>
+            )}
+
+            <input
+
+              id={key}
+              type={field.type || "text"}
+              className={`${baseInputClasses} ${focusClasses} ${field.icon ? "pl-9" : ""} `}
+              onFocus={() => setIsFocused(true)}
+              name={key}
+              value={formik.values[key]}
+              onBlur={formik.handleBlur}
+              onChange={(e) => {
+                formik.setFieldValue(
+                  key,
+                  e.target.value
+                )
+                executeFieldMethod("onChange", field, `${key}`)
+              }
+              }
+              step={field.step}
+              placeholder={field.placeholder}
+              disabled={field.disabled}
+              min={field.min}
+              max={field.max}
+
+
+            />
+            {/* Animated border glow */}
+            <div className={`absolute inset-0 rounded-lg bg-gradient-to-r from-purple-400 to-indigo-400 opacity-0 transition-opacity duration-300 pointer-events-none ${isFocused ? 'opacity-20' : ''
+              }`} style={{ zIndex: -1, filter: 'blur(8px)' }}></div>
+          </div>
+          {formik.touched[key] && formik.errors[key] &&
+
+            <span className="text-xs text-red-500">{String(formik.errors[key])}</span>
+          }
+        </div>
+      );
+
     default:
 
       return (
@@ -1318,6 +1544,7 @@ export default function FieldRenderer({
             )}
 
             <input
+              id={key}
               type={field.type || "text"}
               className={`${baseInputClasses} ${focusClasses} ${field.icon ? "pl-9" : ""} `}
               onFocus={() => setIsFocused(true)}
@@ -1327,6 +1554,9 @@ export default function FieldRenderer({
               onChange={formik.handleChange}
               placeholder={field.placeholder}
               disabled={field.disabled}
+              step={field.step}
+              minLength={field.minlength}
+              maxLength={field.maxlength}
 
             />
             {/* Animated border glow */}
