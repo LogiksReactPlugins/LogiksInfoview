@@ -718,8 +718,11 @@ export const example10 = {
 }
 
 
+
+
+
 export const example11 = {
-      "endPoints": {
+     "endPoints": {
         "baseURL": "http://192.168.0.20:9999",
         "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6InhZc01tbVhQUDN1VmJPOFZVczhQZWU2UmozVEpYenRVejh4aFlBLzdXejFRT04wL2pGMmMyNDd4YkZaYlBUcm9IckdGbkZOUlQxQ1Z3WUxVeEQxUVYxYVJoQnlhcmhaT0JBRmVBRk01Lys4R0lsU2dhTGRPWUY1Z1Jyd2lzVkFMZm9GQnpEL2VUdm1XL1BEL2Y0SXpuOEdBNUxmWS9abmJjODA0c0lLNVUwejduQjl0N3AyODhIZlo2VGg2cG4rRHZkSjhPanZEcWNDUW1ZRVk1R3dxNDRxTWZ6QngwSWZGZjZuZEZPZ2Q4MGpuZlluVGQ4SXFuQXpmb0k0Y3Zad1N3dk9HemtWMHJFY3QwclgrWTNDaFI1VWpKN1ZmUmNjN0VvakZqZz09IiwiaWF0IjoxNzY4ODkwMDIwLCJleHAiOjE3Njg4OTM2MjAsImp0aSI6ImFjYzoxOjE3Njg4OTAwMjA3Njg6d2ViIn0.jc7dqXPDWYUcCbLv5uiHBjrIm2aZ0ohnR9EDfFeA6NQ",
         "dbopsGetHash": "/api/dbops",
@@ -730,290 +733,138 @@ export const example11 = {
         "registerQuery": "/api/query/save",
         "runQuery": "/api/query/run"
     },
-    "source": {
-        "type": "sql",
-        "dbopsid": "forms%40hse.induction%403"
+    "hooks": {
+        "preload": {
+            "helpers": [
+                "countries"
+            ]
+        }
     },
     "forcefill": {
         "groupuid": "#SESS_GROUP_NAME#",
-        "guid": "#SESS_GUID#"
+        "guid": "#SESS_GUID#",
+        "type": "warehouse"
     },
+    "source": {
+        "type": "sql",
+        "dbopsid": "forms%40warehouse.main%401"
+    },
+    "script": "company",
     "fields": {
-        "company_code_id": {
-            "onChange": "testfunc",
+        "company_id": {
             "label": "Company",
             "type": "select",
+            "orderBy": "name ASC",
             "no-option": "Select Company",
+            "group": "Info",
             "required": true,
-            "width": 4,
-            "ajaxchain": [
-                {
-                    "target": "spv_id",
-                    "src": {
-                        "type": "sql",
-                        "queryid": "forms%40hse.induction%40fields.company_code_id.ajaxchain.0"
-                    }
-                },
-                {
-                    "target": "sector_id",
-                    "src": {
-                        "type": "sql",
-                        "queryid": "forms%40hse.induction%40fields.company_code_id.ajaxchain.1"
-                    }
-                }
-            ],
             "options": [
                 {
-                    "title": "WEL",
-                    "value": 1
-                },
-                {
-                    "title": "WMEL",
-                    "value": 2
+                    "title": "Smartinfologiks",
+                    "value": 9
                 }
             ]
         },
-        "spv_id": {
-            "label": "SPV",
-            "no-option": "Select SPV",
-            "type": "select",
-            "required": true,
-            "width": 4,
-            "options": []
+        "name": {
+            "label": "Name",
+            "group": "Info",
+            "required": true
         },
-        "sector_id": {
-            "label": "Sector",
-            "type": "select",
-            "no-option": "Select Sector",
-            "required": true,
-            "width": 4,
-            "ajaxchain": {
-                "target": "project_function_id",
-                "src": {
-                    "type": "sql",
-                    "queryid": "forms%40hse.induction%40fields.sector_id.ajaxchain.0"
-                }
-            },
-            "options": []
+        "branch_code": {
+            "label": "Code (E.g- de,cg)",
+            "group": "Info",
+            "required": true
         },
-        "project_function_id": {
-            "label": "Project Function",
-            "type": "select",
-            "no-option": "Select Project Function",
-            "required": true,
-            "width": 4,
-            "ajaxchain": {
-                "target": "location_id",
-                "src": {
-                    "type": "sql",
-                    "queryid": "forms%40hse.induction%40fields.project_function_id.ajaxchain.0"
-                }
-            },
-            "options": []
+        "tags": {
+            "label": "Tags",
+            "type": "tags",
+            "group": "Info"
         },
-        "location_id": {
-            "label": "Location",
-            "type": "select",
-            "no-option": "Select Location",
-            "required": true,
-            "width": 4,
-            "options": []
+        "mail": {
+            "label": "E-mail",
+            "group": "Info",
+            "type": "email",
+            "required": true
         },
-        "date": {
-            "label": "Date",
-            "type": "date",
-            "required": true,
-            "width": 4
+        "landline": {
+            "label": "Landline",
+            "group": "Info",
+            "required": true
         },
-        "conducted_by_department": {
-            "label": "Conducted By Department",
-            "type": "select",
-            "groupid": "hse_conducted_by_department",
+        "region": {
+            "label": "Region",
+            "group": "Address",
+            "required": true
+        },
+        "country": {
+            "label": "Country",
+            "group": "Address",
+            "type": "radio",
+            "orderby": "title asc",
             "required": true,
-            "width": 4,
+            "queryid": "forms%40warehouse.main%40undefined"
+        },
+        "address": {
+            "label": "Address",
+            "group": "Address",
+            "type": "textarea",
+            "required": true
+        },
+        "zipcode": {
+            "label": "Zipcode",
+            "group": "Address",
+            "required": true
+        },
+        "contact_person1": {
+            "label": "Contact Person1",
+            "group": "Contact",
+            "required": true
+        },
+        "contact_designation1": {
+            "label": "Contact Person1 Designation",
+            "group": "Contact",
+            "required": true
+        },
+        "contact_person2": {
+            "label": "Contact Person2",
+            "group": "Contact"
+        },
+        "contact_designation2": {
+            "label": "Contact Person2 Designation",
+            "group": "Contact"
+        },
+        "manager": {
+            "label": "Manager Name",
+            "group": "Contact"
+        },
+        "blocked": {
+            "label": "Blocked",
+            "group": "Info",
+            "type": "select",
+            "groupid": "boolean",
+            "required": true,
             "options": [
                 {
-                    "title": "WEL HSE",
-                    "value": "wel_hse",
-                    "class": null,
+                    "title": "False",
+                    "value": "false",
+                    "class": "",
                     "privilege": "*"
                 },
                 {
-                    "title": "Contractor",
-                    "value": "contractor",
+                    "title": "True",
+                    "value": "true",
+                    "class": "",
+                    "privilege": "*"
+                },
+                {
+                    "title": "True",
+                    "value": null,
                     "class": null,
                     "privilege": "*"
                 }
             ]
-        },
-        "conducted_by_name": {
-            "label": "Conducted By (Name)",
-            "type": "text",
-            "width": 4
-        },
-        "participant_count": {
-            "onChange": "testfunc2",
-            "label": "Participant Count",
-            "type": "number",
-            "required": true,
-            "width": 4
-        },
-        "photo_attendance": {
-            "label": "Induction Photo/Attendance (Max. Sizes:10MB)",
-            "type": "file",
-            "width": 4
         }
     },
-    "infoview": {
-        "template": "cards",
-        "groups": {
-            "participant_details": {
-                "label": "Participant Details",
-                "type": "module",
-                "src": "infoviewTable",
-                "vmode": "edit",
-                "config": {
-                    "type": "sql",
-                    "uimode": "grid",
-                    "uiswitcher": false,
-                    "policy_create": "hse.create.access",
-                    "policy_view": "hse.view.access",
-                    "policy_delete": "hse.delete.access",
-                    "policy_update": "hse.update.access",
-                    "toolbar": {
-                        "search": true,
-                        "print": false,
-                        "export": false,
-                        "email": false
-                    },
-                    "colkey": "hse_induction_id",
-                    "popup.form": {
-                        "source": {
-                            "type": "sql",
-                            "dbopsid": "forms%40hse.induction%40"
-                        },
-                        "forcefill": {
-                            "guid": "#SESS_GUID#",
-                            "created_by": "#SESS_USER_ID#",
-                            "hse_induction_id": "#refid1#"
-                        },
-                        "fields": {
-                            "gender": {
-                                "label": "Gender",
-                                "type": "select",
-                                "required": true,
-                                "groupid": "user_gender",
-                                "width": 4,
-                                "formatter": "pretty",
-                                "options": [
-                                    {
-                                        "title": "Other",
-                                        "value": "other",
-                                        "class": null,
-                                        "privilege": "*"
-                                    }
-                                ]
-                            },
-                            "count": {
-                                "label": "Count",
-                                "type": "number",
-                                "required": true,
-                                "width": 4
-                            },
-                            "company": {
-                                "label": "Company",
-                                "type": "select",
-                                "groupid": "company_type",
-                                "required": true,
-                                "width": 4,
-                                "options": [
-                                    {
-                                        "title": "Wel",
-                                        "value": "wel",
-                                        "class": null,
-                                        "privilege": "*"
-                                    },
-                                    {
-                                        "title": "Contractor Staff",
-                                        "value": "contractor_staff",
-                                        "class": null,
-                                        "privilege": "*"
-                                    },
-                                    {
-                                        "title": "Contractor Workers",
-                                        "value": "contractor_workers",
-                                        "class": null,
-                                        "privilege": "*"
-                                    },
-                                    {
-                                        "title": "Visitor",
-                                        "value": "visitor",
-                                        "class": null,
-                                        "privilege": "*"
-                                    }
-                                ]
-                            },
-                            "company_name": {
-                                "label": "Company Name",
-                                "onChange": "company_required",
-                                "type": "text",
-                                "required": true,
-                                "width": 4
-                            },
-                            "photograph": {
-                                "label": "Photograph",
-                                "type": "file",
-                                "width": 6
-                            }
-                        }
-                    },
-                    "datagrid": {
-                        "id": {
-                            "label": "ID",
-                            "searchable": true
-                        },
-                        "gender": {
-                            "label": "Gender",
-                            "searchable": true,
-                            "sortable": true,
-                            "formatter": "pretty"
-                        },
-                        "company_name": {
-                            "label": "Company Name",
-                            "searchable": true
-                        },
-                        "company": {
-                            "label": "Company",
-                            "searchable": true
-                        },
-                        "photograph": {
-                            "label": "Photograph",
-                            "searchable": true,
-                            "formatter": "pretty"
-                        }
-                    },
-                    "actions1": {
-                        "addInfoRecord": {
-                            "label": "Add Record"
-                        }
-                    },
-                    "buttons": {
-                        "editRecord": {
-                            "label": "Edit Record",
-                            "icon": "fa fa-pen"
-                        },
-                        "deleteRecord": {
-                            "label": "Delete Record",
-                            "icon": "fa fa-trash text-red-500"
-                        }
-                    },
-                    "queryid": "forms%40hse.induction%40infoview.groups.participant_details"
-                },
-                "width": 12
-            }
-        }
-    },
-    "script": "ZnVuY3Rpb24gdGVzdGZ1bmMoZGF0YSl7CiAgICBjb25zb2xlLndhcm4oIi0tLSIrZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoZGF0YSkudmFsdWUpCn0KCmZ1bmN0aW9uIHRlc3RmdW5jMihkYXRhKXsKICAgIGNvbnNvbGUud2Fybihkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKS52YWx1ZSkKfQoKZnVuY3Rpb24gY29tcGFueV9yZXF1aXJlZChkYXRhKXsKICAgIGNvbnNvbGUud2Fybihkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKS52YWx1ZSkKfQo=",
-    "module_refid": "hse.induction",
+    "module_refid": "warehouse.main",
     "module_type": "forms"
 }

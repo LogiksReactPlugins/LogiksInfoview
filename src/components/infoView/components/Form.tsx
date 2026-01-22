@@ -36,8 +36,6 @@ export default function LogiksForm({
   }, [formJson.fields]);
 
 
-  console.log("initialvalues", initialvalues);
-  console.log("resolvedData", resolvedData);
 
 
   React.useEffect(() => {
@@ -144,7 +142,7 @@ export default function LogiksForm({
 
 
 
-  console.log("source?.refid", formJson?.source?.refid);
+
 
 
 

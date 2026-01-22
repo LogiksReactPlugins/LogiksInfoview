@@ -68,11 +68,10 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
         setConfirmOpen(true);
     };
 
-    console.log("config?.[formType]", config?.[formType]);
 
 
     const confirmDelete = async () => {
-        console.log("deleteTarget", deleteTarget);
+   
 
         if (!deleteTarget?.id) return;
 
@@ -225,6 +224,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
 
                                 }
                             }}
+                            methods={methods}
                             initialvalues={editData ?? {}}
                             setEditData={handleFormClose}
                             module_refid={infoViewJson?.module_refid}
