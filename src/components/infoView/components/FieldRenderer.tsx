@@ -1553,7 +1553,14 @@ console.log("methods in noram FieldRenderer",methods);
               name={key}
               value={formik.values[key]}
               onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+               onChange={(e) => {
+                formik.setFieldValue(
+                  key,
+                  e.target.value
+                )
+                executeFieldMethod("onChange", field, `${key}`)
+              }
+              }
               placeholder={field.placeholder}
               disabled={field.disabled}
               step={field.step}

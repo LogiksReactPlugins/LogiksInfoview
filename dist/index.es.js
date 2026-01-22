@@ -139,7 +139,7 @@ function Sa() {
     }
     function c(b, E) {
       function N() {
-        J || (J = !0, console.error(
+        X || (X = !0, console.error(
           "%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)",
           E
         ));
@@ -248,7 +248,7 @@ React keys must be passed directly to JSX without using spread:
         return b();
       }
     };
-    var J, L = {}, Z = h.react_stack_bottom_frame.bind(
+    var X, L = {}, Z = h.react_stack_bottom_frame.bind(
       h,
       s
     )(), w = W(n(s)), A = {};
@@ -3379,9 +3379,9 @@ var tn = Ze && Ze.isMap, Cl = tn ? dr(tn) : Fl, Il = "[object Set]";
 function Rl(e) {
   return Ve(e) && _e(e) == Il;
 }
-var rn = Ze && Ze.isSet, Pl = rn ? dr(rn) : Rl, Dl = 1, Ml = 2, kl = 4, na = "[object Arguments]", Ll = "[object Array]", zl = "[object Boolean]", Vl = "[object Date]", Bl = "[object Error]", aa = "[object Function]", Gl = "[object GeneratorFunction]", Ul = "[object Map]", Kl = "[object Number]", sa = "[object Object]", ql = "[object RegExp]", Yl = "[object Set]", Hl = "[object String]", Wl = "[object Symbol]", Zl = "[object WeakMap]", Ql = "[object ArrayBuffer]", Xl = "[object DataView]", Jl = "[object Float32Array]", ec = "[object Float64Array]", tc = "[object Int8Array]", rc = "[object Int16Array]", nc = "[object Int32Array]", ac = "[object Uint8Array]", sc = "[object Uint8ClampedArray]", ic = "[object Uint16Array]", oc = "[object Uint32Array]", X = {};
-X[na] = X[Ll] = X[Ql] = X[Xl] = X[zl] = X[Vl] = X[Jl] = X[ec] = X[tc] = X[rc] = X[nc] = X[Ul] = X[Kl] = X[sa] = X[ql] = X[Yl] = X[Hl] = X[Wl] = X[ac] = X[sc] = X[ic] = X[oc] = !0;
-X[Bl] = X[aa] = X[Zl] = !1;
+var rn = Ze && Ze.isSet, Pl = rn ? dr(rn) : Rl, Dl = 1, Ml = 2, kl = 4, na = "[object Arguments]", Ll = "[object Array]", zl = "[object Boolean]", Vl = "[object Date]", Bl = "[object Error]", aa = "[object Function]", Gl = "[object GeneratorFunction]", Ul = "[object Map]", Kl = "[object Number]", sa = "[object Object]", ql = "[object RegExp]", Yl = "[object Set]", Hl = "[object String]", Wl = "[object Symbol]", Zl = "[object WeakMap]", Ql = "[object ArrayBuffer]", Xl = "[object DataView]", Jl = "[object Float32Array]", ec = "[object Float64Array]", tc = "[object Int8Array]", rc = "[object Int16Array]", nc = "[object Int32Array]", ac = "[object Uint8Array]", sc = "[object Uint8ClampedArray]", ic = "[object Uint16Array]", oc = "[object Uint32Array]", J = {};
+J[na] = J[Ll] = J[Ql] = J[Xl] = J[zl] = J[Vl] = J[Jl] = J[ec] = J[tc] = J[rc] = J[nc] = J[Ul] = J[Kl] = J[sa] = J[ql] = J[Yl] = J[Hl] = J[Wl] = J[ac] = J[sc] = J[ic] = J[oc] = !0;
+J[Bl] = J[aa] = J[Zl] = !1;
 function nt(e, t, r, n, a, s) {
   var i, c = t & Dl, u = t & Ml, f = t & kl;
   if (i !== void 0)
@@ -3400,7 +3400,7 @@ function nt(e, t, r, n, a, s) {
       if (i = u || h ? {} : $l(e), !c)
         return u ? Ko(e, Mo(i, e)) : Go(e, Co(i, e));
     } else {
-      if (!X[m])
+      if (!J[m])
         return a ? e : {};
       i = Al(e, m, c);
     }
@@ -3669,7 +3669,7 @@ function Ec() {
         }
       }
     }
-    var l = u, j = f, $ = c, M = i, V = t, B = d, I = n, k = v, G = y, W = r, J = s, L = a, Z = m, w = !1;
+    var l = u, j = f, $ = c, M = i, V = t, B = d, I = n, k = v, G = y, W = r, X = s, L = a, Z = m, w = !1;
     function A(D) {
       return w || (w = !0, console.warn("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.")), b(D) || O(D) === u;
     }
@@ -3709,7 +3709,7 @@ function Ec() {
     function Ie(D) {
       return O(D) === m;
     }
-    H.AsyncMode = l, H.ConcurrentMode = j, H.ContextConsumer = $, H.ContextProvider = M, H.Element = V, H.ForwardRef = B, H.Fragment = I, H.Lazy = k, H.Memo = G, H.Portal = W, H.Profiler = J, H.StrictMode = L, H.Suspense = Z, H.isAsyncMode = A, H.isConcurrentMode = b, H.isContextConsumer = E, H.isContextProvider = N, H.isElement = P, H.isForwardRef = C, H.isFragment = U, H.isLazy = ne, H.isMemo = le, H.isPortal = re, H.isProfiler = pe, H.isStrictMode = we, H.isSuspense = Ie, H.isValidElementType = S, H.typeOf = O;
+    H.AsyncMode = l, H.ConcurrentMode = j, H.ContextConsumer = $, H.ContextProvider = M, H.Element = V, H.ForwardRef = B, H.Fragment = I, H.Lazy = k, H.Memo = G, H.Portal = W, H.Profiler = X, H.StrictMode = L, H.Suspense = Z, H.isAsyncMode = A, H.isConcurrentMode = b, H.isContextConsumer = E, H.isContextProvider = N, H.isElement = P, H.isForwardRef = C, H.isFragment = U, H.isLazy = ne, H.isMemo = le, H.isPortal = re, H.isProfiler = pe, H.isStrictMode = we, H.isSuspense = Ie, H.isValidElementType = S, H.typeOf = O;
   }()), H;
 }
 var un;
@@ -4040,7 +4040,7 @@ function Fc(e) {
       payload: h.initialStatus
     }));
   }, [f, h.initialStatus, h.initialTouched]);
-  var J = ge(function(g) {
+  var X = ge(function(g) {
     if (T.current[g] && be(T.current[g].validate)) {
       var F = fe(j.values, g), R = T.current[g].validate(F);
       return Ht(R) ? ($({
@@ -4232,7 +4232,7 @@ function Fc(e) {
   }), Ue = {
     resetForm: W,
     validateForm: G,
-    validateField: J,
+    validateField: X,
     setErrors: A,
     setFieldError: E,
     setFieldTouched: U,
@@ -4305,7 +4305,7 @@ function Fc(e) {
     setValues: b,
     submitForm: Ie,
     validateForm: G,
-    validateField: J,
+    validateField: X,
     isValid: pa,
     dirty: Mt,
     unregisterField: Z,
@@ -4718,7 +4718,7 @@ function Lc({
     } catch (A) {
       console.error("File upload failed", A), t.setFieldError(l, "File upload failed");
     }
-  }, J = async (L, Z, w) => {
+  }, X = async (L, Z, w) => {
     const A = Z[L];
     if (console.log("methodName", A), !A) return;
     const b = r?.[A];
@@ -4738,7 +4738,7 @@ function Lc({
         const P = N.target.value;
         y(P), x(0), P.trim() ? T(!0) : (T(!1), t.setFieldValue(l, ""));
       }, E = (N) => {
-        t.setFieldValue(l, N), y(""), T(!1), J("onChange", e, `${l}-${N}`);
+        t.setFieldValue(l, N), y(""), T(!1), X("onChange", e, `${l}-${N}`);
       };
       return /* @__PURE__ */ o.jsxs("div", { className: "relative", children: [
         /* @__PURE__ */ o.jsxs("label", { className: M, children: [
@@ -4860,7 +4860,7 @@ function Lc({
                           checked: w.includes(A),
                           onChange: (N) => {
                             const P = N.target.checked ? [...w, A] : w.filter((C) => C !== A);
-                            t.setFieldValue(l, P), J("onChange", e, `${l}-${A}`);
+                            t.setFieldValue(l, P), X("onChange", e, `${l}-${A}`);
                           },
                           className: "h-4 w-4 text-indigo-600 border-gray-300 rounded"
                         }
@@ -4937,7 +4937,7 @@ function Lc({
                   id: `${l}-${w}`,
                   "data-index": b,
                   onMouseDown: () => {
-                    t.setFieldValue(l, w), T(!1), y(""), x(0), J("onChange", e, `${l}-${w}`);
+                    t.setFieldValue(l, w), T(!1), y(""), x(0), X("onChange", e, `${l}-${w}`);
                   },
                   className: `px-2 py-1 rounded cursor-pointer text-sm
                   ${t.values[l] === w ? "bg-indigo-50 text-indigo-600 font-medium" : v === b ? "bg-gray-100" : "hover:bg-gray-50"}`,
@@ -4971,7 +4971,7 @@ function Lc({
                 t.setFieldValue(
                   l,
                   w.target.value
-                ), J("onChange", e, `${l}`);
+                ), X("onChange", e, `${l}`);
               },
               placeholder: e.placeholder,
               disabled: e.disabled
@@ -5043,7 +5043,7 @@ function Lc({
                           checked: w.includes(A),
                           onChange: (N) => {
                             const P = N.target.checked ? [...w, A] : w.filter((C) => C !== A);
-                            t.setFieldValue(l, P), J("onChange", e, `${l}-${A}`);
+                            t.setFieldValue(l, P), X("onChange", e, `${l}-${A}`);
                           },
                           className: "h-4 w-4 text-indigo-600 border-gray-300 rounded"
                         }
@@ -5078,7 +5078,7 @@ function Lc({
                 t.setFieldValue(
                   l,
                   w.target.value === "" ? "" : w.target.value
-                ), J("onChange", e, `${l}`);
+                ), X("onChange", e, `${l}`);
               },
               disabled: e.disabled,
               children: [
@@ -5126,7 +5126,7 @@ function Lc({
                     t.setFieldValue(
                       l,
                       b.target.value === "" ? "" : b.target.value
-                    ), J("onChange", e, `${l}-${w}`);
+                    ), X("onChange", e, `${l}-${w}`);
                   },
                   onBlur: t.handleBlur,
                   disabled: e.disabled,
@@ -5160,7 +5160,7 @@ function Lc({
                   checked: w.includes(A),
                   onChange: (E) => {
                     const N = E.target.checked ? [...w, A] : w.filter((P) => P !== A);
-                    t.setFieldValue(l, N), J("onChange", e, `${l}-${A}`);
+                    t.setFieldValue(l, N), X("onChange", e, `${l}-${A}`);
                   },
                   onBlur: t.handleBlur,
                   disabled: e.disabled,
@@ -5261,7 +5261,7 @@ function Lc({
               multiple: L,
               onChange: (w) => {
                 const A = w.currentTarget.files;
-                A && W(A), J("onChange", e, `${l}`);
+                A && W(A), X("onChange", e, `${l}`);
               },
               onBlur: t.handleBlur,
               placeholder: e.placeholder,
@@ -5293,7 +5293,7 @@ function Lc({
                 t.setFieldValue(
                   l,
                   w.target.value
-                ), J("onChange", e, `${l}`);
+                ), X("onChange", e, `${l}`);
               },
               onBlur: t.handleBlur,
               placeholder: e.placeholder || "Enter valid JSON",
@@ -5332,7 +5332,7 @@ function Lc({
                 t.setFieldValue(
                   l,
                   w.target.value
-                ), J("onChange", e, `${l}`);
+                ), X("onChange", e, `${l}`);
               },
               onBlur: t.handleBlur,
               placeholder: e.placeholder,
@@ -5372,7 +5372,7 @@ function Lc({
                 t.setFieldValue(
                   l,
                   w.target.value
-                ), J("onChange", e, `${l}`);
+                ), X("onChange", e, `${l}`);
               },
               step: e.step,
               placeholder: e.placeholder,
@@ -5403,7 +5403,12 @@ function Lc({
               name: l,
               value: t.values[l],
               onBlur: t.handleBlur,
-              onChange: t.handleChange,
+              onChange: (w) => {
+                t.setFieldValue(
+                  l,
+                  w.target.value
+                ), X("onChange", e, `${l}`);
+              },
               placeholder: e.placeholder,
               disabled: e.disabled,
               step: e.step,
@@ -5779,7 +5784,7 @@ function xr({ tabObj: e, methods: t, tabName: r, sqlOpsUrls: n, refid: a, Report
         if (!k?.source) throw new Error("Form source missing");
         let G = !1, W;
         k?.source?.dbopsid && (G = !0, W = k?.source?.dbopsid);
-        const J = await Q({
+        const X = await Q({
           method: "GET",
           url: n.baseURL + n.dbopsGetHash,
           headers: {
@@ -5801,7 +5806,7 @@ function xr({ tabObj: e, methods: t, tabName: r, sqlOpsUrls: n, refid: a, Report
               source: L,
               fields: k.fields,
               forcefill: k.forcefill,
-              datahash: J.data.refhash,
+              datahash: X.data.refhash,
               scrid: u?.module_refid
             },
             headers: {
@@ -5815,7 +5820,7 @@ function xr({ tabObj: e, methods: t, tabName: r, sqlOpsUrls: n, refid: a, Report
           data: {
             refid: W,
             fields: { blocked: "true" },
-            datahash: J.data.refhash,
+            datahash: X.data.refhash,
             refid1: m?.id
           },
           headers: {
@@ -6103,8 +6108,8 @@ function mn({
   infoViewJson: h
 }) {
   const [y, v] = oe(0), [x, _] = oe(!1), p = xe(null), [T, S] = oe({}), O = (G, W) => {
-    S((J) => ({
-      ...J,
+    S((X) => ({
+      ...X,
       [G]: W
     }));
   }, l = Object.keys(e);
