@@ -180,7 +180,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     };
 
 
-console.log("methods in Grid",methods);
+
 
     return (
         <>

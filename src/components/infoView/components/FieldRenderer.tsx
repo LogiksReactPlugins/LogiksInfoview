@@ -23,7 +23,7 @@ export default function FieldRenderer({
     optionsOverride ?? field.options ?? {}
   );
 
-console.log("methods in noram FieldRenderer",methods);
+
   const [search, setSearch] = useState("");
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
