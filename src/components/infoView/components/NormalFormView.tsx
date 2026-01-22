@@ -65,6 +65,7 @@ export default function NormalFormView({
     formik.resetForm();
   }
 
+console.log("methods in noram form",methods);
 
   return (
     <div className="relative z-10 max-w-full ">

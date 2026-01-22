@@ -23,7 +23,7 @@ export default function FieldRenderer({
     optionsOverride ?? field.options ?? {}
   );
 
-
+console.log("methods in noram FieldRenderer",methods);
   const [search, setSearch] = useState("");
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
@@ -560,6 +560,8 @@ export default function FieldRenderer({
     value?: any
   ) => {
     const methodName = field[trigger] as keyof typeof methods | undefined;
+    console.log("methodName",methodName);
+    
     if (!methodName) return;
 
     const fn = methods?.[methodName];

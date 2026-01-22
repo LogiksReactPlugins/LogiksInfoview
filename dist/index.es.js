@@ -4445,7 +4445,9 @@ function Lc({
 }) {
   const [u, f] = oe(!1), [d, m] = oe(
     s ?? e.options ?? {}
-  ), [h, y] = oe(""), [v, x] = oe(0), _ = xe(null), [p, T] = oe(!1), S = te.useRef(h), O = xe(null);
+  );
+  console.log("methods in noram FieldRenderer", r);
+  const [h, y] = oe(""), [v, x] = oe(0), _ = xe(null), [p, T] = oe(!1), S = te.useRef(h), O = xe(null);
   te.useEffect(() => {
     S.current = h;
   }, [h]), ce(() => {
@@ -4718,7 +4720,7 @@ function Lc({
     }
   }, J = async (L, Z, w) => {
     const A = Z[L];
-    if (!A) return;
+    if (console.log("methodName", A), !A) return;
     const b = r?.[A];
     if (typeof b != "function") {
       console.error(`Method "${String(A)}" not found`);
@@ -5452,7 +5454,7 @@ function zc({
   function _(p) {
     p.preventDefault(), x.resetForm();
   }
-  return /* @__PURE__ */ o.jsx("div", { className: "relative z-10 max-w-full ", children: /* @__PURE__ */ o.jsx("div", { className: "bg-white border border-gray-100 rounded-md animate-in fade-in duration-300", children: /* @__PURE__ */ o.jsxs("form", { onSubmit: x.handleSubmit, className: "p-4  mx-auto", children: [
+  return console.log("methods in noram form", s), /* @__PURE__ */ o.jsx("div", { className: "relative z-10 max-w-full ", children: /* @__PURE__ */ o.jsx("div", { className: "bg-white border border-gray-100 rounded-md animate-in fade-in duration-300", children: /* @__PURE__ */ o.jsxs("form", { onSubmit: x.handleSubmit, className: "p-4  mx-auto", children: [
     /* @__PURE__ */ o.jsxs("div", { className: "grid grid-flow-col auto-cols-max gap-4  overflow-x-auto", children: [
       f.map((p, T) => fs(p.hidden) || p.type === "geolocation" || p.vmode === "edit" && i?.operation === "create" ? null : /* @__PURE__ */ o.jsx(
         "div",
@@ -5735,7 +5737,9 @@ function Bc({
         s?.(j), console.error("API fetch failed:", j);
       }
     }
-  }, _ = {
+  };
+  console.log("methods in FORM", t);
+  const _ = {
     simple: /* @__PURE__ */ o.jsx(
       zc,
       {
@@ -5827,7 +5831,7 @@ function xr({ tabObj: e, methods: t, tabName: r, sqlOpsUrls: n, refid: a, Report
   }, V = () => {
     h(null), d(!1);
   };
-  return /* @__PURE__ */ o.jsx(o.Fragment, { children: s ? /* @__PURE__ */ o.jsxs(o.Fragment, { children: [
+  return console.log("methods in Grid", t), /* @__PURE__ */ o.jsx(o.Fragment, { children: s ? /* @__PURE__ */ o.jsxs(o.Fragment, { children: [
     /* @__PURE__ */ o.jsx(
       s,
       {

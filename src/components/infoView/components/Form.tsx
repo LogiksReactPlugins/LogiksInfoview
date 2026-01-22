@@ -300,6 +300,7 @@ export default function LogiksForm({
     }
   };
 
+console.log("methods in FORM",methods);
 
 
   const formView = {
