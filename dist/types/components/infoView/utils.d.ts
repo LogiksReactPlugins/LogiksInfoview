@@ -38,5 +38,10 @@ export declare function runAjaxChain({ field, value, sqlOpsUrls, setFieldOptions
     sqlOpsUrls: any;
     setFieldOptions: (name: string, options: SelectOptions) => void;
 }): Promise<void>;
+export declare function decodeSignature(val: any): Array<{
+    d: string;
+    color: string;
+    width: number;
+}> | null;
 export {};
 //# sourceMappingURL=utils.d.ts.map

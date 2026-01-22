@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import type { InfoFieldRendererProps, InfoViewField, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
-import { DEFAULT_LOGO } from '../constant.js';
-import { fetchDataByquery, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, runAjaxChain } from '../utils.js';
+import { DEFAULT_LOGO, IMAGE_FIELDS } from '../constant.js';
+import {  decodeSignature, fetchDataByquery, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, runAjaxChain } from '../utils.js';
+
 
 
 export default function InfoFieldRenderer({
@@ -74,8 +75,6 @@ export default function InfoFieldRenderer({
         setOptions(mapped);
         return;
       }
-
-
 
       const source = field?.source ?? {};
 
@@ -228,6 +227,7 @@ export default function InfoFieldRenderer({
     });
   }, [fieldValue, sqlOpsUrls, setFieldOptions]);
 
+  console.log("key", key);
 
   const rawVal =
     typeof key === "string" ? data?.[key] : undefined;
@@ -244,9 +244,7 @@ export default function InfoFieldRenderer({
       : resolveDisplayValue(rawVal, flatOptions);
 
   const isImageField =
-    typeof key === "string" &&
-    (key.toLowerCase().includes("avatar") ||
-      key.toLowerCase().includes("logo"));
+    typeof key === "string" && IMAGE_FIELDS.includes(key.toLowerCase());
 
 
   const renderValue =
@@ -256,27 +254,43 @@ export default function InfoFieldRenderer({
         ? displayVal
         : JSON.stringify(displayVal);
 
+
+  const signaturePaths = decodeSignature(rawVal);
+
+
   return (
     <div className="px-3 py-2 bg-gray-50 rounded-lg">
       <label className={labelClasses}>{field?.label}</label>
       <div className="relative">
 
-        {isImageField ? (
+        {signaturePaths ? (
+          <svg
+            viewBox="0 0 300 150"
+            className="h-24 w-full border bg-white rounded"
+          >
+            {signaturePaths.map((p, i) => (
+              <path
+                key={i}
+                d={p.d}
+                stroke={p.color || "#000"}
+                strokeWidth={p.width || 2}
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            ))}
+          </svg>
+        ) : isImageField ? (
           <img
             src={String(displayVal)}
-            alt="avatar"
+            alt="image"
             className="w-16 h-16 rounded-full object-cover border"
             onError={(e) => {
-              const target = e.currentTarget as HTMLImageElement;
-              target.onerror = null;
-              target.src = DEFAULT_LOGO;
+              e.currentTarget.src = DEFAULT_LOGO;
             }}
-
           />
         ) : (
-          <p className={baseInputClasses}>
-            {renderValue}
-          </p>
+          <p className={baseInputClasses}>{renderValue}</p>
         )}
 
       </div>

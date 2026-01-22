@@ -755,3 +755,25 @@ export async function runAjaxChain({
     setFieldOptions(chain.target, mapped);
   }
 }
+
+
+
+
+export function decodeSignature(
+  val: any
+): Array<{ d: string; color: string; width: number }> | null {
+  if (!val || val.type !== "Buffer" || !Array.isArray(val.data)) return null;
+
+  try {
+    const decoded = new TextDecoder().decode(new Uint8Array(val.data));
+    const parsed = JSON.parse(decoded);
+
+    if (Array.isArray(parsed) && parsed[0]?.d) {
+      return parsed;
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
