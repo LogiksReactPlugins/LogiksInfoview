@@ -3,12 +3,12 @@ import type { ComponentType } from "react";
 import type { AxiosRequestConfig } from "axios";
 import type { FormikProps } from "formik";
 
-  export type DbOpsPayload = {
-          refid: string | number;
-          fields: Record<string, any>;
-          datahash: string;
-          refid1?: string | number;
-        }
+export type DbOpsPayload = {
+    refid: string | number;
+    fields: Record<string, any>;
+    datahash: string;
+    refid1?: string | number;
+}
 
 export interface InfoViewField {
     name: string;
@@ -35,6 +35,8 @@ export interface sqlQueryProps {
     table: string;
     cols: string;
     where?: Record<string, string>;
+    orderby?: string;
+    groupby?:string;
 };
 
 
@@ -126,7 +128,7 @@ export interface SqlEndpoints {
     registerQuery?: string;
     runQuery?: string;
     uploadURL?: string;
-    refid?:string;
+    refid?: string;
 };
 
 type SqlSrcByTable = {
@@ -149,6 +151,8 @@ export type AutocompleteConfig = {
     target: string;
     src: AutocompleteSrc;
 };
+
+export type FileCategory = "image" | "pdf" | "video" | "text" | "other";
 
 export interface FormField {
     name: string;

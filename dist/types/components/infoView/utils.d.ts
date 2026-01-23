@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { AutocompleteConfig, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from './InfoView.types.js';
+import { AutocompleteConfig, FileCategory, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from './InfoView.types.js';
 import * as Yup from "yup";
 export declare function determineViewMode(json: Infoview): string;
 export declare function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup>;
@@ -43,5 +43,8 @@ export declare function decodeSignature(val: any): Array<{
     color: string;
     width: number;
 }> | null;
+export declare function getFileExtension(path?: string): string;
+export declare function getMimeCategory(ext: string): "image" | "pdf" | "video" | "text" | "other";
+export declare const fileIconClassMap: Record<FileCategory, string>;
 export {};
 //# sourceMappingURL=utils.d.ts.map

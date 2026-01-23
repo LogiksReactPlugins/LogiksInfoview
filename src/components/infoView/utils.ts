@@ -1,7 +1,8 @@
 import * as Yup from "yup";
 
 import axios, { type AxiosResponse } from "axios";
-import type { AutocompleteConfig, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions, sqlQueryProps } from "./InfoView.types.js";
+import type { AutocompleteConfig, FileCategory, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions, sqlQueryProps } from "./InfoView.types.js";
+import { IMAGE_EXT, PDF_EXT, TEXT_EXT, VIDEO_EXT } from "./constant.js";
 
 export function determineViewMode(json: Infoview) {
 
@@ -777,3 +778,27 @@ export function decodeSignature(
     return null;
   }
 }
+
+export function getFileExtension(path = "") {
+  return path.split(".").pop()?.toLowerCase() ?? "";
+}
+
+export function getMimeCategory(ext: string) {
+  if (IMAGE_EXT.includes(ext)) return "image";
+  if (VIDEO_EXT.includes(ext)) return "video";
+  if (PDF_EXT.includes(ext)) return "pdf";
+  if (TEXT_EXT.includes(ext)) return "text";
+  return "other";
+}
+
+export const fileIconClassMap: Record<FileCategory, string> = {
+  image: "fa fa-file-image",
+  pdf: "fa fa-file-pdf",
+  video: "fa fa-file-video",
+  text: "fa fa-file-lines",
+  other: "fa fa-file"
+};
+
+
+
+

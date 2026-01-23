@@ -31,6 +31,8 @@ export interface sqlQueryProps {
     table: string;
     cols: string;
     where?: Record<string, string>;
+    orderby?: string;
+    groupby?: string;
 }
 export interface InfoViewGroup {
     label: string;
@@ -126,6 +128,7 @@ export type AutocompleteConfig = {
     target: string;
     src: AutocompleteSrc;
 };
+export type FileCategory = "image" | "pdf" | "video" | "text" | "other";
 export interface FormField {
     name: string;
     label?: string;

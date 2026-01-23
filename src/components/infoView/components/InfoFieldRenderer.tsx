@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import type { InfoFieldRendererProps, InfoViewField, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
-import { DEFAULT_LOGO, IMAGE_FIELDS } from '../constant.js';
-import {  decodeSignature, fetchDataByquery, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, runAjaxChain } from '../utils.js';
+import { DEFAULT_LOGO } from '../constant.js';
+import { decodeSignature, fetchDataByquery, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, runAjaxChain } from '../utils.js';
+import FilePreviewTrigger from './FilePreviewTrigger.js';
 
 
 
@@ -232,19 +233,21 @@ export default function InfoFieldRenderer({
   const rawVal =
     typeof key === "string" ? data?.[key] : undefined;
 
-  const displayVal =
-    typeof rawVal === "string"
-      ? field.type === "date"
-        ? rawVal.split("T")[0]
-        : field.type === "time"
-          ? rawVal.includes("T")
-            ? rawVal.slice(11, 16)
-            : rawVal.slice(0, 5)
-          : resolveDisplayValue(rawVal, flatOptions)
-      : resolveDisplayValue(rawVal, flatOptions);
+  let displayVal;
 
-  const isImageField =
-    typeof key === "string" && IMAGE_FIELDS.includes(key.toLowerCase());
+  if (typeof rawVal === "string") {
+    if (field.type === "date") {
+      displayVal = rawVal.split("T")[0];
+    } else if (field.type === "time") {
+      displayVal = rawVal.includes("T")
+        ? rawVal.slice(11, 16)
+        : rawVal.slice(0, 5);
+    } else {
+      displayVal = resolveDisplayValue(rawVal, flatOptions);
+    }
+  } else {
+    displayVal = resolveDisplayValue(rawVal, flatOptions);
+  }
 
 
   const renderValue =
@@ -254,9 +257,13 @@ export default function InfoFieldRenderer({
         ? displayVal
         : JSON.stringify(displayVal);
 
+  console.log("displayVal", displayVal);
+
+  console.log("key", key);
+
 
   const signaturePaths = decodeSignature(rawVal);
-
+  const filePath = `${sqlOpsUrls?.baseURL}${String(displayVal).startsWith("/") ? displayVal : `/${displayVal}`}`
 
   return (
     <div className="px-3 py-2 bg-gray-50 rounded-lg">
@@ -280,15 +287,17 @@ export default function InfoFieldRenderer({
               />
             ))}
           </svg>
-        ) : isImageField ? (
+        ) : field.type === "photo" || field.type === "avatar" ? (
           <img
-            src={String(displayVal)}
+            src={filePath}
             alt="image"
             className="w-16 h-16 rounded-full object-cover border"
             onError={(e) => {
               e.currentTarget.src = DEFAULT_LOGO;
             }}
           />
+        ) : field.type === "file" ? (
+          <FilePreviewTrigger sqlOpsUrls={sqlOpsUrls} filePath={String(displayVal)} />
         ) : (
           <p className={baseInputClasses}>{renderValue}</p>
         )}
