@@ -2142,7 +2142,7 @@ function os(e) {
 function ls(e) {
   const t = {};
   return Object.entries(e).forEach(([r, n]) => {
-    const a = n.group || "General";
+    const a = n.group || "Info";
     t[a] || (t[a] = { label: a, type: "fields", fields: [] }), t[a]?.fields?.push({ name: r, ...n });
   }), t;
 }

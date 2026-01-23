@@ -12,7 +12,7 @@ export function groupFields(fields: Record<string, any>): Record<string, InfoVie
   const grouped: Record<string, InfoViewGroup> = {};
   Object.entries(fields).forEach(([key, config]) => {
 
-    const groupName = config.group || "General";
+    const groupName = config.group || "Info";
     if (!grouped[groupName]) {
       grouped[groupName] = { label: groupName, type: "fields", fields: [] };
     }
