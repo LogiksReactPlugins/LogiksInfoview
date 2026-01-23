@@ -414,317 +414,12 @@ export const example9 = {
     "module_refid": "hse.external_observations",
     "module_type": "forms"
 }
+ 
 
-
-export const example10 = {
-
-    "endPoints": {
-        "baseURL": "http://192.168.0.20:9999",
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6Ijd0NTk3SjZKbVlIZlFtWnlXV2RiN3VXb3BWNTJEemF4ZkZxRmMvbkJPczk1ejVqRTJnUDl3S1gycnJlc29vKy80SnAwOHdIOFNndGZ1U0tNNUVxTk1JUWNvZWNDcWRtRjlXS25qdHdpMnhvN1BPTHdVZDZMdXMzL3VYYmljVSthNGJ1dFRkRkc5WVpYZ3prUlY4M3B3STVPUUZTaE84bkNTYlRMRG9Ya25tY21VNmlycndmWGR6aUgweVFhdldHR0s5SHdZYXFaNWZQYmNKZ3BzYUIzT1k0SFcwVitmaGVmcUlWK0Q0R2M5TTdXWHVZV2ZlVzRHc0lneVhweHc2bFVnakRTK0szUWh4WnhGUU5WUUtHVkY1SmUyaG8yTHRmOStjVHBUS0k9IiwiaWF0IjoxNzY4ODk5NDE5LCJleHAiOjE3Njg5MDMwMTksImp0aSI6ImFjYzoxOjE3Njg4OTk0MTk4ODg6d2ViIn0.7EZ4epjkNFvEADeqj4vCCNMKtBmOUh5D87tOW2gZh7A",
-        "dbopsGetHash": "/api/dbops",
-        "dbopsGetRefId": "/api/dbops/save",
-        "dbopsCreate": "/api/dbops/create",
-        "dbopsUpdate": "/api/dbops/update",
-        "dbopsFetch": "/api/dbops/fetch",
-        "registerQuery": "/api/query/save",
-        "runQuery": "/api/query/run"
-    },
-    "source": {
-        "type": "sql",
-        "dbopsid": "forms%40hse.induction%403"
-    },
-    "forcefill": {
-        "groupuid": "#SESS_GROUP_NAME#",
-        "guid": "#SESS_GUID#"
-    },
-    "fields": {
-        "company_code_id": {
-            "onChange": "testfunc",
-            "label": "Company",
-            "type": "select",
-            "no-option": "Select Company",
-            "required": true,
-            "width": 4,
-            "ajaxchain": [
-                {
-                    "target": "spv_id",
-                    "src": {
-                        "type": "sql",
-                        "queryid": "forms%40hse.induction%40fields.company_code_id.ajaxchain.0"
-                    }
-                },
-                {
-                    "target": "sector_id",
-                    "src": {
-                        "type": "sql",
-                        "queryid": "forms%40hse.induction%40fields.company_code_id.ajaxchain.1"
-                    }
-                }
-            ],
-            "options": [
-                {
-                    "title": "WEL",
-                    "value": 1
-                },
-                {
-                    "title": "WMEL",
-                    "value": 2
-                }
-            ]
-        },
-        "spv_id": {
-            "label": "SPV",
-            "no-option": "Select SPV",
-            "type": "select",
-            "required": true,
-            "width": 4,
-            "options": []
-        },
-        "sector_id": {
-            "label": "Sector",
-            "type": "select",
-            "no-option": "Select Sector",
-            "required": true,
-            "width": 4,
-            "ajaxchain": {
-                "target": "project_function_id",
-                "src": {
-                    "type": "sql",
-                    "queryid": "forms%40hse.induction%40fields.sector_id.ajaxchain.0"
-                }
-            },
-            "options": []
-        },
-        "project_function_id": {
-            "label": "Project Function",
-            "type": "select",
-            "no-option": "Select Project Function",
-            "required": true,
-            "width": 4,
-            "ajaxchain": {
-                "target": "location_id",
-                "src": {
-                    "type": "sql",
-                    "queryid": "forms%40hse.induction%40fields.project_function_id.ajaxchain.0"
-                }
-            },
-            "options": []
-        },
-        "location_id": {
-            "label": "Location",
-            "type": "select",
-            "no-option": "Select Location",
-            "required": true,
-            "width": 4,
-            "options": []
-        },
-        "date": {
-            "label": "Date",
-            "type": "date",
-            "required": true,
-            "width": 4
-        },
-        "conducted_by_department": {
-            "label": "Conducted By Department",
-            "type": "select",
-            "groupid": "hse_conducted_by_department",
-            "required": true,
-            "width": 4,
-            "options": [
-                {
-                    "title": "WEL HSE",
-                    "value": "wel_hse",
-                    "class": null,
-                    "privilege": "*"
-                },
-                {
-                    "title": "Contractor",
-                    "value": "contractor",
-                    "class": null,
-                    "privilege": "*"
-                }
-            ]
-        },
-        "conducted_by_name": {
-            "label": "Conducted By (Name)",
-            "type": "text",
-            "width": 4
-        },
-        "participant_count": {
-            "onChange": "testfunc2",
-            "label": "Participant Count",
-            "type": "number",
-            "required": true,
-            "width": 4
-        },
-        "photo_attendance": {
-            "label": "Induction Photo/Attendance (Max. Sizes:10MB)",
-            "type": "file",
-            "width": 4
-        }
-    },
-    "infoview": {
-        "template": "cards",
-        "groups": {
-            "participant_details": {
-                "label": "Participant Details",
-                "type": "module",
-                "src": "infoviewTable",
-                "vmode": "edit",
-                "config": {
-                    "type": "sql",
-                    "uimode": "grid",
-                    "uiswitcher": false,
-                    "policy_create": "hse.create.access",
-                    "policy_view": "hse.view.access",
-                    "policy_delete": "hse.delete.access",
-                    "policy_update": "hse.update.access",
-                    "toolbar": {
-                        "search": true,
-                        "print": false,
-                        "export": false,
-                        "email": false
-                    },
-                    "colkey": "hse_induction_id",
-                    "popup.form": {
-                        "source": {
-                            "type": "sql",
-                            "dbopsid": "forms%40hse.induction%40"
-                        },
-                        "forcefill": {
-                            "guid": "#SESS_GUID#",
-                            "created_by": "#SESS_USER_ID#",
-                            "hse_induction_id": "#refid1#"
-                        },
-                        "fields": {
-                            "gender": {
-                                "label": "Gender",
-                                "type": "select",
-                                "required": true,
-                                "groupid": "user_gender",
-                                "width": 4,
-                                "formatter": "pretty",
-                                "options": [
-                                    {
-                                        "title": "Other",
-                                        "value": "other",
-                                        "class": null,
-                                        "privilege": "*"
-                                    }
-                                ]
-                            },
-                            "count": {
-                                "label": "Count",
-                                "type": "number",
-                                "required": true,
-                                "width": 4
-                            },
-                            "company": {
-                                "label": "Company",
-                                "type": "select",
-                                "groupid": "company_type",
-                                "required": true,
-                                "width": 4,
-                                "options": [
-                                    {
-                                        "title": "Wel",
-                                        "value": "wel",
-                                        "class": null,
-                                        "privilege": "*"
-                                    },
-                                    {
-                                        "title": "Contractor Staff",
-                                        "value": "contractor_staff",
-                                        "class": null,
-                                        "privilege": "*"
-                                    },
-                                    {
-                                        "title": "Contractor Workers",
-                                        "value": "contractor_workers",
-                                        "class": null,
-                                        "privilege": "*"
-                                    },
-                                    {
-                                        "title": "Visitor",
-                                        "value": "visitor",
-                                        "class": null,
-                                        "privilege": "*"
-                                    }
-                                ]
-                            },
-                            "company_name": {
-                                "label": "Company Name",
-                                "onChange": "company_required",
-                                "type": "text",
-                                "required": true,
-                                "width": 4
-                            },
-                            "photograph": {
-                                "label": "Photograph",
-                                "type": "file",
-                                "width": 6
-                            }
-                        }
-                    },
-                    "datagrid": {
-                        "id": {
-                            "label": "ID",
-                            "searchable": true
-                        },
-                        "gender": {
-                            "label": "Gender",
-                            "searchable": true,
-                            "sortable": true,
-                            "formatter": "pretty"
-                        },
-                        "company_name": {
-                            "label": "Company Name",
-                            "searchable": true
-                        },
-                        "company": {
-                            "label": "Company",
-                            "searchable": true
-                        },
-                        "photograph": {
-                            "label": "Photograph",
-                            "searchable": true,
-                            "formatter": "pretty"
-                        }
-                    },
-                    "actions1": {
-                        "addInfoRecord": {
-                            "label": "Add Record"
-                        }
-                    },
-                    "buttons": {
-                        "editRecord": {
-                            "label": "Edit Record",
-                            "icon": "fa fa-pen"
-                        },
-                        "deleteRecord": {
-                            "label": "Delete Record",
-                            "icon": "fa fa-trash text-red-500"
-                        }
-                    },
-                    "queryid": "forms%40hse.induction%40infoview.groups.participant_details"
-                },
-                "width": 12
-            }
-        }
-    },
-    "script": "ZnVuY3Rpb24gdGVzdGZ1bmMoZGF0YSl7CiAgICBjb25zb2xlLndhcm4oIi0tLSIrZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoZGF0YSkudmFsdWUpCn0KCmZ1bmN0aW9uIHRlc3RmdW5jMihkYXRhKXsKICAgIGNvbnNvbGUud2Fybihkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKS52YWx1ZSkKfQoKZnVuY3Rpb24gY29tcGFueV9yZXF1aXJlZChkYXRhKXsKICAgIGNvbnNvbGUud2Fybihkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKS52YWx1ZSkKfQo=",
-    "module_refid": "hse.induction",
-    "module_type": "forms"
-}
-
-
-
-
-
-export const example11 = {
+export const example10 ={
      "endPoints": {
         "baseURL": "http://192.168.0.20:9999",
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6InhZc01tbVhQUDN1VmJPOFZVczhQZWU2UmozVEpYenRVejh4aFlBLzdXejFRT04wL2pGMmMyNDd4YkZaYlBUcm9IckdGbkZOUlQxQ1Z3WUxVeEQxUVYxYVJoQnlhcmhaT0JBRmVBRk01Lys4R0lsU2dhTGRPWUY1Z1Jyd2lzVkFMZm9GQnpEL2VUdm1XL1BEL2Y0SXpuOEdBNUxmWS9abmJjODA0c0lLNVUwejduQjl0N3AyODhIZlo2VGg2cG4rRHZkSjhPanZEcWNDUW1ZRVk1R3dxNDRxTWZ6QngwSWZGZjZuZEZPZ2Q4MGpuZlluVGQ4SXFuQXpmb0k0Y3Zad1N3dk9HemtWMHJFY3QwclgrWTNDaFI1VWpKN1ZmUmNjN0VvakZqZz09IiwiaWF0IjoxNzY4ODkwMDIwLCJleHAiOjE3Njg4OTM2MjAsImp0aSI6ImFjYzoxOjE3Njg4OTAwMjA3Njg6d2ViIn0.jc7dqXPDWYUcCbLv5uiHBjrIm2aZ0ohnR9EDfFeA6NQ",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6IldhTkl1L0VBcFFMcmVtQk03OVZTcDJrbmVQRG00dFlrWFQ1OTB3VUp0bWoxZHlmR2pGWE5JODBpTE1WNzc3L084aTZqNjNCamVJUytuREVsK0MvanNZK1N2enJBQ0w4MDdIMUhjL2Q4bUNsalJocE1zc0ppbWU0bVMzekVsR3F5VittRWY3V3BHU1hLYmNDYnk3cWdpY3R5bzR0NktONEVUcDYvWm52UklLRW1FU0taK25ZQWtHaklsRHJYekxlQjVwcktLTkZFVDhaeVhIUGJKcWZlRVVWdFc3NzVobFBJU0EvMFdxbzE2ZnplRnZBbnprZjJsN1hOdmpGVkZKL3lqbWNYYkh6MFVhMXVQcmpLdEd2S3pkK0VEYUNFYTNMZlhhaXl4YVE9IiwiaWF0IjoxNzY5MTczNTU2LCJleHAiOjE3NjkxNzcxNTYsImp0aSI6ImFjYzoxOjE3NjkxNzM1NTY1MjQ6d2ViIn0.D1qdx7VhbKBg8qGQiBj_aTBTqZtRvGkiIgg-lyHjPM8",
         "dbopsGetHash": "/api/dbops",
         "dbopsGetRefId": "/api/dbops/save",
         "dbopsCreate": "/api/dbops/create",
@@ -734,111 +429,41 @@ export const example11 = {
         "runQuery": "/api/query/run"
     },
     "hooks": {
-        "preload": {
-            "helpers": [
-                "countries"
-            ]
+        "postsubmit": {
+            "api": "mySignatures",
+            "method": "post"
         }
-    },
-    "forcefill": {
-        "groupuid": "#SESS_GROUP_NAME#",
-        "guid": "#SESS_GUID#",
-        "type": "warehouse"
     },
     "source": {
         "type": "sql",
-        "dbopsid": "forms%40warehouse.main%401"
+        "dbopsid": "forms%40mySignatures.main%4012"
     },
-    "script": "company",
+    "forcefill": {
+        "guid": "#SESS_GUID#"
+    },
     "fields": {
-        "company_id": {
-            "label": "Company",
-            "type": "select",
-            "orderBy": "name ASC",
-            "no-option": "Select Company",
+        "title": {
+            "label": "Signature Title",
             "group": "Info",
+            "type": "text",
+            "required": true
+        },
+        "signature_type": {
+            "label": "Signature Type",
+            "group": "Info",
+            "type": "text",
+            "groupid": "signature_type",
+            "required": true
+        },
+        "signature_content": {
+            "label": "Signature Content",
+            "group": "Info",
+            "type": "json",
             "required": true,
-            "options": [
-                {
-                    "title": "Smartinfologiks",
-                    "value": 9
-                }
-            ]
+            "width": 12
         },
-        "name": {
-            "label": "Name",
-            "group": "Info",
-            "required": true
-        },
-        "branch_code": {
-            "label": "Code (E.g- de,cg)",
-            "group": "Info",
-            "required": true
-        },
-        "tags": {
-            "label": "Tags",
-            "type": "tags",
-            "group": "Info"
-        },
-        "mail": {
-            "label": "E-mail",
-            "group": "Info",
-            "type": "email",
-            "required": true
-        },
-        "landline": {
-            "label": "Landline",
-            "group": "Info",
-            "required": true
-        },
-        "region": {
-            "label": "Region",
-            "group": "Address",
-            "required": true
-        },
-        "country": {
-            "label": "Country",
-            "group": "Address",
-            "type": "radio",
-            "orderby": "title asc",
-            "required": true,
-            "queryid": "forms%40warehouse.main%40undefined"
-        },
-        "address": {
-            "label": "Address",
-            "group": "Address",
-            "type": "textarea",
-            "required": true
-        },
-        "zipcode": {
-            "label": "Zipcode",
-            "group": "Address",
-            "required": true
-        },
-        "contact_person1": {
-            "label": "Contact Person1",
-            "group": "Contact",
-            "required": true
-        },
-        "contact_designation1": {
-            "label": "Contact Person1 Designation",
-            "group": "Contact",
-            "required": true
-        },
-        "contact_person2": {
-            "label": "Contact Person2",
-            "group": "Contact"
-        },
-        "contact_designation2": {
-            "label": "Contact Person2 Designation",
-            "group": "Contact"
-        },
-        "manager": {
-            "label": "Manager Name",
-            "group": "Contact"
-        },
-        "blocked": {
-            "label": "Blocked",
+        "is_default": {
+            "label": "Default Signature",
             "group": "Info",
             "type": "select",
             "groupid": "boolean",
@@ -863,8 +488,38 @@ export const example11 = {
                     "privilege": "*"
                 }
             ]
+        },
+        "blocked": {
+            "label": "Blocked",
+            "group": "Info",
+            "vmode": "edit",
+            "type": "select",
+            "groupid": "boolean",
+            "options": [
+                {
+                    "title": "False",
+                    "value": "false",
+                    "class": "",
+                    "privilege": "*"
+                },
+                {
+                    "title": "True",
+                    "value": "true",
+                    "class": "",
+                    "privilege": "*"
+                },
+                {
+                    "title": "True",
+                    "value": null,
+                    "class": null,
+                    "privilege": "*"
+                }
+            ]
         }
     },
-    "module_refid": "warehouse.main",
+    "infoview": {
+        "groups": {}
+    },
+    "module_refid": "mySignatures.main",
     "module_type": "forms"
 }

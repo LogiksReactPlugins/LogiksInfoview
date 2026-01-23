@@ -758,26 +758,67 @@ export async function runAjaxChain({
 }
 
 
+type DrawnSignature = Array<{ d: string; color?: string; width?: number }>;
 
+type TextSignature = {
+  text: string;
+  style?: {
+    fontSize?: number;
+    fontFamily?: string;
+    textColor?: string;
+  };
+};
 
-export function decodeSignature(
-  val: any
-): Array<{ d: string; color: string; width: number }> | null {
-  if (!val || val.type !== "Buffer" || !Array.isArray(val.data)) return null;
+type DecodedSignature =
+  | { type: "drawn"; paths: DrawnSignature }
+  | { type: "text"; data: TextSignature }
+  | { type: "html"; html: string }
+  | { type: "image"; src: string };
 
-  try {
-    const decoded = new TextDecoder().decode(new Uint8Array(val.data));
-    const parsed = JSON.parse(decoded);
-
-    if (Array.isArray(parsed) && parsed[0]?.d) {
-      return parsed;
+export function decodeSignature(val: any): DecodedSignature | null {
+  // Case: already a string (URL or base64)
+  if (typeof val === "string") {
+    if (val.startsWith("data:image/") || val.startsWith("http") || val.startsWith("/")) {
+      return { type: "image", src: val };
     }
-
-    return null;
-  } catch {
     return null;
   }
+
+  // Case: Buffer
+  if (!val || val.type !== "Buffer" || !Array.isArray(val.data)) return null;
+
+  const decoded = new TextDecoder().decode(new Uint8Array(val.data)).trim();
+
+  // 1️⃣ Image (base64)
+  if (decoded.startsWith("data:image/")) {
+    return { type: "image", src: decoded };
+  }
+
+  // 2️⃣ HTML
+  if (decoded.startsWith("<")) {
+    return { type: "html", html: decoded };
+  }
+
+  // 3️⃣ JSON-based signatures
+  try {
+    const parsed = JSON.parse(decoded);
+
+    // Drawn
+    if (Array.isArray(parsed) && parsed[0]?.d) {
+      return { type: "drawn", paths: parsed };
+    }
+
+    // Text-based
+    if (parsed?.text) {
+      return { type: "text", data: parsed };
+    }
+  } catch {
+    // not JSON
+  }
+
+  return null;
 }
+
 
 export function getFileExtension(path = "") {
   return path.split(".").pop()?.toLowerCase() ?? "";

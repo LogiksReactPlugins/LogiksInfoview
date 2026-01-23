@@ -38,11 +38,33 @@ export declare function runAjaxChain({ field, value, sqlOpsUrls, setFieldOptions
     sqlOpsUrls: any;
     setFieldOptions: (name: string, options: SelectOptions) => void;
 }): Promise<void>;
-export declare function decodeSignature(val: any): Array<{
+type DrawnSignature = Array<{
     d: string;
-    color: string;
-    width: number;
-}> | null;
+    color?: string;
+    width?: number;
+}>;
+type TextSignature = {
+    text: string;
+    style?: {
+        fontSize?: number;
+        fontFamily?: string;
+        textColor?: string;
+    };
+};
+type DecodedSignature = {
+    type: "drawn";
+    paths: DrawnSignature;
+} | {
+    type: "text";
+    data: TextSignature;
+} | {
+    type: "html";
+    html: string;
+} | {
+    type: "image";
+    src: string;
+};
+export declare function decodeSignature(val: any): DecodedSignature | null;
 export declare function getFileExtension(path?: string): string;
 export declare function getMimeCategory(ext: string): "image" | "pdf" | "video" | "text" | "other";
 export declare const fileIconClassMap: Record<FileCategory, string>;

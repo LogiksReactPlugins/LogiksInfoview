@@ -2475,13 +2475,23 @@ async function Ss({
   }
 }
 function _s(e) {
+  if (typeof e == "string")
+    return e.startsWith("data:image/") || e.startsWith("http") || e.startsWith("/") ? { type: "image", src: e } : null;
   if (!e || e.type !== "Buffer" || !Array.isArray(e.data)) return null;
+  const t = new TextDecoder().decode(new Uint8Array(e.data)).trim();
+  if (t.startsWith("data:image/"))
+    return { type: "image", src: t };
+  if (t.startsWith("<"))
+    return { type: "html", html: t };
   try {
-    const t = new TextDecoder().decode(new Uint8Array(e.data)), r = JSON.parse(t);
-    return Array.isArray(r) && r[0]?.d ? r : null;
+    const r = JSON.parse(t);
+    if (Array.isArray(r) && r[0]?.d)
+      return { type: "drawn", paths: r };
+    if (r?.text)
+      return { type: "text", data: r };
   } catch {
-    return null;
   }
+  return null;
 }
 function Mn(e = "") {
   return e.split(".").pop()?.toLowerCase() ?? "";
@@ -2661,32 +2671,46 @@ function dt({
       sqlOpsUrls: n,
       setFieldOptions: c
     }));
-  }, [x, n, c]), console.log("key", u);
+  }, [x, n, c]);
   const _ = typeof u == "string" ? t?.[u] : void 0;
   let p;
   typeof _ == "string" ? e.type === "date" ? p = _.split("T")[0] : e.type === "time" ? p = _.includes("T") ? _.slice(11, 16) : _.slice(0, 5) : p = Cr(_, v) : p = Cr(_, v);
-  const T = p == null ? "" : typeof p == "string" || typeof p == "number" ? p : JSON.stringify(p);
-  console.log("displayVal", p), console.log("key", u);
-  const S = _s(_), F = `${n?.baseURL}${String(p).startsWith("/") ? p : `/${p}`}`;
+  const T = p == null ? "" : typeof p == "string" || typeof p == "number" ? p : JSON.stringify(p), S = _s(_), F = `${n?.baseURL}${String(p).startsWith("/") ? p : `/${p}`}`;
   return /* @__PURE__ */ i.jsxs("div", { className: "px-3 py-2 bg-gray-50 rounded-lg", children: [
     /* @__PURE__ */ i.jsx("label", { className: d, children: e?.label }),
-    /* @__PURE__ */ i.jsx("div", { className: "relative", children: S ? /* @__PURE__ */ i.jsx(
-      "svg",
+    /* @__PURE__ */ i.jsx("div", { className: "relative", children: S ? S.type === "drawn" ? /* @__PURE__ */ i.jsx("svg", { viewBox: "0 0 300 150", className: "h-24 w-full border bg-white rounded", children: S.paths.map((l, j) => /* @__PURE__ */ i.jsx(
+      "path",
       {
-        viewBox: "0 0 300 150",
-        className: "h-24 w-full border bg-white rounded",
-        children: S.map((l, j) => /* @__PURE__ */ i.jsx(
-          "path",
-          {
-            d: l.d,
-            stroke: l.color || "#000",
-            strokeWidth: l.width || 2,
-            fill: "none",
-            strokeLinecap: "round",
-            strokeLinejoin: "round"
-          },
-          j
-        ))
+        d: l.d,
+        stroke: l.color || "#000",
+        strokeWidth: l.width || 2,
+        fill: "none",
+        strokeLinecap: "round",
+        strokeLinejoin: "round"
+      },
+      j
+    )) }) : S.type === "text" ? /* @__PURE__ */ i.jsx("svg", { viewBox: "0 0 300 150", className: "h-24 w-full border bg-white rounded", children: /* @__PURE__ */ i.jsx(
+      "text",
+      {
+        x: "10",
+        y: "100",
+        fontSize: S.data.style?.fontSize || 32,
+        fontFamily: S.data.style?.fontFamily || "cursive",
+        fill: S.data.style?.textColor || "#000",
+        children: S.data.text
+      }
+    ) }) : S.type === "html" ? /* @__PURE__ */ i.jsx(
+      "div",
+      {
+        className: "border bg-white rounded p-2 text-sm",
+        dangerouslySetInnerHTML: { __html: S.html }
+      }
+    ) : /* @__PURE__ */ i.jsx(
+      "img",
+      {
+        src: S.src,
+        alt: "signature",
+        className: "h-24 object-contain border bg-white rounded"
       }
     ) : e.type === "photo" || e.type === "avatar" ? /* @__PURE__ */ i.jsx(
       "img",
@@ -2694,9 +2718,7 @@ function dt({
         src: F,
         alt: "image",
         className: "w-16 h-16 rounded-full object-cover border",
-        onError: (l) => {
-          l.currentTarget.src = Pn;
-        }
+        onError: (l) => l.currentTarget.src = Pn
       }
     ) : e.type === "file" ? /* @__PURE__ */ i.jsx($s, { sqlOpsUrls: n, filePath: String(p) }) : /* @__PURE__ */ i.jsx("p", { className: f, children: T }) })
   ] });

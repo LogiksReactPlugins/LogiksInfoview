@@ -228,7 +228,7 @@ export default function InfoFieldRenderer({
     });
   }, [fieldValue, sqlOpsUrls, setFieldOptions]);
 
-  console.log("key", key);
+
 
   const rawVal =
     typeof key === "string" ? data?.[key] : undefined;
@@ -257,12 +257,8 @@ export default function InfoFieldRenderer({
         ? displayVal
         : JSON.stringify(displayVal);
 
-  console.log("displayVal", displayVal);
 
-  console.log("key", key);
-
-
-  const signaturePaths = decodeSignature(rawVal);
+  const signature = decodeSignature(rawVal);
   const filePath = `${sqlOpsUrls?.baseURL}${String(displayVal).startsWith("/") ? displayVal : `/${displayVal}`}`
 
   return (
@@ -270,31 +266,51 @@ export default function InfoFieldRenderer({
       <label className={labelClasses}>{field?.label}</label>
       <div className="relative">
 
-        {signaturePaths ? (
-          <svg
-            viewBox="0 0 300 150"
-            className="h-24 w-full border bg-white rounded"
-          >
-            {signaturePaths.map((p, i) => (
-              <path
-                key={i}
-                d={p.d}
-                stroke={p.color || "#000"}
-                strokeWidth={p.width || 2}
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            ))}
-          </svg>
+        {signature ? (
+          signature.type === "drawn" ? (
+            <svg viewBox="0 0 300 150" className="h-24 w-full border bg-white rounded">
+              {signature.paths.map((p, i) => (
+                <path
+                  key={i}
+                  d={p.d}
+                  stroke={p.color || "#000"}
+                  strokeWidth={p.width || 2}
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              ))}
+            </svg>
+          ) : signature.type === "text" ? (
+            <svg viewBox="0 0 300 150" className="h-24 w-full border bg-white rounded">
+              <text
+                x="10"
+                y="100"
+                fontSize={signature.data.style?.fontSize || 32}
+                fontFamily={signature.data.style?.fontFamily || "cursive"}
+                fill={signature.data.style?.textColor || "#000"}
+              >
+                {signature.data.text}
+              </text>
+            </svg>
+          ) : signature.type === "html" ? (
+            <div
+              className="border bg-white rounded p-2 text-sm"
+              dangerouslySetInnerHTML={{ __html: signature.html }}
+            />
+          ) : (
+            <img
+              src={signature.src}
+              alt="signature"
+              className="h-24 object-contain border bg-white rounded"
+            />
+          )
         ) : field.type === "photo" || field.type === "avatar" ? (
           <img
             src={filePath}
             alt="image"
             className="w-16 h-16 rounded-full object-cover border"
-            onError={(e) => {
-              e.currentTarget.src = DEFAULT_LOGO;
-            }}
+            onError={(e) => (e.currentTarget.src = DEFAULT_LOGO)}
           />
         ) : field.type === "file" ? (
           <FilePreviewTrigger sqlOpsUrls={sqlOpsUrls} filePath={String(displayVal)} />
