@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import axios, { type AxiosResponse } from "axios";
+
 import type { AutocompleteConfig, FileCategory, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions, sqlQueryProps } from "./InfoView.types.js";
 import { IMAGE_EXT, PDF_EXT, TEXT_EXT, VIDEO_EXT } from "./constant.js";
 
@@ -249,26 +249,28 @@ export const formatOptions = (
 
 
 export function resolveDisplayValue(
-  rawVal: unknown,
+  fieldValue: unknown,
   options: FlatOptions
 ) {
-  if (!options || Object.keys(options).length === 0) return rawVal;
 
-  if (typeof rawVal === "number") {
-    return options[String(rawVal)] ?? rawVal;
+
+  if (!options || Object.keys(options).length === 0) return fieldValue;
+
+  if (typeof fieldValue === "number") {
+    return options[String(fieldValue)] ?? fieldValue;
   }
 
-  if (typeof rawVal === "string") {
-    const parts = rawVal.split(",").map(v => v.trim());
+  if (typeof fieldValue === "string") {
+    const parts = fieldValue.split(",").map(v => v.trim());
 
     const labels = parts
       .map(v => options[v])
       .filter(Boolean);
 
-    return labels.length ? labels.join(", ") : rawVal;
+    return labels.length ? labels.join(", ") : fieldValue;
   }
 
-  return rawVal;
+  return fieldValue;
 }
 
 
@@ -611,50 +613,6 @@ export const flattenOptions = (options: SelectOptions): FlatEntry[] => {
 
 
 
-export async function fetchDataByquery(
-  sqlOpsUrls: Record<string, any>,
-  query: Record<string, any> | undefined,
-  querid: string | undefined,
-  refid: string | undefined = undefined,
-  module_refid: string | undefined = undefined,
-  filter: Record<string, any> = {}
-): Promise<AxiosResponse<any>> {
-  try {
-
-    let queryId = querid;
-
-    if (!queryId) {
-      const resQueryId = await axios({
-        method: "POST",
-        url: sqlOpsUrls.baseURL + sqlOpsUrls.registerQuery,
-        data: { "query": query, "srcid": module_refid },
-        headers: {
-          "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
-        },
-      });
-      queryId = resQueryId.data.queryid;
-    }
-
-    const res = await axios({
-      method: "POST",
-      url: sqlOpsUrls.baseURL + sqlOpsUrls.runQuery,
-      data: {
-        "queryid": queryId,
-        "filter": filter,
-        "refid": refid,
-        "page": 0,
-        "limit": 10000
-      },
-      headers: {
-        "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
-      },
-    });
-
-    return res
-  } catch (error) {
-    throw error;
-  }
-}
 
 export function normalizeOptions(
   options?: SelectOptions
@@ -696,66 +654,6 @@ export const normalizeRowSafe = (row: Row): Row => {
 
 
 
-export async function runAjaxChain({
-  field,
-  value,
-  sqlOpsUrls,
-  setFieldOptions,
-}: {
-  field: any;
-  value: any;
-  sqlOpsUrls: any;
-  setFieldOptions: (name: string, options: SelectOptions) => void;
-}) {
-  if (!field.ajaxchain || !value || !sqlOpsUrls) return;
-
-  const chains = Array.isArray(field.ajaxchain)
-    ? field.ajaxchain
-    : [field.ajaxchain];
-
-  for (const chain of chains) {
-    const src = chain.src;
-    if (!src) continue;
-
-    let query: sqlQueryProps | undefined;
-
-    if (!src.queryid) {
-      const resolvedWhere = replacePlaceholders(src.where ?? {}, { refid: value });
-      query = {
-        ...src,
-        table: src.table,
-        cols: src.columns,
-        where: resolvedWhere,
-      };
-    }
-
-    const { data: res } = await fetchDataByquery(
-      sqlOpsUrls,
-      query,
-      src.queryid,
-      value
-    );
-
-    const rawItems = Array.isArray(res?.data?.data)
-      ? res.data.data
-      : Array.isArray(res?.data)
-        ? res.data
-        : res;
-
-    const normalized = Array.isArray(rawItems)
-      ? rawItems.map(normalizeRowSafe)
-      : [];
-
-    const mapped = formatOptions(
-      field.valueKey ?? "value",
-      field.labelKey ?? "title",
-      normalized,
-      field.groupKey
-    );
-
-    setFieldOptions(chain.target, mapped);
-  }
-}
 
 
 type DrawnSignature = Array<{ d: string; color?: string; width?: number }>;
@@ -776,30 +674,25 @@ type DecodedSignature =
   | { type: "image"; src: string };
 
 export function decodeSignature(val: any): DecodedSignature | null {
-  // Case: already a string (URL or base64)
-  if (typeof val === "string") {
-    if (val.startsWith("data:image/") || val.startsWith("http") || val.startsWith("/")) {
-      return { type: "image", src: val };
-    }
-    return null;
-  }
 
   // Case: Buffer
   if (!val || val.type !== "Buffer" || !Array.isArray(val.data)) return null;
 
   const decoded = new TextDecoder().decode(new Uint8Array(val.data)).trim();
 
-  // 1️⃣ Image (base64)
+  // 1 Image (base64)
   if (decoded.startsWith("data:image/")) {
+    console.log("decoded", decoded);
+
     return { type: "image", src: decoded };
   }
 
-  // 2️⃣ HTML
+  // 2HTML
   if (decoded.startsWith("<")) {
     return { type: "html", html: decoded };
   }
 
-  // 3️⃣ JSON-based signatures
+  //  JSON-based signatures
   try {
     const parsed = JSON.parse(decoded);
 

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import type { InfoFieldRendererProps, InfoViewField, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
 import { DEFAULT_LOGO } from '../constant.js';
-import { decodeSignature, fetchDataByquery, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, runAjaxChain } from '../utils.js';
+import { decodeSignature, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue } from '../utils.js';
 import FilePreviewTrigger from './FilePreviewTrigger.js';
+import { fetchDataByquery, runAjaxChain } from '../service.js';
 
 
 
@@ -212,26 +213,24 @@ export default function InfoFieldRenderer({
     refid
   ]);
 
-  const fieldValue = field?.name ? data?.[field.name] : undefined;
+ const rawVal = field?.name ? data?.[field.name] : undefined;
 
   React.useEffect(() => {
     if (ranRef.current) return;
-    if (!setFieldOptions || !fieldValue) return;
+    if (!setFieldOptions || !rawVal) return;
 
     ranRef.current = true;
 
     runAjaxChain({
       field,
-      value: fieldValue,
+      value: rawVal,
       sqlOpsUrls,
       setFieldOptions,
     });
-  }, [fieldValue, sqlOpsUrls, setFieldOptions]);
+  }, [rawVal, sqlOpsUrls, setFieldOptions]);
 
 
 
-  const rawVal =
-    typeof key === "string" ? data?.[key] : undefined;
 
   let displayVal;
 
@@ -259,7 +258,8 @@ export default function InfoFieldRenderer({
 
 
   const signature = decodeSignature(rawVal);
-  const filePath = `${sqlOpsUrls?.baseURL}${String(displayVal).startsWith("/") ? displayVal : `/${displayVal}`}`
+
+  
 
   return (
     <div className="px-3 py-2 bg-gray-50 rounded-lg">
@@ -300,19 +300,12 @@ export default function InfoFieldRenderer({
             />
           ) : (
             <img
-              src={signature.src}
+              src={`${sqlOpsUrls?.baseURL}${signature.src}`}
               alt="signature"
               className="h-24 object-contain border bg-white rounded"
             />
           )
-        ) : field.type === "photo" || field.type === "avatar" ? (
-          <img
-            src={filePath}
-            alt="image"
-            className="w-16 h-16 rounded-full object-cover border"
-            onError={(e) => (e.currentTarget.src = DEFAULT_LOGO)}
-          />
-        ) : field.type === "file" ? (
+        ) : (field.type === "file" || field.type === "attachement" || field.type === "photo" || field.type === "avatar") && displayVal ? (
           <FilePreviewTrigger sqlOpsUrls={sqlOpsUrls} filePath={String(displayVal)} />
         ) : (
           <p className={baseInputClasses}>{renderValue}</p>

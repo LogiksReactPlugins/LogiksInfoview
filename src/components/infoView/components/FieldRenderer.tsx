@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import axios from 'axios';
 
 import type { FieldRendererProps, FormField, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
-import { fetchDataByquery, flattenOptions, formatOptions, getOptionLabel, getSearchColumns, isAutocompleteConfig, isGroupedOptions, normalizeRowSafe, replacePlaceholders } from '../utils.js';
+import { flattenOptions, formatOptions, getOptionLabel, getSearchColumns, isAutocompleteConfig, isGroupedOptions, normalizeRowSafe, replacePlaceholders } from '../utils.js';
 import { DropdownPortal } from './DropdownPortal.js';
+import { fetchDataByquery } from '../service.js';
 
 
 
@@ -560,8 +561,6 @@ export default function FieldRenderer({
     value?: any
   ) => {
     const methodName = field[trigger] as keyof typeof methods | undefined;
-    console.log("methodName",methodName);
-    
     if (!methodName) return;
 
     const fn = methods?.[methodName];
@@ -1553,7 +1552,7 @@ export default function FieldRenderer({
               name={key}
               value={formik.values[key]}
               onBlur={formik.handleBlur}
-               onChange={(e) => {
+              onChange={(e) => {
                 formik.setFieldValue(
                   key,
                   e.target.value

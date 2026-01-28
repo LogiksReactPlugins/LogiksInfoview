@@ -1,4 +1,5 @@
-import { SqlEndpoints } from './InfoView.types.js';
+import { AxiosResponse } from 'axios';
+import { SelectOptions, SqlEndpoints } from './InfoView.types.js';
 type SqlSource = {
     table: string;
     columns: string;
@@ -27,5 +28,13 @@ export declare const sqlClient: {
         values: any;
     }, module_refid: string | undefined): Promise<any>;
 };
+export declare function fetchDataByquery(sqlOpsUrls: Record<string, any>, query: Record<string, any> | undefined, querid: string | undefined, refid?: string | undefined, module_refid?: string | undefined, filter?: Record<string, any>): Promise<AxiosResponse<any>>;
+export declare function runAjaxChain({ field, value, sqlOpsUrls, setFieldOptions, }: {
+    field: any;
+    value: any;
+    sqlOpsUrls: any;
+    setFieldOptions: (name: string, options: SelectOptions) => void;
+}): Promise<void>;
+export declare function getPreviewUrl(fileUrl: string, sqlOpsUrls: Record<string, any>): Promise<string>;
 export {};
 //# sourceMappingURL=service.d.ts.map

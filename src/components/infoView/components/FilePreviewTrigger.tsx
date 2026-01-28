@@ -1,7 +1,8 @@
-import { useState, type JSX } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { fileIconClassMap, getFileExtension, getMimeCategory } from "../utils.js";
 import type { FileCategory, SqlEndpoints } from "../InfoView.types.js";
 import FilePreview from "./FilePreview.js";
+import { getPreviewUrl } from "../service.js";
 
 type FilePreviewTriggerProps = {
   filePath: string;
@@ -13,12 +14,34 @@ function getFileIcon(category: FileCategory): JSX.Element {
 }
 
 const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) => {
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+
+
+  useEffect(() => {
+ 
+    if (!open || !sqlOpsUrls) return;
+    let active = true;
+    let objectUrl: string | null = null;
+
+    getPreviewUrl(filePath, sqlOpsUrls).then((url) => {
+
+      if (!active) return;
+      objectUrl = url;
+      setPreviewUrl(url);
+    });
+
+    return () => {
+      active = false;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [open, filePath, sqlOpsUrls]);
+
+
   const ext = getFileExtension(filePath);
   const category = getMimeCategory(ext);
   const icon = getFileIcon(category);
 
-  let fullUrl = `${sqlOpsUrls?.baseURL}${String(filePath).startsWith("/") ? filePath : `/${filePath}`}`
   return (
     <>
 
@@ -43,7 +66,11 @@ const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) =
               ✕
             </button>
 
-            <FilePreview fileUrl={fullUrl} />
+            {previewUrl ? (
+              <FilePreview fileUrl={previewUrl} category={category} />
+            ) : (
+              <div className="text-center p-8">Loading preview…</div>
+            )}
           </div>
         </div>
       )}

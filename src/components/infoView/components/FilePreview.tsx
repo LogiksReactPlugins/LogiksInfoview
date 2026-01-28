@@ -1,15 +1,14 @@
-import { getFileExtension, getMimeCategory } from "../utils.js";
+
 
 type FilePreviewProps = {
     fileUrl: string;
+    category:string;
 };
 
-const FilePreview = ({ fileUrl }: FilePreviewProps) => {
+const FilePreview = ({ fileUrl,category }: FilePreviewProps) => {
     if (!fileUrl) return null;
 
 
-    const ext = getFileExtension(fileUrl);
-    const category = getMimeCategory(ext);
 
     if (category === "image") {
         return <img src={fileUrl} className="max-h-[80vh] mx-auto" />;

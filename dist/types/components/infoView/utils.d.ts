@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { AutocompleteConfig, FileCategory, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from './InfoView.types.js';
 import * as Yup from "yup";
 export declare function determineViewMode(json: Infoview): string;
@@ -19,7 +18,7 @@ export declare function copyToClipboard(content: string): Promise<void>;
 export declare const replacePlaceholders: (input: any, vars: Record<string, string | number>) => any;
 export declare const normalizeToObject: (res: any) => Record<string, any> | null;
 export declare const formatOptions: (valueKey: string, labelKey: string, items: any[], groupKey?: string) => SelectOptions;
-export declare function resolveDisplayValue(rawVal: unknown, options: FlatOptions): unknown;
+export declare function resolveDisplayValue(fieldValue: unknown, options: FlatOptions): unknown;
 export declare const isHidden: (hidden?: boolean | string) => boolean;
 export declare const intializeForm: (formFields: FormField[], initialValues: Record<string, any>, validationSchema: Record<string, Yup.AnySchema>, data?: Record<string, any>) => void;
 export declare const isGroupedOptions: (options: SelectOptions) => options is GroupedOptions;
@@ -28,16 +27,9 @@ export declare function getSearchColumns(columns: string): string[];
 export declare const getOptionLabel: (options: SelectOptions, value: string) => string | undefined;
 type FlatEntry = [string, string];
 export declare const flattenOptions: (options: SelectOptions) => FlatEntry[];
-export declare function fetchDataByquery(sqlOpsUrls: Record<string, any>, query: Record<string, any> | undefined, querid: string | undefined, refid?: string | undefined, module_refid?: string | undefined, filter?: Record<string, any>): Promise<AxiosResponse<any>>;
 export declare function normalizeOptions(options?: SelectOptions): FlatOptions;
 type Row = Record<string, unknown>;
 export declare const normalizeRowSafe: (row: Row) => Row;
-export declare function runAjaxChain({ field, value, sqlOpsUrls, setFieldOptions, }: {
-    field: any;
-    value: any;
-    sqlOpsUrls: any;
-    setFieldOptions: (name: string, options: SelectOptions) => void;
-}): Promise<void>;
 type DrawnSignature = Array<{
     d: string;
     color?: string;
