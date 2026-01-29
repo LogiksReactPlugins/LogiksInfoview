@@ -1,4 +1,4 @@
-import { InfoViewField, InfoData, SqlEndpoints } from '../InfoView.types.js';
+import { InfoViewField, InfoData, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
 interface CommonInfoProps {
     infoData: InfoData;
     sqlOpsUrls: SqlEndpoints;
@@ -7,8 +7,13 @@ interface CommonInfoProps {
         label: string;
         type: string;
     };
+    methods: Record<string, Function>;
     hiddenFields?: string[];
+    fieldOptions: Record<string, SelectOptions>;
+    setFieldOptions: (fieldName: string, options: SelectOptions) => void;
+    refid: string;
+    module_refid: string | undefined;
 }
-export default function CommonInfo({ commonInfo, infoData, hiddenFields, sqlOpsUrls }: CommonInfoProps): import("react/jsx-runtime").JSX.Element;
+export default function CommonInfo({ commonInfo, infoData, hiddenFields, sqlOpsUrls, setFieldOptions, fieldOptions, module_refid, refid, methods }: CommonInfoProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=CommonInfo.d.ts.map

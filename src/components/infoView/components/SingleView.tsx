@@ -2,12 +2,17 @@ import React from 'react';
 import axios from "axios";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
 import { normalizeToObject, replacePlaceholders, tailwindCols, tailwindGrid, toColWidth, toGrid, transformedObject } from '../utils.js'
-import type { InfoViewGroup, SqlEndpoints } from '../InfoView.types.js'
+import type { InfoViewGroup, SelectOptions, SqlEndpoints } from '../InfoView.types.js'
 
-export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid, module_refid }:
+export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid, module_refid, setFieldOptions, fieldOptions }:
     {
         tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string,
         sqlOpsUrls: SqlEndpoints, refid: string, module_refid: string | undefined;
+        setFieldOptions: (
+            fieldName: string,
+            options: SelectOptions
+        ) => void;
+        fieldOptions: Record<string, SelectOptions>;
     }
 ) {
     const [data, setData] = React.useState<Record<string, any> | null>(null);
@@ -162,6 +167,7 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
             <div className="grid grid-cols-12 gap-2">
                 {
                     data ? Object.keys(data).map((field, index) => {
+                        let formattedField = { name: field, label: field }
                         return <div
                             key={`field-${index}`}
                             className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(tabObj.width)] || "lg:col-span-2"
@@ -169,12 +175,16 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
                         >
                             <InfoFieldRenderer
                                 key={field}
-                                field={{ name: field, label: field }}
+                                field={formattedField}
                                 data={data ?? {}}
                                 methods={methods}
                                 refid={refid}
                                 sqlOpsUrls={sqlOpsUrls}
-                              
+                                setFieldOptions={setFieldOptions}
+                                {...(fieldOptions[formattedField.name]
+                                    ? { optionsOverride: fieldOptions[formattedField.name] }
+                                    : {})}
+
                             />
                         </div>
                     }) : <div className="col-span-12 flex flex-col  min-h-0">

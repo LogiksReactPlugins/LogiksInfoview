@@ -25,6 +25,11 @@ interface AccordianViewProps {
         endPoints?: Record<string, any>;
         module_refid?: string | undefined;
     };
+    fieldOptions: Record<string, SelectOptions>;
+    setFieldOptions: (
+        fieldName: string,
+        options: SelectOptions
+    ) => void;
 }
 
 export default function AccordianView({
@@ -37,17 +42,13 @@ export default function AccordianView({
     Reports,
     toast = {},
     handleAction = () => { },
-    infoViewJson
+    infoViewJson,
+    fieldOptions,
+    setFieldOptions
 }
     : AccordianViewProps) {
 
-    const [fieldOptions, setFieldOptions] = useState<
-        Record<string, SelectOptions>
-    >({});
 
-    const setOptionsForField = (name: string, options: SelectOptions) => {
-        setFieldOptions(prev => ({ ...prev, [name]: options }));
-    };
 
 
     type RendererKey = "single" | "grid";
@@ -58,7 +59,8 @@ export default function AccordianView({
                 methods={methods}
                 tabName={tabName}
                 sqlOpsUrls={sqlOpsUrls}
-               
+                fieldOptions={fieldOptions}
+                setFieldOptions={setFieldOptions}
                 refid={refid}
                 module_refid={infoViewJson?.module_refid}
             />
@@ -73,7 +75,7 @@ export default function AccordianView({
                 methods={methods}
                 tabName={tabName}
                 sqlOpsUrls={sqlOpsUrls}
-                 refid={refid}
+                refid={refid}
             />
         ),
     };
@@ -88,7 +90,7 @@ export default function AccordianView({
             <div className="p-4 mx-auto">
                 <div className="space-y-1 flex flex-col min-h-0">
                     {groups && Object.entries(groups).map(([group, obj], index) => {
-                   
+
 
                         return <Accordion key={group} title={obj.label} isFirst={index === 0}>
                             {obj?.fields ? (
@@ -104,12 +106,12 @@ export default function AccordianView({
                                                     module_refid={infoViewJson?.module_refid}
                                                     methods={methods}
                                                     field={field} data={infoData ?? {}}
-                                                    setFieldOptions={setOptionsForField}
+                                                    setFieldOptions={setFieldOptions}
                                                     {...(fieldOptions[field.name]
                                                         ? { optionsOverride: fieldOptions[field.name] }
                                                         : {})}
-                                                        sqlOpsUrls={sqlOpsUrls}
-                                                     refid={refid}
+                                                    sqlOpsUrls={sqlOpsUrls}
+                                                    refid={refid}
                                                 />
                                             </div>
                                         ))}

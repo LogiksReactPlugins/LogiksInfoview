@@ -337,80 +337,245 @@ export declare const example10: {
         registerQuery: string;
         runQuery: string;
     };
-    hooks: {
-        postsubmit: {
-            api: string;
-            method: string;
-        };
-    };
     source: {
         type: string;
         dbopsid: string;
     };
     forcefill: {
+        groupuid: string;
         guid: string;
     };
+    gotolink: string;
     fields: {
-        title: {
+        company_code_id: {
             label: string;
-            group: string;
             type: string;
+            "no-option": string;
             required: boolean;
+            width: number;
+            ajaxchain: {
+                target: string;
+                src: {
+                    type: string;
+                    queryid: string;
+                };
+            }[];
+            options: {
+                title: string;
+                value: number;
+            }[];
         };
-        signature_type: {
+        sector_id: {
             label: string;
-            group: string;
             type: string;
-            groupid: string;
+            "no-option": string;
             required: boolean;
+            width: number;
+            ajaxchain: {
+                target: string;
+                src: {
+                    type: string;
+                    queryid: string;
+                };
+            };
+            options: never[];
         };
-        signature_content: {
+        project_function_id: {
             label: string;
-            group: string;
+            type: string;
+            "no-option": string;
+            required: boolean;
+            width: number;
+            ajaxchain: {
+                target: string;
+                src: {
+                    type: string;
+                    queryid: string;
+                };
+            };
+            options: never[];
+        };
+        location_id: {
+            label: string;
+            type: string;
+            "no-option": string;
+            required: boolean;
+            width: number;
+            options: never[];
+        };
+        date: {
+            label: string;
             type: string;
             required: boolean;
             width: number;
         };
-        is_default: {
+        conducted_by_department: {
             label: string;
-            group: string;
             type: string;
             groupid: string;
             required: boolean;
-            options: ({
+            width: number;
+            options: {
                 title: string;
                 value: string;
-                class: string;
-                privilege: string;
-            } | {
-                title: string;
-                value: null;
                 class: null;
                 privilege: string;
-            })[];
+            }[];
         };
-        blocked: {
+        conducted_by_name: {
             label: string;
-            group: string;
-            vmode: string;
             type: string;
-            groupid: string;
-            options: ({
-                title: string;
-                value: string;
-                class: string;
-                privilege: string;
-            } | {
-                title: string;
-                value: null;
-                class: null;
-                privilege: string;
-            })[];
+            width: number;
+            queryid: string;
+        };
+        participant_count: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+        photo_attendance: {
+            label: string;
+            type: string;
+            width: number;
         };
     };
     infoview: {
-        groups: {};
+        groups: {
+            participant_details: {
+                label: string;
+                type: string;
+                src: string;
+                vmode: string;
+                config: {
+                    type: string;
+                    uimode: string;
+                    uiswitcher: boolean;
+                    policy_create: string;
+                    policy_view: string;
+                    policy_delete: string;
+                    policy_update: string;
+                    toolbar: {
+                        search: boolean;
+                        print: boolean;
+                        export: boolean;
+                        email: boolean;
+                    };
+                    colkey: string;
+                    "popup.form": {
+                        source: {
+                            type: string;
+                            dbopsid: string;
+                        };
+                        forcefill: {
+                            guid: string;
+                            created_by: string;
+                            hse_induction_id: string;
+                        };
+                        fields: {
+                            gender: {
+                                label: string;
+                                type: string;
+                                required: boolean;
+                                groupid: string;
+                                width: number;
+                                formatter: string;
+                                options: ({
+                                    title: string;
+                                    value: string;
+                                    class: string;
+                                    privilege: string;
+                                } | {
+                                    title: string;
+                                    value: string;
+                                    class: null;
+                                    privilege: string;
+                                })[];
+                            };
+                            count: {
+                                label: string;
+                                type: string;
+                                required: boolean;
+                                width: number;
+                            };
+                            company: {
+                                label: string;
+                                type: string;
+                                onChange: string;
+                                groupid: string;
+                                required: boolean;
+                                width: number;
+                                options: {
+                                    title: string;
+                                    value: string;
+                                    class: null;
+                                    privilege: string;
+                                }[];
+                            };
+                            company_name: {
+                                label: string;
+                                disabled: boolean;
+                                type: string;
+                                required: boolean;
+                                width: number;
+                            };
+                            photograph: {
+                                label: string;
+                                type: string;
+                                width: number;
+                            };
+                        };
+                    };
+                    datagrid: {
+                        gender: {
+                            label: string;
+                            searchable: boolean;
+                            sortable: boolean;
+                            formatter: string;
+                        };
+                        count: {
+                            label: string;
+                            searchable: boolean;
+                            sortable: boolean;
+                        };
+                        company_name: {
+                            label: string;
+                            searchable: boolean;
+                        };
+                        company: {
+                            label: string;
+                            formatter: string;
+                            searchable: boolean;
+                        };
+                        photograph: {
+                            label: string;
+                            searchable: boolean;
+                            multiple: boolean;
+                            formatter: string;
+                        };
+                    };
+                    actions1: {
+                        addInfoRecord: {
+                            label: string;
+                        };
+                    };
+                    buttons: {
+                        editRecord: {
+                            label: string;
+                            icon: string;
+                        };
+                        deleteRecord: {
+                            label: string;
+                            icon: string;
+                        };
+                    };
+                    queryid: string;
+                };
+                width: number;
+            };
+        };
     };
+    script: string;
     module_refid: string;
     module_type: string;
 };

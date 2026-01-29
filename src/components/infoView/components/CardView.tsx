@@ -27,6 +27,11 @@ interface CardViewProps {
         endPoints?: Record<string, any>;
         module_refid?: string;
     };
+    fieldOptions: Record<string, SelectOptions>;
+    setFieldOptions: (
+        fieldName: string,
+        options: SelectOptions
+    ) => void;
 }
 
 export default function CardView({
@@ -39,23 +44,18 @@ export default function CardView({
     Reports,
     toast = {},
     handleAction = () => { },
-    infoViewJson
+    infoViewJson,
+    fieldOptions,
+    setFieldOptions
 }
     : CardViewProps) {
 
-    const [fieldOptions, setFieldOptions] = useState<
-        Record<string, SelectOptions>
-    >({});
-
-    const setOptionsForField = (name: string, options: SelectOptions) => {
-        setFieldOptions(prev => ({ ...prev, [name]: options }));
-    };
 
 
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView module_refid={infoViewJson?.module_refid} tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls}   refid={refid} />
+            <SingleView fieldOptions={fieldOptions} setFieldOptions={setFieldOptions} module_refid={infoViewJson?.module_refid} tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
         ),
         grid: (tab, tabName) => (
             <GridView
@@ -66,7 +66,7 @@ export default function CardView({
                 methods={methods}
                 tabName={tabName}
                 sqlOpsUrls={sqlOpsUrls}
-                
+
                 refid={refid}
                 infoViewJson={infoViewJson}
             />
@@ -97,7 +97,8 @@ export default function CardView({
                                                     module_refid={infoViewJson?.module_refid}
                                                     methods={methods} field={field}
                                                     data={infoData ?? {}}
-                                                    setFieldOptions={setOptionsForField}
+                                                    setFieldOptions={setFieldOptions}
+
                                                     {...(fieldOptions[field.name]
                                                         ? { optionsOverride: fieldOptions[field.name] }
                                                         : {})}

@@ -2,7 +2,7 @@
 import { tailwindCols, toColWidth } from '../utils.js';
 
 import InfoFieldRenderer from './InfoFieldRenderer.js';
-import type { InfoViewField, InfoData, SqlEndpoints } from '../InfoView.types.js';
+import type { InfoViewField, InfoData, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
 import PhotoRenderer from './PhotoRenderer.js';
 
 
@@ -14,10 +14,28 @@ interface CommonInfoProps {
         label: string;
         type: string
     };
+    methods: Record<string, Function>;
     hiddenFields?: string[];
+    fieldOptions: Record<string, SelectOptions>;
+    setFieldOptions: (
+        fieldName: string,
+        options: SelectOptions
+    ) => void;
+    refid: string;
+    module_refid: string | undefined;
 }
 
-export default function CommonInfo({ commonInfo, infoData, hiddenFields = [], sqlOpsUrls }: CommonInfoProps) {
+export default function CommonInfo({
+    commonInfo,
+    infoData,
+    hiddenFields = [],
+    sqlOpsUrls,
+    setFieldOptions,
+    fieldOptions,
+    module_refid,
+    refid,
+    methods
+}: CommonInfoProps) {
 
     return (
         <div className="bg-white border border-gray-100 p-4 min-h-3/10 overflow-auto">
@@ -51,10 +69,21 @@ export default function CommonInfo({ commonInfo, infoData, hiddenFields = [], sq
                             return (
                                 <div key={field.name} className={`hover:bg-gray-100 transition-colors duration-200 col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-4"}`}>
                                     <InfoFieldRenderer
-                                        key={field?.name || index}
+                                        key={field?.name}
                                         field={field}
                                         data={infoData ?? {}}
                                         sqlOpsUrls={sqlOpsUrls}
+
+
+
+                                        methods={methods}
+                                        refid={refid}
+
+                                        module_refid={module_refid}
+                                        setFieldOptions={setFieldOptions}
+                                        {...(fieldOptions[field.name]
+                                            ? { optionsOverride: fieldOptions[field.name] }
+                                            : {})}
                                     />
                                 </div>
                             );

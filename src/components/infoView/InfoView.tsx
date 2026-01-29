@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { determineViewMode, groupFields, normalizeToObject, replacePlaceholders, transformedObject } from './utils.js';
 
-import type { InfoViewGroup, InfoViewProps, InfoData } from './InfoView.types.js';
+import type { InfoViewGroup, InfoViewProps, InfoData, SelectOptions } from './InfoView.types.js';
 
 import CommonInfo from "./components/CommonInfo.js";
 import TabView from "./components/TabView.js";
@@ -33,6 +33,15 @@ export default function LogiksInfoView({
         () => groupFieldsFn(infoViewJson.fields || {}),
         [infoViewJson.fields, groupFieldsFn]
     );
+
+
+    const [fieldOptions, setFieldOptions] = React.useState<
+        Record<string, SelectOptions>
+    >({});
+
+    const setOptionsForField = (name: string, options: SelectOptions) => {
+        setFieldOptions(prev => ({ ...prev, [name]: options }));
+    };
 
     const refid = infoViewJson?.source?.refid;
     let groups: Record<string, InfoViewGroup> = { ...groupedFields };
@@ -204,6 +213,8 @@ export default function LogiksInfoView({
                     toast={toast}
                     handleAction={handleAction}
                     infoViewJson={infoViewJson}
+                    setFieldOptions={setOptionsForField}
+                    fieldOptions={fieldOptions}
 
                 />
 
@@ -224,6 +235,8 @@ export default function LogiksInfoView({
                     toast={toast}
                     handleAction={handleAction}
                     infoViewJson={infoViewJson}
+                    setFieldOptions={setOptionsForField}
+                    fieldOptions={fieldOptions}
 
 
                 />
@@ -241,6 +254,8 @@ export default function LogiksInfoView({
                     toast={toast}
                     handleAction={handleAction}
                     infoViewJson={infoViewJson}
+                    setFieldOptions={setOptionsForField}
+                    fieldOptions={fieldOptions}
 
 
                 />
@@ -260,6 +275,8 @@ export default function LogiksInfoView({
                     toast={toast}
                     handleAction={handleAction}
                     infoViewJson={infoViewJson}
+                    setFieldOptions={setOptionsForField}
+                    fieldOptions={fieldOptions}
 
 
                 />
@@ -278,6 +295,11 @@ export default function LogiksInfoView({
                     infoData={infoData}
                     hiddenFields={hiddenFields}
                     sqlOpsUrls={sqlOpsUrls}
+                    setFieldOptions={setOptionsForField}
+                    fieldOptions={fieldOptions}
+                    module_refid={infoViewJson.module_refid}
+                    refid={refid}
+                    methods={methods}
                 />
             )}
             {formView(viewMode)}

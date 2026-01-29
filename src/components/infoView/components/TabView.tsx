@@ -115,7 +115,7 @@ const TopNav = ({
         </div>
 
         {/* SCROLLABLE TABS */}
-        <div className={`relative bg-gray-100 ${isCommonInfo ? "" : "rounded-t-lg"} px-12 pt-1 shadow-inner overflow-hidden`}>
+        <div className={`relative bg-gray-100 ${isCommonInfo ? "" : "rounded-t-lg"} px-1 pt-1 shadow-inner overflow-hidden`}>
             <nav
                 ref={tabsNavRef}
                 className="relative flex overflow-x-auto scrollbar-hide scroll-smooth"
@@ -195,7 +195,6 @@ const ContentArea = (
                                     methods={methods}
                                     refid={refid}
                                     sqlOpsUrls={sqlOpsUrls}
-                                   
                                     module_refid={module_refid}
                                     setFieldOptions={setFieldOptions}
                                     {...(fieldOptions[field.name]
@@ -292,23 +291,16 @@ export default function TabView({
     Reports,
     toast = {},
     handleAction = () => { },
-    infoViewJson
+    infoViewJson,
+    fieldOptions,
+    setFieldOptions
 }: TabViewProps) {
 
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [showScrollHint, setShowScrollHint] = useState(false);
     const tabsNavRef = useRef<HTMLDivElement | null>(null);
 
-    const [fieldOptions, setFieldOptions] = useState<
-        Record<string, SelectOptions>
-    >({});
 
-    const setOptionsForField = (name: string, options: SelectOptions) => {
-        setFieldOptions(prev => ({
-            ...prev,
-            [name]: options,
-        }));
-    };
 
     const groupNames = Object.keys(groups);
 
@@ -352,7 +344,7 @@ export default function TabView({
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<string, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView module_refid={infoViewJson.module_refid} tabObj={tab} methods={methods} tabName={tabName}  sqlOpsUrls={sqlOpsUrls} refid={refid} />
+            <SingleView fieldOptions={fieldOptions} setFieldOptions={setFieldOptions} module_refid={infoViewJson.module_refid} tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
         ),
         grid: (tab, tabName) => (
             <GridView
@@ -363,7 +355,6 @@ export default function TabView({
                 methods={methods}
                 tabName={tabName}
                 sqlOpsUrls={sqlOpsUrls}
-                
                 refid={refid}
                 infoViewJson={infoViewJson}
             />
@@ -402,10 +393,9 @@ export default function TabView({
                     methods={methods}
                     refid={refid}
                     sqlOpsUrls={sqlOpsUrls}
-                  
                     module_refid={infoViewJson.module_refid}
                     fieldOptions={fieldOptions}
-                    setFieldOptions={setOptionsForField}
+                    setFieldOptions={setFieldOptions}
 
                 />
 
@@ -441,9 +431,9 @@ export default function TabView({
                     methods={methods}
                     refid={refid}
                     module_refid={infoViewJson.module_refid}
-                   sqlOpsUrls={sqlOpsUrls}
+                    sqlOpsUrls={sqlOpsUrls}
                     fieldOptions={fieldOptions}
-                    setFieldOptions={setOptionsForField}
+                    setFieldOptions={setFieldOptions}
                 />
             </main>
 

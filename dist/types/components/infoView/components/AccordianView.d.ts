@@ -1,5 +1,5 @@
 import { ComponentType } from 'react';
-import { InfoViewGroup, InfoViewField, InfoData, Infoview, SqlEndpoints } from '../InfoView.types.js';
+import { InfoViewGroup, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
 interface AccordianViewProps {
     groups: Record<string, InfoViewGroup>;
     methods?: Record<string, Function>;
@@ -18,7 +18,9 @@ interface AccordianViewProps {
         endPoints?: Record<string, any>;
         module_refid?: string | undefined;
     };
+    fieldOptions: Record<string, SelectOptions>;
+    setFieldOptions: (fieldName: string, options: SelectOptions) => void;
 }
-export default function AccordianView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson }: AccordianViewProps): import("react/jsx-runtime").JSX.Element;
+export default function AccordianView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson, fieldOptions, setFieldOptions }: AccordianViewProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=AccordianView.d.ts.map

@@ -1,5 +1,5 @@
 import { default as React, ComponentType } from 'react';
-import { InfoViewGroup, InfoViewField, InfoData, Infoview, SqlEndpoints } from '../InfoView.types.js';
+import { InfoViewGroup, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
 interface CardViewProps {
     groups: Record<string, InfoViewGroup>;
     methods?: Record<string, Function>;
@@ -18,7 +18,9 @@ interface CardViewProps {
         endPoints?: Record<string, any>;
         module_refid?: string;
     };
+    fieldOptions: Record<string, SelectOptions>;
+    setFieldOptions: (fieldName: string, options: SelectOptions) => void;
 }
-export default function CardView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson }: CardViewProps): import("react/jsx-runtime").JSX.Element;
+export default function CardView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson, fieldOptions, setFieldOptions }: CardViewProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=CardView.d.ts.map

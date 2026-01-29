@@ -90,7 +90,7 @@ export interface InfoFieldRendererProps {
     refid?: string | undefined;
     module_refid?: string | undefined;
     optionsOverride?: SelectOptions;
-    setFieldOptions?: (fieldName: string, options: SelectOptions) => void;
+    setFieldOptions: (fieldName: string, options: SelectOptions) => void;
 }
 export interface sqlQueryProps {
     table: string;
@@ -245,6 +245,8 @@ export interface TabViewProps {
         endPoints?: Record<string, any>;
         module_refid?: string | undefined;
     };
+    fieldOptions: Record<string, SelectOptions>;
+    setFieldOptions: (fieldName: string, options: SelectOptions) => void;
 }
 export interface VerticalNavProps {
     groups: Record<string, InfoViewGroup>;
