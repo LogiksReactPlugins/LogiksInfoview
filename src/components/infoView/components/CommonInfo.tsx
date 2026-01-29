@@ -1,13 +1,14 @@
-import React from 'react';
-import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import { DEFAULT_LOGO } from "../constant.js";
-import InfoFieldRenderer from './InfoFieldRenderer.js';
-import type { InfoViewField, InfoData } from '../InfoView.types.js';
 
+import { tailwindCols, toColWidth } from '../utils.js';
+
+import InfoFieldRenderer from './InfoFieldRenderer.js';
+import type { InfoViewField, InfoData, SqlEndpoints } from '../InfoView.types.js';
+import PhotoRenderer from './PhotoRenderer.js';
 
 
 interface CommonInfoProps {
     infoData: InfoData;
+    sqlOpsUrls: SqlEndpoints;
     commonInfo: {
         fields?: InfoViewField[];
         label: string;
@@ -16,28 +17,24 @@ interface CommonInfoProps {
     hiddenFields?: string[];
 }
 
-export default function CommonInfo({ commonInfo, infoData, hiddenFields = [] }: CommonInfoProps) {
+export default function CommonInfo({ commonInfo, infoData, hiddenFields = [], sqlOpsUrls }: CommonInfoProps) {
 
     return (
         <div className="bg-white border border-gray-100 p-4 min-h-3/10 overflow-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 {/* Left Column - Avatar */}
                 <div className="lg:col-span-2 flex flex-col items-center">
-                    <div className="relative w-42 h-42">
+                    <div className="relative w-42 h-42 ">
                         {
-                            <img
-                                src={String(infoData.avatar_photo)}
-                                alt="Profile"
-                                className=" w-full h-full object-cover border-4 rounded-[12px] border-white shadow-lg"
-                                onError={(e) => {
-                                    // Fallback to placeholder if image fails to load
-                                    const target = e.currentTarget as HTMLImageElement; // <-- cast here
-                                    target.onerror = null;
-                                    target.src = DEFAULT_LOGO;
-                                }}
-                            />
-                        }
+                            commonInfo?.fields?.filter(field => field.type === "avatar").map((field) => {
+                                const value = infoData[field.name];
+                                if (typeof value !== "string" || value.trim() === "") {
+                                    return null;
+                                }
+                                return <PhotoRenderer field_name={field.name} filePath={value} sqlOpsUrls={sqlOpsUrls} />
+                            })
 
+                        }
 
                     </div>
                 </div>
@@ -48,6 +45,7 @@ export default function CommonInfo({ commonInfo, infoData, hiddenFields = [] }: 
                         {commonInfo.fields?.map((field, index) => {
                             const value = infoData?.[field.name];
                             if (hiddenFields.includes(field.name)) return null;
+                            if (field.type === "avatar") return null
                             if (!value && value !== false && value !== 0) return null;
 
                             return (
@@ -56,6 +54,7 @@ export default function CommonInfo({ commonInfo, infoData, hiddenFields = [] }: 
                                         key={field?.name || index}
                                         field={field}
                                         data={infoData ?? {}}
+                                        sqlOpsUrls={sqlOpsUrls}
                                     />
                                 </div>
                             );

@@ -5,74 +5,9 @@ import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 import InfoFieldRenderer from './InfoFieldRenderer.js';
 import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
-
-interface TabViewProps {
-    groups: Record<string, InfoViewGroup>;
-    methods?: Record<string, Function>;
-    infoData: InfoData;
-    viewRenderers?: Record<string, (tab: InfoViewGroup, tabName: string) => React.ReactNode>;
-    layoutConfig?: {
-        containerClass?: string;
-        tabNavClass?: string;
-        fieldGridClass?: string;
-    };
-    isCommonInfo: boolean;
-    viewMode: string;
-    sqlOpsUrls?: SqlEndpoints;
-    refid: string;
-    Reports?: ComponentType<any>;
-    toast?: Record<string, Function>;
-    handleAction?: Function;
-    infoViewJson: {
-        script?: string;
-        fields: Record<string, Omit<InfoViewField, "name">>;
-        infoview?: Infoview;
-        source?: Record<string, any>,
-        endPoints?: Record<string, any>;
-        module_refid?: string | undefined;
-    };
-}
+import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions, VerticalNavProps, TopNavProps, ContentAreaPrps, TabViewProps } from '../InfoView.types.js';
 
 
-interface VerticalNavProps {
-    groups: Record<string, InfoViewGroup>;
-    groupNames: string[];
-    setActiveTabIndex: (index: number) => void;
-    activeTabIndex: number;
-
-}
-
-
-interface TopNavProps extends VerticalNavProps {
-    // extra props only TopNav needs
-    showScrollHint: boolean;
-    layoutConfig: {
-        containerClass?: string;
-        tabNavClass?: string;
-        fieldGridClass?: string;
-    };
-    isCommonInfo: boolean;
-    tabsNavRef: React.RefObject<HTMLDivElement | null>;
-}
-
-interface ContentAreaPrps extends VerticalNavProps {
-    layoutConfig: {
-        containerClass?: string;
-        tabNavClass?: string;
-        fieldGridClass?: string;
-    };
-    infoData: InfoData;
-    tabObj: InfoViewGroup | null;
-    renderView: (tab: InfoViewGroup, tabName: string) => React.ReactNode;
-    methods?: Record<string, Function>;
-    sqlOpsUrls?: SqlEndpoints;
-    refid?: string | undefined;
-    module_refid?: string | undefined;
-    fieldOptions: Record<string, SelectOptions>;
-    setFieldOptions: (name: string, options: SelectOptions) => void;
-
-}
 
 const VerticalNav = ({ groups, groupNames, setActiveTabIndex, activeTabIndex }: VerticalNavProps) => (
     <nav
@@ -259,7 +194,8 @@ const ContentArea = (
                                     data={infoData ?? {}}
                                     methods={methods}
                                     refid={refid}
-                                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                                    sqlOpsUrls={sqlOpsUrls}
+                                   
                                     module_refid={module_refid}
                                     setFieldOptions={setFieldOptions}
                                     {...(fieldOptions[field.name]
@@ -413,14 +349,10 @@ export default function TabView({
     const isTop = !isLeft && !isRight;
     const tabObj = groups[groupNames[activeTabIndex] ?? ""] || null;
 
-
-
-
-
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<string, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView module_refid={infoViewJson.module_refid} tabObj={tab} methods={methods} tabName={tabName}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
+            <SingleView module_refid={infoViewJson.module_refid} tabObj={tab} methods={methods} tabName={tabName}  sqlOpsUrls={sqlOpsUrls} refid={refid} />
         ),
         grid: (tab, tabName) => (
             <GridView
@@ -430,7 +362,8 @@ export default function TabView({
                 tabObj={tab}
                 methods={methods}
                 tabName={tabName}
-                {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                sqlOpsUrls={sqlOpsUrls}
+                
                 refid={refid}
                 infoViewJson={infoViewJson}
             />
@@ -441,9 +374,6 @@ export default function TabView({
 
     const renderView = viewRenderers[uiModeKey] || defaultRenderer[uiModeKey] ||
         (() => <div className="flex-1 flex justify-center p-4">No UI mode for this type</div>);
-
-
-
 
 
     if (isTop) {
@@ -471,7 +401,8 @@ export default function TabView({
                     groups={groups}
                     methods={methods}
                     refid={refid}
-                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                    sqlOpsUrls={sqlOpsUrls}
+                  
                     module_refid={infoViewJson.module_refid}
                     fieldOptions={fieldOptions}
                     setFieldOptions={setOptionsForField}
@@ -510,7 +441,7 @@ export default function TabView({
                     methods={methods}
                     refid={refid}
                     module_refid={infoViewJson.module_refid}
-                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                   sqlOpsUrls={sqlOpsUrls}
                     fieldOptions={fieldOptions}
                     setFieldOptions={setOptionsForField}
                 />

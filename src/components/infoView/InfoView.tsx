@@ -40,7 +40,7 @@ export default function LogiksInfoView({
     if (infoViewJson.infoview?.groups) {
         groups = { ...groups, ...infoViewJson.infoview.groups };
     }
-   
+
 
     React.useEffect(() => {
         let cancelled = false;
@@ -198,7 +198,7 @@ export default function LogiksInfoView({
                     methods={methods}
                     infoData={infoData}
                     viewRenderers={viewRenderers}
-                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                    sqlOpsUrls={sqlOpsUrls}
                     refid={refid}
                     {...(Reports ? { Reports } : {})}
                     toast={toast}
@@ -218,7 +218,7 @@ export default function LogiksInfoView({
                     infoData={infoData}
                     isCommonInfo={!!commonInfo}
                     viewMode={viewMode}
-                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                    sqlOpsUrls={sqlOpsUrls}
                     refid={refid}
                     {...(Reports ? { Reports } : {})}
                     toast={toast}
@@ -235,7 +235,7 @@ export default function LogiksInfoView({
                     viewRenderers={viewRenderers}
                     methods={methods}
                     infoData={infoData}
-                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                    sqlOpsUrls={sqlOpsUrls}
                     refid={refid}
                     {...(Reports ? { Reports } : {})}
                     toast={toast}
@@ -254,7 +254,7 @@ export default function LogiksInfoView({
                     infoData={infoData}
                     isCommonInfo={!!commonInfo}
                     viewMode={viewMode}
-                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                    sqlOpsUrls={sqlOpsUrls}
                     refid={refid}
                     {...(Reports ? { Reports } : {})}
                     toast={toast}
@@ -270,21 +270,18 @@ export default function LogiksInfoView({
 
     return (
 
-
-
         <div className={layoutConfig.containerClass || "h-screen flex flex-col "}>
 
-            {commonInfo && (
+            {commonInfo && sqlOpsUrls && (
                 <CommonInfo
                     commonInfo={commonInfo}
                     infoData={infoData}
                     hiddenFields={hiddenFields}
+                    sqlOpsUrls={sqlOpsUrls}
                 />
             )}
             {formView(viewMode)}
         </div>
-
-
     );
 
 };

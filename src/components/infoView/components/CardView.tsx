@@ -14,19 +14,19 @@ interface CardViewProps {
     methods?: Record<string, Function>;
     infoData: InfoData;
     viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
-    sqlOpsUrls?: SqlEndpoints
+    sqlOpsUrls: SqlEndpoints
     refid: string;
     Reports?: ComponentType<any>;
-        toast?: Record<string, Function>;
-        handleAction?: Function;
-         infoViewJson: {
-                        script?: string;
-                        fields: Record<string, Omit<InfoViewField, "name">>;
-                        infoview?: Infoview;
-                        source?: Record<string, any>,
-                        endPoints?: Record<string, any>;
-                         module_refid?: string;
-                    };
+    toast?: Record<string, Function>;
+    handleAction?: Function;
+    infoViewJson: {
+        script?: string;
+        fields: Record<string, Omit<InfoViewField, "name">>;
+        infoview?: Infoview;
+        source?: Record<string, any>,
+        endPoints?: Record<string, any>;
+        module_refid?: string;
+    };
 }
 
 export default function CardView({
@@ -36,39 +36,40 @@ export default function CardView({
     viewRenderers = {},
     sqlOpsUrls,
     refid,
-     Reports,
-    toast={},
-    handleAction=()=>{},
+    Reports,
+    toast = {},
+    handleAction = () => { },
     infoViewJson
 }
     : CardViewProps) {
 
-            const [fieldOptions, setFieldOptions] = useState<
-                Record<string, SelectOptions>
-            >({});
-        
-            const setOptionsForField = (name: string, options: SelectOptions) => {
-                setFieldOptions(prev => ({ ...prev, [name]: options }));
-            };
+    const [fieldOptions, setFieldOptions] = useState<
+        Record<string, SelectOptions>
+    >({});
+
+    const setOptionsForField = (name: string, options: SelectOptions) => {
+        setFieldOptions(prev => ({ ...prev, [name]: options }));
+    };
 
 
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView module_refid={infoViewJson?.module_refid} tabObj={tab} methods={methods} tabName={tabName}  {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid} />
+            <SingleView module_refid={infoViewJson?.module_refid} tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls}   refid={refid} />
         ),
         grid: (tab, tabName) => (
-            <GridView  
-              {...(Reports ? { Reports } : {})}
+            <GridView
+                {...(Reports ? { Reports } : {})}
                 toast={toast}
-                handleAction={handleAction} 
-                tabObj={tab} 
-                methods={methods} 
-                tabName={tabName} 
-               {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
-                refid={refid} 
+                handleAction={handleAction}
+                tabObj={tab}
+                methods={methods}
+                tabName={tabName}
+                sqlOpsUrls={sqlOpsUrls}
+                
+                refid={refid}
                 infoViewJson={infoViewJson}
-                />
+            />
         ),
     };
 
@@ -92,15 +93,16 @@ export default function CardView({
                                                 className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-2"
                                                     }`}
                                             >
-                                                <InfoFieldRenderer 
-                                                module_refid={infoViewJson?.module_refid} 
-                                                methods={methods} field={field} 
-                                                data={infoData ?? {}}  
-                                                   setFieldOptions={setOptionsForField}
+                                                <InfoFieldRenderer
+                                                    module_refid={infoViewJson?.module_refid}
+                                                    methods={methods} field={field}
+                                                    data={infoData ?? {}}
+                                                    setFieldOptions={setOptionsForField}
                                                     {...(fieldOptions[field.name]
                                                         ? { optionsOverride: fieldOptions[field.name] }
                                                         : {})}
-                                                {...(sqlOpsUrls ? { sqlOpsUrls } : {})}refid={refid}  
+                                                    sqlOpsUrls={sqlOpsUrls}
+                                                    refid={refid}
                                                 />
                                             </div>
                                         ))}

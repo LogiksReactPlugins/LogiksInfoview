@@ -61,7 +61,7 @@ export interface InfoViewProps {
         fields: Record<string, Omit<InfoViewField, "name">>;
         infoview?: Infoview;
         source?: Record<string, any>,
-        endPoints?: SqlEndpoints;
+        endPoints: SqlEndpoints;
         buttons?: Record<string, any>;
         forcefill?: Record<string, any>;
         module_refid?: string;
@@ -91,6 +91,7 @@ export interface InfoViewProps {
 export type FlatOptions = Record<string, string>;
 export type GroupedOptions = Record<string, Record<string, string>>;
 export type SelectOptions = FlatOptions | GroupedOptions;
+
 export interface InfoData {
     [key: string]: string | number | boolean | null | undefined;
     // add other fields here...
@@ -99,7 +100,7 @@ export interface InfoData {
 export interface InfoFieldRendererProps {
     field: InfoViewField;
     methods?: Record<string, Function>;
-    sqlOpsUrls?: SqlEndpoints;
+    sqlOpsUrls: SqlEndpoints;
     data?: Record<string, string | number | boolean | null | undefined>; // or data?: Record<string, unknown> if optional
     refid?: string | undefined;
     module_refid?: string | undefined;
@@ -204,7 +205,7 @@ export interface FormField {
 export interface FormJson {
     title?: string | undefined;
     template?: string;
-    endPoints?: SqlEndpoints;
+    endPoints: SqlEndpoints;
     forcefill?: Record<string, string>;
     fields: Record<string, Omit<FormField, "name">>;
     source: Record<string, any>;
@@ -239,7 +240,7 @@ export interface BaseFormViewProps {
     methods?: Record<string, Function>;
     components?: Record<string, ReactNode>;
     widget?: boolean | undefined;
-    sqlOpsUrls?: SqlEndpoints;
+    sqlOpsUrls: SqlEndpoints;
     refid?: string | undefined;
     module_refid?: string | undefined
 
@@ -262,6 +263,73 @@ export interface FieldRendererProps {
         fieldName: string,
         options: SelectOptions
     ) => void;
+}
+
+export interface TabViewProps {
+    groups: Record<string, InfoViewGroup>;
+    methods?: Record<string, Function>;
+    infoData: InfoData;
+    viewRenderers?: Record<string, (tab: InfoViewGroup, tabName: string) => React.ReactNode>;
+    layoutConfig?: {
+        containerClass?: string;
+        tabNavClass?: string;
+        fieldGridClass?: string;
+    };
+    isCommonInfo: boolean;
+    viewMode: string;
+    sqlOpsUrls: SqlEndpoints;
+    refid: string;
+    Reports?: ComponentType<any>;
+    toast?: Record<string, Function>;
+    handleAction?: Function;
+    infoViewJson: {
+        script?: string;
+        fields: Record<string, Omit<InfoViewField, "name">>;
+        infoview?: Infoview;
+        source?: Record<string, any>,
+        endPoints?: Record<string, any>;
+        module_refid?: string | undefined;
+    };
+}
+
+
+export interface VerticalNavProps {
+    groups: Record<string, InfoViewGroup>;
+    groupNames: string[];
+    setActiveTabIndex: (index: number) => void;
+    activeTabIndex: number;
+
+}
+
+
+export interface TopNavProps extends VerticalNavProps {
+    // extra props only TopNav needs
+    showScrollHint: boolean;
+    layoutConfig: {
+        containerClass?: string;
+        tabNavClass?: string;
+        fieldGridClass?: string;
+    };
+    isCommonInfo: boolean;
+    tabsNavRef: React.RefObject<HTMLDivElement | null>;
+}
+
+export interface ContentAreaPrps extends VerticalNavProps {
+    layoutConfig: {
+        containerClass?: string;
+        tabNavClass?: string;
+        fieldGridClass?: string;
+    };
+    infoData: InfoData;
+    tabObj: InfoViewGroup | null;
+    renderView: (tab: InfoViewGroup, tabName: string) => React.ReactNode;
+    methods?: Record<string, Function>;
+    sqlOpsUrls: SqlEndpoints;
+    refid?: string | undefined;
+    module_refid?: string | undefined;
+    fieldOptions: Record<string, SelectOptions>;
+    setFieldOptions: (name: string, options: SelectOptions) => void;
+
 }
 
 

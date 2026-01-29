@@ -13,7 +13,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
         tabObj: InfoViewGroup,
         methods: Record<string, Function>,
         tabName: string,
-        sqlOpsUrls?: Record<string, any>,
+        sqlOpsUrls: Record<string, any>,
         refid: string;
         Reports?: ComponentType<any>;
         toast?: Record<string, Function>;

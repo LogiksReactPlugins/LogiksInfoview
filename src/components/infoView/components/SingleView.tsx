@@ -7,7 +7,7 @@ import type { InfoViewGroup, SqlEndpoints } from '../InfoView.types.js'
 export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid, module_refid }:
     {
         tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string,
-        sqlOpsUrls?: SqlEndpoints, refid: string, module_refid: string | undefined;
+        sqlOpsUrls: SqlEndpoints, refid: string, module_refid: string | undefined;
     }
 ) {
     const [data, setData] = React.useState<Record<string, any> | null>(null);
@@ -173,7 +173,8 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
                                 data={data ?? {}}
                                 methods={methods}
                                 refid={refid}
-                                {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                                sqlOpsUrls={sqlOpsUrls}
+                              
                             />
                         </div>
                     }) : <div className="col-span-12 flex flex-col  min-h-0">

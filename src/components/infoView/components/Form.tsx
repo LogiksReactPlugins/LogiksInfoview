@@ -10,7 +10,7 @@ import type { FormProps } from "../InfoView.types.js";
 import { sqlClient } from "../service.js";
 
 export default function LogiksForm({
-  formJson = { title: "", fields: {}, source: {} },
+  formJson ,
   methods = {},
   userid = null,
   onCancel = () => { },
@@ -314,7 +314,8 @@ export default function LogiksForm({
       onCancel={onCancel}
       methods={methods}
       components={components}
-      {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+      sqlOpsUrls={sqlOpsUrls}
+    
       refid={refid}
       module_refid={module_refid}
 

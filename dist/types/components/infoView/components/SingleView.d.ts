@@ -3,7 +3,7 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
     tabObj: InfoViewGroup;
     methods: Record<string, Function>;
     tabName: string;
-    sqlOpsUrls?: SqlEndpoints;
+    sqlOpsUrls: SqlEndpoints;
     refid: string;
     module_refid: string | undefined;
 }): import("react/jsx-runtime").JSX.Element;

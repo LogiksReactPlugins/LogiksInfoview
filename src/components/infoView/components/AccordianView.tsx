@@ -12,7 +12,7 @@ interface AccordianViewProps {
     methods?: Record<string, Function>;
     infoData: InfoData;
     viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
-    sqlOpsUrls?: SqlEndpoints;
+    sqlOpsUrls: SqlEndpoints;
     refid: string;
     Reports?: ComponentType<any>;
     toast?: Record<string, Function>;
@@ -57,7 +57,8 @@ export default function AccordianView({
                 tabObj={tab}
                 methods={methods}
                 tabName={tabName}
-                {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                sqlOpsUrls={sqlOpsUrls}
+               
                 refid={refid}
                 module_refid={infoViewJson?.module_refid}
             />
@@ -71,7 +72,8 @@ export default function AccordianView({
                 tabObj={tab}
                 methods={methods}
                 tabName={tabName}
-                {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid}
+                sqlOpsUrls={sqlOpsUrls}
+                 refid={refid}
             />
         ),
     };
@@ -106,7 +108,8 @@ export default function AccordianView({
                                                     {...(fieldOptions[field.name]
                                                         ? { optionsOverride: fieldOptions[field.name] }
                                                         : {})}
-                                                    {...(sqlOpsUrls ? { sqlOpsUrls } : {})} refid={refid}
+                                                        sqlOpsUrls={sqlOpsUrls}
+                                                     refid={refid}
                                                 />
                                             </div>
                                         ))}

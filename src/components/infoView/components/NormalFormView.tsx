@@ -84,7 +84,8 @@ export default function NormalFormView({
                 <FieldRenderer
                   refid={refid}
                   module_refid={module_refid}
-                  {...(sqlOpsUrls ? { sqlOpsUrls } : {})}
+                  sqlOpsUrls={sqlOpsUrls}
+                 
                   field={field}
                   formik={formik}
                   methods={methods}

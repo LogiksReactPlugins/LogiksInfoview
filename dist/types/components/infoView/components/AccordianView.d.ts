@@ -5,7 +5,7 @@ interface AccordianViewProps {
     methods?: Record<string, Function>;
     infoData: InfoData;
     viewRenderers?: Record<string, (tab: InfoViewGroup) => React.ReactNode>;
-    sqlOpsUrls?: SqlEndpoints;
+    sqlOpsUrls: SqlEndpoints;
     refid: string;
     Reports?: ComponentType<any>;
     toast?: Record<string, Function>;

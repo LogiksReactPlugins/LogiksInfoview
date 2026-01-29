@@ -13,7 +13,10 @@ export default function InfoFieldRenderer({
   data,
   methods = {},
   sqlOpsUrls,
-  refid, module_refid, optionsOverride, setFieldOptions }: InfoFieldRendererProps) {
+  refid, 
+  module_refid, 
+  optionsOverride, 
+  setFieldOptions }: InfoFieldRendererProps) {
 
   const key = field?.name;
 
