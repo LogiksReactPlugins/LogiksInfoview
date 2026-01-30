@@ -54,9 +54,7 @@ export interface Infoview {
     template?: string
 }
 
-export interface InfoViewProps {
-
-    infoViewJson: {
+export interface InfoviewJson {
         script?: string;
         fields: Record<string, Omit<InfoViewField, "name">>;
         infoview?: Infoview;
@@ -65,7 +63,11 @@ export interface InfoViewProps {
         buttons?: Record<string, any>;
         forcefill?: Record<string, any>;
         module_refid?: string;
-    };
+    }
+
+export interface InfoViewProps {
+
+    infoViewJson: InfoviewJson;
 
     /** Fields to hide */
     hiddenFields?: string[];
@@ -85,7 +87,7 @@ export interface InfoViewProps {
     Reports?: ComponentType<any>;
 
     toast?: Record<string, Function>;
-    handleAction?: Function;
+    handleAction?: (action: Record<string, any>, data: InfoData) => void;
 }
 
 export type FlatOptions = Record<string, string>;
@@ -281,15 +283,8 @@ export interface TabViewProps {
     refid: string;
     Reports?: ComponentType<any>;
     toast?: Record<string, Function>;
-    handleAction?: Function;
-    infoViewJson: {
-        script?: string;
-        fields: Record<string, Omit<InfoViewField, "name">>;
-        infoview?: Infoview;
-        source?: Record<string, any>,
-        endPoints?: Record<string, any>;
-        module_refid?: string | undefined;
-    };
+    handleAction?: (action: Record<string, any>, data: InfoData) => void;
+    infoViewJson: InfoviewJson;
     fieldOptions: Record<string, SelectOptions>;
     setFieldOptions: (
         fieldName: string,
@@ -319,12 +314,13 @@ export interface TopNavProps extends VerticalNavProps {
     tabsNavRef: React.RefObject<HTMLDivElement | null>;
 }
 
-export interface ContentAreaPrps extends VerticalNavProps {
+export interface ContentAreaProps extends VerticalNavProps {
     layoutConfig: {
         containerClass?: string;
         tabNavClass?: string;
         fieldGridClass?: string;
     };
+    handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoData: InfoData;
     tabObj: InfoViewGroup | null;
     renderView: (tab: InfoViewGroup, tabName: string) => React.ReactNode;
@@ -334,6 +330,7 @@ export interface ContentAreaPrps extends VerticalNavProps {
     module_refid?: string | undefined;
     fieldOptions: Record<string, SelectOptions>;
     setFieldOptions: (name: string, options: SelectOptions) => void;
+    buttons?: Record<string, any> | undefined;
 
 }
 

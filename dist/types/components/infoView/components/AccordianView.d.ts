@@ -1,5 +1,5 @@
 import { ComponentType } from 'react';
-import { InfoViewGroup, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
+import { InfoViewGroup, InfoData, SqlEndpoints, SelectOptions, InfoviewJson } from '../InfoView.types.js';
 interface AccordianViewProps {
     groups: Record<string, InfoViewGroup>;
     methods?: Record<string, Function>;
@@ -9,15 +9,8 @@ interface AccordianViewProps {
     refid: string;
     Reports?: ComponentType<any>;
     toast?: Record<string, Function>;
-    handleAction?: Function;
-    infoViewJson: {
-        script?: string;
-        fields: Record<string, Omit<InfoViewField, "name">>;
-        infoview?: Infoview;
-        source?: Record<string, any>;
-        endPoints?: Record<string, any>;
-        module_refid?: string | undefined;
-    };
+    handleAction?: (action: Record<string, any>, data: InfoData) => void;
+    infoViewJson: InfoviewJson;
     fieldOptions: Record<string, SelectOptions>;
     setFieldOptions: (fieldName: string, options: SelectOptions) => void;
 }

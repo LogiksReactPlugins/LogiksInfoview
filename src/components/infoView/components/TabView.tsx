@@ -1,11 +1,11 @@
 import react, { useEffect, useRef, useState } from 'react';
 
-import type { ComponentType } from "react";
+
 import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 import InfoFieldRenderer from './InfoFieldRenderer.js';
-import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions, VerticalNavProps, TopNavProps, ContentAreaPrps, TabViewProps } from '../InfoView.types.js';
+import { tailwindCols, toColWidth } from '../utils.js';
+import type { InfoViewGroup, InfoViewField, VerticalNavProps, TopNavProps, ContentAreaProps, TabViewProps } from '../InfoView.types.js';
 
 
 
@@ -170,10 +170,38 @@ const ContentArea = (
         sqlOpsUrls,
         module_refid,
         fieldOptions,
-        setFieldOptions
-    }: ContentAreaPrps
-) => (
-    <div
+        setFieldOptions,
+        buttons,
+        handleAction
+    }: ContentAreaProps
+) => {
+    { console.log("active tab", groupNames[activeTabIndex]) }
+
+    let visibleButtons = buttons ? Object.entries(buttons).filter(([_, val]) => {
+        if (val.groups) return val.groups.includes(groupNames[activeTabIndex])
+        return false;
+    }) : []
+
+
+    async function handleClick(method: string,val:Record<string,any>) {
+
+        const methodFn = methods?.[method as keyof typeof methods];
+
+        if (methodFn) {
+            try {
+                await methodFn();
+
+            } catch (err) {
+                console.error("Method execution failed:", err);
+
+            }
+            return
+        }
+        handleAction?.({[method]:val},infoData)
+      
+    }
+
+    return <div
         key={groupNames[activeTabIndex]}
         className="bg-white rounded-b-lg border  border-t-0 border-gray-100 p-3 animate-in fade-in duration-300 flex-1 flex flex-col min-h-0"
     >
@@ -216,9 +244,22 @@ const ContentArea = (
             </div>
         )}
 
+        <div className="flex justify-end gap-2 pt-3 border-t border-gray-100">
+            {visibleButtons &&
+                visibleButtons.map(([key, val]) => (
+                    <button
+                        key={key}
+                        onClick={() => handleClick(key,val)}
+                        className="px-5 py-2 bg-action font-semibold rounded-lg border-2 border-gray-200 shadow-sm hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer"
+                    >
+                        {val.label}
+                    </button>
+                ))}
+        </div>
+
         {/* Navigation controls for many tabs */}
         {groupNames.length > 5 && (
-            <div className="mt-10 pt-2 border-t border-gray-100 flex items-center justify-between gap-4">
+            <div className="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between gap-4">
                 {/* Progress indicator */}
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                     <span>Tab {activeTabIndex + 1} of {groupNames.length}</span>
@@ -276,7 +317,7 @@ const ContentArea = (
             </div>
         )}
     </div>
-)
+}
 
 export default function TabView({
     groups,
@@ -396,6 +437,8 @@ export default function TabView({
                     module_refid={infoViewJson.module_refid}
                     fieldOptions={fieldOptions}
                     setFieldOptions={setFieldOptions}
+                    buttons={infoViewJson.buttons}
+                    handleAction={handleAction}
 
                 />
 
@@ -434,6 +477,8 @@ export default function TabView({
                     sqlOpsUrls={sqlOpsUrls}
                     fieldOptions={fieldOptions}
                     setFieldOptions={setFieldOptions}
+                    handleAction={handleAction}
+
                 />
             </main>
 

@@ -46,17 +46,18 @@ export interface Infoview {
     groups?: Record<string, Omit<InfoViewGroup, "fields">>;
     template?: string;
 }
+export interface InfoviewJson {
+    script?: string;
+    fields: Record<string, Omit<InfoViewField, "name">>;
+    infoview?: Infoview;
+    source?: Record<string, any>;
+    endPoints: SqlEndpoints;
+    buttons?: Record<string, any>;
+    forcefill?: Record<string, any>;
+    module_refid?: string;
+}
 export interface InfoViewProps {
-    infoViewJson: {
-        script?: string;
-        fields: Record<string, Omit<InfoViewField, "name">>;
-        infoview?: Infoview;
-        source?: Record<string, any>;
-        endPoints: SqlEndpoints;
-        buttons?: Record<string, any>;
-        forcefill?: Record<string, any>;
-        module_refid?: string;
-    };
+    infoViewJson: InfoviewJson;
     /** Fields to hide */
     hiddenFields?: string[];
     /** Custom grouping function */
@@ -74,7 +75,7 @@ export interface InfoViewProps {
     methods?: Record<string, Function>;
     Reports?: ComponentType<any>;
     toast?: Record<string, Function>;
-    handleAction?: Function;
+    handleAction?: (action: Record<string, any>, data: InfoData) => void;
 }
 export type FlatOptions = Record<string, string>;
 export type GroupedOptions = Record<string, Record<string, string>>;
@@ -236,15 +237,8 @@ export interface TabViewProps {
     refid: string;
     Reports?: ComponentType<any>;
     toast?: Record<string, Function>;
-    handleAction?: Function;
-    infoViewJson: {
-        script?: string;
-        fields: Record<string, Omit<InfoViewField, "name">>;
-        infoview?: Infoview;
-        source?: Record<string, any>;
-        endPoints?: Record<string, any>;
-        module_refid?: string | undefined;
-    };
+    handleAction?: (action: Record<string, any>, data: InfoData) => void;
+    infoViewJson: InfoviewJson;
     fieldOptions: Record<string, SelectOptions>;
     setFieldOptions: (fieldName: string, options: SelectOptions) => void;
 }
@@ -264,12 +258,13 @@ export interface TopNavProps extends VerticalNavProps {
     isCommonInfo: boolean;
     tabsNavRef: React.RefObject<HTMLDivElement | null>;
 }
-export interface ContentAreaPrps extends VerticalNavProps {
+export interface ContentAreaProps extends VerticalNavProps {
     layoutConfig: {
         containerClass?: string;
         tabNavClass?: string;
         fieldGridClass?: string;
     };
+    handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoData: InfoData;
     tabObj: InfoViewGroup | null;
     renderView: (tab: InfoViewGroup, tabName: string) => React.ReactNode;
@@ -279,6 +274,7 @@ export interface ContentAreaPrps extends VerticalNavProps {
     module_refid?: string | undefined;
     fieldOptions: Record<string, SelectOptions>;
     setFieldOptions: (name: string, options: SelectOptions) => void;
+    buttons?: Record<string, any> | undefined;
 }
 export {};
 //# sourceMappingURL=InfoView.types.d.ts.map
