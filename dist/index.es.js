@@ -2580,30 +2580,39 @@ function Os(e) {
   return /* @__PURE__ */ i.jsx("i", { className: `${t} text-2xl text-gray-600` });
 }
 const Fs = ({ filePath: e, sqlOpsUrls: t }) => {
-  const [r, n] = le(null), [a, s] = le(!1);
+  const [r, n] = le(null), [a, s] = le(!1), o = Ss(e), c = _s(o);
   oe(() => {
-    if (!a || !t) return;
+    if (!t || c !== "image" && !a) return;
     let u = !0, f = null;
     return Dn(e, t).then((y) => {
       u && (f = y, n(y));
     }), () => {
       u = !1, f && URL.revokeObjectURL(f);
     };
-  }, [a, e, t]);
-  const o = Ss(e), c = _s(o), d = Os(c);
+  }, [c, a, e, t]);
+  let d = e.split("/").pop();
   return /* @__PURE__ */ i.jsxs(i.Fragment, { children: [
-    /* @__PURE__ */ i.jsxs(
+    c === "image" && r ? /* @__PURE__ */ i.jsx(
+      "img",
+      {
+        src: r,
+        alt: d,
+        title: "Click to preview",
+        onClick: () => s(!0),
+        className: "h-16 w-16 object-cover rounded  cursor-pointer hover:opacity-90"
+      }
+    ) : /* @__PURE__ */ i.jsxs(
       "div",
       {
         role: "button",
         tabIndex: 0,
         onClick: () => s(!0),
         onKeyDown: (u) => u.key === "Enter" && s(!0),
-        className: "inline-flex cursor-pointer",
+        className: "inline-flex cursor-pointer items-center gap-1",
+        title: "Click to preview",
         children: [
-          d,
-          "   ",
-          e?.split("/").pop()
+          Os(c),
+          /* @__PURE__ */ i.jsx("span", { className: "text-sm", children: d })
         ]
       }
     ),

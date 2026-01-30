@@ -17,10 +17,14 @@ const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) =
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
-
+ const ext = getFileExtension(filePath);
+  const category = getMimeCategory(ext);
   useEffect(() => {
  
-    if (!open || !sqlOpsUrls) return;
+    if (!sqlOpsUrls) return;
+
+  // load immediately for images (thumbnail)
+  if (category !== "image" && !open) return;
     let active = true;
     let objectUrl: string | null = null;
 
@@ -35,25 +39,33 @@ const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) =
       active = false;
       if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, [open, filePath, sqlOpsUrls]);
+  }, [category,open, filePath, sqlOpsUrls]);
 
-
-  const ext = getFileExtension(filePath);
-  const category = getMimeCategory(ext);
-  const icon = getFileIcon(category);
-
+let fileName = filePath.split("/").pop();
   return (
     <>
 
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={() => setOpen(true)}
-        onKeyDown={(e) => e.key === "Enter" && setOpen(true)}
-        className="inline-flex cursor-pointer"
-      >
-        {icon} &nbsp; {filePath?.split("/").pop()}
-      </div>
+    {category === "image" && previewUrl ? (
+        <img
+          src={previewUrl}
+          alt={fileName}
+          title="Click to preview"
+          onClick={() => setOpen(true)}
+          className="h-16 w-16 object-cover rounded  cursor-pointer hover:opacity-90"
+        />
+      ) : (
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => setOpen(true)}
+          onKeyDown={(e) => e.key === "Enter" && setOpen(true)}
+          className="inline-flex cursor-pointer items-center gap-1"
+          title="Click to preview"
+        >
+          {getFileIcon(category)}
+          <span className="text-sm">{fileName}</span>
+        </div>
+      )}
 
 
       {open && (
