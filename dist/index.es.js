@@ -6165,8 +6165,7 @@ const pn = ({ groups: e, groupNames: t, setActiveTabIndex: r, activeTabIndex: n 
   buttons: y,
   handleAction: E
 }) => {
-  console.log("active tab", e[t]);
-  let v = y ? Object.entries(y).filter(([u, g]) => g.groups ? g.groups.includes(e[t]) : !1) : [];
+  let v = y ? Object.entries(y).filter(([u, g]) => g.groups ? g.groups.includes(e[t]) : !0) : [];
   async function S(u, g) {
     const T = c?.[u];
     if (T) {

@@ -175,15 +175,14 @@ const ContentArea = (
         handleAction
     }: ContentAreaProps
 ) => {
-    { console.log("active tab", groupNames[activeTabIndex]) }
-
+    
     let visibleButtons = buttons ? Object.entries(buttons).filter(([_, val]) => {
         if (val.groups) return val.groups.includes(groupNames[activeTabIndex])
-        return false;
+        return true;
     }) : []
 
 
-    async function handleClick(method: string,val:Record<string,any>) {
+    async function handleClick(method: string, val: Record<string, any>) {
 
         const methodFn = methods?.[method as keyof typeof methods];
 
@@ -197,8 +196,8 @@ const ContentArea = (
             }
             return
         }
-        handleAction?.({[method]:val},infoData)
-      
+        handleAction?.({ [method]: val }, infoData)
+
     }
 
     return <div
@@ -249,7 +248,7 @@ const ContentArea = (
                 visibleButtons.map(([key, val]) => (
                     <button
                         key={key}
-                        onClick={() => handleClick(key,val)}
+                        onClick={() => handleClick(key, val)}
                         className="px-5 py-2 bg-action font-semibold rounded-lg border-2 border-gray-200 shadow-sm hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer"
                     >
                         {val.label}
