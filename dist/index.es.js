@@ -2788,7 +2788,7 @@ function dt({
     ) : /* @__PURE__ */ i.jsx(
       "img",
       {
-        src: `${n?.baseURL}${u.src}`,
+        src: u.src,
         alt: "signature",
         className: "h-24 object-contain border bg-white rounded"
       }

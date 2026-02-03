@@ -262,7 +262,6 @@ export default function InfoFieldRenderer({
 
   const signature = decodeSignature(rawVal);
 
-  
 
   return (
     <div className="px-3 py-2 bg-gray-50 rounded-lg">
@@ -303,7 +302,7 @@ export default function InfoFieldRenderer({
             />
           ) : (
             <img
-              src={`${sqlOpsUrls?.baseURL}${signature.src}`}
+              src={signature.src}
               alt="signature"
               className="h-24 object-contain border bg-white rounded"
             />
