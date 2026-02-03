@@ -350,8 +350,8 @@ export declare const example10: {
         company_code_id: {
             label: string;
             type: string;
-            "no-option": string;
             required: boolean;
+            "no-option": string;
             width: number;
             ajaxchain: {
                 target: string;
@@ -368,8 +368,8 @@ export declare const example10: {
         sector_id: {
             label: string;
             type: string;
-            "no-option": string;
             required: boolean;
+            "no-option": string;
             width: number;
             ajaxchain: {
                 target: string;
@@ -383,8 +383,8 @@ export declare const example10: {
         project_function_id: {
             label: string;
             type: string;
-            "no-option": string;
             required: boolean;
+            "no-option": string;
             width: number;
             ajaxchain: {
                 target: string;
@@ -398,8 +398,8 @@ export declare const example10: {
         location_id: {
             label: string;
             type: string;
-            "no-option": string;
             required: boolean;
+            "no-option": string;
             width: number;
             options: never[];
         };
@@ -409,11 +409,39 @@ export declare const example10: {
             required: boolean;
             width: number;
         };
-        conducted_by_department: {
+        duration_min: {
+            label: string;
+            onChange: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+        participant_count: {
+            label: string;
+            onChange: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+        man_hours: {
+            label: string;
+            disabled: boolean;
+            type: string;
+            width: number;
+        };
+        conducted_by: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+            queryid: string;
+        };
+        trainer: {
             label: string;
             type: string;
             groupid: string;
             required: boolean;
+            search: boolean;
             width: number;
             options: {
                 title: string;
@@ -422,25 +450,35 @@ export declare const example10: {
                 privilege: string;
             }[];
         };
-        conducted_by_name: {
+        category: {
             label: string;
             type: string;
-            width: number;
-            queryid: string;
-        };
-        participant_count: {
-            label: string;
-            type: string;
+            groupid: string;
             required: boolean;
+            search: boolean;
             width: number;
+            options: {
+                title: string;
+                value: string;
+                class: null;
+                privilege: string;
+            }[];
         };
-        photo_attendance: {
+        photograph: {
             label: string;
             type: string;
+            multiple: boolean;
+            width: number;
+        };
+        attendance_scan: {
+            label: string;
+            type: string;
+            multiple: boolean;
             width: number;
         };
     };
     infoview: {
+        template: string;
         groups: {
             participant_details: {
                 label: string;
@@ -470,16 +508,29 @@ export declare const example10: {
                         forcefill: {
                             guid: string;
                             created_by: string;
-                            hse_induction_id: string;
+                            hse_training_id: string;
                         };
                         fields: {
+                            topic: {
+                                label: string;
+                                type: string;
+                                onChange: string;
+                                groupid: string;
+                                required: boolean;
+                                width: number;
+                                options: {
+                                    title: string;
+                                    value: string;
+                                    class: null;
+                                    privilege: string;
+                                }[];
+                            };
                             gender: {
                                 label: string;
                                 type: string;
                                 required: boolean;
                                 groupid: string;
                                 width: number;
-                                formatter: string;
                                 options: ({
                                     title: string;
                                     value: string;
@@ -498,10 +549,15 @@ export declare const example10: {
                                 required: boolean;
                                 width: number;
                             };
+                            company_name: {
+                                label: string;
+                                type: string;
+                                required: boolean;
+                                width: number;
+                            };
                             company: {
                                 label: string;
                                 type: string;
-                                onChange: string;
                                 groupid: string;
                                 required: boolean;
                                 width: number;
@@ -512,21 +568,30 @@ export declare const example10: {
                                     privilege: string;
                                 }[];
                             };
-                            company_name: {
+                            participant_photograph: {
                                 label: string;
-                                disabled: boolean;
                                 type: string;
-                                required: boolean;
                                 width: number;
                             };
-                            photograph: {
+                            other_topic_text: {
                                 label: string;
                                 type: string;
+                                disabled: boolean;
                                 width: number;
                             };
                         };
                     };
                     datagrid: {
+                        id: {
+                            label: string;
+                            searchable: boolean;
+                        };
+                        topic: {
+                            label: string;
+                            searchable: boolean;
+                            sortable: boolean;
+                            formatter: string;
+                        };
                         gender: {
                             label: string;
                             searchable: boolean;
@@ -536,7 +601,6 @@ export declare const example10: {
                         count: {
                             label: string;
                             searchable: boolean;
-                            sortable: boolean;
                         };
                         company_name: {
                             label: string;
@@ -544,14 +608,17 @@ export declare const example10: {
                         };
                         company: {
                             label: string;
-                            formatter: string;
                             searchable: boolean;
+                            formatter: string;
                         };
-                        photograph: {
+                        participant_photograph: {
                             label: string;
                             searchable: boolean;
-                            multiple: boolean;
                             formatter: string;
+                        };
+                        other_topic_text: {
+                            label: string;
+                            searchable: boolean;
                         };
                     };
                     actions1: {

@@ -416,10 +416,10 @@ export const example9 = {
 }
 
 
-export const example10 = {
-    "endPoints": {
+export const example10 ={
+     "endPoints": {
         "baseURL": "http://192.168.0.20:9999",
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6Im1lcDVsN2FTWEthSDhxSFpQUHJhQlgxVzNtZzk3MGRDdnFKT3V0c3FUMGR6NE9PRjE1dlJDYVJHc21mOXJmMkxKQW5BVDZvZm9Pb0ExL2Q2NmRaYUlLVENDaVRCLzF4MzEwalViNlA1VW5Id0pQdXRORWt0V1czTlJCb0t3YXBuRjlrNGRTQVpjd1AvVXA1U3dxM3NXdDRTSUxxL2hTa05YRWlvTDBHMVFid2pZSHFzejVybmd1NlJHQm9xbUkwaXJGbDVzTjZpam4vMU03cHRQL2EzNlh0RmxGV1g0UUhXNHc4V0ZPaXIzMDQwaktUVFEvR0l5dE1jL1ovbm5Ha0V4YkhBeHp6anNPRzk4RHNiR3lFaGxlUFI4Y1RGMVdkdCtlVnZNVVk9IiwiaWF0IjoxNzY5NzUwMzk3LCJleHAiOjE3Njk3NTM5OTcsImp0aSI6ImFjYzoxOjE3Njk3NTAzOTc1ODA6d2ViIn0.WCtpQgW7MeiP6l-7nLGEPtXpU6L_cD_XorLObPszKgE",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6ImhrcU9ndmQ3Wk9MWmU2bVBUcXFzcnhCY3FyUUFOK2tGQmFPenpXTEpSL0xMRHhnQTRrTEdjZE9TbW81UUNTVWd0Ym12WUdCbGs5d0Npaks2eEk4cUxndUdSK1YzOGtBM0YzclU0SjFLeUxlUTJVeTQrdzZvUXQxSUNVcUVEd2k2cTRUTGdiRkJJc1NxWWkyVHhDRk5qMXBYa1MwaE1mbHlhSUFZRE1LMFJuOVNoYmQrcjdyMGxicWdQamgvVzJKVHE5dFFoV3IyVForbXhRYXAydG9oSHF0WGdISG03eFVrcGFDb24vQzc4OWV5OCs4dk1mTEduV2RyMkw3NW1KUGVsTXZncmwrdm9hQkE5NW85bnFKVlp1MFB3NjdDalZFS3hQQy9qdGM9IiwiaWF0IjoxNzcwMTAwMDk4LCJleHAiOjE3NzAxMDM2OTgsImp0aSI6ImFjYzoxOjE3NzAxMDAwOTg4MDE6d2ViIn0.wwg6A7k9LG6fr8inJqLmFdO5H0QLBjcozT3jd2SMS2k",
         "dbopsGetHash": "/api/dbops",
         "dbopsGetRefId": "/api/dbops/save",
         "dbopsCreate": "/api/dbops/create",
@@ -430,26 +430,26 @@ export const example10 = {
     },
     "source": {
         "type": "sql",
-        "dbopsid": "forms%40hse.induction%4014"
+        "dbopsid": "forms%40hse.training%401"
     },
     "forcefill": {
         "groupuid": "#SESS_GROUP_NAME#",
         "guid": "#SESS_GUID#"
     },
-    "gotolink": "infoview/hse.induction/{hashid}",
+    "gotolink": "infoview/hse.training/{hashid}",
     "fields": {
         "company_code_id": {
             "label": "Company",
             "type": "select",
-            "no-option": "Select Company",
             "required": true,
+            "no-option": "Select Company",
             "width": 4,
             "ajaxchain": [
                 {
                     "target": "sector_id",
                     "src": {
                         "type": "sql",
-                        "queryid": "forms%40hse.induction%40fields.company_code_id.ajaxchain.0"
+                        "queryid": "forms%40hse.training%40fields.company_code_id.ajaxchain.0"
                     }
                 }
             ],
@@ -467,29 +467,29 @@ export const example10 = {
         "sector_id": {
             "label": "Sector",
             "type": "select",
-            "no-option": "Select Sector",
             "required": true,
+            "no-option": "Select Sector",
             "width": 4,
             "ajaxchain": {
                 "target": "project_function_id",
                 "src": {
                     "type": "sql",
-                    "queryid": "forms%40hse.induction%40fields.sector_id.ajaxchain.0"
+                    "queryid": "forms%40hse.training%40fields.sector_id.ajaxchain.0"
                 }
             },
             "options": []
         },
         "project_function_id": {
-            "label": "Project Function",
+            "label": "Project Function ",
             "type": "select",
-            "no-option": "Select Project Function",
             "required": true,
+            "no-option": "Select Project Function",
             "width": 4,
             "ajaxchain": {
                 "target": "location_id",
                 "src": {
                     "type": "sql",
-                    "queryid": "forms%40hse.induction%40fields.project_function_id.ajaxchain.0"
+                    "queryid": "forms%40hse.training%40fields.project_function_id.ajaxchain.0"
                 }
             },
             "options": []
@@ -497,58 +497,127 @@ export const example10 = {
         "location_id": {
             "label": "Location",
             "type": "select",
-            "no-option": "Select Location",
             "required": true,
+            "no-option": "Select Location",
             "width": 4,
             "options": []
         },
         "date": {
-            "label": "Date",
+            "label": "Training Date",
             "type": "date",
             "required": true,
             "width": 4
         },
-        "conducted_by_department": {
-            "label": "Conducted By Department",
-            "type": "select",
-            "groupid": "hse_conducted_by_department",
+        "duration_min": {
+            "label": "Training Duration (Min)",
+            "onChange": "calculateManHours",
+            "type": "number",
             "required": true,
+            "width": 4
+        },
+        "participant_count": {
+            "label": "Participant Count",
+            "onChange": "calculateManHours",
+            "type": "number",
+            "required": true,
+            "width": 4
+        },
+        "man_hours": {
+            "label": "Training Man Hours",
+            "disabled": true,
+            "type": "text",
+            "width": 4
+        },
+        "conducted_by": {
+            "label": "Training Conducted By",
+            "type": "autocomplete",
+            "required": true,
+            "width": 4,
+            "queryid": "forms%40hse.training%40undefined"
+        },
+        "trainer": {
+            "label": "Trainer",
+            "type": "select",
+            "groupid": "hse_training",
+            "required": true,
+            "search": true,
             "width": 4,
             "options": [
                 {
-                    "title": "WEL HSE",
-                    "value": "wel_hse",
+                    "title": "Internal",
+                    "value": "internal",
                     "class": null,
                     "privilege": "*"
                 },
                 {
-                    "title": "Contractor",
-                    "value": "contractor",
+                    "title": "External",
+                    "value": "external",
                     "class": null,
                     "privilege": "*"
                 }
             ]
         },
-        "conducted_by_name": {
-            "label": "Conducted By (Name)",
-            "type": "autocomplete",
-            "width": 4,
-            "queryid": "forms%40hse.induction%40undefined"
-        },
-        "participant_count": {
-            "label": "Participant Count",
-            "type": "number",
+        "category": {
+            "label": "Category",
+            "type": "select",
+            "groupid": "hse_category",
             "required": true,
+            "search": true,
+            "width": 4,
+            "options": [
+                {
+                    "title": "On Site",
+                    "value": "on_site",
+                    "class": null,
+                    "privilege": "*"
+                },
+                {
+                    "title": "On Site",
+                    "value": "on_site",
+                    "class": null,
+                    "privilege": "*"
+                },
+                {
+                    "title": "Class Room",
+                    "value": "class_room",
+                    "class": null,
+                    "privilege": "*"
+                },
+                {
+                    "title": "Class Room",
+                    "value": "class_room",
+                    "class": null,
+                    "privilege": "*"
+                },
+                {
+                    "title": "Mock Drill",
+                    "value": "mock_drill",
+                    "class": null,
+                    "privilege": "*"
+                },
+                {
+                    "title": "Mock Drill",
+                    "value": "mock_drill",
+                    "class": null,
+                    "privilege": "*"
+                }
+            ]
+        },
+        "photograph": {
+            "label": "Training Photograph (Max. Sizes:10MB)",
+            "type": "file",
+            "multiple": true,
             "width": 4
         },
-        "photo_attendance": {
-            "label": "Induction Photo/Attendance (Max. Sizes:10MB)",
+        "attendance_scan": {
+            "label": "Training Attendance Scan (Max. Sizes:10MB)",
             "type": "file",
+            "multiple": true,
             "width": 4
         }
     },
     "infoview": {
-      
+        "template": "cards",
         "groups": {
             "participant_details": {
                 "label": "Participant Details",
@@ -569,25 +638,106 @@ export const example10 = {
                         "export": false,
                         "email": false
                     },
-                    "colkey": "hse_induction_id",
+                    "colkey": "hse_training_id",
                     "popup.form": {
                         "source": {
                             "type": "sql",
-                            "dbopsid": "forms%40hse.induction.infoview_popup.participant_details%40"
+                            "dbopsid": "forms%40hse.training.infoview_popup.participant_details%40"
                         },
                         "forcefill": {
                             "guid": "#SESS_GUID#",
                             "created_by": "#SESS_USER_ID#",
-                            "hse_induction_id": "#refid#"
+                            "hse_training_id": "#refid#"
                         },
                         "fields": {
+                            "topic": {
+                                "label": "Topic",
+                                "type": "select",
+                                "onChange": "changeTopic",
+                                "groupid": "training_topic",
+                                "required": true,
+                                "width": 4,
+                                "options": [
+                                    {
+                                        "title": "Height Work Safety",
+                                        "value": "height_work_safety",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Environment Related",
+                                        "value": "environment_related",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Confined Space",
+                                        "value": "confined_space",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "PPEs",
+                                        "value": "ppes",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Fire Fighting",
+                                        "value": "fire_fighting",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "CPR",
+                                        "value": "cpr",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Road Safety",
+                                        "value": "road_safety",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "ESG",
+                                        "value": "esg",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Mock Drill",
+                                        "value": "mock_drill",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Emergency Preparedness",
+                                        "value": "emergency_preparedness",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Behaviour Based Safety",
+                                        "value": "behaviour_based_safety",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Other",
+                                        "value": "other",
+                                        "class": null,
+                                        "privilege": "*"
+                                    }
+                                ]
+                            },
                             "gender": {
                                 "label": "Gender",
                                 "type": "select",
                                 "required": true,
                                 "groupid": "user_gender",
                                 "width": 4,
-                                "formatter": "pretty",
                                 "options": [
                                     {
                                         "title": "Female",
@@ -615,10 +765,15 @@ export const example10 = {
                                 "required": true,
                                 "width": 4
                             },
+                            "company_name": {
+                                "label": "Company Name",
+                                "type": "text",
+                                "required": true,
+                                "width": 4
+                            },
                             "company": {
                                 "label": "Company",
                                 "type": "select",
-                                "onChange": "company_required",
                                 "groupid": "company_type",
                                 "required": true,
                                 "width": 4,
@@ -649,21 +804,30 @@ export const example10 = {
                                     }
                                 ]
                             },
-                            "company_name": {
-                                "label": "Company Name",
-                                "disabled": true,
-                                "type": "text",
-                                "required": true,
+                            "participant_photograph": {
+                                "label": "Participant Photograph",
+                                "type": "file",
                                 "width": 4
                             },
-                            "photograph": {
-                                "label": "Photograph",
-                                "type": "file",
-                                "width": 6
+                            "other_topic_text": {
+                                "label": "Other Topic",
+                                "type": "textarea",
+                                "disabled": true,
+                                "width": 12
                             }
                         }
                     },
                     "datagrid": {
+                        "id": {
+                            "label": "ID",
+                            "searchable": true
+                        },
+                        "topic": {
+                            "label": "Topic",
+                            "searchable": true,
+                            "sortable": true,
+                            "formatter": "pretty"
+                        },
                         "gender": {
                             "label": "Gender",
                             "searchable": true,
@@ -672,8 +836,7 @@ export const example10 = {
                         },
                         "count": {
                             "label": "Count",
-                            "searchable": true,
-                            "sortable": true
+                            "searchable": true
                         },
                         "company_name": {
                             "label": "Company Name",
@@ -681,14 +844,17 @@ export const example10 = {
                         },
                         "company": {
                             "label": "Company",
-                            "formatter": "pretty",
-                            "searchable": true
-                        },
-                        "photograph": {
-                            "label": "Photograph",
                             "searchable": true,
-                            "multiple": true,
+                            "formatter": "pretty"
+                        },
+                        "participant_photograph": {
+                            "label": "Participant Photograph",
+                            "searchable": true,
                             "formatter": "url"
+                        },
+                        "other_topic_text": {
+                            "label": "Other Topic",
+                            "searchable": true
                         }
                     },
                     "actions1": {
@@ -706,13 +872,13 @@ export const example10 = {
                             "icon": "fa fa-trash text-red-500"
                         }
                     },
-                    "queryid": "forms%40hse.induction.infoviewTable.participant_details%40infoview.groups.participant_details"
+                    "queryid": "forms%40hse.training.infoviewTable.participant_details%40infoview.groups.participant_details"
                 },
                 "width": 12
             }
         }
     },
-    "script": "CgoKZnVuY3Rpb24gY29tcGFueV9yZXF1aXJlZChkYXRhKSB7CiAgY29uc3QgdmFsdWUgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKT8udmFsdWU7CiAgY29uc3QgcmV3b3JrRmllbGQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY29tcGFueV9uYW1lIik7CiAgaWYgKHJld29ya0ZpZWxkKSB7CiAgICByZXdvcmtGaWVsZC5kaXNhYmxlZCA9ICF2YWx1ZTsKICB9Cn0=",
-    "module_refid": "hse.induction",
+    "script": "ZnVuY3Rpb24gc2V0TmF0aXZlVmFsdWUoZWxlbWVudCwgdmFsdWUpIHsKICBjb25zdCB2YWx1ZVNldHRlciA9IE9iamVjdC5nZXRPd25Qcm9wZXJ0eURlc2NyaXB0b3IoCiAgICB3aW5kb3cuSFRNTElucHV0RWxlbWVudC5wcm90b3R5cGUsCiAgICAidmFsdWUiCiAgKS5zZXQ7CgogIHZhbHVlU2V0dGVyLmNhbGwoZWxlbWVudCwgdmFsdWUpOwoKICBlbGVtZW50LmRpc3BhdGNoRXZlbnQobmV3IEV2ZW50KCJpbnB1dCIsIHsgYnViYmxlczogdHJ1ZSB9KSk7Cn0KCmZ1bmN0aW9uIGNhbGN1bGF0ZU1hbkhvdXJzKCkgewogIGNvbnN0IGR1cmF0aW9uID0gTnVtYmVyKGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJkdXJhdGlvbl9taW4iKT8udmFsdWUpIHx8IDA7CiAgY29uc3QgcGFydGljaXBhbnQgPSBOdW1iZXIoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInBhcnRpY2lwYW50X2NvdW50Iik/LnZhbHVlKSB8fCAwOwoKICBjb25zdCBtYW5Ib3VycyA9IGR1cmF0aW9uICogcGFydGljaXBhbnQ7CiAKICBjb25zdCBtYW5Ib3Vyc0lucHV0ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIm1hbl9ob3VycyIpOwogIGlmIChtYW5Ib3Vyc0lucHV0KSB7CiAgICBzZXROYXRpdmVWYWx1ZShtYW5Ib3Vyc0lucHV0LCBtYW5Ib3Vycyk7CiAgfQp9CgpmdW5jdGlvbiBjaGFuZ2VUb3BpYyhzZWxlY3RJZCkgewogIGNvbnN0IHZhbHVlID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoc2VsZWN0SWQpPy52YWx1ZTsKICBjb25zdCByZXdvcmtGaWVsZCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJvdGhlcl90b3BpY190ZXh0Iik7CgogIGlmICghcmV3b3JrRmllbGQpIHJldHVybjsKCiAgaWYgKHZhbHVlID09PSAib3RoZXIiKSB7CiAgICByZXdvcmtGaWVsZC5kaXNhYmxlZCA9IGZhbHNlOwogIH0gZWxzZSB7CiAgICByZXdvcmtGaWVsZC5kaXNhYmxlZCA9IHRydWU7ICAgCiAgfQp9CgoK",
+    "module_refid": "hse.training",
     "module_type": "forms"
 }

@@ -13,9 +13,9 @@ export default function InfoFieldRenderer({
   data,
   methods = {},
   sqlOpsUrls,
-  refid, 
-  module_refid, 
-  optionsOverride, 
+  refid,
+  module_refid,
+  optionsOverride,
   setFieldOptions }: InfoFieldRendererProps) {
 
   const key = field?.name;
@@ -216,7 +216,7 @@ export default function InfoFieldRenderer({
     refid
   ]);
 
- const rawVal = field?.name ? data?.[field.name] : undefined;
+  const rawVal = field?.name ? data?.[field.name] : undefined;
 
   React.useEffect(() => {
     if (ranRef.current) return;
@@ -308,7 +308,19 @@ export default function InfoFieldRenderer({
             />
           )
         ) : (field.type === "file" || field.type === "attachement" || field.type === "photo" || field.type === "avatar") && displayVal ? (
-          <FilePreviewTrigger sqlOpsUrls={sqlOpsUrls} filePath={String(displayVal)} />
+          <div className="flex flex-wrap gap-2">
+            {String(displayVal)
+              .split(",")
+              .map((path) => path.trim())
+              .filter(Boolean)
+              .map((path) => (
+                <FilePreviewTrigger
+                  key={path}
+                  sqlOpsUrls={sqlOpsUrls}
+                  filePath={path}
+                />
+              ))}
+          </div>
         ) : (
           <p className={baseInputClasses}>{renderValue}</p>
         )}
