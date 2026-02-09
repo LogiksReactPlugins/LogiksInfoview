@@ -1,4 +1,4 @@
-import { default as React, ComponentType } from 'react';
+import { default as React, ComponentType, ReactNode } from 'react';
 import { InfoViewGroup, InfoData, SqlEndpoints, SelectOptions, InfoviewJson } from '../InfoView.types.js';
 interface CardViewProps {
     groups: Record<string, InfoViewGroup>;
@@ -13,7 +13,7 @@ interface CardViewProps {
     infoViewJson: InfoviewJson;
     fieldOptions: Record<string, SelectOptions>;
     setFieldOptions: (fieldName: string, options: SelectOptions) => void;
-    components?: Record<string, ComponentType<any>>;
+    components?: Record<string, ComponentType<any> | ReactNode>;
 }
 export default function CardView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson, fieldOptions, setFieldOptions, components }: CardViewProps): import("react/jsx-runtime").JSX.Element;
 export {};

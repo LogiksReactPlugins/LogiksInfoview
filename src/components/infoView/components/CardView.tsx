@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
 import Accordion from './Accordian.js';
 import SingleView from './SingleView.js';
@@ -8,6 +8,7 @@ import GridView from './GridView.js';
 import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
 import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions, InfoviewJson } from '../InfoView.types.js';
 import Card from './Card.js';
+import { resolveComponent } from '@/components/helpers/resolveComponent.js';
 
 interface CardViewProps {
     groups: Record<string, InfoViewGroup>;
@@ -25,7 +26,7 @@ interface CardViewProps {
         fieldName: string,
         options: SelectOptions
     ) => void;
-    components?: Record<string, ComponentType<any>>;
+   components?: Record<string, ComponentType<any> | ReactNode>;
 }
 
 export default function CardView({
@@ -114,12 +115,7 @@ export default function CardView({
                             return false;
                         }) : [];
 
-                        const CustomComponent =
-                            obj?.type === "component" &&
-                                typeof obj.component === "string" &&
-                                components?.[obj.component]
-                                ? components[obj.component]
-                                : null;
+                      const node = resolveComponent(obj.component, components);
 
                         return <Card key={group} title={obj.label} >
                             {obj?.type === "fields" && obj?.fields ? (
@@ -147,9 +143,9 @@ export default function CardView({
                                         ))}
                                     </div>
                                 </div>
-                            ) : CustomComponent ? (
+                            ) : obj?.type === "component" && node ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
-                                    <CustomComponent />
+                                    {node}
                                 </div>
                             ) : obj ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
