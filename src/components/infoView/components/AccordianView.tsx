@@ -23,6 +23,7 @@ interface AccordianViewProps {
         fieldName: string,
         options: SelectOptions
     ) => void;
+    components?: Record<string, ComponentType<any>>;
 }
 
 export default function AccordianView({
@@ -37,7 +38,8 @@ export default function AccordianView({
     handleAction = () => { },
     infoViewJson,
     fieldOptions,
-    setFieldOptions
+    setFieldOptions,
+    components
 }
     : AccordianViewProps) {
 
@@ -74,7 +76,7 @@ export default function AccordianView({
     };
 
 
-const buttons = infoViewJson?.buttons;
+    const buttons = infoViewJson?.buttons;
     let commonButtons = buttons ? Object.entries(buttons).filter(([_, val]) => {
         if (val.groups && val.groups.length > 0) return false
         return true;
@@ -100,8 +102,6 @@ const buttons = infoViewJson?.buttons;
 
     }
 
-    console.log("commonButtons",commonButtons);
-    
 
     return (
 
@@ -111,12 +111,19 @@ const buttons = infoViewJson?.buttons;
                 <div className="space-y-1 flex flex-col min-h-0">
                     {groups && Object.entries(groups).map(([group, obj], index) => {
 
- let visibleButtons = buttons ? Object.entries(buttons).filter(([_, val]) => {
+                        let visibleButtons = buttons ? Object.entries(buttons).filter(([_, val]) => {
                             if (val.groups) return val.groups.includes(group)
                             return false;
                         }) : [];
+
+                        const CustomComponent =
+                            obj?.type === "component" &&
+                                typeof obj.component === "string" &&
+                                components?.[obj.component]
+                                ? components[obj.component]
+                                : null;
                         return <Accordion key={group} title={obj.label} isFirst={index === 0}>
-                            {obj?.fields ? (
+                            {obj?.type === "fields" && obj?.fields ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                                     <div className={"grid grid-cols-12 gap-2"}>
                                         {obj.fields.map((field: InfoViewField, index: number) => (
@@ -140,6 +147,10 @@ const buttons = infoViewJson?.buttons;
                                         ))}
                                     </div>
                                 </div>
+                            ) : CustomComponent ? (
+                                <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
+                                    <CustomComponent />
+                                </div>
                             ) : obj ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                                     {viewRenderers[obj.config?.uimode]?.(obj) ||
@@ -149,7 +160,7 @@ const buttons = infoViewJson?.buttons;
 
                             ) : null}
 
-                             <div className="flex justify-end gap-2 pt-3 border-t border-gray-100">
+                            <div className="flex justify-end gap-2 pt-3 border-t border-gray-100">
                                 {visibleButtons &&
                                     visibleButtons.map(([key, val]) => (
                                         <button
@@ -164,7 +175,7 @@ const buttons = infoViewJson?.buttons;
                         </Accordion>
                     })}
 
-                     <div className="flex justify-end gap-2 pt-3 border-t border-gray-100">
+                    <div className="flex justify-end gap-2 pt-3 border-t border-gray-100">
                         {commonButtons &&
                             commonButtons.map(([key, val]) => (
                                 <button

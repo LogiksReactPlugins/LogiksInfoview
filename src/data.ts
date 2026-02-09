@@ -617,8 +617,13 @@ export const example10 ={
         }
     },
     "infoview": {
-        "template": "cards",
+        "template": "tabs",
         "groups": {
+            "comments":{
+                "label": "comment",
+                "type": "component",
+                "component":"DemoComp"
+            },
             "participant_details": {
                 "label": "Participant Details",
                 "type": "module",

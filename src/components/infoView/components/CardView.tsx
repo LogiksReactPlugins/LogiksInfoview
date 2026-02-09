@@ -25,6 +25,7 @@ interface CardViewProps {
         fieldName: string,
         options: SelectOptions
     ) => void;
+    components?: Record<string, ComponentType<any>>;
 }
 
 export default function CardView({
@@ -39,7 +40,8 @@ export default function CardView({
     handleAction = () => { },
     infoViewJson,
     fieldOptions,
-    setFieldOptions
+    setFieldOptions,
+    components
 }
     : CardViewProps) {
 
@@ -92,7 +94,7 @@ export default function CardView({
 
     }
 
-   
+
 
 
     return (
@@ -112,10 +114,15 @@ export default function CardView({
                             return false;
                         }) : [];
 
-                        console.log(`visibleButtons ${group}`, visibleButtons);
+                        const CustomComponent =
+                            obj?.type === "component" &&
+                                typeof obj.component === "string" &&
+                                components?.[obj.component]
+                                ? components[obj.component]
+                                : null;
 
                         return <Card key={group} title={obj.label} >
-                            {obj?.fields ? (
+                            {obj?.type === "fields" && obj?.fields ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                                     <div className={"grid grid-cols-12 gap-2"}>
                                         {obj.fields.map((field: InfoViewField, index: number) => (
@@ -139,6 +146,10 @@ export default function CardView({
                                             </div>
                                         ))}
                                     </div>
+                                </div>
+                            ) : CustomComponent ? (
+                                <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
+                                    <CustomComponent />
                                 </div>
                             ) : obj ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">

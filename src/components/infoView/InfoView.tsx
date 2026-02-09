@@ -21,7 +21,8 @@ export default function LogiksInfoView({
     methods = {},
     Reports,
     toast = {},
-    handleAction = () => { }
+    handleAction = () => { },
+    components
 }: InfoViewProps) {
 
 
@@ -49,6 +50,9 @@ export default function LogiksInfoView({
     if (infoViewJson.infoview?.groups) {
         groups = { ...groups, ...infoViewJson.infoview.groups };
     }
+
+    console.log("groups", groups);
+
 
 
     React.useEffect(() => {
@@ -215,6 +219,7 @@ export default function LogiksInfoView({
                     infoViewJson={infoViewJson}
                     setFieldOptions={setOptionsForField}
                     fieldOptions={fieldOptions}
+                    {...(components ? { components } : {})}
 
                 />
 
@@ -238,6 +243,8 @@ export default function LogiksInfoView({
                     setFieldOptions={setOptionsForField}
                     fieldOptions={fieldOptions}
 
+                    {...(components ? { components } : {})}
+
 
                 />
 
@@ -256,6 +263,7 @@ export default function LogiksInfoView({
                     infoViewJson={infoViewJson}
                     setFieldOptions={setOptionsForField}
                     fieldOptions={fieldOptions}
+                    {...(components ? { components } : {})}
 
 
                 />
@@ -277,6 +285,7 @@ export default function LogiksInfoView({
                     infoViewJson={infoViewJson}
                     setFieldOptions={setOptionsForField}
                     fieldOptions={fieldOptions}
+                    {...(components ? { components } : {})}
 
 
                 />

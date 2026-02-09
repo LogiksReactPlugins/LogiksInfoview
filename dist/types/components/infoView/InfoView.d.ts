@@ -1,3 +1,3 @@
 import { InfoViewProps } from './InfoView.types.js';
-export default function LogiksInfoView({ infoViewJson, data, hiddenFields, groupFieldsFn, layoutConfig, viewRenderers, methods, Reports, toast, handleAction }: InfoViewProps): import("react/jsx-runtime").JSX.Element;
+export default function LogiksInfoView({ infoViewJson, data, hiddenFields, groupFieldsFn, layoutConfig, viewRenderers, methods, Reports, toast, handleAction, components }: InfoViewProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=InfoView.d.ts.map

@@ -480,6 +480,11 @@ export declare const example10: {
     infoview: {
         template: string;
         groups: {
+            comments: {
+                label: string;
+                type: string;
+                component: string;
+            };
             participant_details: {
                 label: string;
                 type: string;

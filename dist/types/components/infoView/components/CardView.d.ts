@@ -13,7 +13,8 @@ interface CardViewProps {
     infoViewJson: InfoviewJson;
     fieldOptions: Record<string, SelectOptions>;
     setFieldOptions: (fieldName: string, options: SelectOptions) => void;
+    components?: Record<string, ComponentType<any>>;
 }
-export default function CardView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson, fieldOptions, setFieldOptions }: CardViewProps): import("react/jsx-runtime").JSX.Element;
+export default function CardView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson, fieldOptions, setFieldOptions, components }: CardViewProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=CardView.d.ts.map

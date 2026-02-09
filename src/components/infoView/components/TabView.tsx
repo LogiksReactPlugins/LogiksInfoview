@@ -172,10 +172,12 @@ const ContentArea = (
         fieldOptions,
         setFieldOptions,
         buttons,
-        handleAction
+        handleAction,
+        components
     }: ContentAreaProps
 ) => {
-    
+
+
     let visibleButtons = buttons ? Object.entries(buttons).filter(([_, val]) => {
         if (val.groups) return val.groups.includes(groupNames[activeTabIndex])
         return true;
@@ -200,6 +202,14 @@ const ContentArea = (
 
     }
 
+    const CustomComponent =
+        tabObj?.type === "component" &&
+            typeof tabObj.component === "string" &&
+            components?.[tabObj.component]
+            ? components[tabObj.component]
+            : null;
+
+
     return <div
         key={groupNames[activeTabIndex]}
         className="bg-white rounded-b-lg border  border-t-0 border-gray-100 p-3 animate-in fade-in duration-300 flex-1 flex flex-col min-h-0"
@@ -207,7 +217,7 @@ const ContentArea = (
 
         {/* Fields Container */}
         {groupNames.length > 0 ? (
-            tabObj?.fields ? (
+            tabObj?.type === "fields" && tabObj?.fields ? (
                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                     <div className={layoutConfig?.fieldGridClass || "grid grid-cols-12 gap-2"}>
                         {tabObj.fields.map((field: InfoViewField, index: number) => (
@@ -231,6 +241,10 @@ const ContentArea = (
                             </div>
                         ))}
                     </div>
+                </div>
+            ) : CustomComponent ? (
+                <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
+                    <CustomComponent />
                 </div>
             ) : tabObj ? (
                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
@@ -333,7 +347,8 @@ export default function TabView({
     handleAction = () => { },
     infoViewJson,
     fieldOptions,
-    setFieldOptions
+    setFieldOptions,
+    components
 }: TabViewProps) {
 
     const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -438,6 +453,7 @@ export default function TabView({
                     setFieldOptions={setFieldOptions}
                     buttons={infoViewJson.buttons}
                     handleAction={handleAction}
+                    {...(components ? { components } : {})}
 
                 />
 
@@ -477,6 +493,7 @@ export default function TabView({
                     fieldOptions={fieldOptions}
                     setFieldOptions={setFieldOptions}
                     handleAction={handleAction}
+                    {...(components ? { components } : {})}
 
                 />
             </main>

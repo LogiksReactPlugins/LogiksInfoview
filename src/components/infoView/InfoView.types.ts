@@ -43,6 +43,7 @@ export interface sqlQueryProps {
 export interface InfoViewGroup {
     label: string;
     type: string;
+    component?: string;
     fields?: InfoViewField[];
     config?: Record<string, any>;
     width?: number;
@@ -50,20 +51,20 @@ export interface InfoViewGroup {
 }
 
 export interface Infoview {
-    groups?: Record<string, Omit<InfoViewGroup, "fields">>,
-    template?: string
+    groups?: Record<string, InfoViewGroup>;
+    template?: string;
 }
 
 export interface InfoviewJson {
-        script?: string;
-        fields: Record<string, Omit<InfoViewField, "name">>;
-        infoview?: Infoview;
-        source?: Record<string, any>,
-        endPoints: SqlEndpoints;
-        buttons?: Record<string, any>;
-        forcefill?: Record<string, any>;
-        module_refid?: string;
-    }
+    script?: string;
+    fields: Record<string, Omit<InfoViewField, "name">>;
+    infoview?: Infoview;
+    source?: Record<string, any>,
+    endPoints: SqlEndpoints;
+    buttons?: Record<string, any>;
+    forcefill?: Record<string, any>;
+    module_refid?: string;
+}
 
 export interface InfoViewProps {
 
@@ -85,6 +86,7 @@ export interface InfoViewProps {
     data?: Record<string, any>;
     methods?: Record<string, Function>,
     Reports?: ComponentType<any>;
+    components?: Record<string, ComponentType<any>>;
 
     toast?: Record<string, Function>;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
@@ -271,6 +273,7 @@ export interface TabViewProps {
     groups: Record<string, InfoViewGroup>;
     methods?: Record<string, Function>;
     infoData: InfoData;
+    components?: Record<string, ComponentType<any>>;
     viewRenderers?: Record<string, (tab: InfoViewGroup, tabName: string) => React.ReactNode>;
     layoutConfig?: {
         containerClass?: string;
@@ -320,6 +323,7 @@ export interface ContentAreaProps extends VerticalNavProps {
         tabNavClass?: string;
         fieldGridClass?: string;
     };
+    components?: Record<string, ComponentType<any>>;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoData: InfoData;
     tabObj: InfoViewGroup | null;
