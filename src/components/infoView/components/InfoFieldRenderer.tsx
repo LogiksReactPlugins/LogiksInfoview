@@ -321,6 +321,11 @@ export default function InfoFieldRenderer({
                 />
               ))}
           </div>
+        ) : field.type === "richtextarea" ? (
+          <div
+            className="tiptap-view border bg-white rounded p-2 text-sm"
+            dangerouslySetInnerHTML={{ __html: String(renderValue) }}
+          />
         ) : (
           <p className={baseInputClasses}>{renderValue}</p>
         )}

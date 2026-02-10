@@ -2799,7 +2799,13 @@ function dt({
         filePath: m
       },
       m
-    )) }) : /* @__PURE__ */ i.jsx("p", { className: d, children: $ }) })
+    )) }) : e.type === "richtextarea" ? /* @__PURE__ */ i.jsx(
+      "div",
+      {
+        className: "tiptap-view border bg-white rounded p-2 text-sm",
+        dangerouslySetInnerHTML: { __html: String($) }
+      }
+    ) : /* @__PURE__ */ i.jsx("p", { className: d, children: $ }) })
   ] });
 }
 function Is({ filePath: e, field_name: t, sqlOpsUrls: r }) {
