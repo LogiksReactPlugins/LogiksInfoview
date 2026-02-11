@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import type { InfoFieldRendererProps, InfoViewField, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
 import { DEFAULT_LOGO } from '../constant.js';
-import { decodeSignature, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue } from '../utils.js';
+import { decodeSignature, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, sanitizeHtml } from '../utils.js';
 import FilePreviewTrigger from './FilePreviewTrigger.js';
 import { fetchDataByquery, runAjaxChain } from '../service.js';
 
@@ -261,7 +261,10 @@ export default function InfoFieldRenderer({
 
 
   const signature = decodeSignature(rawVal);
-
+const safeHtml =
+  field.type === "richtextarea" && typeof renderValue === "string"
+    ? sanitizeHtml(renderValue)
+    : null;
 
   return (
     <div className="px-3 py-2 bg-gray-50 rounded-lg">
@@ -323,8 +326,8 @@ export default function InfoFieldRenderer({
           </div>
         ) : field.type === "richtextarea" ? (
           <div
-            className="ttiptap border bg-white rounded p-2 text-sm"
-            dangerouslySetInnerHTML={{ __html: String(renderValue) }}
+            className="ttiptap border border-gray-200 min-h-[400px] max-h-[220px] overflow-auto bg-white rounded p-2 text-sm"
+            dangerouslySetInnerHTML={{ __html: safeHtml ?? "" }}
           />
         ) : (
           <p className={baseInputClasses}>{renderValue}</p>

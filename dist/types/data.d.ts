@@ -337,317 +337,59 @@ export declare const example10: {
         registerQuery: string;
         runQuery: string;
     };
-    source: {
-        type: string;
-        dbopsid: string;
-    };
     forcefill: {
         groupuid: string;
         guid: string;
     };
-    gotolink: string;
+    source: {
+        type: string;
+        dbopsid: string;
+    };
     fields: {
-        company_code_id: {
+        title: {
             label: string;
-            type: string;
+            group: string;
             required: boolean;
-            "no-option": string;
-            width: number;
-            ajaxchain: {
-                target: string;
-                src: {
-                    type: string;
-                    queryid: string;
-                };
-            }[];
-            options: {
-                title: string;
-                value: number;
-            }[];
-        };
-        sector_id: {
-            label: string;
-            type: string;
-            required: boolean;
-            "no-option": string;
-            width: number;
-            ajaxchain: {
-                target: string;
-                src: {
-                    type: string;
-                    queryid: string;
-                };
-            };
-            options: never[];
-        };
-        project_function_id: {
-            label: string;
-            type: string;
-            required: boolean;
-            "no-option": string;
-            width: number;
-            ajaxchain: {
-                target: string;
-                src: {
-                    type: string;
-                    queryid: string;
-                };
-            };
-            options: never[];
-        };
-        location_id: {
-            label: string;
-            type: string;
-            required: boolean;
-            "no-option": string;
-            width: number;
-            options: never[];
-        };
-        date: {
-            label: string;
-            type: string;
-            required: boolean;
-            width: number;
-        };
-        duration_min: {
-            label: string;
-            onChange: string;
-            type: string;
-            required: boolean;
-            width: number;
-        };
-        participant_count: {
-            label: string;
-            onChange: string;
-            type: string;
-            required: boolean;
-            width: number;
-        };
-        man_hours: {
-            label: string;
-            disabled: boolean;
-            type: string;
-            width: number;
-        };
-        conducted_by: {
-            label: string;
-            type: string;
-            required: boolean;
-            width: number;
-            queryid: string;
-        };
-        trainer: {
-            label: string;
-            type: string;
-            groupid: string;
-            required: boolean;
-            search: boolean;
-            width: number;
-            options: {
-                title: string;
-                value: string;
-                class: null;
-                privilege: string;
-            }[];
         };
         category: {
             label: string;
+            group: string;
             type: string;
             groupid: string;
             required: boolean;
-            search: boolean;
-            width: number;
             options: {
                 title: string;
                 value: string;
-                class: null;
+                class: string;
                 privilege: string;
             }[];
         };
-        photograph: {
+        terms: {
             label: string;
+            group: string;
             type: string;
-            multiple: boolean;
-            width: number;
+            required: boolean;
         };
-        attendance_scan: {
+        blocked: {
             label: string;
+            group: string;
             type: string;
-            multiple: boolean;
-            width: number;
+            groupid: string;
+            vmode: string;
+            required: boolean;
+            options: ({
+                title: string;
+                value: string;
+                class: string;
+                privilege: string;
+            } | {
+                title: string;
+                value: null;
+                class: null;
+                privilege: string;
+            })[];
         };
     };
-    infoview: {
-        template: string;
-        groups: {
-            comments: {
-                label: string;
-                type: string;
-                component: string;
-            };
-            participant_details: {
-                label: string;
-                type: string;
-                src: string;
-                vmode: string;
-                config: {
-                    type: string;
-                    uimode: string;
-                    uiswitcher: boolean;
-                    policy_create: string;
-                    policy_view: string;
-                    policy_delete: string;
-                    policy_update: string;
-                    toolbar: {
-                        search: boolean;
-                        print: boolean;
-                        export: boolean;
-                        email: boolean;
-                    };
-                    colkey: string;
-                    "popup.form": {
-                        source: {
-                            type: string;
-                            dbopsid: string;
-                        };
-                        forcefill: {
-                            guid: string;
-                            created_by: string;
-                            hse_training_id: string;
-                        };
-                        fields: {
-                            topic: {
-                                label: string;
-                                type: string;
-                                onChange: string;
-                                groupid: string;
-                                required: boolean;
-                                width: number;
-                                options: {
-                                    title: string;
-                                    value: string;
-                                    class: null;
-                                    privilege: string;
-                                }[];
-                            };
-                            gender: {
-                                label: string;
-                                type: string;
-                                required: boolean;
-                                groupid: string;
-                                width: number;
-                                options: ({
-                                    title: string;
-                                    value: string;
-                                    class: string;
-                                    privilege: string;
-                                } | {
-                                    title: string;
-                                    value: string;
-                                    class: null;
-                                    privilege: string;
-                                })[];
-                            };
-                            count: {
-                                label: string;
-                                type: string;
-                                required: boolean;
-                                width: number;
-                            };
-                            company_name: {
-                                label: string;
-                                type: string;
-                                required: boolean;
-                                width: number;
-                            };
-                            company: {
-                                label: string;
-                                type: string;
-                                groupid: string;
-                                required: boolean;
-                                width: number;
-                                options: {
-                                    title: string;
-                                    value: string;
-                                    class: null;
-                                    privilege: string;
-                                }[];
-                            };
-                            participant_photograph: {
-                                label: string;
-                                type: string;
-                                width: number;
-                            };
-                            other_topic_text: {
-                                label: string;
-                                type: string;
-                                disabled: boolean;
-                                width: number;
-                            };
-                        };
-                    };
-                    datagrid: {
-                        id: {
-                            label: string;
-                            searchable: boolean;
-                        };
-                        topic: {
-                            label: string;
-                            searchable: boolean;
-                            sortable: boolean;
-                            formatter: string;
-                        };
-                        gender: {
-                            label: string;
-                            searchable: boolean;
-                            sortable: boolean;
-                            formatter: string;
-                        };
-                        count: {
-                            label: string;
-                            searchable: boolean;
-                        };
-                        company_name: {
-                            label: string;
-                            searchable: boolean;
-                        };
-                        company: {
-                            label: string;
-                            searchable: boolean;
-                            formatter: string;
-                        };
-                        participant_photograph: {
-                            label: string;
-                            searchable: boolean;
-                            formatter: string;
-                        };
-                        other_topic_text: {
-                            label: string;
-                            searchable: boolean;
-                        };
-                    };
-                    actions1: {
-                        addInfoRecord: {
-                            label: string;
-                        };
-                    };
-                    buttons: {
-                        editRecord: {
-                            label: string;
-                            icon: string;
-                        };
-                        deleteRecord: {
-                            label: string;
-                            icon: string;
-                        };
-                    };
-                    queryid: string;
-                };
-                width: number;
-            };
-        };
-    };
-    script: string;
     module_refid: string;
     module_type: string;
 };

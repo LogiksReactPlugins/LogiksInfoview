@@ -51,9 +51,7 @@ export default function LogiksInfoView({
         groups = { ...groups, ...infoViewJson.infoview.groups };
     }
 
-    console.log("groups", groups);
-
-
+  
 
     React.useEffect(() => {
         let cancelled = false;
