@@ -3221,7 +3221,7 @@ function ct({
     )) }) : e.type === "richtextarea" ? /* @__PURE__ */ a.jsx(
       "div",
       {
-        className: "ttiptap border border-gray-200 min-h-[400px] max-h-[220px] overflow-auto bg-white rounded p-2 text-sm",
+        className: "tiptap border border-gray-200 min-h-[400px] max-h-[220px] overflow-auto bg-white rounded p-2 text-sm",
         dangerouslySetInnerHTML: { __html: y ?? "" }
       }
     ) : /* @__PURE__ */ a.jsx("p", { className: g, children: j }) })

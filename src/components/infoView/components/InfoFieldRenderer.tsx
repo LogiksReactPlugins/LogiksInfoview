@@ -326,7 +326,7 @@ const safeHtml =
           </div>
         ) : field.type === "richtextarea" ? (
           <div
-            className="ttiptap border border-gray-200 min-h-[400px] max-h-[220px] overflow-auto bg-white rounded p-2 text-sm"
+            className="tiptap border border-gray-200 min-h-[400px] max-h-[220px] overflow-auto bg-white rounded p-2 text-sm"
             dangerouslySetInnerHTML={{ __html: safeHtml ?? "" }}
           />
         ) : (
