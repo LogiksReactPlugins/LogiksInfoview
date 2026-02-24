@@ -70,7 +70,7 @@ function ss() {
         switch (typeof b.tag == "number" && console.error(
           "Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."
         ), b.$$typeof) {
-          case m:
+          case h:
             return "Portal";
           case v:
             return (b.displayName || "Context") + ".Provider";
@@ -191,13 +191,13 @@ function ss() {
         if (L)
           if (K(X)) {
             for (L = 0; L < X.length; L++)
-              h(X[L]);
+              m(X[L]);
             Object.freeze && Object.freeze(X);
           } else
             console.error(
               "React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead."
             );
-        else h(X);
+        else m(X);
       if (W.call(E, "key")) {
         X = e(b);
         var xe = Object.keys(E).filter(function(ut) {
@@ -235,10 +235,10 @@ React keys must be passed directly to JSX without using spread:
         ue
       );
     }
-    function h(b) {
+    function m(b) {
       typeof b == "object" && b !== null && b.$$typeof === R && b._store && (b._store.validated = 1);
     }
-    var p = Y, R = Symbol.for("react.transitional.element"), m = Symbol.for("react.portal"), N = Symbol.for("react.fragment"), j = Symbol.for("react.strict_mode"), w = Symbol.for("react.profiler"), x = Symbol.for("react.consumer"), v = Symbol.for("react.context"), T = Symbol.for("react.forward_ref"), c = Symbol.for("react.suspense"), I = Symbol.for("react.suspense_list"), O = Symbol.for("react.memo"), $ = Symbol.for("react.lazy"), k = Symbol.for("react.activity"), B = Symbol.for("react.client.reference"), U = p.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, W = Object.prototype.hasOwnProperty, K = Array.isArray, J = console.createTask ? console.createTask : function() {
+    var p = Y, R = Symbol.for("react.transitional.element"), h = Symbol.for("react.portal"), N = Symbol.for("react.fragment"), j = Symbol.for("react.strict_mode"), w = Symbol.for("react.profiler"), x = Symbol.for("react.consumer"), v = Symbol.for("react.context"), T = Symbol.for("react.forward_ref"), c = Symbol.for("react.suspense"), I = Symbol.for("react.suspense_list"), O = Symbol.for("react.memo"), $ = Symbol.for("react.lazy"), k = Symbol.for("react.activity"), B = Symbol.for("react.client.reference"), U = p.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, W = Object.prototype.hasOwnProperty, K = Array.isArray, J = console.createTask ? console.createTask : function() {
       return null;
     };
     p = {
@@ -601,22 +601,22 @@ function It(e, t, n) {
   const r = n.metaTokens, s = n.visitor || d, o = n.dots, i = n.indexes, y = (n.Blob || typeof Blob < "u" && Blob) && g.isSpecCompliantForm(t);
   if (!g.isFunction(s))
     throw new TypeError("visitor must be a function");
-  function f(m) {
-    if (m === null) return "";
-    if (g.isDate(m))
-      return m.toISOString();
-    if (g.isBoolean(m))
-      return m.toString();
-    if (!y && g.isBlob(m))
+  function f(h) {
+    if (h === null) return "";
+    if (g.isDate(h))
+      return h.toISOString();
+    if (g.isBoolean(h))
+      return h.toString();
+    if (!y && g.isBlob(h))
       throw new q("Blob is not supported. Use a Buffer instead.");
-    return g.isArrayBuffer(m) || g.isTypedArray(m) ? y && typeof Blob == "function" ? new Blob([m]) : Buffer.from(m) : m;
+    return g.isArrayBuffer(h) || g.isTypedArray(h) ? y && typeof Blob == "function" ? new Blob([h]) : Buffer.from(h) : h;
   }
-  function d(m, N, j) {
-    let w = m;
-    if (m && !j && typeof m == "object") {
+  function d(h, N, j) {
+    let w = h;
+    if (h && !j && typeof h == "object") {
       if (g.endsWith(N, "{}"))
-        N = r ? N : N.slice(0, -2), m = JSON.stringify(m);
-      else if (g.isArray(m) && Gs(m) || (g.isFileList(m) || g.endsWith(N, "[]")) && (w = g.toArray(m)))
+        N = r ? N : N.slice(0, -2), h = JSON.stringify(h);
+      else if (g.isArray(h) && Gs(h) || (g.isFileList(h) || g.endsWith(N, "[]")) && (w = g.toArray(h)))
         return N = Tn(N), w.forEach(function(v, T) {
           !(g.isUndefined(v) || v === null) && t.append(
             // eslint-disable-next-line no-nested-ternary
@@ -625,18 +625,18 @@ function It(e, t, n) {
           );
         }), !1;
     }
-    return ar(m) ? !0 : (t.append(zr(j, N, o), f(m)), !1);
+    return ar(h) ? !0 : (t.append(zr(j, N, o), f(h)), !1);
   }
-  const h = [], p = Object.assign(Ks, {
+  const m = [], p = Object.assign(Ks, {
     defaultVisitor: d,
     convertValue: f,
     isVisitable: ar
   });
-  function R(m, N) {
-    if (!g.isUndefined(m)) {
-      if (h.indexOf(m) !== -1)
+  function R(h, N) {
+    if (!g.isUndefined(h)) {
+      if (m.indexOf(h) !== -1)
         throw Error("Circular reference detected in " + N.join("."));
-      h.push(m), g.forEach(m, function(w, x) {
+      m.push(h), g.forEach(h, function(w, x) {
         (!(g.isUndefined(w) || w === null) && s.call(
           t,
           w,
@@ -644,7 +644,7 @@ function It(e, t, n) {
           N,
           p
         )) === !0 && R(w, N ? N.concat(x) : [x]);
-      }), h.pop();
+      }), m.pop();
     }
   }
   if (!g.isObject(e))
@@ -964,8 +964,8 @@ let he = class {
       const d = Ve(y);
       if (!d)
         throw new Error("header name must be a non-empty string");
-      const h = g.findKey(s, d);
-      (!h || s[h] === void 0 || f === !0 || f === void 0 && s[h] !== !1) && (s[h || y] = Nt(l));
+      const m = g.findKey(s, d);
+      (!m || s[m] === void 0 || f === !0 || f === void 0 && s[m] !== !1) && (s[m || y] = Nt(l));
     }
     const i = (l, y) => g.forEach(l, (f, d) => o(f, d, y));
     if (g.isPlainObject(t) || t instanceof this.constructor)
@@ -1128,9 +1128,9 @@ function ha(e, t) {
   return t = t !== void 0 ? t : 1e3, function(y) {
     const f = Date.now(), d = r[o];
     i || (i = f), n[s] = y, r[s] = f;
-    let h = o, p = 0;
-    for (; h !== s; )
-      p += n[h++], h = h % e;
+    let m = o, p = 0;
+    for (; m !== s; )
+      p += n[m++], m = m % e;
     if (s = (s + 1) % e, s === o && (o = (o + 1) % e), f - i < t)
       return;
     const R = d && f - d;
@@ -1143,10 +1143,10 @@ function pa(e, t) {
     n = d, s = null, o && (clearTimeout(o), o = null), e(...f);
   };
   return [(...f) => {
-    const d = Date.now(), h = d - n;
-    h >= r ? i(f, d) : (s = f, o || (o = setTimeout(() => {
+    const d = Date.now(), m = d - n;
+    m >= r ? i(f, d) : (s = f, o || (o = setTimeout(() => {
       o = null, i(s);
-    }, r - h)));
+    }, r - m)));
   }, () => s && i(s)];
 }
 const St = (e, t, n = 3) => {
@@ -1155,7 +1155,7 @@ const St = (e, t, n = 3) => {
   return pa((o) => {
     const i = o.loaded, l = o.lengthComputable ? o.total : void 0, y = i - r, f = s(y), d = i <= l;
     r = i;
-    const h = {
+    const m = {
       loaded: i,
       total: l,
       progress: l ? i / l : void 0,
@@ -1166,7 +1166,7 @@ const St = (e, t, n = 3) => {
       lengthComputable: l != null,
       [t ? "download" : "upload"]: !0
     };
-    e(h);
+    e(m);
   }, n);
 }, Gr = (e, t) => {
   const n = e != null;
@@ -1219,14 +1219,14 @@ const Yr = (e) => e instanceof he ? { ...e } : e;
 function De(e, t) {
   t = t || {};
   const n = {};
-  function r(f, d, h, p) {
+  function r(f, d, m, p) {
     return g.isPlainObject(f) && g.isPlainObject(d) ? g.merge.call({ caseless: p }, f, d) : g.isPlainObject(d) ? g.merge({}, d) : g.isArray(d) ? d.slice() : d;
   }
-  function s(f, d, h, p) {
+  function s(f, d, m, p) {
     if (g.isUndefined(d)) {
       if (!g.isUndefined(f))
-        return r(void 0, f, h, p);
-    } else return r(f, d, h, p);
+        return r(void 0, f, m, p);
+    } else return r(f, d, m, p);
   }
   function o(f, d) {
     if (!g.isUndefined(d))
@@ -1238,10 +1238,10 @@ function De(e, t) {
         return r(void 0, f);
     } else return r(void 0, d);
   }
-  function l(f, d, h) {
-    if (h in t)
+  function l(f, d, m) {
+    if (m in t)
       return r(f, d);
-    if (h in e)
+    if (m in e)
       return r(void 0, f);
   }
   const y = {
@@ -1273,11 +1273,11 @@ function De(e, t) {
     socketPath: i,
     responseEncoding: i,
     validateStatus: l,
-    headers: (f, d, h) => s(Yr(f), Yr(d), h, !0)
+    headers: (f, d, m) => s(Yr(f), Yr(d), m, !0)
   };
   return g.forEach(Object.keys({ ...e, ...t }), function(d) {
-    const h = y[d] || s, p = h(e[d], t[d], d);
-    g.isUndefined(p) && h !== l || (n[d] = p);
+    const m = y[d] || s, p = m(e[d], t[d], d);
+    g.isUndefined(p) && m !== l || (n[d] = p);
   }), n;
 }
 const In = (e) => {
@@ -1292,7 +1292,7 @@ const In = (e) => {
     if (oe.hasStandardBrowserEnv || oe.hasStandardBrowserWebWorkerEnv)
       i.setContentType(void 0);
     else if ((y = i.getContentType()) !== !1) {
-      const [f, ...d] = y ? y.split(";").map((h) => h.trim()).filter(Boolean) : [];
+      const [f, ...d] = y ? y.split(";").map((m) => m.trim()).filter(Boolean) : [];
       i.setContentType([f || "multipart/form-data", ...d].join("; "));
     }
   }
@@ -1306,9 +1306,9 @@ const In = (e) => {
     const s = In(e);
     let o = s.data;
     const i = he.from(s.headers).normalize();
-    let { responseType: l, onUploadProgress: y, onDownloadProgress: f } = s, d, h, p, R, m;
+    let { responseType: l, onUploadProgress: y, onDownloadProgress: f } = s, d, m, p, R, h;
     function N() {
-      R && R(), m && m(), s.cancelToken && s.cancelToken.unsubscribe(d), s.signal && s.signal.removeEventListener("abort", d);
+      R && R(), h && h(), s.cancelToken && s.cancelToken.unsubscribe(d), s.signal && s.signal.removeEventListener("abort", d);
     }
     let j = new XMLHttpRequest();
     j.open(s.method.toUpperCase(), s.url, !0), j.timeout = s.timeout;
@@ -1348,7 +1348,7 @@ const In = (e) => {
       )), j = null;
     }, o === void 0 && i.setContentType(null), "setRequestHeader" in j && g.forEach(i.toJSON(), function(T, c) {
       j.setRequestHeader(c, T);
-    }), g.isUndefined(s.withCredentials) || (j.withCredentials = !!s.withCredentials), l && l !== "json" && (j.responseType = s.responseType), f && ([p, m] = St(f, !0), j.addEventListener("progress", p)), y && j.upload && ([h, R] = St(y), j.upload.addEventListener("progress", h), j.upload.addEventListener("loadend", R)), (s.cancelToken || s.signal) && (d = (v) => {
+    }), g.isUndefined(s.withCredentials) || (j.withCredentials = !!s.withCredentials), l && l !== "json" && (j.responseType = s.responseType), f && ([p, h] = St(f, !0), j.addEventListener("progress", p)), y && j.upload && ([m, R] = St(y), j.upload.addEventListener("progress", m), j.upload.addEventListener("loadend", R)), (s.cancelToken || s.signal) && (d = (v) => {
       j && (r(!v || v.type ? new We(null, e, j) : v), j.abort(), j = null);
     }, s.cancelToken && s.cancelToken.subscribe(d), s.signal && (s.signal.aborted ? d() : s.signal.addEventListener("abort", d)));
     const x = ma(s.url);
@@ -1422,9 +1422,9 @@ const In = (e) => {
           l(), y.close();
           return;
         }
-        let h = d.byteLength;
+        let m = d.byteLength;
         if (n) {
-          let p = o += h;
+          let p = o += m;
           n(p);
         }
         y.enqueue(new Uint8Array(d));
@@ -1493,11 +1493,11 @@ const Ra = async (e) => {
     onUploadProgress: y,
     responseType: f,
     headers: d,
-    withCredentials: h = "same-origin",
+    withCredentials: m = "same-origin",
     fetchOptions: p
   } = In(e);
   f = f ? (f + "").toLowerCase() : "text";
-  let R = va([s, o && o.toAbortSignal()], i), m;
+  let R = va([s, o && o.toAbortSignal()], i), h;
   const N = R && R.unsubscribe && (() => {
     R.unsubscribe();
   });
@@ -1517,18 +1517,18 @@ const Ra = async (e) => {
         r = Vr(c.body, Xr, O, $);
       }
     }
-    g.isString(h) || (h = h ? "include" : "omit");
+    g.isString(m) || (m = m ? "include" : "omit");
     const w = "credentials" in Request.prototype;
-    m = new Request(t, {
+    h = new Request(t, {
       ...p,
       signal: R,
       method: n.toUpperCase(),
       headers: d.normalize().toJSON(),
       body: r,
       duplex: "half",
-      credentials: w ? h : void 0
+      credentials: w ? m : void 0
     });
-    let x = await fetch(m, p);
+    let x = await fetch(h, p);
     const v = ir && (f === "stream" || f === "response");
     if (ir && (l || v && N)) {
       const c = {};
@@ -1555,16 +1555,16 @@ const Ra = async (e) => {
         status: x.status,
         statusText: x.statusText,
         config: e,
-        request: m
+        request: h
       });
     });
   } catch (w) {
     throw N && N(), w && w.name === "TypeError" && /Load failed|fetch/i.test(w.message) ? Object.assign(
-      new q("Network Error", q.ERR_NETWORK, e, m),
+      new q("Network Error", q.ERR_NETWORK, e, h),
       {
         cause: w.cause || w
       }
-    ) : q.from(w, w && w.code, e, m);
+    ) : q.from(w, w && w.code, e, h);
   }
 }), lr = {
   http: qs,
@@ -1736,8 +1736,8 @@ let Pe = class {
     );
     o && g.forEach(
       ["delete", "get", "head", "post", "put", "patch", "common"],
-      (m) => {
-        delete o[m];
+      (h) => {
+        delete o[h];
       }
     ), n.headers = he.concat(i, o);
     const l = [];
@@ -1749,19 +1749,19 @@ let Pe = class {
     this.interceptors.response.forEach(function(N) {
       f.push(N.fulfilled, N.rejected);
     });
-    let d, h = 0, p;
+    let d, m = 0, p;
     if (!y) {
-      const m = [Zr.bind(this), void 0];
-      for (m.unshift(...l), m.push(...f), p = m.length, d = Promise.resolve(n); h < p; )
-        d = d.then(m[h++], m[h++]);
+      const h = [Zr.bind(this), void 0];
+      for (h.unshift(...l), h.push(...f), p = h.length, d = Promise.resolve(n); m < p; )
+        d = d.then(h[m++], h[m++]);
       return d;
     }
     p = l.length;
     let R = n;
-    for (h = 0; h < p; ) {
-      const m = l[h++], N = l[h++];
+    for (m = 0; m < p; ) {
+      const h = l[m++], N = l[m++];
       try {
-        R = m(R);
+        R = h(R);
       } catch (j) {
         N.call(this, j);
         break;
@@ -1769,11 +1769,11 @@ let Pe = class {
     }
     try {
       d = Zr.call(this, R);
-    } catch (m) {
-      return Promise.reject(m);
+    } catch (h) {
+      return Promise.reject(h);
     }
-    for (h = 0, p = f.length; h < p; )
-      d = d.then(f[h++], f[h++]);
+    for (m = 0, p = f.length; m < p; )
+      d = d.then(f[m++], f[m++]);
     return d;
   }
   getUri(t) {
@@ -2164,10 +2164,10 @@ function Hn() {
     Element: y,
     NodeFilter: f,
     NamedNodeMap: d = e.NamedNodeMap || e.MozNamedAttrMap,
-    HTMLFormElement: h,
+    HTMLFormElement: m,
     DOMParser: p,
     trustedTypes: R
-  } = e, m = y.prototype, N = Je(m, "cloneNode"), j = Je(m, "remove"), w = Je(m, "nextSibling"), x = Je(m, "childNodes"), v = Je(m, "parentNode");
+  } = e, h = y.prototype, N = Je(h, "cloneNode"), j = Je(h, "remove"), w = Je(h, "nextSibling"), x = Je(h, "childNodes"), v = Je(h, "parentNode");
   if (typeof i == "function") {
     const F = n.createElement("template");
     F.content && F.content.ownerDocument && (n = F.content.ownerDocument);
@@ -2337,7 +2337,7 @@ function Hn() {
       null
     );
   }, Wt = function(u) {
-    return u instanceof h && (typeof u.nodeName != "string" || typeof u.textContent != "string" || typeof u.removeChild != "function" || !(u.attributes instanceof d) || typeof u.removeAttribute != "function" || typeof u.setAttribute != "function" || typeof u.namespaceURI != "string" || typeof u.insertBefore != "function" || typeof u.hasChildNodes != "function");
+    return u instanceof m && (typeof u.nodeName != "string" || typeof u.textContent != "string" || typeof u.removeChild != "function" || !(u.attributes instanceof d) || typeof u.removeAttribute != "function" || typeof u.setAttribute != "function" || typeof u.namespaceURI != "string" || typeof u.insertBefore != "function" || typeof u.hasChildNodes != "function");
   }, Or = function(u) {
     return typeof l == "function" && u instanceof l;
   };
@@ -2700,11 +2700,11 @@ const po = (e) => e === !0 || e === "true", go = (e, t, n, r) => {
           );
           break;
         case "date":
-          l = pe.date().typeError("Invalid date format (expected dd/MM/yyyy or dd-MM-yyyy)").transform((d, h) => {
-            if (typeof h == "string") {
-              const p = h.replace(/-/g, "/"), [R, m, N] = p.split("/");
-              if (R && m && N)
-                return /* @__PURE__ */ new Date(`${N}-${m}-${R}`);
+          l = pe.date().typeError("Invalid date format (expected dd/MM/yyyy or dd-MM-yyyy)").transform((d, m) => {
+            if (typeof m == "string") {
+              const p = m.replace(/-/g, "/"), [R, h, N] = p.split("/");
+              if (R && h && N)
+                return /* @__PURE__ */ new Date(`${N}-${h}-${R}`);
             }
             return d;
           });
@@ -2727,9 +2727,9 @@ const po = (e) => e === !0 || e === "true", go = (e, t, n, r) => {
           break;
         case "float":
         case "decimal":
-          l = pe.number().typeError("Must be a decimal").transform((d, h) => {
-            if (h == null || h === "") return;
-            const p = Number(h);
+          l = pe.number().typeError("Must be a decimal").transform((d, m) => {
+            if (m == null || m === "") return;
+            const p = Number(m);
             if (isNaN(p)) return d;
             if (typeof d == "number" && !isNaN(d)) {
               const R = Number(d);
@@ -2972,13 +2972,13 @@ async function So({
       l,
       i.queryid,
       t
-    ), f = Array.isArray(y?.data?.data) ? y.data.data : Array.isArray(y?.data) ? y.data : y, d = Array.isArray(f) ? f.map(ge) : [], h = we(
+    ), f = Array.isArray(y?.data?.data) ? y.data.data : Array.isArray(y?.data) ? y.data : y, d = Array.isArray(f) ? f.map(ge) : [], m = we(
       e.valueKey ?? "value",
       e.labelKey ?? "title",
       d,
       e.groupKey
     );
-    r(o.target, h);
+    r(o.target, m);
   }
 }
 async function qn(e, t) {
@@ -3003,8 +3003,8 @@ const _o = ({ filePath: e, sqlOpsUrls: t }) => {
   je(() => {
     if (!t || l !== "image" && !s) return;
     let f = !0, d = null;
-    return qn(e, t).then((h) => {
-      f && (d = h, r(h));
+    return qn(e, t).then((m) => {
+      f && (d = m, r(m));
     }), () => {
       f = !1, d && URL.revokeObjectURL(d);
     };
@@ -3063,11 +3063,11 @@ function ct({
     text-sm text-gray-600 break-words
   `, f = `
     block text-sm font-semibold  transition-all duration-300 text-gray-700 capitalize
-  `, [d, h] = ae(
+  `, [d, m] = ae(
     i ?? e.options ?? {}
   ), p = Y.useRef(!1);
   Y.useEffect(() => {
-    i && h(i);
+    i && m(i);
   }, [i]);
   const R = Y.useMemo(
     () => wo(d),
@@ -3080,7 +3080,7 @@ function ct({
         if (typeof e.options == "object" && !Array.isArray(e.options)) {
           const U = Object.values(e.options);
           if (U.length && typeof U[0] == "string") {
-            h(e.options);
+            m(e.options);
             return;
           }
         }
@@ -3091,7 +3091,7 @@ function ct({
           e.groupKey
           // auto-uses `category` if present
         );
-        h(B);
+        m(B);
         return;
       }
       const O = e?.source ?? {};
@@ -3100,12 +3100,12 @@ function ct({
         if (k)
           try {
             const B = await Promise.resolve(k()), U = Array.isArray(B?.data?.data) ? B.data.data : Array.isArray(B?.data) ? B.data : B, W = Array.isArray(U) ? U.map(ge) : [], K = we(T, c, W, e.groupKey);
-            v && h(K);
+            v && m(K);
           } catch (B) {
-            console.error("Method execution failed:", B), v && h({});
+            console.error("Method execution failed:", B), v && m({});
           }
         else
-          v && h({});
+          v && m({});
       }
       if (O.type === "api" && O.url)
         try {
@@ -3116,9 +3116,9 @@ function ct({
             params: O.params ?? {},
             headers: O.headers ?? {}
           }), k = Array.isArray($?.data?.data) ? $.data.data : Array.isArray($?.data) ? $.data : $, B = Array.isArray(k) ? k.map(ge) : [], U = we(T, c, B, e.groupKey);
-          v && h(U);
+          v && m(U);
         } catch ($) {
-          console.error("API execution failed:", $), v && h({});
+          console.error("API execution failed:", $), v && m({});
         }
       if (e.table || e.type === "dataSelector" || e.queryid) {
         if (!r) {
@@ -3147,7 +3147,7 @@ function ct({
             };
           }
           const k = await ze(r, $, e?.queryid, void 0, o), B = Array.isArray(k?.data?.data) ? k.data.data : Array.isArray(k?.data) ? k.data : k, U = Array.isArray(B) ? B.map(ge) : [], W = we(T, c, U, e.groupKey);
-          v && h(W);
+          v && m(W);
         } catch ($) {
           console.error("API fetch failed:", $);
         }
@@ -3163,18 +3163,18 @@ function ct({
     e.where,
     s
   ]);
-  const m = e?.name ? t?.[e.name] : void 0;
+  const h = e?.name ? t?.[e.name] : void 0;
   Y.useEffect(() => {
-    p.current || !l || !m || (p.current = !0, So({
+    p.current || !l || !h || (p.current = !0, So({
       field: e,
-      value: m,
+      value: h,
       sqlOpsUrls: r,
       setFieldOptions: l
     }));
-  }, [m, r, l]);
+  }, [h, r, l]);
   let N;
-  typeof m == "string" ? e.type === "date" ? N = m.split("T")[0] : e.type === "time" ? N = m.includes("T") ? m.slice(11, 16) : m.slice(0, 5) : N = cn(m, R) : N = cn(m, R);
-  const j = N == null ? "" : typeof N == "string" || typeof N == "number" ? N : JSON.stringify(N), w = Eo(m), x = e.type === "richtextarea" && typeof j == "string" ? Ao(j) : null;
+  typeof h == "string" ? e.type === "date" ? N = h.split("T")[0] : e.type === "time" ? N = h.includes("T") ? h.slice(11, 16) : h.slice(0, 5) : N = cn(h, R) : N = cn(h, R);
+  const j = N == null ? "" : typeof N == "string" || typeof N == "number" ? N : JSON.stringify(N), w = Eo(h), x = e.type === "richtextarea" && typeof j == "string" ? Ao(j) : null;
   return /* @__PURE__ */ a.jsxs("div", { className: "px-3 py-2 bg-gray-50 rounded-lg", children: [
     /* @__PURE__ */ a.jsx("label", { className: f, children: e?.label }),
     /* @__PURE__ */ a.jsx("div", { className: "relative", children: w ? w.type === "drawn" ? /* @__PURE__ */ a.jsx("svg", { viewBox: "0 0 300 150", className: "h-24 w-full border bg-white rounded", children: w.paths.map((v, T) => /* @__PURE__ */ a.jsx(
@@ -3265,13 +3265,13 @@ function Oo({
   const f = nr(
     () => e?.fields?.find((p) => p.type === "avatar"),
     [e?.fields]
-  ), d = f?.name, h = d && typeof t?.[d] == "string" ? t[d].trim() : "";
+  ), d = f?.name, m = d && typeof t?.[d] == "string" ? t[d].trim() : "";
   return /* @__PURE__ */ a.jsx("div", { className: "bg-white border border-gray-100 p-4 min-h-3/10 overflow-auto", children: /* @__PURE__ */ a.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-6", children: [
-    f && /* @__PURE__ */ a.jsx("div", { className: "lg:col-span-2 flex flex-col items-center", children: /* @__PURE__ */ a.jsx("div", { className: "relative w-42 h-42 p-2 rounded-sm overflow-hidden bg-gray-100 flex items-center justify-center", children: h ? /* @__PURE__ */ a.jsx(
+    f && /* @__PURE__ */ a.jsx("div", { className: "lg:col-span-2 flex flex-col items-center", children: /* @__PURE__ */ a.jsx("div", { className: "relative w-42 h-42 p-2 rounded-sm overflow-hidden bg-gray-100 flex items-center justify-center", children: m ? /* @__PURE__ */ a.jsx(
       Co,
       {
         field_name: f.name,
-        filePath: h,
+        filePath: m,
         sqlOpsUrls: r
       }
     ) : /* @__PURE__ */ a.jsx(
@@ -3309,10 +3309,10 @@ function yr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
         return;
       }
       if (p.type === "method") {
-        const R = p.method, m = R ? t[R] : void 0;
-        if (m)
+        const R = p.method, h = R ? t[R] : void 0;
+        if (h)
           try {
-            const N = await Promise.resolve(m());
+            const N = await Promise.resolve(h());
             d || f(N || null);
           } catch (N) {
             console.error("Method execution failed:", N), d || f(null);
@@ -3343,8 +3343,8 @@ function yr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
           return;
         }
         try {
-          let R = !1, m;
-          p?.dbopsid && (R = !0, m = p?.dbopsid);
+          let R = !1, h;
+          p?.dbopsid && (R = !0, h = p?.dbopsid);
           const N = await H({
             method: "GET",
             url: r.baseURL + r.dbopsGetHash,
@@ -3361,7 +3361,7 @@ function yr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
               where: fe(p.where, {
                 refid: s
               })
-            }), m = (await H({
+            }), h = (await H({
               method: "POST",
               url: r.baseURL + r.dbopsGetRefId,
               data: {
@@ -3381,7 +3381,7 @@ function yr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
             method: "POST",
             url: r.baseURL + r.dbopsFetch,
             data: {
-              refid: m,
+              refid: h,
               datahash: N.data.refhash
             },
             headers: {
@@ -3403,7 +3403,7 @@ function yr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
     JSON.stringify(e?.config?.params || {}),
     JSON.stringify(e?.config?.body || {}),
     JSON.stringify(e?.config?.headers || {})
-  ]), /* @__PURE__ */ a.jsx("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ a.jsx("div", { className: "grid grid-cols-12 gap-2", children: y ? Object.keys(y).map((d, h) => {
+  ]), /* @__PURE__ */ a.jsx("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ a.jsx("div", { className: "grid grid-cols-12 gap-2", children: y ? Object.keys(y).map((d, m) => {
     let p = { name: d, label: d };
     return /* @__PURE__ */ a.jsx(
       "div",
@@ -3423,7 +3423,7 @@ function yr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
           d
         )
       },
-      `field-${h}`
+      `field-${m}`
     );
   }) : /* @__PURE__ */ a.jsx("div", { className: "col-span-12 flex flex-col  min-h-0", children: /* @__PURE__ */ a.jsxs("div", { className: "flex flex-1 flex-col items-center justify-center text-gray-500", children: [
     /* @__PURE__ */ a.jsx("div", { className: "w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center", children: /* @__PURE__ */ a.jsxs("svg", { className: "w-8 h-8 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: [
@@ -3496,13 +3496,13 @@ function Io({
   setFieldOptions: i,
   module_refid: l
 }) {
-  const [y, f] = ae(!1), [d, h] = ae(
+  const [y, f] = ae(!1), [d, m] = ae(
     o ?? e.options ?? {}
-  ), [p, R] = ae(""), [m, N] = ae(0), j = jt(null), [w, x] = ae(!1), v = Y.useRef(p), T = jt(null);
+  ), [p, R] = ae(""), [h, N] = ae(0), j = jt(null), [w, x] = ae(!1), v = Y.useRef(p), T = jt(null);
   Y.useEffect(() => {
     v.current = p;
   }, [p]), je(() => {
-    o && Object.keys(o).length !== 0 && h(o);
+    o && Object.keys(o).length !== 0 && m(o);
   }, [o]), je(() => {
     if (!w) return;
     const z = (V) => {
@@ -3522,7 +3522,7 @@ function Io({
         if (typeof e.options == "object" && !Array.isArray(e.options)) {
           const P = Object.values(e.options);
           if (P.length && typeof P[0] == "string") {
-            h(e.options);
+            m(e.options);
             return;
           }
         }
@@ -3533,7 +3533,7 @@ function Io({
           e.groupKey
           // auto-uses `category` if present
         );
-        h(L);
+        m(L);
         return;
       }
       const b = e?.source ?? {};
@@ -3542,12 +3542,12 @@ function Io({
         if (C)
           try {
             const L = await Promise.resolve(C()), P = Array.isArray(L?.data?.data) ? L.data.data : Array.isArray(L?.data) ? L.data : L, M = Array.isArray(P) ? P.map(ge) : [], ee = we(A, _, M, e.groupKey);
-            z && h(ee);
+            z && m(ee);
           } catch (L) {
-            console.error("Method execution failed:", L), z && h({});
+            console.error("Method execution failed:", L), z && m({});
           }
         else
-          z && h({});
+          z && m({});
       }
       if (b.type === "api" && b.url)
         try {
@@ -3558,9 +3558,9 @@ function Io({
             params: b.params ?? {},
             headers: b.headers ?? {}
           }), C = Array.isArray(E?.data?.data) ? E.data.data : Array.isArray(E?.data) ? E.data : E, L = Array.isArray(C) ? C.map(ge) : [], P = we(A, _, L, e.groupKey);
-          z && h(P);
+          z && m(P);
         } catch (E) {
-          console.error("API execution failed:", E), z && h({});
+          console.error("API execution failed:", E), z && m({});
         }
       if (e.table || e.type === "dataSelector" || e.queryid) {
         if (!r) {
@@ -3589,7 +3589,7 @@ function Io({
             };
           }
           const C = await ze(r, E, e?.queryid, void 0, l), L = Array.isArray(C?.data?.data) ? C.data.data : Array.isArray(C?.data) ? C.data : C, P = Array.isArray(L) ? L.map(ge) : [], M = we(A, _, P, e.groupKey);
-          z && h(M);
+          z && m(M);
         } catch (E) {
           console.error("API fetch failed:", E);
         }
@@ -3631,17 +3631,17 @@ function Io({
         );
       else if (z.key === "Enter") {
         z.preventDefault();
-        const [A] = W[m] || [];
+        const [A] = W[h] || [];
         A && t.setFieldValue(e.name, V ? A : [...t.values[e.name], A]);
       } else z.key === "Escape" && (R(""), x(!1));
   };
   je(() => {
     j.current?.querySelector(
-      `[data-index="${m}"]`
+      `[data-index="${h}"]`
     )?.scrollIntoView({ block: "nearest" });
-  }, [m]), je(() => {
-    m >= W.length && N(0);
-  }, [W, m]), je(() => {
+  }, [h]), je(() => {
+    h >= W.length && N(0);
+  }, [W, h]), je(() => {
     const z = e.autocomplete, V = e.ajaxchain;
     if (!z && !V) return;
     const A = t.values[e.name];
@@ -3725,7 +3725,7 @@ function Io({
           M,
           e.groupKey
         );
-        h(ee);
+        m(ee);
       } catch (_) {
         if (H.isCancel(_)) return;
         console.error("Search fetch failed", _);
@@ -3812,8 +3812,8 @@ function Io({
             },
             onKeyDown: (C) => {
               if (C.key === "Enter") {
-                if (C.preventDefault(), W[m]) {
-                  const [L] = W[m];
+                if (C.preventDefault(), W[h]) {
+                  const [L] = W[h];
                   t.setFieldValue(c, L);
                 } else p.trim() && t.setFieldValue(c, p.trim());
                 x(!1);
@@ -3835,7 +3835,7 @@ function Io({
                 id: `${c}-${C}`,
                 "data-index": P,
                 className: `px-3 py-2 cursor-pointer text-sm
-                  ${m === P ? "bg-gray-100" : "hover:bg-gray-100"}`,
+                  ${h === P ? "bg-gray-100" : "hover:bg-gray-100"}`,
                 onMouseDown: () => E(C),
                 children: L
               },
@@ -3901,7 +3901,7 @@ function Io({
                   {
                     "data-index": E,
                     className: `flex items-center gap-x-2 px-2 py-1 rounded cursor-pointer text-sm
-                    ${A.includes(_) ? "bg-indigo-50 text-indigo-600 font-medium" : m === E ? "bg-gray-100" : "hover:bg-gray-50"}`,
+                    ${A.includes(_) ? "bg-indigo-50 text-indigo-600 font-medium" : h === E ? "bg-gray-100" : "hover:bg-gray-50"}`,
                     children: [
                       /* @__PURE__ */ a.jsx(
                         "input",
@@ -3991,7 +3991,7 @@ function Io({
                     t.setFieldValue(c, A), x(!1), R(""), N(0), Q("onChange", e, `${c}-${A}`);
                   },
                   className: `px-2 py-1 rounded cursor-pointer text-sm
-                  ${t.values[c] === A ? "bg-indigo-50 text-indigo-600 font-medium" : m === b ? "bg-gray-100" : "hover:bg-gray-50"}`,
+                  ${t.values[c] === A ? "bg-indigo-50 text-indigo-600 font-medium" : h === b ? "bg-gray-100" : "hover:bg-gray-50"}`,
                   children: _
                 },
                 A
@@ -4084,7 +4084,7 @@ function Io({
                   {
                     "data-index": E,
                     className: `flex items-center gap-x-2 px-2 py-1 rounded cursor-pointer text-sm
-                    ${A.includes(_) ? "bg-indigo-50 text-indigo-600 font-medium" : m === E ? "bg-gray-100" : "hover:bg-gray-50"}`,
+                    ${A.includes(_) ? "bg-indigo-50 text-indigo-600 font-medium" : h === E ? "bg-gray-100" : "hover:bg-gray-50"}`,
                     children: [
                       /* @__PURE__ */ a.jsx(
                         "input",
@@ -4486,12 +4486,12 @@ function Po({
   refid: l,
   module_refid: y
 }) {
-  const f = ho(t, i?.operation), [d, h] = Y.useState({}), p = (w, x) => {
-    h((v) => ({
+  const f = ho(t, i?.operation), [d, m] = Y.useState({}), p = (w, x) => {
+    m((v) => ({
       ...v,
       [w]: x
     }));
-  }, { initialValues: R, validationSchema: m } = Y.useMemo(() => {
+  }, { initialValues: R, validationSchema: h } = Y.useMemo(() => {
     const w = {}, x = {};
     return f.forEach((v) => {
       go([v], w, x, n);
@@ -4502,7 +4502,7 @@ function Po({
   }, [f, n]), N = ts({
     initialValues: R,
     enableReinitialize: !0,
-    validationSchema: pe.object().shape(m),
+    validationSchema: pe.object().shape(h),
     onSubmit: (w) => {
       r(w), N.resetForm();
     }
@@ -4558,11 +4558,11 @@ function Do({
   setEditData: l,
   module_refid: y
 }) {
-  const f = e.endPoints, d = e?.source?.refid, [h, p] = Y.useState(i), R = Y.useMemo(() => fo(e.fields), [e.fields]);
+  const f = e.endPoints, d = e?.source?.refid, [m, p] = Y.useState(i), R = Y.useMemo(() => fo(e.fields), [e.fields]);
   Y.useEffect(() => {
     p(i ?? {});
   }, [i]);
-  const m = Y.useCallback(
+  const h = Y.useCallback(
     (w) => {
       w && Object.keys(w).length > 0 && p(w);
     },
@@ -4578,7 +4578,7 @@ function Do({
           if (c)
             try {
               const I = await Promise.resolve(c());
-              w && m(I);
+              w && h(I);
             } catch (I) {
               console.error("Method execution failed:", I);
             }
@@ -4592,7 +4592,7 @@ function Do({
               params: v.params ?? {},
               headers: v.headers ?? {}
             });
-            w && m(T.data);
+            w && h(T.data);
           } catch (T) {
             console.error("API fetch failed:", T);
           }
@@ -4613,7 +4613,7 @@ function Do({
               },
               fields: _t(e.fields, f.operation)
             }, v?.dbopsid, y);
-            w && m(T);
+            w && h(T);
           } catch (T) {
             console.error("API fetch failed:", T);
           }
@@ -4743,7 +4743,7 @@ function Do({
       {
         title: e?.title ?? "",
         fields: e.fields,
-        data: h,
+        data: m,
         onSubmit: N,
         onCancel: r,
         methods: t,
@@ -4757,16 +4757,16 @@ function Do({
   return /* @__PURE__ */ a.jsx("div", { className: "relative", children: j.simple });
 }
 function xr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, Reports: o, toast: i, handleAction: l, infoViewJson: y }) {
-  const [f, d] = ae(!1), [h, p] = ae(null), [R, m] = Y.useState(0), [N, j] = Y.useState(null), w = e?.config, x = e?.config, v = x?.["popup.form"] ? "popup.form" : (x?.form, "form"), T = x?.[v] && Object.keys(x?.[v]).length > 0, c = (B) => {
+  const [f, d] = ae(!1), [m, p] = ae(null), [R, h] = Y.useState(0), [N, j] = Y.useState(null), w = e?.config, x = e?.config, v = x?.["popup.form"] ? "popup.form" : (x?.form, "form"), T = x?.[v] && Object.keys(x?.[v]).length > 0, c = (B) => {
     let U = ge(B.data);
     j(U);
   }, I = (B) => {
-    j(B), m((U) => U + 1);
+    j(B), h((U) => U + 1);
   }, O = (B) => {
     let U = ge(B.data);
     p(U), d(!0);
   }, $ = async () => {
-    if (h?.id) {
+    if (m?.id) {
       if (!r) {
         window.alert("Delete configuration missing.");
         return;
@@ -4785,11 +4785,11 @@ function xr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, Report
           }
         });
         if (!K) {
-          let z = { ...W.source, refid: h.id };
+          let z = { ...W.source, refid: m.id };
           W.source.where && (z = {
             ...z,
             where: fe(W.source.where, {
-              refid: h?.id
+              refid: m?.id
             })
           }), J = (await H({
             method: "POST",
@@ -4814,12 +4814,12 @@ function xr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, Report
             refid: J,
             fields: { blocked: "true" },
             datahash: Q.data.refhash,
-            refid1: h?.id
+            refid1: m?.id
           },
           headers: {
             Authorization: `Bearer ${r.accessToken}`
           }
-        }), window.alert("Record deleted successfully."), m((z) => z + 1);
+        }), window.alert("Record deleted successfully."), h((z) => z + 1);
       } catch (B) {
         console.error(B), window.alert("Failed to delete record. Please try again");
       } finally {
@@ -4921,10 +4921,10 @@ const fn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
 }) => {
   const [y, f] = ae(!1), d = jt(null);
   return je(() => {
-    const h = (p) => {
+    const m = (p) => {
       d.current && !d.current.contains(p.target) && f(!1);
     };
-    return document.addEventListener("mousedown", h), () => document.removeEventListener("mousedown", h);
+    return document.addEventListener("mousedown", m), () => document.removeEventListener("mousedown", m);
   }, []), /* @__PURE__ */ a.jsxs("div", { className: s?.tabNavClass || "relative z-10", children: [
     o && /* @__PURE__ */ a.jsx("div", { className: "absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 flex items-center justify-center", children: /* @__PURE__ */ a.jsx(
       "button",
@@ -4952,7 +4952,7 @@ const fn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
             children: "⋮"
           }
         ),
-        y && /* @__PURE__ */ a.jsx("div", { className: "absolute right-0 mt-2 w-48 max-h-100 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30", children: t.map((h, p) => /* @__PURE__ */ a.jsx(
+        y && /* @__PURE__ */ a.jsx("div", { className: "absolute right-0 mt-2 w-48 max-h-100 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30", children: t.map((m, p) => /* @__PURE__ */ a.jsx(
           "button",
           {
             type: "button",
@@ -4960,9 +4960,9 @@ const fn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
               n(p), f(!1);
             },
             className: `w-full text-left px-3 py-2 text-sm truncate hover:bg-gray-100 ${r === p ? "bg-gray-50 font-semibold text-action" : "text-gray-700"}`,
-            children: e[h]?.label || h
+            children: e[m]?.label || m
           },
-          h
+          m
         )) })
       ] })
     ] }),
@@ -4975,7 +4975,7 @@ const fn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
           scrollbarWidth: "none",
           msOverflowStyle: "none"
         },
-        children: t.length > 0 ? t.map((h, p) => /* @__PURE__ */ a.jsx(
+        children: t.length > 0 ? t.map((m, p) => /* @__PURE__ */ a.jsx(
           "button",
           {
             type: "button",
@@ -4987,9 +4987,9 @@ const fn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
             transition-all duration-300 ease-out
             focus:outline-none whitespace-nowrap
             ${r === p ? "text-action bg-white" : "text-gray-600 hover:text-gray-800 hover:bg-white/50"}`,
-            children: /* @__PURE__ */ a.jsx("span", { className: "relative z-10 flex items-center justify-center gap-1 sm:gap-2", children: /* @__PURE__ */ a.jsx("span", { className: "truncate", children: e[h]?.label || h }) })
+            children: /* @__PURE__ */ a.jsx("span", { className: "relative z-10 flex items-center justify-center gap-1 sm:gap-2", children: /* @__PURE__ */ a.jsx("span", { className: "truncate", children: e[m]?.label || m }) })
           },
-          h
+          m
         )) : /* @__PURE__ */ a.jsx("div", { className: "py-3 px-6 text-sm text-gray-500", children: "No group available" })
       }
     ) })
@@ -5006,10 +5006,10 @@ const fn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
   refid: y,
   sqlOpsUrls: f,
   module_refid: d,
-  fieldOptions: h,
+  fieldOptions: m,
   setFieldOptions: p,
   buttons: R,
-  handleAction: m,
+  handleAction: h,
   components: N
 }) => {
   let j = R ? Object.entries(R).filter(([v, T]) => T.groups ? T.groups.includes(e[t]) : !0) : [];
@@ -5023,7 +5023,7 @@ const fn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
       }
       return;
     }
-    m?.({ [v]: T }, s);
+    h?.({ [v]: T }, s);
   }
   const x = br(r?.component, N);
   return /* @__PURE__ */ a.jsxs(
@@ -5045,7 +5045,7 @@ const fn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
                 sqlOpsUrls: f,
                 module_refid: d,
                 setFieldOptions: p,
-                ...h[v.name] ? { optionsOverride: h[v.name] } : {}
+                ...m[v.name] ? { optionsOverride: m[v.name] } : {}
               }
             )
           },
@@ -5135,11 +5135,11 @@ function hn({
   refid: y,
   Reports: f,
   toast: d = {},
-  handleAction: h = () => {
+  handleAction: m = () => {
   },
   infoViewJson: p,
   fieldOptions: R,
-  setFieldOptions: m,
+  setFieldOptions: h,
   components: N
 }) {
   const [j, w] = ae(0), [x, v] = ae(!1), T = jt(null), c = Object.keys(e);
@@ -5162,13 +5162,13 @@ function hn({
     }
   }, [j, c.length]);
   const I = i === "tableft", O = i === "tabright", $ = !I && !O, k = e[c[j] ?? ""] || null, B = {
-    single: (K, J) => /* @__PURE__ */ a.jsx(yr, { fieldOptions: R, setFieldOptions: m, module_refid: p.module_refid, tabObj: K, methods: t, tabName: J, sqlOpsUrls: l, refid: y }),
+    single: (K, J) => /* @__PURE__ */ a.jsx(yr, { fieldOptions: R, setFieldOptions: h, module_refid: p.module_refid, tabObj: K, methods: t, tabName: J, sqlOpsUrls: l, refid: y }),
     grid: (K, J) => /* @__PURE__ */ a.jsx(
       xr,
       {
         ...f ? { Reports: f } : {},
         toast: d,
-        handleAction: h,
+        handleAction: m,
         tabObj: K,
         methods: t,
         tabName: J,
@@ -5208,9 +5208,9 @@ function hn({
         sqlOpsUrls: l,
         module_refid: p.module_refid,
         fieldOptions: R,
-        setFieldOptions: m,
+        setFieldOptions: h,
         buttons: p.buttons,
-        handleAction: h,
+        handleAction: m,
         ...N ? { components: N } : {}
       }
     )
@@ -5240,8 +5240,8 @@ function hn({
         module_refid: p.module_refid,
         sqlOpsUrls: l,
         fieldOptions: R,
-        setFieldOptions: m,
-        handleAction: h,
+        setFieldOptions: h,
+        handleAction: m,
         ...N ? { components: N } : {}
       }
     ) }),
@@ -5307,7 +5307,7 @@ function Mo({
   },
   infoViewJson: f,
   fieldOptions: d,
-  setFieldOptions: h,
+  setFieldOptions: m,
   components: p
 }) {
   const R = {
@@ -5319,7 +5319,7 @@ function Mo({
         tabName: x,
         sqlOpsUrls: s,
         fieldOptions: d,
-        setFieldOptions: h,
+        setFieldOptions: m,
         refid: o,
         module_refid: f?.module_refid
       }
@@ -5338,8 +5338,8 @@ function Mo({
         refid: o
       }
     )
-  }, m = f?.buttons;
-  let N = m ? Object.entries(m).filter(([w, x]) => !(x.groups && x.groups.length > 0)) : [];
+  }, h = f?.buttons;
+  let N = h ? Object.entries(h).filter(([w, x]) => !(x.groups && x.groups.length > 0)) : [];
   async function j(w, x) {
     const v = t?.[w];
     if (v) {
@@ -5352,9 +5352,9 @@ function Mo({
     }
     y?.({ [w]: x }, n);
   }
-  return /* @__PURE__ */ a.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ a.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ a.jsxs("div", { className: "space-y-1 flex flex-col min-h-0", children: [
+  return /* @__PURE__ */ a.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ a.jsx("div", { className: "mx-auto", children: /* @__PURE__ */ a.jsxs("div", { className: "space-y-1 flex flex-col min-h-0", children: [
     e && Object.entries(e).map(([w, x], v) => {
-      let T = m ? Object.entries(m).filter(([I, O]) => O.groups ? O.groups.includes(w) : !1) : [];
+      let T = h ? Object.entries(h).filter(([I, O]) => O.groups ? O.groups.includes(w) : !1) : [];
       const c = br(x.component, p);
       return /* @__PURE__ */ a.jsxs(Fo, { title: x.label, isFirst: v === 0, children: [
         x?.type === "fields" && x?.fields ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ a.jsx("div", { className: "grid grid-cols-12 gap-2", children: x.fields.map((I, O) => /* @__PURE__ */ a.jsx(
@@ -5368,7 +5368,7 @@ function Mo({
                 methods: t,
                 field: I,
                 data: n ?? {},
-                setFieldOptions: h,
+                setFieldOptions: m,
                 ...d[I.name] ? { optionsOverride: d[I.name] } : {},
                 sqlOpsUrls: s,
                 refid: o
@@ -5434,11 +5434,11 @@ function Bo({
   },
   infoViewJson: f,
   fieldOptions: d,
-  setFieldOptions: h,
+  setFieldOptions: m,
   components: p
 }) {
   const R = {
-    single: (w, x) => /* @__PURE__ */ a.jsx(yr, { fieldOptions: d, setFieldOptions: h, module_refid: f?.module_refid, tabObj: w, methods: t, tabName: x, sqlOpsUrls: s, refid: o }),
+    single: (w, x) => /* @__PURE__ */ a.jsx(yr, { fieldOptions: d, setFieldOptions: m, module_refid: f?.module_refid, tabObj: w, methods: t, tabName: x, sqlOpsUrls: s, refid: o }),
     grid: (w, x) => /* @__PURE__ */ a.jsx(
       xr,
       {
@@ -5453,8 +5453,8 @@ function Bo({
         infoViewJson: f
       }
     )
-  }, m = f?.buttons;
-  let N = m ? Object.entries(m).filter(([w, x]) => !(x.groups && x.groups.length > 0)) : [];
+  }, h = f?.buttons;
+  let N = h ? Object.entries(h).filter(([w, x]) => !(x.groups && x.groups.length > 0)) : [];
   async function j(w, x) {
     const v = t?.[w];
     if (v) {
@@ -5467,10 +5467,9 @@ function Bo({
     }
     y?.({ [w]: x }, n);
   }
-  return /* @__PURE__ */ a.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ a.jsx("div", { className: "p-4 mx-auto", children: /* @__PURE__ */ a.jsxs("div", { className: "space-y-2  flex flex-col min-h-0", children: [
+  return /* @__PURE__ */ a.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ a.jsx("div", { className: "mx-auto", children: /* @__PURE__ */ a.jsxs("div", { className: "space-y-2  flex flex-col min-h-0", children: [
     e && Object.entries(e).map(([w, x], v) => {
-      console.log("group", w), console.log("buttons", m);
-      let T = m ? Object.entries(m).filter(([I, O]) => O.groups ? O.groups.includes(w) : !1) : [];
+      let T = h ? Object.entries(h).filter(([I, O]) => O.groups ? O.groups.includes(w) : !1) : [];
       const c = br(x.component, p);
       return /* @__PURE__ */ a.jsxs($o, { title: x.label, children: [
         x?.type === "fields" && x?.fields ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ a.jsx("div", { className: "grid grid-cols-12 gap-2", children: x.fields.map((I, O) => /* @__PURE__ */ a.jsx(
@@ -5484,7 +5483,7 @@ function Bo({
                 methods: t,
                 field: I,
                 data: n ?? {},
-                setFieldOptions: h,
+                setFieldOptions: m,
                 ...d[I.name] ? { optionsOverride: d[I.name] } : {},
                 sqlOpsUrls: s,
                 refid: o
@@ -5529,7 +5528,7 @@ function li({
   },
   components: d
 }) {
-  const [h, p] = Y.useState({}), R = co(e.infoview ?? {}), m = e.endPoints, N = Y.useMemo(
+  const [m, p] = Y.useState({}), R = co(e.infoview ?? {}), h = e.endPoints, N = Y.useMemo(
     () => r(e.fields || {}),
     [e.fields, r]
   ), [j, w] = Y.useState({}), x = (O, $) => {
@@ -5570,7 +5569,7 @@ function li({
           console.error("API fetch failed:", B), O || p({});
         }
       if (k.type === "sql" && k.refid && k.refid != "0" || k.dbopsid) {
-        if (!m) {
+        if (!h) {
           console.error("SQL source requires formJson.endPoints but it is missing");
           return;
         }
@@ -5579,9 +5578,9 @@ function li({
           k?.dbopsid && (B = !0, U = k?.dbopsid);
           const W = await H({
             method: "GET",
-            url: m.baseURL + m.dbopsGetHash,
+            url: h.baseURL + h.dbopsGetHash,
             headers: {
-              Authorization: `Bearer ${m?.accessToken}`
+              Authorization: `Bearer ${h?.accessToken}`
             }
           });
           if (!B) {
@@ -5595,30 +5594,30 @@ function li({
               })
             }), U = (await H({
               method: "POST",
-              url: m.baseURL + m.dbopsGetRefId,
+              url: h.baseURL + h.dbopsGetRefId,
               data: {
                 operation: "fetch",
                 source: Q,
-                fields: _t(e.fields, m.operation),
+                fields: _t(e.fields, h.operation),
                 forcefill: e.forcefill,
                 datahash: W.data.refhash,
                 srcid: e?.module_refid
               },
               headers: {
-                Authorization: `Bearer ${m?.accessToken}`
+                Authorization: `Bearer ${h?.accessToken}`
               }
             }))?.data.refid;
           }
           const K = await H({
             method: "POST",
-            url: m.baseURL + m.dbopsFetch,
+            url: h.baseURL + h.dbopsFetch,
             data: {
               refid: U,
               datahash: W.data.refhash,
               module_refid: e.module_refid
             },
             headers: {
-              Authorization: `Bearer ${m?.accessToken}`
+              Authorization: `Bearer ${h?.accessToken}`
             }
           }), J = Wn(K) ?? {};
           O || p(J);
@@ -5647,9 +5646,9 @@ function li({
           {
             groups: T,
             methods: i,
-            infoData: h,
+            infoData: m,
             viewRenderers: o,
-            sqlOpsUrls: m,
+            sqlOpsUrls: h,
             refid: v,
             ...l ? { Reports: l } : {},
             toast: y,
@@ -5670,10 +5669,10 @@ function li({
             viewRenderers: o,
             layoutConfig: s,
             methods: i,
-            infoData: h,
+            infoData: m,
             isCommonInfo: !!c,
             viewMode: O,
-            sqlOpsUrls: m,
+            sqlOpsUrls: h,
             refid: v,
             ...l ? { Reports: l } : {},
             toast: y,
@@ -5691,8 +5690,8 @@ function li({
             groups: T,
             viewRenderers: o,
             methods: i,
-            infoData: h,
-            sqlOpsUrls: m,
+            infoData: m,
+            sqlOpsUrls: h,
             refid: v,
             ...l ? { Reports: l } : {},
             toast: y,
@@ -5711,10 +5710,10 @@ function li({
             viewRenderers: o,
             layoutConfig: s,
             methods: i,
-            infoData: h,
+            infoData: m,
             isCommonInfo: !!c,
             viewMode: O,
-            sqlOpsUrls: m,
+            sqlOpsUrls: h,
             refid: v,
             ...l ? { Reports: l } : {},
             toast: y,
@@ -5727,14 +5726,14 @@ function li({
         );
     }
   };
-  return console.log("commonInfo", c), /* @__PURE__ */ a.jsxs("div", { className: s.containerClass || "h-screen flex flex-col ", children: [
-    c && m && /* @__PURE__ */ a.jsx(
+  return /* @__PURE__ */ a.jsxs("div", { className: s.containerClass || "h-screen flex flex-col ", children: [
+    c && h && /* @__PURE__ */ a.jsx(
       Oo,
       {
         commonInfo: c,
-        infoData: h,
+        infoData: m,
         hiddenFields: n,
-        sqlOpsUrls: m,
+        sqlOpsUrls: h,
         setFieldOptions: x,
         fieldOptions: j,
         module_refid: e.module_refid,
