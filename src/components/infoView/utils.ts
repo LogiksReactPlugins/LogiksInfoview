@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-
+import DOMPurify from "dompurify";
 import type { AutocompleteConfig, FileCategory, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions, sqlQueryProps } from "./InfoView.types.js";
 import { IMAGE_EXT, PDF_EXT, TEXT_EXT, VIDEO_EXT } from "./constant.js";
 
@@ -732,6 +732,13 @@ export const fileIconClassMap: Record<FileCategory, string> = {
   text: "fa fa-file-lines",
   other: "fa fa-file"
 };
+
+
+export function sanitizeHtml(html: string) {
+  return DOMPurify.sanitize(html, {
+    USE_PROFILES: { html: true },
+  });
+}
 
 
 

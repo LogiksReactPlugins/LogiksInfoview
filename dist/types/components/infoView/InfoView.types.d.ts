@@ -75,7 +75,7 @@ export interface InfoViewProps {
     data?: Record<string, any>;
     methods?: Record<string, Function>;
     Reports?: ComponentType<any>;
-    components?: Record<string, ComponentType<any>>;
+    components?: Record<string, ComponentType<any> | ReactNode>;
     toast?: Record<string, Function>;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
 }
@@ -227,7 +227,7 @@ export interface TabViewProps {
     groups: Record<string, InfoViewGroup>;
     methods?: Record<string, Function>;
     infoData: InfoData;
-    components?: Record<string, ComponentType<any>>;
+    components?: Record<string, ComponentType<any> | ReactNode>;
     viewRenderers?: Record<string, (tab: InfoViewGroup, tabName: string) => React.ReactNode>;
     layoutConfig?: {
         containerClass?: string;
@@ -267,7 +267,7 @@ export interface ContentAreaProps extends VerticalNavProps {
         tabNavClass?: string;
         fieldGridClass?: string;
     };
-    components?: Record<string, ComponentType<any>>;
+    components?: Record<string, ComponentType<any> | ReactNode>;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoData: InfoData;
     tabObj: InfoViewGroup | null;

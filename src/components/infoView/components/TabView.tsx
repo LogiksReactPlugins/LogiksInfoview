@@ -6,6 +6,7 @@ import GridView from './GridView.js';
 import InfoFieldRenderer from './InfoFieldRenderer.js';
 import { tailwindCols, toColWidth } from '../utils.js';
 import type { InfoViewGroup, InfoViewField, VerticalNavProps, TopNavProps, ContentAreaProps, TabViewProps } from '../InfoView.types.js';
+import { resolveComponent } from '@/components/helpers/resolveComponent.js';
 
 
 
@@ -202,12 +203,9 @@ const ContentArea = (
 
     }
 
-    const CustomComponent =
-        tabObj?.type === "component" &&
-            typeof tabObj.component === "string" &&
-            components?.[tabObj.component]
-            ? components[tabObj.component]
-            : null;
+  
+
+            const node = resolveComponent(tabObj?.component, components);
 
 
     return <div
@@ -242,9 +240,9 @@ const ContentArea = (
                         ))}
                     </div>
                 </div>
-            ) : CustomComponent ? (
+            ) : tabObj?.type === "component" && node ? (
                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
-                    <CustomComponent />
+                    {node}
                 </div>
             ) : tabObj ? (
                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">

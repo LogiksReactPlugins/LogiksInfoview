@@ -1,4 +1,4 @@
-import { useState, type ComponentType } from "react";
+import { useState, type ComponentType, type ReactNode } from "react";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
 import Accordion from './Accordian.js';
 import SingleView from './SingleView.js';
@@ -6,6 +6,7 @@ import GridView from './GridView.js';
 
 import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
 import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions, InfoviewJson } from '../InfoView.types.js';
+import { resolveComponent } from "@/components/helpers/resolveComponent.js";
 
 interface AccordianViewProps {
     groups: Record<string, InfoViewGroup>;
@@ -23,7 +24,7 @@ interface AccordianViewProps {
         fieldName: string,
         options: SelectOptions
     ) => void;
-    components?: Record<string, ComponentType<any>>;
+    components?: Record<string, ComponentType<any> | ReactNode>;
 }
 
 export default function AccordianView({
@@ -116,12 +117,7 @@ export default function AccordianView({
                             return false;
                         }) : [];
 
-                        const CustomComponent =
-                            obj?.type === "component" &&
-                                typeof obj.component === "string" &&
-                                components?.[obj.component]
-                                ? components[obj.component]
-                                : null;
+                      const node = resolveComponent(obj.component, components);
                         return <Accordion key={group} title={obj.label} isFirst={index === 0}>
                             {obj?.type === "fields" && obj?.fields ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
@@ -147,9 +143,9 @@ export default function AccordianView({
                                         ))}
                                     </div>
                                 </div>
-                            ) : CustomComponent ? (
+                            ) : obj?.type === "component" && node ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
-                                    <CustomComponent />
+                                    {node}
                                 </div>
                             ) : obj ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
