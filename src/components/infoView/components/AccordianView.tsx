@@ -107,7 +107,7 @@ export default function AccordianView({
 
         <div className="bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100">
 
-            <div className="p-4 mx-auto">
+            <div className="mx-auto">
                 <div className="space-y-1 flex flex-col min-h-0">
                     {groups && Object.entries(groups).map(([group, obj], index) => {
 
