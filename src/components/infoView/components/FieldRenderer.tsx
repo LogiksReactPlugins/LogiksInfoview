@@ -77,7 +77,13 @@ export default function FieldRenderer({
 
       let labelKey = field.labelKey ?? "title";
 
-      if (field?.options) {
+      let opts = field?.options;
+
+      if (opts && (
+        (Array.isArray(opts) && opts.length > 0) ||
+        (!Array.isArray(opts) && Object.keys(opts).length > 0)
+      )) {
+
 
         //  CASE 1: flat or grouped object
         // { "1": "WEL" } OR { quarter1: { "1": "January" } }
@@ -117,13 +123,27 @@ export default function FieldRenderer({
         const methodFn = methodName ? methods[methodName] : undefined;
         if (methodFn) {
           try {
-            const res = await Promise.resolve(methodFn());
+            const res = await methodFn();
 
-            const rawItems = Array.isArray(res?.data?.data)
-              ? res.data.data
-              : Array.isArray(res?.data)
-                ? res.data
-                : res;
+            const rawItems = Array.isArray(res.data?.results?.options) ?
+              res.data?.results?.options : Array.isArray(res?.data?.data)
+                ? res.data.data
+                : Array.isArray(res.data?.results)
+                  ? res.data?.results :
+                  Array.isArray(res?.data)
+                    ? res.data
+                    : res;
+
+            if (
+              typeof rawItems === "object" &&
+              !Array.isArray(rawItems)
+            ) {
+              const values = Object.values(rawItems);
+              if (values.length && typeof values[0] === "string") {
+                setOptions(rawItems as SelectOptions);
+                return;
+              }
+            }
 
             const normalizedItems = Array.isArray(rawItems)
               ? rawItems.map(normalizeRowSafe)
@@ -132,31 +152,55 @@ export default function FieldRenderer({
             const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
 
             if (isMounted) setOptions(mapped);
+            return;
           } catch (err) {
             console.error("Method execution failed:", err);
             if (isMounted) setOptions({});
+            return;
           }
         } else {
           if (isMounted) setOptions({});
+          return;
         }
       }
 
       // Case 2: API source
-      if (source.type === "api" && source.url) {
+      if (source.type === "api" && source.endpoint) {
         try {
-          const res = await axios({
+          const config = {
             method: source.method || "GET",
-            url: source.url,
-            data: source.body ?? {},
-            params: source.params ?? {},
-            headers: source.headers ?? {},
-          });
+            url: sqlOpsUrls?.baseURL + source.endpoint,
 
-          const rawItems = Array.isArray(res?.data?.data)
-            ? res.data.data
-            : Array.isArray(res?.data)
-              ? res.data
-              : res;
+            headers: {
+              "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+            },
+            ...(source.method === "GET"
+              ? { params: { refid: source.refid } }
+              : { data: { refid: source.refid } }),
+          }
+
+          const res = await axios(config);
+
+          const rawItems = Array.isArray(res.data?.results?.options) ?
+            res.data?.results?.options : Array.isArray(res?.data?.data)
+              ? res.data.data
+              : Array.isArray(res.data?.results)
+                ? res.data?.results :
+                Array.isArray(res?.data)
+                  ? res.data
+                  : res;
+
+
+          if (
+            typeof rawItems === "object" &&
+            !Array.isArray(rawItems)
+          ) {
+            const values = Object.values(rawItems);
+            if (values.length && typeof values[0] === "string") {
+              setOptions(rawItems as SelectOptions);
+              return;
+            }
+          }
 
           const normalizedItems = Array.isArray(rawItems)
             ? rawItems.map(normalizeRowSafe)
@@ -164,10 +208,12 @@ export default function FieldRenderer({
           const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey)
 
           if (isMounted) setOptions(mapped);
+          return;
 
         } catch (err) {
           console.error("API execution failed:", err);
           if (isMounted) setOptions({});
+          return;
         }
       }
 
@@ -220,6 +266,17 @@ export default function FieldRenderer({
               ? res.data
               : res;
 
+          if (
+            typeof rawItems === "object" &&
+            !Array.isArray(rawItems)
+          ) {
+            const values = Object.values(rawItems);
+            if (values.length && typeof values[0] === "string") {
+              setOptions(rawItems as SelectOptions);
+              return;
+            }
+          }
+
           const normalizedItems = Array.isArray(rawItems)
             ? rawItems.map(normalizeRowSafe)
             : [];
@@ -271,6 +328,23 @@ export default function FieldRenderer({
     () => flattenOptions(options),
     [options]
   );
+
+  const exactMatch = useMemo(() => {
+
+    if (!field.type) return null
+    if (!["suggest", "autosuggest", "autocomplete"].includes(field.type)) {
+      return null;
+    }
+
+    if (!search.trim()) return null;
+
+    const normalized = search.trim().toLowerCase();
+
+    return flatOptions.find(([, label]) => {
+      const value = label.trim().toLowerCase();
+      return value === normalized;
+    });
+  }, [field.type, search, flatOptions]);
 
   const optionCount = flatOptions.length;
 
@@ -350,29 +424,86 @@ export default function FieldRenderer({
         if (isAutocompleteConfig(ac)) {
           const src = ac.src;
           if (!src || !sqlOpsUrls) return;
+          let row: any;
 
-          const resolvedWhere = replacePlaceholders(src.where ?? {}, {
-            refid: value,
-          });
+          if ("type" in src && src.type === "api") {
+            let curr_field = field.name;
 
-          const query = {
-            ...src,
-            table: src.table,
-            cols: src.columns,
-            where: resolvedWhere,
-          };
+            if (typeof field.parameter === "string" && field.parameter) {
+              curr_field = field.parameter
+            }
 
-          const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, undefined, module_refid);
+            const params = { [curr_field]: value, refid: value }
 
-          const row = Array.isArray(res?.data) ? res.data[0] : res?.data;
+            if (typeof field.parameter === "object" && field.parameter !== null
+              && Object.keys(field.parameter).length > 0
 
-          if (row) {
+            ) {
+
+              for (const [key, val] of Object.entries(field.parameter)) {
+                params[key] = key === curr_field
+                  ? value
+                  : formik.values?.[val as string];
+              }
+
+            }
+            const config = {
+              method: src.method || "GET",
+              url: sqlOpsUrls?.baseURL + src.endpoint,
+
+              headers: {
+                "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+              },
+
+              ...(src.method === "GET"
+                ? { params }
+                : { data: params }),
+            }
+
+            const { data: res } = await axios(config);
+            row = Array.isArray(res?.data?.results?.options) ? res?.data?.results?.options[0] :
+              Array.isArray(res?.data?.data)
+                ? res.data.data[0]
+                : Array.isArray(res?.data?.results)
+                  ? res.data.results[0]
+                  : Array.isArray(res?.data)
+                    ? res.data[0]
+                    : res?.data;
+          } else {
+            let query: sqlQueryProps | undefined;
+
+            if (!src.queryid) {
+              if (!src.table || !src.columns) {
+                throw new Error("SQL query requires field.table");
+              }
+              const resolvedWhere = replacePlaceholders(src?.where ?? {}, {
+                refid: value,
+              });
+              query = {
+                ...src,
+                table: src.table,
+                cols: src.columns,
+                where: resolvedWhere,
+              };
+            }
+
+            const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, undefined, module_refid);
+
+            row = Array.isArray(res?.data?.data)
+              ? res.data.data[0]
+              : Array.isArray(res?.data)
+                ? res.data[0]
+                : res?.data;
+          }
+          let normalizedRow = normalizeRowSafe(row);
+
+          if (normalizedRow) {
             ac.target
               .split(",")
               .map(t => t.trim())
               .forEach(t => {
-                if (row[t] !== undefined) {
-                  formik.setFieldValue(t, row[t]);
+                if (normalizedRow[t] !== undefined) {
+                  formik.setFieldValue(t, normalizedRow[t]);
                 }
               });
           }
@@ -385,34 +516,79 @@ export default function FieldRenderer({
           if (!src || typeof src !== "object") continue;
           if (!sqlOpsUrls) continue;
 
-          let query: sqlQueryProps | undefined;
+          let responseData: any;
 
-          if (!src.queryid) {
-            if (!src.table || !src.columns) {
-              throw new Error("SQL query requires field.table");
+          if ("type" in src && src.type === "api") {
+            let curr_field = field.name;
+
+            if (typeof field.parameter === "string" && field.parameter) {
+              curr_field = field.parameter
             }
-            const resolvedWhere = replacePlaceholders(src?.where ?? {}, {
-              refid: value,
-            });
-            query = {
-              ...src,
-              table: src.table,
-              cols: src.columns,
-              where: resolvedWhere,
-            };
+
+            let params = { [curr_field]: value, refid: value }
+
+            if (typeof field.parameter === "object" && field.parameter !== null
+              && Object.keys(field.parameter).length > 0
+
+            ) {
+
+              for (const [key, val] of Object.entries(field.parameter)) {
+                params[key] = key === curr_field
+                  ? value
+                  : formik.values?.[val as string];
+              }
+
+            }
+
+
+            const config = {
+              method: src.method || "GET",
+              url: sqlOpsUrls?.baseURL + src.endpoint,
+
+              headers: {
+                "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+              },
+              ...(src.method === "GET"
+                ? { params }
+                : { data: params }),
+            }
+            const { data: res } = await axios(config);
+            responseData = res;
+          } else {
+
+
+
+            let query: sqlQueryProps | undefined;
+
+            if (!src.queryid) {
+              if (!src.table || !src.columns) {
+                throw new Error("SQL query requires field.table");
+              }
+              const resolvedWhere = replacePlaceholders(src?.where ?? {}, {
+                refid: value,
+              });
+              query = {
+                ...src,
+                table: src.table,
+                cols: src.columns,
+                where: resolvedWhere,
+              };
+            }
+
+
+            const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, value, module_refid);
+            responseData = res;
           }
-
-
-          const { data: res } = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, value, module_refid);
 
           let valueKey = field.valueKey ?? "value";
           let labelKey = field.labelKey ?? "title";
 
-          const rawItems = Array.isArray(res?.data?.data)
-            ? res.data.data
-            : Array.isArray(res?.data)
-              ? res.data
-              : res;
+          const rawItems = Array.isArray(responseData?.results?.options) ?
+            responseData?.results?.options : Array.isArray(responseData.data)
+              ? responseData.data
+              : Array.isArray(responseData.results)
+                ? responseData.results
+                : responseData
 
           const normalizedItems = Array.isArray(rawItems)
             ? rawItems.map(normalizeRowSafe)
@@ -1357,8 +1533,6 @@ export default function FieldRenderer({
               }`} style={{ zIndex: -1, filter: 'blur(8px)' }}></div>
           </div>
 
-
-
           {files.map((file) => {
             const name = file?.split("/").pop();
             if (!name) return null;
@@ -1393,10 +1567,7 @@ export default function FieldRenderer({
               name={key}
               value={formik.values[key]}
               onChange={(e) => {
-                formik.setFieldValue(
-                  key,
-                  e.target.value
-                )
+                formik.setFieldValue(key, e.target.value)
                 executeFieldMethod("onChange", field, `${key}`)
               }
               }
@@ -1431,9 +1602,9 @@ export default function FieldRenderer({
           </label>
 
           <div className="relative">
-            {field.icon && (
-              <div className="absolute z-10 left-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                {renderIcon(field)}
+            {(
+              <div className="absolute z-10 right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                <i className="fa-solid fa-calendar"></i>
               </div>
             )}
 
@@ -1445,10 +1616,7 @@ export default function FieldRenderer({
               max={field.max}
               value={formik.values[key]}
               onChange={(e) => {
-                formik.setFieldValue(
-                  key,
-                  e.target.value
-                )
+                formik.setFieldValue(key, e.target.value)
                 executeFieldMethod("onChange", field, `${key}`)
               }
               }
@@ -1501,10 +1669,7 @@ export default function FieldRenderer({
               value={formik.values[key]}
               onBlur={formik.handleBlur}
               onChange={(e) => {
-                formik.setFieldValue(
-                  key,
-                  e.target.value
-                )
+                formik.setFieldValue(key, e.target.value)
                 executeFieldMethod("onChange", field, `${key}`)
               }
               }
@@ -1553,10 +1718,7 @@ export default function FieldRenderer({
               value={formik.values[key]}
               onBlur={formik.handleBlur}
               onChange={(e) => {
-                formik.setFieldValue(
-                  key,
-                  e.target.value
-                )
+                formik.setFieldValue(key, e.target.value)
                 executeFieldMethod("onChange", field, `${key}`)
               }
               }

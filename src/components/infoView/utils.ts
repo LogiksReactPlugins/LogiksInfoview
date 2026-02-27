@@ -529,16 +529,21 @@ export const isGroupedOptions = (
 };
 
 export function isAutocompleteConfig(ac: unknown): ac is AutocompleteConfig {
+  if (!ac || typeof ac !== "object") return false;
+
+  const src = (ac as any).src;
+
   return (
-    typeof ac === "object" &&
-    ac !== null &&
     typeof (ac as any).target === "string" &&
-    typeof (ac as any).src === "object" &&
-    (ac as any).src !== null &&
-    typeof (ac as any).src.table === "string"
+    typeof src === "object" &&
+    src !== null &&
+    (
+      src.type === "api" ||
+      typeof src.queryid === "string" ||
+      (typeof src.table === "string" && typeof src.columns !== "undefined")
+    )
   );
 }
-
 export function getSearchColumns(columns: string): string[] {
   return columns
     .split(",")

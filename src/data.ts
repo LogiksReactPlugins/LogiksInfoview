@@ -416,10 +416,10 @@ export const example9 = {
 }
 
 
-export const example10 ={
-      "endPoints": {
+export const example10 = {
+     "endPoints": {
         "baseURL": "http://192.168.0.20:9999",
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6Ii9jVjFtRktDbXo1d0QvVjRHL1pTMGJyTTkxQnhBcHRpdG15TFZXVkVTUmNpNUtkVnpaLzBOSTk3Qkx4YUFvQmhkMGc5VU5CWmpwZU45ZkNCOEV5LzBlcURQVzhZNmZPa3doYjVmMXlieEVsMlRiRGlBNHR3R29iSWJIZ004Nnd0VXFTaEhjenE5WUV6RU9IbFZxQTNkSkJmenhIeUlxWG14SlRqNm5FcVRacHQ1TllzQ3cvdS9ldlBzd0FhVkxWajBHWXRRUjBaSW1KVFBYN2QwZi9kWHA3TkZXbFZ3aWVkclBadjFKQ1gxcFd5OXVtaDRDVkFsc2pmYjJEOXJRMFZCNkxpU1BCS2kwbFZIaXU5UmNHWmwyRTcwLzZ3bTRXdFU4WDRxaWNpIiwiaWF0IjoxNzcwNzg3NzQ0LCJleHAiOjE3NzA3OTEzNDQsImp0aSI6ImFjYzoxOjE3NzA3ODc3NDQ3NjI6d2ViIn0.cQuoiGHGTz6V7EH82NfFXb0uks-RjE6sRK2yJG3Xlog",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6ImYrM1JTZzV4a2hvR2p3NkVBdE5lRkxXOVA1dVdhaEdLRytnenExUGlnZlhYdXhqcnFUbDhmTiszdFIzL0Y5M2huTDhIQXAxSXQwOU85OFU1Z1Y5ejd1TmYweEhNTWZpSFR0YjdoMVFBSllkeHJOTzFHS2d6M0kxU0dhZHZjbncxV0lwNktZT2RSYWpqY0NFVnQvaFlvRHNldUJCYzJpOEhtMnVxd0lxNVJIbFBmczk0U3d2MGdMbVN3TWM5QUpFQ0srVTg2VVJTVHA0NG5XZEZmcVRRNjI4Q1R3STlrQlJoaFRvRnJKQlBCa2lHdDVHcEVYWkJRZnBBZGJXZStESDBNbVFTditMYU9EZUliQWZFa3NsdkY5UlFMODhzQXdLQytEbzBCNWpWIiwiaWF0IjoxNzcyMTY5ODEzLCJleHAiOjE3NzIxNjk5MzMsImp0aSI6ImFjYzoxOjE3NzIxNjk4MTM0MzQ6d2ViIn0.9i7Ob9lz63eTHzW2u4TW2i7tsuvUr2aF6AdJethqBKs",
         "dbopsGetHash": "/api/dbops",
         "dbopsGetRefId": "/api/dbops/save",
         "dbopsCreate": "/api/dbops/create",
@@ -428,94 +428,251 @@ export const example10 ={
         "registerQuery": "/api/query/save",
         "runQuery": "/api/query/run"
     },
-    "forcefill": {
-        "groupuid": "#SESS_GROUP_NAME#",
-        "guid": "#SESS_GUID#"
+    "hooks": {
+        "postsubmit": [
+            "quality.generateMPRNo"
+        ]
     },
     "source": {
         "type": "sql",
-        "dbopsid": "forms%40termsandcondition_1.main%401"
+        "dbopsid": "forms%40quality.quality_mpr%4016"
     },
+    "forcefill": {
+        "guid": "#SESS_GUID#"
+    },
+    "gotolink": "infoview/quality.quality_mpr/{hashid}",
     "fields": {
-        "title": {
-            "label": "Title",
-            "group": "Info",
-            "required": true
-        },
-        "category": {
-            "label": "Category",
-            "group": "Info",
+        "company_code_id": {
+            "label": "Company/ SPV",
             "type": "select",
-            "groupid": "accounts_terms",
+            "parameter": "company_id",
             "required": true,
+            "source": {
+                "type": "api",
+                "method": "post",
+                "endpoint": "/api/services/eofficeGlobal/get_company"
+            },
+            "ajaxchain": [
+                {
+                    "target": "sector_id",
+                    "src": {
+                        "type": "api",
+                        "method": "post",
+                        "endpoint": "/api/services/eofficeGlobal/get_sector"
+                    }
+                }
+            ],
+            "no-option": "Select Company/ SPV",
+            "width": 4,
+            "options": []
+        },
+        "sector_id": {
+            "label": "Sector",
+            "no-option": "Select Sector",
+            "type": "select",
+            "parameter": {
+                "sector_id": "sector_id",
+                "company_id": "company_code_id"
+            },
+            "ajaxchain": [
+                {
+                    "target": "project_function_id",
+                    "src": {
+                        "type": "api",
+                        "method": "post",
+                        "endpoint": "/api/services/eofficeGlobal/get_project_function"
+                    }
+                }
+            ],
+            "required": true,
+            "width": 4,
+            "options": []
+        },
+        "project_function_id": {
+            "label": "Project Function ",
+            "type": "select",
+            "required": true,
+            "width": 4,
+            "no-option": "Select Project Function",
+            "options": []
+        },
+        "mpr_month": {
+            "label": "MPR Month",
+            "type": "date",
+            "required": true,
+            "width": 4
+        },
+        "mpr_id": {
+            "label": "MPR",
+            "type": "select",
+            "groupby": "mpr_name",
+            "required": true,
+            "width": 4,
+            "ajaxchain": {
+                "target": "sub_header",
+                "src": {
+                    "type": "sql",
+                    "queryid": "forms%40quality.quality_mpr%40fields.mpr_id.ajaxchain.0"
+                }
+            },
             "options": [
                 {
-                    "title": "purchase_payment_terms",
-                    "value": "purchase_payment_terms",
-                    "class": "",
-                    "privilege": "*"
+                    "title": "Tests",
+                    "value": 1
                 },
                 {
-                    "title": "Purchase Terms",
-                    "value": "purchase_terms",
-                    "class": "",
-                    "privilege": "*"
-                },
-                {
-                    "title": "Quotation Terms",
-                    "value": "quotations_terms",
-                    "class": "",
-                    "privilege": "*"
-                },
-                {
-                    "title": "Payment Terms",
-                    "value": "payment_terms",
-                    "class": "",
-                    "privilege": "*"
-                },
-                {
-                    "title": "Invoices Terms",
-                    "value": "invoices_terms",
-                    "class": "",
-                    "privilege": "*"
+                    "title": "Test ",
+                    "value": 2
                 }
             ]
         },
-        "terms": {
-            "label": "Terms",
-            "group": "Info",
-            "type": "richtextarea",
-            "required": true
-        },
-        "blocked": {
-            "label": "Blocked",
-            "group": "Info",
+        "sub_header": {
+            "label": "Sub Header",
             "type": "select",
-            "groupid": "boolean",
-            "vmode": "edit",
-            "required": true,
+            "required": false,
+            "nodb": true,
+            "width": 4,
+            "autocomplete": {
+                "target": "weightage,is_code_refrence,frequency",
+                "src": {
+                    "type": "sql",
+                    "queryid": "forms%40quality.quality_mpr%40fields.sub_header.autocomplete.0"
+                }
+            },
+            "options": []
+        },
+        "weightage": {
+            "label": "Weightage",
+            "type": "number",
+            "disabled": true,
+            "nodb": true,
+            "required": false,
+            "width": 4
+        },
+        "is_code_refrence": {
+            "label": "Is Code Reference",
+            "type": "text",
+            "disabled": true,
+            "nodb": true,
+            "required": false,
+            "width": 4
+        },
+        "frequency": {
+            "label": "Frequency",
+            "type": "text",
+            "disabled": true,
+            "nodb": true,
+            "required": false,
+            "width": 4
+        },
+        "section": {
+            "label": "Section",
+            "type": "select",
+            "groupid": "section_master",
+            "required": false,
+            "width": 4,
             "options": [
                 {
-                    "title": "False",
-                    "value": "false",
-                    "class": "",
+                    "title": "KIYAAN",
+                    "value": "kiyaan",
+                    "class": null,
                     "privilege": "*"
                 },
                 {
-                    "title": "True",
-                    "value": "true",
-                    "class": "",
+                    "title": "RSDCPL",
+                    "value": "rsdcpl",
+                    "class": null,
                     "privilege": "*"
                 },
                 {
-                    "title": "True",
-                    "value": null,
+                    "title": "SPL",
+                    "value": "spl",
+                    "class": null,
+                    "privilege": "*"
+                },
+                {
+                    "title": "TEJAS",
+                    "value": "tejas",
                     "class": null,
                     "privilege": "*"
                 }
             ]
+        },
+        "conducted": {
+            "label": "Conducted",
+            "type": "number",
+            "required": false,
+            "width": 4
+        },
+        "passed": {
+            "label": "Passed",
+            "type": "number",
+            "required": false,
+            "width": 4
+        },
+        "failed": {
+            "label": "Failed",
+            "type": "number",
+            "required": false,
+            "width": 4
         }
     },
-    "module_refid": "termsandcondition_1.main",
+    "infoview": {
+        "template": "cards",
+        "groups": {
+            "test_master_details": {
+                "label": "Test Master Details",
+                "type": "module",
+                "src": "infoviewTable",
+                "vmode": "edit",
+                "config": {
+                    "type": "sql",
+                    "uimode": "grid",
+                    "uiswitcher": false,
+                    "policy_create": "quality.create.access",
+                    "policy_view": "quality.view.access",
+                    "policy_delete": "quality.delete.access",
+                    "policy_update": "quality.update.access",
+                    "join": [
+                        {
+                            "type": "left",
+                            "query": "data_test_master_tbl",
+                            "condition": "quality_mpr_tbl.mpr_id=data_test_master_tbl.id"
+                        }
+                    ],
+                    "toolbar": {
+                        "search": true,
+                        "print": false,
+                        "export": false,
+                        "email": false
+                    },
+                    "colkey": "quality_mpr_tbl.id",
+                    "datagrid": {
+                        "data_test_master_tbl.mpr_sub_header": {
+                            "label": "MPR Sub Header",
+                            "searchable": true,
+                            "sortable": true
+                        },
+                        "data_test_master_tbl.frequency": {
+                            "label": "Frequency",
+                            "searchable": true,
+                            "sortable": true
+                        },
+                        "data_test_master_tbl.weightage": {
+                            "label": "Weightage",
+                            "searchable": true
+                        },
+                        "data_test_master_tbl.is_code_refrence": {
+                            "label": "Is Code Reference",
+                            "searchable": true
+                        }
+                    },
+                    "queryid": "forms%40quality.quality_mpr.infoviewTable.test_master_details%40infoview.groups.test_master_details"
+                },
+                "width": 12
+            }
+        }
+    },
+    "module_refid": "quality.quality_mpr",
     "module_type": "forms"
 }

@@ -114,6 +114,14 @@ export interface SqlEndpoints {
     uploadURL?: string;
     refid?: string;
 }
+type ApiSrc = {
+    type: string;
+    endpoint: string;
+    method?: string;
+    table?: never;
+    columns?: never;
+    queryid?: never;
+};
 type SqlSrcByTable = {
     table: string;
     columns: string;
@@ -126,7 +134,7 @@ type SqlSrcByQueryId = {
     table?: never;
     columns?: never;
 };
-type AutocompleteSrc = SqlSrcByTable | SqlSrcByQueryId;
+type AutocompleteSrc = ApiSrc | SqlSrcByTable | SqlSrcByQueryId;
 export type AutocompleteConfig = {
     target: string;
     src: AutocompleteSrc;
@@ -135,6 +143,7 @@ export type FileCategory = "image" | "pdf" | "video" | "text" | "other";
 export interface FormField {
     name: string;
     label?: string;
+    parameter?: string;
     width?: number | string;
     options?: Record<string, any>;
     group?: string;

@@ -29,11 +29,12 @@ export declare const sqlClient: {
     }, module_refid: string | undefined): Promise<any>;
 };
 export declare function fetchDataByquery(sqlOpsUrls: Record<string, any>, query: Record<string, any> | undefined, querid: string | undefined, refid?: string | undefined, module_refid?: string | undefined, filter?: Record<string, any>): Promise<AxiosResponse<any>>;
-export declare function runAjaxChain({ field, value, sqlOpsUrls, setFieldOptions, }: {
+export declare function runAjaxChain({ field, value, sqlOpsUrls, setFieldOptions, values, }: {
     field: any;
     value: any;
     sqlOpsUrls: any;
     setFieldOptions: (name: string, options: SelectOptions) => void;
+    values: Record<string, any>;
 }): Promise<void>;
 export declare function getPreviewUrl(fileUrl: string, sqlOpsUrls: Record<string, any>): Promise<string>;
 export {};

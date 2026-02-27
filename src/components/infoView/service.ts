@@ -183,11 +183,13 @@ export async function runAjaxChain({
     value,
     sqlOpsUrls,
     setFieldOptions,
+    values,
 }: {
     field: any;
     value: any;
     sqlOpsUrls: any;
     setFieldOptions: (name: string, options: SelectOptions) => void;
+    values: Record<string, any>
 }) {
     if (!field.ajaxchain || !value || !sqlOpsUrls) return;
 
@@ -196,33 +198,90 @@ export async function runAjaxChain({
         : [field.ajaxchain];
 
     for (const chain of chains) {
+        type ParamValue =
+            | string
+            | number
+            | boolean
+            | null
+            | undefined
+            | Record<string, unknown>
+            | unknown[];
         const src = chain.src;
-        if (!src) continue;
 
-        let query: sqlQueryProps | undefined;
+        if (!chain || typeof chain !== "object") continue;
+        if (!src || typeof src !== "object") continue;
 
-        if (!src.queryid) {
-            const resolvedWhere = replacePlaceholders(src.where ?? {}, { refid: value });
-            query = {
-                ...src,
-                table: src.table,
-                cols: src.columns,
-                where: resolvedWhere,
-            };
+        let responseData: any;
+
+        if ("type" in src && src.type === "api") {
+            let curr_field = field.name;
+
+            if (typeof field.parameter === "string" && field.parameter) {
+                curr_field = field.parameter
+            }
+
+            const params: Record<string, ParamValue> = { [curr_field]: value, refid: value }
+
+            if (typeof field.parameter === "object" && field.parameter !== null
+                && Object.keys(field.parameter).length > 0
+
+            ) {
+
+                for (const [key, val] of Object.entries(field.parameter)) {
+                    params[key] = key === curr_field
+                        ? value
+                        : values?.[val as string];
+                }
+
+            }
+
+
+            const config = {
+                method: src.method || "GET",
+                url: sqlOpsUrls?.baseURL + src.endpoint,
+
+                headers: {
+                    "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                },
+                ...(src.method === "GET"
+                    ? { params }
+                    : { data: params }),
+            }
+            const { data: res } = await axios(config);
+            responseData = res;
+        } else {
+
+            let query: sqlQueryProps | undefined;
+
+            if (!src.queryid) {
+                if (!src.table || !src.columns) {
+                    throw new Error("SQL query requires field.table");
+                }
+                const resolvedWhere = replacePlaceholders(src.where ?? {}, { refid: value });
+                query = {
+                    ...src,
+                    table: src.table,
+                    cols: src.columns,
+                    where: resolvedWhere,
+                };
+            }
+
+            const { data: res } = await fetchDataByquery(
+                sqlOpsUrls,
+                query,
+                src.queryid,
+                value
+            );
+            responseData = res;
+
         }
 
-        const { data: res } = await fetchDataByquery(
-            sqlOpsUrls,
-            query,
-            src.queryid,
-            value
-        );
-
-        const rawItems = Array.isArray(res?.data?.data)
-            ? res.data.data
-            : Array.isArray(res?.data)
-                ? res.data
-                : res;
+        const rawItems = Array.isArray(responseData?.results?.options) ?
+            responseData?.results?.options : Array.isArray(responseData.data)
+                ? responseData.data
+                : Array.isArray(responseData.results)
+                    ? responseData.results
+                    : responseData
 
         const normalized = Array.isArray(rawItems)
             ? rawItems.map(normalizeRowSafe)

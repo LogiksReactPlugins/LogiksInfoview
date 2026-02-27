@@ -50,7 +50,13 @@ export default function InfoFieldRenderer({
     let labelKey = field.labelKey ?? "title";
 
     const fetchData = async () => {
-      if (field?.options) {
+
+      let opts = field?.options;
+
+      if (opts && (
+        (Array.isArray(opts) && opts.length > 0) ||
+        (!Array.isArray(opts) && Object.keys(opts).length > 0)
+      )) {
         //  CASE 1: flat or grouped object
         // { "1": "WEL" } OR { quarter1: { "1": "January" } }
         if (
@@ -91,42 +97,78 @@ export default function InfoFieldRenderer({
           try {
             const res = await Promise.resolve(methodFn());
 
-            const rawItems = Array.isArray(res?.data?.data)
-              ? res.data.data
-              : Array.isArray(res?.data)
-                ? res.data
-                : res;
+            const rawItems = Array.isArray(res.data?.results?.options) ?
+              res.data?.results?.options : Array.isArray(res?.data?.data)
+                ? res.data.data
+                : Array.isArray(res.data?.results)
+                  ? res.data?.results :
+                  Array.isArray(res?.data)
+                    ? res.data
+                    : res;
+
+            if (
+              typeof rawItems === "object" &&
+              !Array.isArray(rawItems)
+            ) {
+              const values = Object.values(rawItems);
+              if (values.length && typeof values[0] === "string") {
+                setOptions(rawItems as SelectOptions);
+                return;
+              }
+            }
 
             const normalizedItems = Array.isArray(rawItems)
               ? rawItems.map(normalizeRowSafe)
               : [];
             const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
             if (isMounted) setOptions(mapped);
+            return;
           } catch (err) {
             console.error("Method execution failed:", err);
             if (isMounted) setOptions({});
+            return;
           }
         } else {
           if (isMounted) setOptions({});
+          return;
         }
       }
 
       // Case 2: API source
-      if (source.type === "api" && source.url) {
-        try {
-          const res = await axios({
-            method: source.method || "GET",
-            url: source.url,
-            data: source.body ?? {},
-            params: source.params ?? {},
-            headers: source.headers ?? {},
-          });
-          const rawItems = Array.isArray(res?.data?.data)
-            ? res.data.data
-            : Array.isArray(res?.data)
-              ? res.data
-              : res;
+      if (source.type === "api" && source.endpoint) {
 
+        try {
+          const config = {
+            method: source.method || "GET",
+            url: sqlOpsUrls?.baseURL + source.endpoint,
+
+            headers: {
+              "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+            },
+            ...(source.method === "GET"
+              ? { params: { refid: source.refid } }
+              : { data: { refid: source.refid } }),
+          }
+
+          const res = await axios(config);
+          const rawItems = Array.isArray(res.data?.results?.options) ?
+            res.data?.results?.options : Array.isArray(res?.data?.data)
+              ? res.data.data
+              : Array.isArray(res.data?.results)
+                ? res.data?.results :
+                Array.isArray(res?.data)
+                  ? res.data
+                  : res;
+          if (
+            typeof rawItems === "object" &&
+            !Array.isArray(rawItems)
+          ) {
+            const values = Object.values(rawItems);
+            if (values.length && typeof values[0] === "string") {
+              setOptions(rawItems as SelectOptions);
+              return;
+            }
+          }
           const normalizedItems = Array.isArray(rawItems)
             ? rawItems.map(normalizeRowSafe)
             : [];
@@ -134,10 +176,12 @@ export default function InfoFieldRenderer({
           const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey)
 
           if (isMounted) setOptions(mapped);
+          return
 
         } catch (err) {
           console.error("API execution failed:", err);
           if (isMounted) setOptions({});
+          return
         }
       }
 
@@ -190,6 +234,17 @@ export default function InfoFieldRenderer({
               ? res.data
               : res;
 
+          if (
+            typeof rawItems === "object" &&
+            !Array.isArray(rawItems)
+          ) {
+            const values = Object.values(rawItems);
+            if (values.length && typeof values[0] === "string") {
+              setOptions(rawItems as SelectOptions);
+              return;
+            }
+          }
+
           const normalizedItems = Array.isArray(rawItems)
             ? rawItems.map(normalizeRowSafe)
             : [];
@@ -218,6 +273,9 @@ export default function InfoFieldRenderer({
 
   const rawVal = field?.name ? data?.[field.name] : undefined;
 
+  //console.log("field?.name ,Val",field?.name,rawVal);
+
+
   React.useEffect(() => {
     if (ranRef.current) return;
     if (!setFieldOptions || !rawVal) return;
@@ -229,6 +287,7 @@ export default function InfoFieldRenderer({
       value: rawVal,
       sqlOpsUrls,
       setFieldOptions,
+      values: data ?? {}
     });
   }, [rawVal, sqlOpsUrls, setFieldOptions]);
 
@@ -261,10 +320,10 @@ export default function InfoFieldRenderer({
 
 
   const signature = decodeSignature(rawVal);
-const safeHtml =
-  field.type === "richtextarea" && typeof renderValue === "string"
-    ? sanitizeHtml(renderValue)
-    : null;
+  const safeHtml =
+    field.type === "richtextarea" && typeof renderValue === "string"
+      ? sanitizeHtml(renderValue)
+      : null;
 
   return (
     <div className="px-3 py-2 bg-gray-50 rounded-lg">

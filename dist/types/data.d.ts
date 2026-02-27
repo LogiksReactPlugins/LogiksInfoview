@@ -337,57 +337,215 @@ export declare const example10: {
         registerQuery: string;
         runQuery: string;
     };
-    forcefill: {
-        groupuid: string;
-        guid: string;
+    hooks: {
+        postsubmit: string[];
     };
     source: {
         type: string;
         dbopsid: string;
     };
+    forcefill: {
+        guid: string;
+    };
+    gotolink: string;
     fields: {
-        title: {
+        company_code_id: {
             label: string;
-            group: string;
+            type: string;
+            parameter: string;
             required: boolean;
+            source: {
+                type: string;
+                method: string;
+                endpoint: string;
+            };
+            ajaxchain: {
+                target: string;
+                src: {
+                    type: string;
+                    method: string;
+                    endpoint: string;
+                };
+            }[];
+            "no-option": string;
+            width: number;
+            options: never[];
         };
-        category: {
+        sector_id: {
             label: string;
-            group: string;
+            "no-option": string;
+            type: string;
+            parameter: {
+                sector_id: string;
+                company_id: string;
+            };
+            ajaxchain: {
+                target: string;
+                src: {
+                    type: string;
+                    method: string;
+                    endpoint: string;
+                };
+            }[];
+            required: boolean;
+            width: number;
+            options: never[];
+        };
+        project_function_id: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+            "no-option": string;
+            options: never[];
+        };
+        mpr_month: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+        mpr_id: {
+            label: string;
+            type: string;
+            groupby: string;
+            required: boolean;
+            width: number;
+            ajaxchain: {
+                target: string;
+                src: {
+                    type: string;
+                    queryid: string;
+                };
+            };
+            options: {
+                title: string;
+                value: number;
+            }[];
+        };
+        sub_header: {
+            label: string;
+            type: string;
+            required: boolean;
+            nodb: boolean;
+            width: number;
+            autocomplete: {
+                target: string;
+                src: {
+                    type: string;
+                    queryid: string;
+                };
+            };
+            options: never[];
+        };
+        weightage: {
+            label: string;
+            type: string;
+            disabled: boolean;
+            nodb: boolean;
+            required: boolean;
+            width: number;
+        };
+        is_code_refrence: {
+            label: string;
+            type: string;
+            disabled: boolean;
+            nodb: boolean;
+            required: boolean;
+            width: number;
+        };
+        frequency: {
+            label: string;
+            type: string;
+            disabled: boolean;
+            nodb: boolean;
+            required: boolean;
+            width: number;
+        };
+        section: {
+            label: string;
             type: string;
             groupid: string;
             required: boolean;
+            width: number;
             options: {
                 title: string;
                 value: string;
-                class: string;
+                class: null;
                 privilege: string;
             }[];
         };
-        terms: {
+        conducted: {
             label: string;
-            group: string;
             type: string;
             required: boolean;
+            width: number;
         };
-        blocked: {
+        passed: {
             label: string;
-            group: string;
             type: string;
-            groupid: string;
-            vmode: string;
             required: boolean;
-            options: ({
-                title: string;
-                value: string;
-                class: string;
-                privilege: string;
-            } | {
-                title: string;
-                value: null;
-                class: null;
-                privilege: string;
-            })[];
+            width: number;
+        };
+        failed: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+    };
+    infoview: {
+        template: string;
+        groups: {
+            test_master_details: {
+                label: string;
+                type: string;
+                src: string;
+                vmode: string;
+                config: {
+                    type: string;
+                    uimode: string;
+                    uiswitcher: boolean;
+                    policy_create: string;
+                    policy_view: string;
+                    policy_delete: string;
+                    policy_update: string;
+                    join: {
+                        type: string;
+                        query: string;
+                        condition: string;
+                    }[];
+                    toolbar: {
+                        search: boolean;
+                        print: boolean;
+                        export: boolean;
+                        email: boolean;
+                    };
+                    colkey: string;
+                    datagrid: {
+                        "data_test_master_tbl.mpr_sub_header": {
+                            label: string;
+                            searchable: boolean;
+                            sortable: boolean;
+                        };
+                        "data_test_master_tbl.frequency": {
+                            label: string;
+                            searchable: boolean;
+                            sortable: boolean;
+                        };
+                        "data_test_master_tbl.weightage": {
+                            label: string;
+                            searchable: boolean;
+                        };
+                        "data_test_master_tbl.is_code_refrence": {
+                            label: string;
+                            searchable: boolean;
+                        };
+                    };
+                    queryid: string;
+                };
+                width: number;
+            };
         };
     };
     module_refid: string;
