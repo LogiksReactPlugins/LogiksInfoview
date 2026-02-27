@@ -279,9 +279,9 @@ export default function LogiksForm({
           "refid1": sqlOpsUrls.refid
         }
 
-        if (source?.refid) {
-          payload.refid1 = source?.refid
-        }
+        // if (source?.refid) {
+        //   payload.refid1 = source?.refid
+        // }
 
         const res = await axios({
           method: "POST",

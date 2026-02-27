@@ -31,6 +31,7 @@ export default function FieldRenderer({
 
   const [open, setOpen] = useState(false);
   const searchRef = React.useRef(search);
+  const fileRef = React.useRef<HTMLInputElement | null>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     searchRef.current = search;
@@ -752,6 +753,11 @@ export default function FieldRenderer({
     }
   };
 
+  useEffect(() => {
+    if (!formik.values[key] && fileRef.current) {
+      fileRef.current.value = "";
+    }
+  }, [formik.values[key]]);
 
   switch (field.type) {
 
@@ -1512,6 +1518,7 @@ export default function FieldRenderer({
 
             <input
               id={key}
+              ref={fileRef}
               type="file"
               className={`${baseInputClasses} ${focusClasses} ${field.icon ? "pl-9" : ""} `}
               onFocus={() => setIsFocused(true)}
