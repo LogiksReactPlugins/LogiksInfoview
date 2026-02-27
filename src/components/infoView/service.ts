@@ -62,20 +62,25 @@ export const sqlClient = {
 
         if (!skipquery) {
 
-            const refid = await getRefId(endpoints, {
+            const dbRefid = await getRefId(endpoints, {
                 operation: "fetch",
                 source: payload.source,
                 fields: payload.fields ?? {},
                 datahash,
                 srcid: module_refid
             });
-            dbopsId = refid;
+            dbopsId = dbRefid;
         }
 
+        const data = { refid: dbopsId, datahash, refid1: endpoints.refid };
+
+        if (payload.source?.refid) {
+            data.refid1 = payload.source?.refid
+        }
 
         const res = await axios.post(
             endpoints.baseURL + endpoints.dbopsFetch,
-            { refid: dbopsId, datahash },
+            data,
             { headers: authHeaders(endpoints) }
         );
 

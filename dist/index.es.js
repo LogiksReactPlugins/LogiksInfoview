@@ -2884,12 +2884,14 @@ const To = ({ fileUrl: e, category: t }) => e ? t === "image" ? /* @__PURE__ */ 
       datahash: s,
       srcid: r
     }));
-    const l = await B.post(
+    const l = { refid: i, datahash: s, refid1: e.refid };
+    t.source?.refid && (l.refid1 = t.source?.refid);
+    const g = await B.post(
       e.baseURL + e.dbopsFetch,
-      { refid: i, datahash: s },
+      l,
       { headers: st(e) }
     );
-    return l.data?.data ?? l.data;
+    return g.data?.data ?? g.data;
   },
   async create(e, t, n) {
     const r = await nr(e), s = await sr(e, {
