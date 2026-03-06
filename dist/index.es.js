@@ -3088,7 +3088,7 @@ function ft({
 }) {
   e?.name;
   const g = `
-    text-sm text-gray-600 break-words
+    text-sm text-gray-600 break-words capitalize
   `, f = `
     block text-sm font-semibold  transition-all duration-300 text-gray-700 capitalize
   `, [u, p] = ie(

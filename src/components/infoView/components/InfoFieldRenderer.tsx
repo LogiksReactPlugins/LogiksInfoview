@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import type { InfoFieldRendererProps, InfoViewField, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
-import { DEFAULT_LOGO } from '../constant.js';
+import type { InfoFieldRendererProps, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
 import { decodeSignature, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, sanitizeHtml } from '../utils.js';
 import FilePreviewTrigger from './FilePreviewTrigger.js';
 import { fetchDataByquery, runAjaxChain } from '../service.js';
@@ -21,7 +20,7 @@ export default function InfoFieldRenderer({
   const key = field?.name;
 
   const baseInputClasses = `
-    text-sm text-gray-600 break-words
+    text-sm text-gray-600 break-words capitalize
   `;
 
   const labelClasses = `
