@@ -320,3 +320,35 @@ export async function getPreviewUrl(
 
     return URL.createObjectURL(res.data);
 }
+
+type UploadResponse = {
+    path: string;
+    [key: string]: any;
+};
+
+export async function uploadFiles(
+    sqlOpsUrls: SqlEndpoints | undefined,
+    files: FileList
+): Promise<UploadResponse[]> {
+    if (!sqlOpsUrls?.uploadURL) {
+        throw new Error("Upload URL missing");
+    }
+
+    const uploadUrl = sqlOpsUrls.baseURL + sqlOpsUrls.uploadURL;
+
+    return Promise.all(
+        Array.from(files).map(async (file) => {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const res = await axios.post(uploadUrl, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${sqlOpsUrls.accessToken}`,
+                },
+            });
+
+            return res.data;
+        })
+    );
+}

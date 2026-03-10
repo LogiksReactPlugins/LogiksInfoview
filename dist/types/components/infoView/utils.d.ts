@@ -25,7 +25,7 @@ export declare const isGroupedOptions: (options: SelectOptions) => options is Gr
 export declare function isAutocompleteConfig(ac: unknown): ac is AutocompleteConfig;
 export declare function getSearchColumns(columns: string): string[];
 export declare const getOptionLabel: (options: SelectOptions, value: string) => string | undefined;
-type FlatEntry = [string, string];
+export type FlatEntry = [string, string];
 export declare const flattenOptions: (options: SelectOptions) => FlatEntry[];
 export declare function normalizeOptions(options?: SelectOptions): FlatOptions;
 type Row = Record<string, unknown>;
@@ -61,5 +61,9 @@ export declare function getFileExtension(path?: string): string;
 export declare function getMimeCategory(ext: string): "image" | "pdf" | "video" | "text" | "other";
 export declare const fileIconClassMap: Record<FileCategory, string>;
 export declare function sanitizeHtml(html: string): string;
+export declare function readPersistedValues(module_refid: string): Record<string, any>;
+export declare function getPersistentKey(field: FormField): string | null;
+export declare function writePersistedValue(module_refid: string, key: string, value: any): void;
+export declare function handlePersist(value: any, field: FormField, module_refid: string | undefined): void;
 export {};
 //# sourceMappingURL=utils.d.ts.map

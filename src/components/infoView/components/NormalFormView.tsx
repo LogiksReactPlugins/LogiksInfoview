@@ -68,7 +68,7 @@ export default function NormalFormView({
 
 
   return (
-    <div className="relative z-10 max-w-full ">
+    <div className="relative  max-w-full ">
       <div className="bg-white border border-gray-100 rounded-md animate-in fade-in duration-300">
         <form onSubmit={formik.handleSubmit} className="p-4  mx-auto">
           <div className="grid grid-flow-col auto-cols-max gap-4  overflow-x-auto">
@@ -85,7 +85,7 @@ export default function NormalFormView({
                   refid={refid}
                   module_refid={module_refid}
                   sqlOpsUrls={sqlOpsUrls}
-                 
+
                   field={field}
                   formik={formik}
                   methods={methods}

@@ -579,7 +579,7 @@ export const getOptionLabel = (
   return;
 };
 
-type FlatEntry = [string, string];
+export type FlatEntry = [string, string];
 
 
 
@@ -738,11 +738,55 @@ export const fileIconClassMap: Record<FileCategory, string> = {
   other: "fa fa-file"
 };
 
+const STORAGE_PREFIX = "__form_persist__";
+
+const getStorageKey = (module_refid: string) =>
+  `${STORAGE_PREFIX}:${module_refid}`;
+
 
 export function sanitizeHtml(html: string) {
   return DOMPurify.sanitize(html, {
     USE_PROFILES: { html: true },
   });
+}
+
+export function readPersistedValues(module_refid: string): Record<string, any> {
+  try {
+    return JSON.parse(localStorage.getItem(getStorageKey(module_refid)) || "{}");
+  } catch {
+    return {};
+  }
+};
+
+export function getPersistentKey(field: FormField): string | null {
+  if (!field.persistent) return null;
+  if (field.persistent === true) return field.name;
+  if (typeof field.persistent === "string") return field.persistent;
+  return null;
+}
+
+export function writePersistedValue(
+  module_refid: string,
+  key: string,
+  value: any
+) {
+  const existing = readPersistedValues(module_refid);
+  localStorage.setItem(
+    getStorageKey(module_refid),
+    JSON.stringify({
+      ...existing,
+      [key]: value,
+    })
+  );
+};
+
+export function handlePersist(value: any, field: FormField, module_refid: string | undefined) {
+
+  const persistentKey = getPersistentKey(field);
+
+  if (persistentKey && module_refid) {
+    writePersistedValue(module_refid, persistentKey, value);
+  }
 }
 
 

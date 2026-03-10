@@ -173,7 +173,7 @@ export type FileCategory = "image" | "pdf" | "video" | "text" | "other";
 export interface FormField {
     name: string;
     label?: string;
-    parameter?:string;
+    parameter?:string | Record<string, string>;
     width?: number | string;
     options?: Record<string, any>;
     group?: string;
@@ -196,7 +196,7 @@ export interface FormField {
     where?: Record<string, string>;
     autocomplete?: "off" | AutocompleteConfig;
     ajaxchain?: AutocompleteConfig | AutocompleteConfig[];
-    validate?: Record<string, string | number>;
+    validate?: Record<string, string | number | boolean>;
     groupid?: string;
     hidden?: boolean;
     value?: string | undefined;
@@ -205,6 +205,9 @@ export interface FormField {
     search?: boolean;
     method?: string;
     vmode?: string;
+    "no-option"?: string;
+    "nodb"?: boolean;
+    "nosave"?: boolean;
     queryid?: string;
     min?: number | string;
     max?: number | string;
@@ -215,6 +218,8 @@ export interface FormField {
     onFocus?: string;
     onClick?: string;
     step?: string | number;
+    persistent?: string | boolean;
+    content?:string;
 
 }
 
@@ -271,7 +276,7 @@ export interface FieldRendererProps {
     formik: FormikProps<Record<string, any>>;
     methods?: Record<string, Function>;
     components?: Record<string, ReactNode>
-    sqlOpsUrls?: SqlEndpoints;
+     sqlOpsUrls?: SqlEndpoints | undefined;
     refid?: string | undefined;
     module_refid?: string | undefined;
     optionsOverride?: SelectOptions;

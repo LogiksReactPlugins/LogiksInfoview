@@ -12,7 +12,6 @@ import { sqlClient } from "../service.js";
 export default function LogiksForm({
   formJson,
   methods = {},
-  userid = null,
   onCancel = () => { },
   components = {},
   callback = () => { },
@@ -61,12 +60,12 @@ export default function LogiksForm({
         return;
       }
 
-      if (source.type === "method") {
+      if (source.type === "method" && sqlOpsUrls?.operation !== "create") {
         const methodName = source.method as keyof typeof methods | undefined;
         const methodFn = methodName ? methods[methodName] : undefined;
         if (methodFn) {
           try {
-            const result = await Promise.resolve(methodFn());
+            const result = await methodFn();
             if (isMounted) safeSetResolvedData(result);
           } catch (err) {
             console.error("Method execution failed:", err);
@@ -77,13 +76,19 @@ export default function LogiksForm({
 
       if (source.type === "api" && sqlOpsUrls?.operation !== "create") {
         try {
-          const response = await axios({
+          const config = {
             method: source.method || "GET",
-            url: source.url ?? "",
-            data: source.body ?? {},
-            params: source.params ?? {},
-            headers: source.headers ?? {},
-          });
+            url: sqlOpsUrls?.baseURL + source.endpoint,
+
+            headers: {
+              "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+            },
+            ...(source.method === "GET"
+              ? { params: { refid: source.refid } }
+              : { data: { refid: source.refid } }),
+          }
+           const response = await axios(config);
+
           if (isMounted) safeSetResolvedData(response.data);
         } catch (err) {
           console.error("API fetch failed:", err);
@@ -129,7 +134,6 @@ export default function LogiksForm({
     fetchData();
     return () => { isMounted = false; };
   }, [
-    userid,
     sqlOpsUrls,
     formJson?.source?.type || "",
     formJson?.source?.method || "",
@@ -138,12 +142,6 @@ export default function LogiksForm({
     JSON.stringify(formJson?.source?.body ?? {}),
     JSON.stringify(formJson?.source?.headers ?? {})
   ]);
-
-
-
-
-
-
 
 
   // ---------- Handle Form Submission ----------
@@ -175,7 +173,7 @@ export default function LogiksForm({
       const methodFn = methodName ? methods[methodName] : undefined;
       if (methodFn) {
         try {
-          const res = await Promise.resolve(methodFn(finalValues));
+          const res = await methodFn(finalValues);
           setEditData?.(null);
           callback?.(res);
 

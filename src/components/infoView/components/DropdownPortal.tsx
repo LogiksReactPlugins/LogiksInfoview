@@ -25,7 +25,7 @@ export function DropdownPortal({
             position: "fixed",
             top: rect.bottom + offset,
             left: rect.left,
-            width: "200px",
+            width: rect.width,
             zIndex: 1000,
         });
     }, [open, anchorRef, offset]);
