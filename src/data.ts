@@ -417,9 +417,9 @@ export const example9 = {
 
 
 export const example10 = {
-     "endPoints": {
+      "endPoints": {
         "baseURL": "http://192.168.0.20:9999",
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6ImYrM1JTZzV4a2hvR2p3NkVBdE5lRkxXOVA1dVdhaEdLRytnenExUGlnZlhYdXhqcnFUbDhmTiszdFIzL0Y5M2huTDhIQXAxSXQwOU85OFU1Z1Y5ejd1TmYweEhNTWZpSFR0YjdoMVFBSllkeHJOTzFHS2d6M0kxU0dhZHZjbncxV0lwNktZT2RSYWpqY0NFVnQvaFlvRHNldUJCYzJpOEhtMnVxd0lxNVJIbFBmczk0U3d2MGdMbVN3TWM5QUpFQ0srVTg2VVJTVHA0NG5XZEZmcVRRNjI4Q1R3STlrQlJoaFRvRnJKQlBCa2lHdDVHcEVYWkJRZnBBZGJXZStESDBNbVFTditMYU9EZUliQWZFa3NsdkY5UlFMODhzQXdLQytEbzBCNWpWIiwiaWF0IjoxNzcyMTY5ODEzLCJleHAiOjE3NzIxNjk5MzMsImp0aSI6ImFjYzoxOjE3NzIxNjk4MTM0MzQ6d2ViIn0.9i7Ob9lz63eTHzW2u4TW2i7tsuvUr2aF6AdJethqBKs",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6ImZ1a2ZRazBIVnkrRUVBdmU3bytyeWVCQ05Tb3N6L1dQQnJGcTV4SmhwMW1kbUg3Ri84Z3dzMUx5WlFLMHZMTGZnQWtJWEk5RTZNNHBPSURIc09LbTNrQm5abEUwa3Y1eFVmcnNySjkxZERLdEdQeDZXb2ZiR0owUnRDOW5DS21Wa2x2R1pSNFdzUlJUR3ZoS3dObXBjNnFIKzBPdmNYQTIrSmdsdGJsNFZob282ZDNhSS9ac0NXZGowekFJdFYzQ04vY2ZxMjlvTWl1UWVYVTVEc2d0Q0h0WEU5U0d0YjVJZVNHMmtTWFY2aFVnRy8reWZxUjk2N2o1KzJTdDVuQ1Q0eTcwOFlMNFFLQWl1d2ZZWVBWRkR5Z292cS9sajlIVDJsOURucEU9IiwiaWF0IjoxNzY4ODI1NDA5LCJleHAiOjE3Njg4MjkwMDksImp0aSI6ImFjYzoxOjE3Njg4MjU0MDk2OTg6d2ViIn0.G2YpMrZvCeYy81E2_3CUKB6QcsIQfLAxg5DJCLnUQyA",
         "dbopsGetHash": "/api/dbops",
         "dbopsGetRefId": "/api/dbops/save",
         "dbopsCreate": "/api/dbops/create",
@@ -428,19 +428,14 @@ export const example10 = {
         "registerQuery": "/api/query/save",
         "runQuery": "/api/query/run"
     },
-    "hooks": {
-        "postsubmit": [
-            "quality.generateMPRNo"
-        ]
-    },
     "source": {
         "type": "sql",
-        "dbopsid": "forms%40quality.quality_mpr%4016"
+        "dbopsid": "forms%40hse.induction%4028"
     },
     "forcefill": {
         "guid": "#SESS_GUID#"
     },
-    "gotolink": "infoview/quality.quality_mpr/{hashid}",
+    "gotolink": "infoview/hse.induction/{hashid}",
     "fields": {
         "company_code_id": {
             "label": "Company/ SPV",
@@ -496,132 +491,62 @@ export const example10 = {
             "no-option": "Select Project Function",
             "options": []
         },
-        "mpr_month": {
-            "label": "MPR Month",
+        "location_id": {
+            "label": "Location",
+            "type": "text",
+            "required": true,
+            "width": 4
+        },
+        "date": {
+            "label": "Date",
             "type": "date",
             "required": true,
             "width": 4
         },
-        "mpr_id": {
-            "label": "MPR",
+        "conducted_by_department": {
+            "label": "Conducted By Department",
             "type": "select",
-            "groupby": "mpr_name",
+            "groupid": "hse_conducted_by_department",
             "required": true,
             "width": 4,
-            "ajaxchain": {
-                "target": "sub_header",
-                "src": {
-                    "type": "sql",
-                    "queryid": "forms%40quality.quality_mpr%40fields.mpr_id.ajaxchain.0"
-                }
-            },
             "options": [
                 {
-                    "title": "Tests",
-                    "value": 1
-                },
-                {
-                    "title": "Test ",
-                    "value": 2
-                }
-            ]
-        },
-        "sub_header": {
-            "label": "Sub Header",
-            "type": "select",
-            "required": false,
-            "nodb": true,
-            "width": 4,
-            "autocomplete": {
-                "target": "weightage,is_code_refrence,frequency",
-                "src": {
-                    "type": "sql",
-                    "queryid": "forms%40quality.quality_mpr%40fields.sub_header.autocomplete.0"
-                }
-            },
-            "options": []
-        },
-        "weightage": {
-            "label": "Weightage",
-            "type": "number",
-            "disabled": true,
-            "nodb": true,
-            "required": false,
-            "width": 4
-        },
-        "is_code_refrence": {
-            "label": "Is Code Reference",
-            "type": "text",
-            "disabled": true,
-            "nodb": true,
-            "required": false,
-            "width": 4
-        },
-        "frequency": {
-            "label": "Frequency",
-            "type": "text",
-            "disabled": true,
-            "nodb": true,
-            "required": false,
-            "width": 4
-        },
-        "section": {
-            "label": "Section",
-            "type": "select",
-            "groupid": "section_master",
-            "required": false,
-            "width": 4,
-            "options": [
-                {
-                    "title": "KIYAAN",
-                    "value": "kiyaan",
+                    "title": "WEL HSE",
+                    "value": "wel_hse",
                     "class": null,
                     "privilege": "*"
                 },
                 {
-                    "title": "RSDCPL",
-                    "value": "rsdcpl",
-                    "class": null,
-                    "privilege": "*"
-                },
-                {
-                    "title": "SPL",
-                    "value": "spl",
-                    "class": null,
-                    "privilege": "*"
-                },
-                {
-                    "title": "TEJAS",
-                    "value": "tejas",
+                    "title": "Contractor",
+                    "value": "contractor",
                     "class": null,
                     "privilege": "*"
                 }
             ]
         },
-        "conducted": {
-            "label": "Conducted",
+        "conducted_by_name": {
+            "label": "Conducted By (Name)",
+            "type": "autocomplete",
+            "width": 4,
+            "queryid": "forms%40hse.induction%40undefined"
+        },
+        "participant_count": {
+            "label": "Participant Count",
             "type": "number",
-            "required": false,
+            "required": true,
             "width": 4
         },
-        "passed": {
-            "label": "Passed",
-            "type": "number",
-            "required": false,
-            "width": 4
-        },
-        "failed": {
-            "label": "Failed",
-            "type": "number",
-            "required": false,
+        "photo_attendance": {
+            "label": "Induction Photo/Attendance (Max. Sizes:10MB)",
+            "type": "file",
             "width": 4
         }
     },
     "infoview": {
         "template": "cards",
         "groups": {
-            "test_master_details": {
-                "label": "Test Master Details",
+            "participant_details": {
+                "label": "Participant Details",
                 "type": "module",
                 "src": "infoviewTable",
                 "vmode": "edit",
@@ -629,50 +554,215 @@ export const example10 = {
                     "type": "sql",
                     "uimode": "grid",
                     "uiswitcher": false,
-                    "policy_create": "quality.create.access",
-                    "policy_view": "quality.view.access",
-                    "policy_delete": "quality.delete.access",
-                    "policy_update": "quality.update.access",
-                    "join": [
-                        {
-                            "type": "left",
-                            "query": "data_test_master_tbl",
-                            "condition": "quality_mpr_tbl.mpr_id=data_test_master_tbl.id"
-                        }
-                    ],
+                    "policy_create": "hse.create.access",
+                    "policy_view": "hse.view.access",
+                    "policy_delete": "hse.delete.access",
+                    "policy_update": "hse.update.access",
                     "toolbar": {
                         "search": true,
                         "print": false,
                         "export": false,
                         "email": false
                     },
-                    "colkey": "quality_mpr_tbl.id",
-                    "datagrid": {
-                        "data_test_master_tbl.mpr_sub_header": {
-                            "label": "MPR Sub Header",
-                            "searchable": true,
-                            "sortable": true
+                    "colkey": "hse_induction_id",
+                    "popup.form": {
+                        "hooks": {
+                            "presubmit": [
+                                "hse.participant_count_test"
+                            ]
                         },
-                        "data_test_master_tbl.frequency": {
-                            "label": "Frequency",
-                            "searchable": true,
-                            "sortable": true
+                        "source": {
+                            "type": "sql",
+                            "dbopsid": "forms%40hse.induction.infoview_popup.participant_details%40"
                         },
-                        "data_test_master_tbl.weightage": {
-                            "label": "Weightage",
-                            "searchable": true
+                        "forcefill": {
+                            "guid": "#SESS_GUID#"
                         },
-                        "data_test_master_tbl.is_code_refrence": {
-                            "label": "Is Code Reference",
-                            "searchable": true
+                        "fields": {
+                            "hse_induction_id": {
+                                "label": "",
+                                "type": "hidden",
+                                "default": "28"
+                            },
+                            "gender": {
+                                "label": "Gender",
+                                "type": "select",
+                                "required": true,
+                                "groupid": "user_gender",
+                                "width": 4,
+                                "formatter": "pretty",
+                                "options": [
+                                    {
+                                        "title": "Female",
+                                        "value": "female",
+                                        "class": "",
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Male",
+                                        "value": "male",
+                                        "class": "",
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Other",
+                                        "value": "other",
+                                        "class": null,
+                                        "privilege": "*"
+                                    }
+                                ]
+                            },
+                            "count": {
+                                "label": "Count",
+                                "type": "number",
+                                "required": true,
+                                "width": 4
+                            },
+                            "company": {
+                                "label": "Company",
+                                "type": "select",
+                                "onChange": "company_required",
+                                "groupid": "company_type",
+                                "required": true,
+                                "width": 4,
+                                "options": [
+                                    {
+                                        "title": "Wel",
+                                        "value": "wel",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Contractor Staff",
+                                        "value": "contractor_staff",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Contractor Workers",
+                                        "value": "contractor_workers",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Visitor",
+                                        "value": "visitor",
+                                        "class": null,
+                                        "privilege": "*"
+                                    }
+                                ]
+                            },
+                            "company_name": {
+                                "label": "Company Name",
+                                "disabled": true,
+                                "type": "text",
+                                "required": true,
+                                "width": 4
+                            },
+                            "photograph": {
+                                "label": "Photograph",
+                                "type": "file",
+                                "width": 6
+                            }
                         }
                     },
-                    "queryid": "forms%40quality.quality_mpr.infoviewTable.test_master_details%40infoview.groups.test_master_details"
+                    "datagrid": {
+                        "gender": {
+                            "label": "Gender",
+                            "searchable": true,
+                            "sortable": true,
+                            "formatter": "pretty"
+                        },
+                        "count": {
+                            "label": "Count",
+                            "searchable": true,
+                            "sortable": true
+                        },
+                        "company_name": {
+                            "label": "Company Name",
+                            "searchable": true
+                        },
+                        "company": {
+                            "label": "Company",
+                            "formatter": "pretty",
+                            "searchable": true
+                        },
+                        "photograph": {
+                            "label": "Photograph",
+                            "searchable": true,
+                            "formatter": "attachment"
+                        }
+                    },
+                    "actions1": {
+                        "addInfoRecord": {
+                            "label": "Add Record"
+                        }
+                    },
+                    "buttons": {
+                        "editRecord": {
+                            "label": "Edit Record",
+                            "icon": "fa fa-pen"
+                        },
+                        "deleteRecord": {
+                            "label": "Delete Record",
+                            "icon": "fa fa-trash text-red-500"
+                        }
+                    },
+                    "queryid": "forms%40hse.induction.infoviewTable.participant_details%40infoview.groups.participant_details"
+                },
+                "width": 12
+            },
+            "activity_log": {
+                "label": "Activity Log",
+                "type": "module",
+                "src": "infoviewTable",
+                "vmode": "view",
+                "config": {
+                    "type": "sql",
+                    "uimode": "grid",
+                    "uiswitcher": false,
+                    "policy_create": "hse.create.access",
+                    "policy_view": "hse.view.access",
+                    "policy_delete": "hse.delete.access",
+                    "policy_update": "hse.update.access",
+                    "colkey": "id",
+                    "datagrid": {
+                        "subject": {
+                            "label": "Subject",
+                            "formatter": "text"
+                        },
+                        "category": {
+                            "label": "Category",
+                            "formatter": "text"
+                        },
+                        "subcategory": {
+                            "label": "Subcategory",
+                            "formatter": "text"
+                        },
+                        "pre_data": {
+                            "label": "Before Changes",
+                            "formatter": "text"
+                        },
+                        "post_data": {
+                            "label": "After Changes",
+                            "formatter": "text"
+                        },
+                        "created_by": {
+                            "label": "Created By",
+                            "formatter": "text"
+                        },
+                        "created_on": {
+                            "label": "Created On",
+                            "formatter": "attachment"
+                        }
+                    },
+                    "queryid": "forms%40hse.induction.infoviewTable.activity_log%40infoview.groups.activity_log"
                 },
                 "width": 12
             }
         }
     },
-    "module_refid": "quality.quality_mpr",
+    "script": "ZnVuY3Rpb24gY29tcGFueV9yZXF1aXJlZChkYXRhKSB7CiAgY29uc3QgdmFsdWUgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKT8udmFsdWU7CiAgY29uc3QgcmV3b3JrRmllbGQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY29tcGFueV9uYW1lIik7CiAgaWYgKHJld29ya0ZpZWxkKSB7CiAgICByZXdvcmtGaWVsZC5kaXNhYmxlZCA9ICF2YWx1ZTsKICB9Cn0K",
+    "module_refid": "hse.induction",
     "module_type": "forms"
 }

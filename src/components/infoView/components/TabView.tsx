@@ -341,7 +341,7 @@ export default function TabView({
     sqlOpsUrls,
     refid,
     Reports,
-    toast = {},
+    toast,
     handleAction = () => { },
     infoViewJson,
     fieldOptions,

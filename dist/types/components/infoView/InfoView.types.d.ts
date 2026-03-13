@@ -57,6 +57,13 @@ export interface InfoviewJson {
     forcefill?: Record<string, any>;
     module_refid?: string;
 }
+export interface Toast {
+    (message: string): void;
+    success?: (message: string) => void;
+    error?: (message: string) => void;
+    info?: (message: string) => void;
+    warn?: (message: string) => void;
+}
 export interface InfoViewProps {
     infoViewJson: InfoviewJson;
     /** Fields to hide */
@@ -76,7 +83,7 @@ export interface InfoViewProps {
     methods?: Record<string, Function>;
     Reports?: ComponentType<any>;
     components?: Record<string, ComponentType<any> | ReactNode>;
-    toast?: Record<string, Function>;
+    toast?: Toast;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
 }
 export type FlatOptions = Record<string, string>;
@@ -210,6 +217,7 @@ export interface FormProps {
     components?: Record<string, ReactNode>;
     initialvalues?: Record<string, any>;
     module_refid?: string | undefined;
+    toast?: Toast | undefined;
 }
 export interface BaseFormViewProps {
     title?: string | undefined;
@@ -253,7 +261,7 @@ export interface TabViewProps {
     sqlOpsUrls: SqlEndpoints;
     refid: string;
     Reports?: ComponentType<any>;
-    toast?: Record<string, Function>;
+    toast?: Toast | undefined;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoViewJson: InfoviewJson;
     fieldOptions: Record<string, SelectOptions>;

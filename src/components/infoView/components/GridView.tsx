@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import type { ComponentType } from "react";
-import type { InfoData, Infoview, InfoViewField, InfoViewGroup } from '../InfoView.types.js';
+import type { InfoData, Infoview, InfoViewField, InfoViewGroup, Toast } from '../InfoView.types.js';
 import { normalizeRowSafe, replacePlaceholders } from '../utils.js';
 import ConfirmModal from './ConfirmationModal.js';
 import LogiksForm from './Form.js';
@@ -16,7 +16,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
         sqlOpsUrls: Record<string, any>,
         refid: string;
         Reports?: ComponentType<any>;
-        toast?: Record<string, Function>;
+        toast?: Toast| undefined;
         handleAction?: (action: Record<string, any>, data: InfoData) => void;
         infoViewJson: {
             script?: string;
@@ -224,6 +224,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
 
                                 }
                             }}
+                            toast={toast}
                             methods={methods}
                             initialvalues={editData ?? {}}
                             setEditData={handleFormClose}
@@ -240,24 +241,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
 
                
                
-                        hasFormConfig && <LogiksForm
-                            formJson={{
-                                ...config[formType],
-                                source: {
-                                    ...config?.[formType].source,
-                                    refid: editData?.id
-                                },
-                                endPoints: {
-                                    ...sqlOpsUrls,
-                                    operation: editData ? "update" : "create"
-
-                                }
-                            }}
-                            methods={methods}
-                            initialvalues={editData ?? {}}
-                            setEditData={handleFormClose}
-                            module_refid={infoViewJson?.module_refid}
-                        />
+                      <p>No report found</p>
                     
 
             )}

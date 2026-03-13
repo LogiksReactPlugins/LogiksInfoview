@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import { fetchGeolocation, getGeoFieldKeys, replacePlaceholders, transformedObject } from "../utils.js";
+import { fetchGeolocation, getErrorMessage, getGeoFieldKeys, getSuccessMessage, replacePlaceholders, transformedObject } from "../utils.js";
 
 
 import NormalFormView from "./NormalFormView.js";
@@ -17,7 +17,8 @@ export default function LogiksForm({
   callback = () => { },
   initialvalues = {},
   setEditData,
-  module_refid
+  module_refid,
+  toast
 
 }: FormProps) {
 
@@ -155,7 +156,7 @@ export default function LogiksForm({
         geo = await fetchGeolocation();
 
       } catch (err) {
-        console.log("catch fetchGeolocation", err);
+       toast?.error?.(" Geolocation error");
         geo = null;
       }
     }
@@ -176,9 +177,11 @@ export default function LogiksForm({
           const res = await methodFn(finalValues);
           setEditData?.(null);
           callback?.(res);
+          toast?.success?.(getSuccessMessage(res));
 
         } catch (err) {
-          callback?.(err)
+          callback?.(err);
+          toast?.error?.(getErrorMessage(err));
           console.error("Method execution failed:", err);
         }
       }
@@ -199,9 +202,11 @@ export default function LogiksForm({
           },
         });
         setEditData?.(null);
-        callback?.(res)
+        callback?.(res);
+        toast?.success?.(getSuccessMessage(res))
       } catch (err) {
-        callback?.(err)
+        callback?.(err);
+        toast?.error?.(getErrorMessage(err));
         console.error("API fetch failed:", err);
       }
     }
@@ -289,10 +294,12 @@ export default function LogiksForm({
             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
           },
         });
+        toast?.success?.(getSuccessMessage(res))
         setEditData?.(null);
         callback?.(res)
       } catch (err) {
-        callback?.(err)
+        callback?.(err);
+        toast?.error?.(getErrorMessage(err));
         console.error("API fetch failed:", err);
       }
     }

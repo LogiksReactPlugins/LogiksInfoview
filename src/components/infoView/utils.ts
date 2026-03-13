@@ -1,7 +1,8 @@
 import * as Yup from "yup";
+import axios from "axios";
 
 import DOMPurify from "dompurify";
-import type { AutocompleteConfig, FileCategory, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions, sqlQueryProps } from "./InfoView.types.js";
+import type { AutocompleteConfig, FileCategory, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions,  } from "./InfoView.types.js";
 import { IMAGE_EXT, PDF_EXT, TEXT_EXT, VIDEO_EXT } from "./constant.js";
 
 export function determineViewMode(json: Infoview) {
@@ -787,6 +788,28 @@ export function handlePersist(value: any, field: FormField, module_refid: string
   if (persistentKey && module_refid) {
     writePersistedValue(module_refid, persistentKey, value);
   }
+}
+
+export function getErrorMessage(err: unknown): string {
+  if (axios.isAxiosError(err)) {
+    return err.response?.data?.message || err.message || "Something went wrong";
+  }
+
+  if (err instanceof Error) {
+    return err.message;
+  }
+
+  if (typeof err === "string") {
+    return err;
+  }
+
+  return "Something went wrong";
+}
+
+export function getSuccessMessage(res: any): string {
+  if (res?.data?.message) return res.data.message;
+  if (res?.message) return res.message;
+  return "Operation completed successfully";
 }
 
 

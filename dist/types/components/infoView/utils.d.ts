@@ -65,5 +65,7 @@ export declare function readPersistedValues(module_refid: string): Record<string
 export declare function getPersistentKey(field: FormField): string | null;
 export declare function writePersistedValue(module_refid: string, key: string, value: any): void;
 export declare function handlePersist(value: any, field: FormField, module_refid: string | undefined): void;
+export declare function getErrorMessage(err: unknown): string;
+export declare function getSuccessMessage(res: any): string;
 export {};
 //# sourceMappingURL=utils.d.ts.map

@@ -337,9 +337,6 @@ export declare const example10: {
         registerQuery: string;
         runQuery: string;
     };
-    hooks: {
-        postsubmit: string[];
-    };
     source: {
         type: string;
         dbopsid: string;
@@ -399,70 +396,19 @@ export declare const example10: {
             "no-option": string;
             options: never[];
         };
-        mpr_month: {
+        location_id: {
             label: string;
             type: string;
             required: boolean;
             width: number;
         };
-        mpr_id: {
-            label: string;
-            type: string;
-            groupby: string;
-            required: boolean;
-            width: number;
-            ajaxchain: {
-                target: string;
-                src: {
-                    type: string;
-                    queryid: string;
-                };
-            };
-            options: {
-                title: string;
-                value: number;
-            }[];
-        };
-        sub_header: {
+        date: {
             label: string;
             type: string;
             required: boolean;
-            nodb: boolean;
-            width: number;
-            autocomplete: {
-                target: string;
-                src: {
-                    type: string;
-                    queryid: string;
-                };
-            };
-            options: never[];
-        };
-        weightage: {
-            label: string;
-            type: string;
-            disabled: boolean;
-            nodb: boolean;
-            required: boolean;
             width: number;
         };
-        is_code_refrence: {
-            label: string;
-            type: string;
-            disabled: boolean;
-            nodb: boolean;
-            required: boolean;
-            width: number;
-        };
-        frequency: {
-            label: string;
-            type: string;
-            disabled: boolean;
-            nodb: boolean;
-            required: boolean;
-            width: number;
-        };
-        section: {
+        conducted_by_department: {
             label: string;
             type: string;
             groupid: string;
@@ -475,29 +421,28 @@ export declare const example10: {
                 privilege: string;
             }[];
         };
-        conducted: {
+        conducted_by_name: {
+            label: string;
+            type: string;
+            width: number;
+            queryid: string;
+        };
+        participant_count: {
             label: string;
             type: string;
             required: boolean;
             width: number;
         };
-        passed: {
+        photo_attendance: {
             label: string;
             type: string;
-            required: boolean;
-            width: number;
-        };
-        failed: {
-            label: string;
-            type: string;
-            required: boolean;
             width: number;
         };
     };
     infoview: {
         template: string;
         groups: {
-            test_master_details: {
+            participant_details: {
                 label: string;
                 type: string;
                 src: string;
@@ -510,11 +455,6 @@ export declare const example10: {
                     policy_view: string;
                     policy_delete: string;
                     policy_update: string;
-                    join: {
-                        type: string;
-                        query: string;
-                        condition: string;
-                    }[];
                     toolbar: {
                         search: boolean;
                         print: boolean;
@@ -522,24 +462,164 @@ export declare const example10: {
                         email: boolean;
                     };
                     colkey: string;
+                    "popup.form": {
+                        hooks: {
+                            presubmit: string[];
+                        };
+                        source: {
+                            type: string;
+                            dbopsid: string;
+                        };
+                        forcefill: {
+                            guid: string;
+                        };
+                        fields: {
+                            hse_induction_id: {
+                                label: string;
+                                type: string;
+                                default: string;
+                            };
+                            gender: {
+                                label: string;
+                                type: string;
+                                required: boolean;
+                                groupid: string;
+                                width: number;
+                                formatter: string;
+                                options: ({
+                                    title: string;
+                                    value: string;
+                                    class: string;
+                                    privilege: string;
+                                } | {
+                                    title: string;
+                                    value: string;
+                                    class: null;
+                                    privilege: string;
+                                })[];
+                            };
+                            count: {
+                                label: string;
+                                type: string;
+                                required: boolean;
+                                width: number;
+                            };
+                            company: {
+                                label: string;
+                                type: string;
+                                onChange: string;
+                                groupid: string;
+                                required: boolean;
+                                width: number;
+                                options: {
+                                    title: string;
+                                    value: string;
+                                    class: null;
+                                    privilege: string;
+                                }[];
+                            };
+                            company_name: {
+                                label: string;
+                                disabled: boolean;
+                                type: string;
+                                required: boolean;
+                                width: number;
+                            };
+                            photograph: {
+                                label: string;
+                                type: string;
+                                width: number;
+                            };
+                        };
+                    };
                     datagrid: {
-                        "data_test_master_tbl.mpr_sub_header": {
+                        gender: {
+                            label: string;
+                            searchable: boolean;
+                            sortable: boolean;
+                            formatter: string;
+                        };
+                        count: {
                             label: string;
                             searchable: boolean;
                             sortable: boolean;
                         };
-                        "data_test_master_tbl.frequency": {
-                            label: string;
-                            searchable: boolean;
-                            sortable: boolean;
-                        };
-                        "data_test_master_tbl.weightage": {
+                        company_name: {
                             label: string;
                             searchable: boolean;
                         };
-                        "data_test_master_tbl.is_code_refrence": {
+                        company: {
+                            label: string;
+                            formatter: string;
+                            searchable: boolean;
+                        };
+                        photograph: {
                             label: string;
                             searchable: boolean;
+                            formatter: string;
+                        };
+                    };
+                    actions1: {
+                        addInfoRecord: {
+                            label: string;
+                        };
+                    };
+                    buttons: {
+                        editRecord: {
+                            label: string;
+                            icon: string;
+                        };
+                        deleteRecord: {
+                            label: string;
+                            icon: string;
+                        };
+                    };
+                    queryid: string;
+                };
+                width: number;
+            };
+            activity_log: {
+                label: string;
+                type: string;
+                src: string;
+                vmode: string;
+                config: {
+                    type: string;
+                    uimode: string;
+                    uiswitcher: boolean;
+                    policy_create: string;
+                    policy_view: string;
+                    policy_delete: string;
+                    policy_update: string;
+                    colkey: string;
+                    datagrid: {
+                        subject: {
+                            label: string;
+                            formatter: string;
+                        };
+                        category: {
+                            label: string;
+                            formatter: string;
+                        };
+                        subcategory: {
+                            label: string;
+                            formatter: string;
+                        };
+                        pre_data: {
+                            label: string;
+                            formatter: string;
+                        };
+                        post_data: {
+                            label: string;
+                            formatter: string;
+                        };
+                        created_by: {
+                            label: string;
+                            formatter: string;
+                        };
+                        created_on: {
+                            label: string;
+                            formatter: string;
                         };
                     };
                     queryid: string;
@@ -548,6 +628,7 @@ export declare const example10: {
             };
         };
     };
+    script: string;
     module_refid: string;
     module_type: string;
 };

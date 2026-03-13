@@ -1,5 +1,5 @@
 import { ComponentType, ReactNode } from 'react';
-import { InfoViewGroup, InfoData, SqlEndpoints, SelectOptions, InfoviewJson } from '../InfoView.types.js';
+import { InfoViewGroup, InfoData, SqlEndpoints, SelectOptions, InfoviewJson, Toast } from '../InfoView.types.js';
 interface AccordianViewProps {
     groups: Record<string, InfoViewGroup>;
     methods?: Record<string, Function>;
@@ -8,7 +8,7 @@ interface AccordianViewProps {
     sqlOpsUrls: SqlEndpoints;
     refid: string;
     Reports?: ComponentType<any>;
-    toast?: Record<string, Function>;
+    toast?: Toast | undefined;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoViewJson: InfoviewJson;
     fieldOptions: Record<string, SelectOptions>;

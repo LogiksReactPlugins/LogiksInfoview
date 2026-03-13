@@ -5,7 +5,7 @@ import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 
 import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions, InfoviewJson } from '../InfoView.types.js';
+import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions, InfoviewJson, Toast } from '../InfoView.types.js';
 import { resolveComponent } from "@/components/helpers/resolveComponent.js";
 
 interface AccordianViewProps {
@@ -16,7 +16,7 @@ interface AccordianViewProps {
     sqlOpsUrls: SqlEndpoints;
     refid: string;
     Reports?: ComponentType<any>;
-    toast?: Record<string, Function>;
+    toast?: Toast | undefined;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoViewJson: InfoviewJson;
     fieldOptions: Record<string, SelectOptions>;
@@ -35,7 +35,7 @@ export default function AccordianView({
     sqlOpsUrls,
     refid,
     Reports,
-    toast = {},
+    toast ,
     handleAction = () => { },
     infoViewJson,
     fieldOptions,

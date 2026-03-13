@@ -13,14 +13,13 @@ import CardView from "./components/CardView.js";
 
 export default function LogiksInfoView({
     infoViewJson,
-    data = {},
     hiddenFields = [],
     groupFieldsFn = groupFields,
     layoutConfig = {},
     viewRenderers = {},
     methods = {},
     Reports,
-    toast = {},
+    toast ,
     handleAction = () => { },
     components
 }: InfoViewProps) {
