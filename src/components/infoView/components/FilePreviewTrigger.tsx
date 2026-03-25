@@ -14,10 +14,11 @@ function getFileIcon(category: FileCategory): JSX.Element {
 }
 
 const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) => {
+   const cleanPath = filePath.replace(/^[^&]*&/, "");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
- const ext = getFileExtension(filePath);
+ const ext = getFileExtension(cleanPath);
   const category = getMimeCategory(ext);
   useEffect(() => {
  
@@ -28,7 +29,7 @@ const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) =
     let active = true;
     let objectUrl: string | null = null;
 
-    getPreviewUrl(filePath, sqlOpsUrls).then((url) => {
+    getPreviewUrl(cleanPath, sqlOpsUrls).then((url) => {
 
       if (!active) return;
       objectUrl = url;
@@ -39,9 +40,9 @@ const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) =
       active = false;
       if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, [category,open, filePath, sqlOpsUrls]);
+  }, [category,open, cleanPath, sqlOpsUrls]);
 
-let fileName = filePath.split("/").pop();
+let fileName = cleanPath.split("/").pop();
   return (
     <>
 

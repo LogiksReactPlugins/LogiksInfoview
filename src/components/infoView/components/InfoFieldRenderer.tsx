@@ -368,7 +368,7 @@ export default function InfoFieldRenderer({
               className="h-24 object-contain border bg-white rounded"
             />
           )
-        ) : (field.type === "file" || field.type === "attachement" || field.type === "photo" || field.type === "avatar") && displayVal ? (
+        ) : (field.type === "file" || field.type === "camera"  || field.type === "camera2" || field.type === "attachement" || field.type === "photo" || field.type === "avatar") && displayVal ? (
           <div className="flex flex-wrap gap-2">
             {String(displayVal)
               .split(",")
