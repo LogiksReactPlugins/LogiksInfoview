@@ -2,8 +2,8 @@ import React, { useRef } from 'react'
 import PhotoRenderer from './PhotoRenderer.js';
 import type { FormikProps } from "formik";
 import type { FormField, SqlEndpoints } from '../InfoView.types.js';
-import { uploadFiles } from '../service.js';
-import { handlePersist } from '../utils.js';
+import { deleteFile, uploadFiles } from '../service.js';
+import { buildFileValue, getIcon, getInputConfig, handlePersist } from '../utils.js';
 
 type PhotoAvatarRendererProps = {
     field: FormField;
@@ -20,27 +20,7 @@ export default function PhotoAvatarRenderer({
 }: PhotoAvatarRendererProps) {
     let key = field?.name;
     const inputRef = useRef<HTMLInputElement | null>(null);
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.currentTarget.files;
-        if (!files || files.length === 0) return;
-
-        try {
-            const uploads = await uploadFiles(sqlOpsUrls, files);
-            const value = field.multiple
-                ? uploads.map(f => f.path)
-                : uploads[0]?.path;
-
-            formik.setFieldValue(
-                key,
-                value
-            );
-            handlePersist(value, field, module_refid)
-        } catch (err) {
-            console.error("File upload failed", err);
-            formik.setFieldError(key, "File upload failed");
-        }
-
-    };
+    const max = field.max !== undefined ? Number(field.max) : Infinity;
 
     const files = Array.isArray(formik.values[key])
         ? formik.values[key]
@@ -48,32 +28,118 @@ export default function PhotoAvatarRenderer({
             ? [formik.values[key]]
             : [];
 
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFiles = e.currentTarget.files;
+        if (!selectedFiles?.length) return;
+
+        const fileArray = Array.from(e.currentTarget.files || [])
+        const total = files.length + fileArray.length;
+        if (total > max) {
+            alert(`You can upload maximum ${max} file(s)`);
+            e.currentTarget.value = "";
+            return;
+        }
+
+        try {
+            const uploads = await uploadFiles(sqlOpsUrls, selectedFiles);
+            const value = buildFileValue({
+                uploads,
+                currentValue: formik.values[key],
+                multiple: field.multiple ?? false,
+            });
+
+            formik.setFieldValue(
+                key,
+                value
+            );
+            handlePersist(value, field, module_refid);
+            e.target.value = "";
+        } catch (err) {
+            console.error("File upload failed", err);
+            formik.setFieldError(key, "File upload failed");
+        }
+
+    };
+
+
+    const removeFile = async (file: string) => {
+        const existing: string[] = Array.isArray(formik.values[key])
+            ? formik.values[key]
+            : [];
+
+        const fileId = file.split("&")[0];
+        if (!fileId) return;
+
+        const updated = existing.filter((f) => f.split("&")[0] !== fileId);
+
+        formik.setFieldValue(key, updated);
+
+
+        try {
+            if (!file.split("&")[0]) return
+            await deleteFile(sqlOpsUrls, fileId);
+            handlePersist(updated, field, module_refid);
+        } catch (err) {
+            formik.setFieldValue(key, existing);
+            window.alert("Failed to delete file due to a technical issue. Please try again.")
+        }
+    };
+
+
+
+    const inputConfig = getInputConfig(field);
+    const isMultiple = field.multiple === true;
     return (
         <div >
-
+            <label className="block text-sm font-semibold mb-1  transition-all duration-300 text-gray-700">
+                {field.label}
+                {field.required && <span className="text-red-500 ml-1">*</span>}
+            </label>
             <input
                 ref={inputRef}
                 type="file"
-                accept="image/*"
                 className="hidden"
+                multiple={isMultiple}
+                {...inputConfig}
                 onChange={handleFileChange}
             />
 
             <div
-                onClick={() => inputRef.current?.click()}
-               className='flex flex-wrap gap-2'
-
+                className='flex flex-wrap gap-2'
             >
                 {files.length > 0 ? files.map(file => (
-                    <PhotoRenderer field_name={file} filePath={file} sqlOpsUrls={sqlOpsUrls} />
-                )) : (
-                    <img
-                        src="https://cdn-icons-png.flaticon.com/512/266/266033.png"
-                        alt="avatar placeholder"
-                        className="w-42 h-42 p-2 rounded-sm object-cover opacity-60"
-                    />
-                )}
+                    <div key={file} className="relative group">
+                        <PhotoRenderer
+                            field_name={file}
+                            filePath={file}
+                            sqlOpsUrls={sqlOpsUrls}
+                        />
+
+                        {/*Remove */}
+                        <button
+                            type="button"
+                            onClick={() => {
+                                removeFile(file)
+                            }}
+                            className="absolute -top-2 -right-2 cursor-pointer bg-white text-red-500 rounded-full w-5 h-5 flex items-center justify-center text-xl cursor-pointer transition"
+                        >
+                            ×
+                        </button>
+                    </div>
+                )) : null}
+
+
+                <div
+                    onClick={() => inputRef.current?.click()}
+                    className="w-24 h-24 flex items-center justify-center border border-dashed rounded-md bg-gray-50 hover:bg-gray-100 cursor-pointer"
+                >
+                    <i className={`fa-solid ${getIcon(field)} text-2xl text-gray-400`} />
+                </div>
+
             </div>
+            {formik.touched[key] && formik.errors[key] &&
+                <span className="text-xs text-red-500">{String(formik.errors[key])}</span>
+            }
         </div>
     )
 }

@@ -15,31 +15,53 @@ export default function LogiksForm({
   onCancel = () => { },
   components = {},
   callback = () => { },
-  initialvalues = {},
+  initialvalues,
   setEditData,
-  module_refid,
   toast
 
 }: FormProps) {
 
-
-
   const sqlOpsUrls = formJson.endPoints;
   const refid = formJson?.source?.refid;
-
-
-  const [resolvedData, setResolvedData] = React.useState<Record<string, any>>(initialvalues);
-
-
+  const [resolvedData, setResolvedData] = React.useState<Record<string, any>>(initialvalues ?? {});
   const geoFieldKeys = React.useMemo(() => {
     return getGeoFieldKeys(formJson.fields)
   }, [formJson.fields]);
 
+    React.useEffect(() => {
+    let isMounted = true;
+
+    const initGeo = async () => {
+
+      try {
+        const geo = await fetchGeolocation();
+
+        if (isMounted) {
+          setResolvedData(prev => ({
+            ...prev,
+            ...Object.fromEntries(
+              geoFieldKeys.map(key => [key, geo])
+            ),
+          }));
+        }
+      } catch (err) {
+        console.warn("Geo fetch failed", err);
+      }
+    };
+
+    initGeo();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [geoFieldKeys]);
 
 
-
-  React.useEffect(() => {
-    setResolvedData(initialvalues ?? {});
+ React.useEffect(() => {
+    setResolvedData(prev => ({
+      ...prev,
+      ...(initialvalues ?? {})
+    }));
   }, [initialvalues]);
 
   const safeSetResolvedData = React.useCallback(
@@ -123,7 +145,7 @@ export default function LogiksForm({
             },
             fields: transformedObject(formJson.fields, sqlOpsUrls.operation),
 
-          }, source?.dbopsid, module_refid);
+          }, source?.dbopsid, formJson?.module_refid);
 
           if (isMounted) safeSetResolvedData(data);
         } catch (err) {
@@ -149,24 +171,27 @@ export default function LogiksForm({
   const handleSubmit = async (values: Record<string, any>) => {
     const source = formJson?.source ?? {};
 
-    let geo: string | null = null;
+    let finalValues = { ...values };
 
     if (geoFieldKeys.length > 0) {
-      try {
-        geo = await fetchGeolocation();
+      const missingKeys = geoFieldKeys.filter(k => !values[k]);
 
-      } catch (err) {
-       toast?.error?.(" Geolocation error");
-        geo = null;
+      if (missingKeys.length > 0) {
+        try {
+          const geo = await fetchGeolocation();
+
+          finalValues = {
+            ...values,
+            ...Object.fromEntries(
+              missingKeys.map(k => [k, geo])
+            ),
+          };
+        } catch (err) {
+          console.warn("Geo fetch failed");
+        }
       }
     }
 
-    const finalValues = {
-      ...values,
-      ...Object.fromEntries(
-        geoFieldKeys.map((key) => [key, geo])
-      ),
-    };
 
 
     if (source.type === "method") {
@@ -263,7 +288,7 @@ export default function LogiksForm({
               "fields": transformedObject(formJson.fields, sqlOpsUrls.operation),
               "forcefill": formJson.forcefill,
               "datahash": resHashId.data.refhash,
-              "scrid": module_refid
+              "scrid": formJson?.module_refid
 
             },
 
@@ -322,7 +347,7 @@ export default function LogiksForm({
       sqlOpsUrls={sqlOpsUrls}
 
       refid={refid}
-      module_refid={module_refid}
+      module_refid={formJson?.module_refid}
 
     />
   };

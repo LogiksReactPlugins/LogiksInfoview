@@ -1,4 +1,4 @@
-import { AutocompleteConfig, FileCategory, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from './InfoView.types.js';
+import { AutocompleteConfig, FileCategory, FileItem, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from './InfoView.types.js';
 import * as Yup from "yup";
 export declare function determineViewMode(json: Infoview): string;
 export declare function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup>;
@@ -67,5 +67,16 @@ export declare function writePersistedValue(module_refid: string, key: string, v
 export declare function handlePersist(value: any, field: FormField, module_refid: string | undefined): void;
 export declare function getErrorMessage(err: unknown): string;
 export declare function getSuccessMessage(res: any): string;
+export declare const buildFileValue: ({ uploads, currentValue, multiple, }: {
+    uploads: FileItem[];
+    currentValue: string | string[] | undefined;
+    multiple?: boolean;
+}) => string[];
+export declare const getInputConfig: (field: FormField) => {
+    accept?: string;
+    capture?: "user" | "environment";
+};
+export declare const getIcon: (field: FormField) => "fa-camera" | "fa-camera-retro" | "fa-image";
+export declare const getMaxDate: (max?: string | number) => string | number | undefined;
 export {};
 //# sourceMappingURL=utils.d.ts.map

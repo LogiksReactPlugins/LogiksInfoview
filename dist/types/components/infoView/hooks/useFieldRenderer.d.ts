@@ -12,6 +12,8 @@ export default function useFieldRenderer({ field, formik, methods, sqlOpsUrls, r
     handleSelect: (val: string) => void;
     handlePersist: typeof handlePersist;
     handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    setLoading: import('react').Dispatch<import('react').SetStateAction<boolean>>;
+    removeFile: (file: string) => Promise<void>;
     optionCount: number;
     baseInputClasses: string;
     focusClasses: string;
@@ -27,5 +29,6 @@ export default function useFieldRenderer({ field, formik, methods, sqlOpsUrls, r
     isFocused: boolean;
     exactMatch: import('../utils.js').FlatEntry | null | undefined;
     triggerRef: import('react').RefObject<HTMLDivElement | null>;
+    loading: boolean;
 };
 //# sourceMappingURL=useFieldRenderer.d.ts.map

@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect, useMemo } from "react";
 import axios from 'axios';
-import type { FieldRendererProps, FormField, SelectOptions, sqlQueryProps } from "../InfoView.types.js";
-import { flattenOptions, formatOptions, getSearchColumns, handlePersist, isAutocompleteConfig, isGroupedOptions, normalizeRowSafe, replacePlaceholders, writePersistedValue } from "../utils.js";
-import { fetchDataByquery, uploadFiles } from "../service.js";
+import type { FieldRendererProps, FileItem, FormField, SelectOptions, sqlQueryProps } from "../InfoView.types.js";
+import { buildFileValue, flattenOptions, formatOptions, getSearchColumns, handlePersist, isAutocompleteConfig, isGroupedOptions, normalizeRowSafe, replacePlaceholders, writePersistedValue } from "../utils.js";
+import { deleteFile, fetchDataByquery, uploadFiles } from "../service.js";
 
 //DRY implementation pending
 
@@ -16,9 +16,9 @@ export default function useFieldRenderer({
     optionsOverride,
     setFieldOptions
 }: FieldRendererProps) {
-
+   
     const [isFocused, setIsFocused] = useState(false);
-
+    const [loading, setLoading] = useState(false);
     const [options, setOptions] = useState<SelectOptions>(
         optionsOverride ?? field.options ?? {}
     );
@@ -75,7 +75,6 @@ export default function useFieldRenderer({
 
     useEffect(() => {
         if (!optionsOverride) return;
-        if (Object.keys(optionsOverride).length === 0) return;
 
         setOptions(optionsOverride);
     }, [optionsOverride]);
@@ -391,17 +390,18 @@ export default function useFieldRenderer({
 
 
     const optionCount = flatOptions.length;
+    const isApiSearch = Boolean(field.search && (field.queryid || field.table));
 
     const filteredOptions = useMemo(() => {
         // API search mode → backend already filtered
-        if (field.search) {
+        if (isApiSearch) {
             return flatOptions;
         }
         if (!search) return flatOptions;
         return flatOptions.filter(([, label]) =>
             label.toLowerCase().includes(search.toLowerCase())
         );
-    }, [field.search, search, flatOptions]);
+    }, [isApiSearch, search, flatOptions]);
 
 
     //  Handle keyboard navigation
@@ -427,10 +427,11 @@ export default function useFieldRenderer({
                 formik.setFieldValue(field.name, value);
                 handlePersist(value, field, module_refid)
             }
-          
+            setOpen(false);
+
 
         } else if (e.key === "Escape") {
-          
+
             setSearch("");
             setOpen(false);
         }
@@ -662,7 +663,7 @@ export default function useFieldRenderer({
 
 
     useEffect(() => {
-        if (!field.search) return;
+        if (!isApiSearch) return;
         if (!search.trim()) return;
         if (!sqlOpsUrls) return;
         const searchColumns = getSearchColumns(field.columns ?? "");
@@ -732,7 +733,7 @@ export default function useFieldRenderer({
             clearTimeout(timer);
             controller.abort();
         };
-    }, [search, refid]);
+    }, [isApiSearch, search, refid]);
 
 
     const handleFileUpload = async (files: FileList) => {
@@ -744,18 +745,46 @@ export default function useFieldRenderer({
 
         try {
             const uploads = await uploadFiles(sqlOpsUrls, files);
-            const value = field.multiple
-                ? uploads.map(f => f.path)
-                : uploads[0]?.path;
 
+
+            const value = buildFileValue({
+                uploads,
+                currentValue: formik.values[key],
+                multiple: field.multiple ?? false,
+            });
             formik.setFieldValue(
                 key,
                 value
             );
+
             handlePersist(value, field, module_refid)
         } catch (err) {
             console.error("File upload failed", err);
             formik.setFieldError(key, "File upload failed");
+        }
+    };
+
+
+    const removeFile = async (file: string) => {
+        const existing: string[] = Array.isArray(formik.values[key])
+            ? formik.values[key]
+            : [];
+
+        const fileId = file.split("&")[0];
+        if (!fileId) return;
+
+        const updated = existing.filter((f) => f.split("&")[0] !== fileId);
+
+        formik.setFieldValue(key, updated);
+
+
+        try {
+            await deleteFile(sqlOpsUrls, fileId);
+            handlePersist(updated, field, module_refid);
+        } catch (err) {
+            console.log(err)
+            formik.setFieldValue(key, existing);
+              window.alert("Failed to delete file due to a technical issue. Please try again.")
         }
     };
 
@@ -824,6 +853,8 @@ export default function useFieldRenderer({
         handleSelect,
         handlePersist,
         handleFileChange,
+        setLoading,
+        removeFile,
         optionCount,
         baseInputClasses,
         focusClasses,
@@ -838,7 +869,9 @@ export default function useFieldRenderer({
         listRef,
         isFocused,
         exactMatch,
-        triggerRef
+        triggerRef,
+        loading
+
 
     }
 }

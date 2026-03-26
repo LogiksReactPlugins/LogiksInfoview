@@ -10,13 +10,14 @@ type FilePreviewTriggerProps = {
 
 export default function PhotoRenderer({ filePath, field_name, sqlOpsUrls }: FilePreviewTriggerProps) {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+    const cleanPath = filePath.replace(/^[^&]*&/, "");
     useEffect(() => {
 
         if (!open || !sqlOpsUrls) return;
         let active = true;
         let objectUrl: string | null = null;
 
-        getPreviewUrl(filePath, sqlOpsUrls).then((url) => {
+        getPreviewUrl(cleanPath, sqlOpsUrls).then((url) => {
 
             if (!active) return;
             objectUrl = url;
@@ -27,15 +28,15 @@ export default function PhotoRenderer({ filePath, field_name, sqlOpsUrls }: File
             active = false;
             if (objectUrl) URL.revokeObjectURL(objectUrl);
         };
-    }, [open, filePath, sqlOpsUrls]);
+    }, [open, cleanPath, sqlOpsUrls]);
 
     if (!previewUrl) return null;
 
     return (
         <img src={previewUrl}
-        alt={field_name}
-        title={field_name}
-            className="object-contain h-full w-full"
+            alt={field_name}
+            title={field_name}
+           className="h-24 w-24 object-cover rounded border border-dashed   hover:opacity-90"
             onError={(e) => {
                 // Fallback to placeholder if image fails to load
                 const target = e.currentTarget as HTMLImageElement; // <-- cast here

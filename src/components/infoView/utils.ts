@@ -2,8 +2,8 @@ import * as Yup from "yup";
 import axios from "axios";
 
 import DOMPurify from "dompurify";
-import type { AutocompleteConfig, FileCategory, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions,  } from "./InfoView.types.js";
-import { IMAGE_EXT, PDF_EXT, TEXT_EXT, VIDEO_EXT } from "./constant.js";
+import type { AutocompleteConfig, FileCategory, FileItem, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions, } from "./InfoView.types.js";
+import { FILE_TYPES, IMAGE_EXT, PDF_EXT, TEXT_EXT, VIDEO_EXT } from "./constant.js";
 
 export function determineViewMode(json: Infoview) {
 
@@ -299,19 +299,24 @@ export const intializeForm = (
 
     // ---------- Initial Values (NORMALIZED) ----------
 
+    if (FILE_TYPES.includes(field.type ?? "")) {
+      initialValues[name] = Array.isArray(value)
+        ? value
+        : typeof value === "string" && value.length > 0
+          ? value.split(",").map(v => v.trim()).filter(Boolean)
+          : [];
 
-    if (field.multiple === true || field.type === "checkbox" || field.type === "tags") {
+    }
+    else if (field.multiple === true || field.type === "tags") {
       initialValues[name] =
         Array.isArray(value)
           ? value
           : typeof value === "string"
             ? value.split(",").map(v => v.trim()).filter(Boolean)
             : [];
-    }
-
-
-
-    else if (field.type === "json") {
+    } else if (field.type === "checkbox") {
+      initialValues[name] = String(value ?? "false");
+    } else if (field.type === "json") {
       initialValues[name] =
         typeof value === "object" && value !== null
           ? JSON.stringify(value, null, 2)
@@ -320,7 +325,7 @@ export const intializeForm = (
 
     else if (field.type === "date") {
       initialValues[name] =
-        typeof value === "string" ? value.slice(0, 10) : "";
+        typeof value === "string" && value.trim() ? value.slice(0, 10) : null;
     }
 
     else if (field.type === "time") {
@@ -348,14 +353,23 @@ export const intializeForm = (
     // ---------- Validation ----------
     let validator: Yup.AnySchema;
 
-    if (field.type === "file") {
-      validator = field.multiple
-        ? Yup.array().of(Yup.mixed<File>())
-        : Yup.mixed<File>();
+    if (FILE_TYPES.includes(field.type ?? "")) {
+      const arrValidator = Yup.array().of(
+        Yup.string()
+      );
+
+      validator = field.required
+        ? arrValidator.min(1, field.error_message || `${field.label} is required`)
+        : arrValidator;
     }
 
-    else if (field.multiple === true || field.type === "checkbox" || field.type === "tags") {
-      validator = Yup.array().of(Yup.string());
+    else if (field.multiple === true || field.type === "tags") {
+
+      const arrValidator = Yup.array().of(Yup.string());
+
+      validator = field.required
+        ? arrValidator.min(1, field.error_message || `${field.label} is required`)
+        : arrValidator;
     }
     else if (field.type === "email") {
       validator = Yup.string().email("Invalid email");
@@ -373,23 +387,11 @@ export const intializeForm = (
           return false;
         }
       });
+    } else if (field.type === "date") {
+      validator = Yup.string().nullable();
     }
     else {
       validator = Yup.string();
-    }
-
-    if (field.required) {
-      validator = validator.required(
-        field.error_message || `${field.label || name} is required`
-      );
-    }
-
-    // ---------- Direct Regex ----------
-    if (field?.validate?.regex && typeof field.validate.regex === "string") {
-      validator = (validator as Yup.StringSchema).matches(
-        new RegExp(field?.validate?.regex),
-        field?.error_message || "Invalid input format"
-      );
     }
 
 
@@ -410,24 +412,29 @@ export const intializeForm = (
           case "regex":
             validator = (validator as Yup.StringSchema).matches(
               new RegExp(val as string),
-              `Must match pattern: ${val}`
+              field?.error_message || `Must match pattern: ${val}`
             );
             break;
 
           case "date":
-            validator = Yup.date()
-              .typeError("Invalid date format (expected dd/MM/yyyy or dd-MM-yyyy)")
-              .transform((value, originalValue) => {
-                if (typeof originalValue === "string") {
-                  const normalized = originalValue.replace(/-/g, "/");
+            validator = (validator as Yup.StringSchema)
+              .nullable()
+              .test(
+                "date",
+                "Invalid date format (expected dd/MM/yyyy or dd-MM-yyyy)",
+                (v) => {
+                  if (v == null || v === "") return true;
+
+                  const normalized = v.replace(/-/g, "/");
                   const [d, m, y] = normalized.split("/");
-                  if (d && m && y) {
-                    return new Date(`${y}-${m}-${d}`);
-                  }
+                  if (!d || !m || !y) return false;
+
+                  const date = new Date(`${y}-${m}-${d}`);
+                  return !isNaN(date.getTime());
                 }
-                return value;
-              });
+              );
             break;
+
 
           case "time":
             validator = (validator as Yup.StringSchema).matches(
@@ -511,6 +518,12 @@ export const intializeForm = (
             break;
         }
       });
+    }
+
+    if (field.required) {
+      validator = validator.required(
+        field.error_message || `${field.label || name} is required`
+      );
     }
 
     validationSchema[name] = validator;
@@ -811,6 +824,73 @@ export function getSuccessMessage(res: any): string {
   if (res?.message) return res.message;
   return "Operation completed successfully";
 }
+
+export const buildFileValue = ({
+  uploads,
+  currentValue,
+  multiple,
+}: {
+  uploads: FileItem[];
+  currentValue: string | string[] | undefined;
+  multiple?: boolean;
+}) => {
+
+  const existing = Array.isArray(currentValue)
+    ? currentValue
+    : currentValue
+      ? [currentValue]
+      : [];
+
+  const newPaths = uploads.map((f) => `${f.fileId}&${f.path}`)
+
+
+  return [...existing, ...newPaths];
+
+
+
+};
+
+export const getInputConfig = (field: FormField): {
+  accept?: string;
+  capture?: "user" | "environment";
+} => {
+  switch (field.type) {
+    case "camera2":
+      return {
+        accept: "image/*",
+        capture: "environment",
+      };
+
+    case "camera":
+    case "photo":
+    case "avatar":
+    default:
+      return {
+        accept: "image/*",
+      };
+  }
+};
+
+export const getIcon = (field: FormField) => {
+  switch (field.type) {
+    case "camera2":
+      return "fa-camera"; // strict camera
+    case "camera":
+      return "fa-camera-retro"; // optional variation
+    case "photo":
+    case "avatar":
+    default:
+      return "fa-image";
+  }
+};
+
+export const getMaxDate = (max?: string | number) => {
+  if (max === "today") {
+    return new Date().toISOString().split("T")[0]; // yyyy-mm-dd
+  }
+  return max;
+};
+
 
 
 

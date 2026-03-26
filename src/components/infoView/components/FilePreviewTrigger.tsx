@@ -14,18 +14,18 @@ function getFileIcon(category: FileCategory): JSX.Element {
 }
 
 const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) => {
-   const cleanPath = filePath.replace(/^[^&]*&/, "");
+  const cleanPath = filePath.replace(/^[^&]*&/, "");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
- const ext = getFileExtension(cleanPath);
+  const ext = getFileExtension(cleanPath);
   const category = getMimeCategory(ext);
   useEffect(() => {
- 
+
     if (!sqlOpsUrls) return;
 
-  // load immediately for images (thumbnail)
-  if (category !== "image" && !open) return;
+    // load immediately for images (thumbnail)
+    if (category !== "image" && !open) return;
     let active = true;
     let objectUrl: string | null = null;
 
@@ -40,13 +40,13 @@ const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) =
       active = false;
       if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, [category,open, cleanPath, sqlOpsUrls]);
+  }, [category, open, cleanPath, sqlOpsUrls]);
 
-let fileName = cleanPath.split("/").pop();
+  let fileName = cleanPath.split("/").pop();
   return (
     <>
 
-    {category === "image" && previewUrl ? (
+      {category === "image" && previewUrl ? (
         <img
           src={previewUrl}
           alt={fileName}

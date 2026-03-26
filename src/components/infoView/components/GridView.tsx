@@ -222,13 +222,14 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                                     ...sqlOpsUrls,
                                     operation: editData ? "update" : "create"
 
-                                }
+                                },
+                                module_refid:infoViewJson?.module_refid
                             }}
                             toast={toast}
                             methods={methods}
                             initialvalues={editData ?? {}}
                             setEditData={handleFormClose}
-                            module_refid={infoViewJson?.module_refid}
+                            
                         />
                     }
                     <ConfirmModal
@@ -241,7 +242,26 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
 
                
                
-                      <p>No report found</p>
+                      hasFormConfig && <LogiksForm
+                            formJson={{
+                                ...config[formType],
+                                source: {
+                                    ...config?.[formType].source,
+                                    refid: editData?.id
+                                },
+                                endPoints: {
+                                    ...sqlOpsUrls,
+                                    operation: editData ? "update" : "create"
+
+                                },
+                                module_refid:infoViewJson?.module_refid
+                            }}
+                            toast={toast}
+                            methods={methods}
+                            initialvalues={editData ?? {}}
+                            setEditData={handleFormClose}
+                            
+                        />
                     
 
             )}

@@ -1,7 +1,7 @@
 // sqlClient.ts
 
 import axios, { type AxiosResponse } from "axios";
-import type { SelectOptions, SqlEndpoints, sqlQueryProps } from "./InfoView.types.js";
+import type { SelectOptions, SqlEndpoints, sqlQueryProps, UploadResponse } from "./InfoView.types.js";
 import { formatOptions, normalizeRowSafe, replacePlaceholders } from "./utils.js";
 
 
@@ -321,34 +321,49 @@ export async function getPreviewUrl(
     return URL.createObjectURL(res.data);
 }
 
-type UploadResponse = {
-    path: string;
-    [key: string]: any;
-};
+
 
 export async function uploadFiles(
     sqlOpsUrls: SqlEndpoints | undefined,
     files: FileList
 ): Promise<UploadResponse[]> {
-    if (!sqlOpsUrls?.uploadURL) {
-        throw new Error("Upload URL missing");
-    }
+ 
 
-    const uploadUrl = sqlOpsUrls.baseURL + sqlOpsUrls.uploadURL;
+    const uploadUrl = sqlOpsUrls?.uploadURL ?? "/api/files/upload";
 
     return Promise.all(
         Array.from(files).map(async (file) => {
             const formData = new FormData();
             formData.append("file", file);
 
-            const res = await axios.post(uploadUrl, formData, {
+            const res = await axios.post(`${sqlOpsUrls?.baseURL}${uploadUrl}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${sqlOpsUrls.accessToken}`,
+                    Authorization: `Bearer ${sqlOpsUrls?.accessToken}`,
                 },
             });
 
             return res.data;
         })
     );
+}
+
+export async function deleteFile(
+    sqlOpsUrls: SqlEndpoints | undefined,
+    fileId: number | string
+) {
+
+    let removeFileURL = sqlOpsUrls?.removeFileURL ?? "/api/files/delete"
+    const res = await axios.post(
+        `${sqlOpsUrls?.baseURL}${removeFileURL}`,
+        { fileId: String(fileId) },
+        {
+            headers: {
+                Authorization: `Bearer ${sqlOpsUrls?.accessToken}`,
+                "Content-Type": "application/json",
+            },
+        }
+    );
+
+    return res.data;
 }

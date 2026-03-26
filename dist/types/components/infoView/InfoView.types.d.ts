@@ -119,6 +119,7 @@ export interface SqlEndpoints {
     registerQuery?: string;
     runQuery?: string;
     uploadURL?: string;
+    removeFileURL?: string;
     refid?: string;
 }
 type ApiSrc = {
@@ -197,7 +198,19 @@ export interface FormField {
     step?: string | number;
     persistent?: string | boolean;
     content?: string;
+    accept?: string;
 }
+export type FileItem = {
+    fileId: number;
+    path: string;
+    name?: string;
+    mime?: string;
+    size?: number;
+    status: string;
+};
+export type UploadResponse = FileItem & {
+    status: string;
+};
 export interface FormJson {
     title?: string | undefined;
     template?: string;
@@ -206,6 +219,7 @@ export interface FormJson {
     fields: Record<string, Omit<FormField, "name">>;
     source: Record<string, any>;
     widget?: boolean;
+    module_refid?: string | undefined;
 }
 export interface FormProps {
     formJson: FormJson;

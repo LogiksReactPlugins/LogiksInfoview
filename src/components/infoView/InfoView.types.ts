@@ -67,11 +67,11 @@ export interface InfoviewJson {
 }
 
 export interface Toast {
-  (message: string): void;
-  success?: (message: string) => void;
-  error?: (message: string) => void;
-  info?: (message: string) => void;
-  warn?: (message: string) => void;
+    (message: string): void;
+    success?: (message: string) => void;
+    error?: (message: string) => void;
+    info?: (message: string) => void;
+    warn?: (message: string) => void;
 }
 
 export interface InfoViewProps {
@@ -94,7 +94,7 @@ export interface InfoViewProps {
     data?: Record<string, any>;
     methods?: Record<string, Function>,
     Reports?: ComponentType<any>;
-   components?: Record<string, ComponentType<any> | ReactNode>;
+    components?: Record<string, ComponentType<any> | ReactNode>;
 
     toast?: Toast;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
@@ -141,6 +141,7 @@ export interface SqlEndpoints {
     registerQuery?: string;
     runQuery?: string;
     uploadURL?: string;
+    removeFileURL?: string;
     refid?: string;
 };
 
@@ -181,7 +182,7 @@ export type FileCategory = "image" | "pdf" | "video" | "text" | "other";
 export interface FormField {
     name: string;
     label?: string;
-    parameter?:string | Record<string, string>;
+    parameter?: string | Record<string, string>;
     width?: number | string;
     options?: Record<string, any>;
     group?: string;
@@ -227,9 +228,23 @@ export interface FormField {
     onClick?: string;
     step?: string | number;
     persistent?: string | boolean;
-    content?:string;
+    content?: string;
+    accept?: string;
 
 }
+
+export type FileItem = {
+    fileId: number;
+    path: string;
+    name?: string;
+    mime?: string;
+    size?: number;
+    status: string;
+};
+
+export type UploadResponse = FileItem & {
+    status: string;
+};
 
 export interface FormJson {
     title?: string | undefined;
@@ -238,7 +253,8 @@ export interface FormJson {
     forcefill?: Record<string, string>;
     fields: Record<string, Omit<FormField, "name">>;
     source: Record<string, any>;
-    widget?: boolean
+    widget?: boolean;
+    module_refid?: string | undefined
 
 
 }
@@ -257,7 +273,7 @@ export interface FormProps {
     components?: Record<string, ReactNode>
     initialvalues?: Record<string, any>;
     module_refid?: string | undefined;
-    toast?:Toast | undefined
+    toast?: Toast | undefined
 
 }
 
@@ -285,7 +301,7 @@ export interface FieldRendererProps {
     formik: FormikProps<Record<string, any>>;
     methods?: Record<string, Function>;
     components?: Record<string, ReactNode>
-     sqlOpsUrls?: SqlEndpoints | undefined;
+    sqlOpsUrls?: SqlEndpoints | undefined;
     refid?: string | undefined;
     module_refid?: string | undefined;
     optionsOverride?: SelectOptions;

@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { SelectOptions, SqlEndpoints } from './InfoView.types.js';
+import { SelectOptions, SqlEndpoints, UploadResponse } from './InfoView.types.js';
 type SqlSource = {
     table: string;
     columns: string;
@@ -37,10 +37,7 @@ export declare function runAjaxChain({ field, value, sqlOpsUrls, setFieldOptions
     values: Record<string, any>;
 }): Promise<void>;
 export declare function getPreviewUrl(fileUrl: string, sqlOpsUrls: Record<string, any>): Promise<string>;
-type UploadResponse = {
-    path: string;
-    [key: string]: any;
-};
 export declare function uploadFiles(sqlOpsUrls: SqlEndpoints | undefined, files: FileList): Promise<UploadResponse[]>;
+export declare function deleteFile(sqlOpsUrls: SqlEndpoints | undefined, fileId: number | string): Promise<any>;
 export {};
 //# sourceMappingURL=service.d.ts.map
