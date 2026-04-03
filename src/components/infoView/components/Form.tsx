@@ -28,7 +28,7 @@ export default function LogiksForm({
     return getGeoFieldKeys(formJson.fields)
   }, [formJson.fields]);
 
-    React.useEffect(() => {
+  React.useEffect(() => {
     let isMounted = true;
 
     const initGeo = async () => {
@@ -57,11 +57,8 @@ export default function LogiksForm({
   }, [geoFieldKeys]);
 
 
- React.useEffect(() => {
-    setResolvedData(prev => ({
-      ...prev,
-      ...(initialvalues ?? {})
-    }));
+  React.useEffect(() => {
+    setResolvedData(initialvalues ?? {});
   }, [initialvalues]);
 
   const safeSetResolvedData = React.useCallback(
@@ -110,7 +107,7 @@ export default function LogiksForm({
               ? { params: { refid: source.refid } }
               : { data: { refid: source.refid } }),
           }
-           const response = await axios(config);
+          const response = await axios(config);
 
           if (isMounted) safeSetResolvedData(response.data);
         } catch (err) {

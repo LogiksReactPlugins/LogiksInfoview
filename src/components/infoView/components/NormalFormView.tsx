@@ -99,7 +99,7 @@ export default function NormalFormView({
 
             <div className="">
               <div> &nbsp;</div>
-              <button onClick={handleReset} className="px-5 py-2 bg-white text-gray-700 font-semibold rounded-lg border-2 border-gray-200  shadow-sm hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+              <button type="button" onClick={handleReset} className="px-5 py-2 bg-white text-gray-700 font-semibold rounded-lg border-2 border-gray-200  shadow-sm hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
                 Reset
               </button>
               {Object.keys(formik.errors).length > 0 && <div> &nbsp;</div>}
