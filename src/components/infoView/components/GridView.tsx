@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import type { ComponentType } from "react";
-import type { InfoData, Infoview, InfoViewField, InfoViewGroup, Toast } from '../InfoView.types.js';
+import type { InfoData, Infoview, FormField, InfoViewGroup, Toast } from '../InfoView.types.js';
 import { normalizeRowSafe, replacePlaceholders } from '../utils.js';
 import ConfirmModal from './ConfirmationModal.js';
 import LogiksForm from './Form.js';
@@ -20,7 +20,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
         handleAction?: (action: Record<string, any>, data: InfoData) => void;
         infoViewJson: {
             script?: string;
-            fields: Record<string, Omit<InfoViewField, "name">>;
+            fields: Record<string, Omit<FormField, "name">>;
             infoview?: Infoview;
             source?: Record<string, any>,
             endPoints?: Record<string, any>;

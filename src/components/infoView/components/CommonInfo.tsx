@@ -2,7 +2,7 @@
 import { tailwindCols, toColWidth } from '../utils.js';
 
 import InfoFieldRenderer from './InfoFieldRenderer.js';
-import type { InfoViewField, InfoData, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
+import type { FormField, InfoData, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
 import PhotoRenderer from './PhotoRenderer.js';
 import { useMemo } from 'react';
 
@@ -11,7 +11,7 @@ interface CommonInfoProps {
     infoData: InfoData;
     sqlOpsUrls: SqlEndpoints;
     commonInfo: {
-        fields?: InfoViewField[];
+        fields?: FormField[];
         label: string;
         type: string
     };
@@ -38,7 +38,7 @@ export default function CommonInfo({
     methods
 }: CommonInfoProps) {
 
-    const avatarField = useMemo<InfoViewField | undefined>(
+    const avatarField = useMemo<FormField | undefined>(
         () => commonInfo?.fields?.find(f => f.type === "avatar"),
         [commonInfo?.fields]
     );
@@ -84,7 +84,7 @@ export default function CommonInfo({
 
 
                             return (
-                                <div key={field.name} className={`hover:bg-gray-100 transition-colors duration-200 col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-4"}`}>
+                                <div key={field.name} className={`hover:bg-gray-100 transition-colors duration-200 col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(Number(field.width))] || "lg:col-span-4"}`}>
                                     <InfoFieldRenderer
                                         key={field?.name}
                                         field={field}

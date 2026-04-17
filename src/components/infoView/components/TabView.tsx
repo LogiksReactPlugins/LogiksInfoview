@@ -4,8 +4,8 @@ import react, { useEffect, useRef, useState } from 'react';
 import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 import InfoFieldRenderer from './InfoFieldRenderer.js';
-import { tailwindCols, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewField, VerticalNavProps, TopNavProps, ContentAreaProps, TabViewProps } from '../InfoView.types.js';
+import { isHidden, tailwindCols, toColWidth } from '../utils.js';
+import type { InfoViewGroup, FormField, VerticalNavProps, TopNavProps, ContentAreaProps, TabViewProps } from '../InfoView.types.js';
 import { resolveComponent } from '@/components/helpers/resolveComponent.js';
 
 
@@ -203,9 +203,9 @@ const ContentArea = (
 
     }
 
-  
 
-            const node = resolveComponent(tabObj?.component, components);
+
+    const node = resolveComponent(tabObj?.component, components);
 
 
     return <div
@@ -218,10 +218,11 @@ const ContentArea = (
             tabObj?.type === "fields" && tabObj?.fields ? (
                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                     <div className={layoutConfig?.fieldGridClass || "grid grid-cols-12 gap-2"}>
-                        {tabObj.fields.map((field: InfoViewField, index: number) => (
-                            <div
+                        {tabObj.fields.map((field: FormField, index: number) => {
+                            if (isHidden(field.hidden)) return null;
+                            return <div
                                 key={field?.name ?? `field-${index}`}
-                                className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-2"
+                                className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(Number(field.width))] || "lg:col-span-2"
                                     }`}
                             >
                                 <InfoFieldRenderer
@@ -237,7 +238,7 @@ const ContentArea = (
                                         : {})}
                                 />
                             </div>
-                        ))}
+                        })}
                     </div>
                 </div>
             ) : tabObj?.type === "component" && node ? (

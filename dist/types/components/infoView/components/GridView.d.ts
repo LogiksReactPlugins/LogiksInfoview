@@ -1,5 +1,5 @@
 import { ComponentType } from 'react';
-import { InfoData, Infoview, InfoViewField, InfoViewGroup, Toast } from '../InfoView.types.js';
+import { InfoData, Infoview, FormField, InfoViewGroup, Toast } from '../InfoView.types.js';
 export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson }: {
     tabObj: InfoViewGroup;
     methods: Record<string, Function>;
@@ -11,7 +11,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoViewJson: {
         script?: string;
-        fields: Record<string, Omit<InfoViewField, "name">>;
+        fields: Record<string, Omit<FormField, "name">>;
         infoview?: Infoview;
         source?: Record<string, any>;
         endPoints?: Record<string, any>;

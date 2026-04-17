@@ -4,8 +4,8 @@ import Accordion from './Accordian.js';
 import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 
-import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions, InfoviewJson, Toast } from '../InfoView.types.js';
+import {  isHidden, tailwindCols, toColWidth } from '../utils.js';
+import type { InfoViewGroup, FormField, InfoData,  SqlEndpoints, SelectOptions, InfoviewJson, Toast } from '../InfoView.types.js';
 import { resolveComponent } from "@/components/helpers/resolveComponent.js";
 
 interface AccordianViewProps {
@@ -122,10 +122,11 @@ export default function AccordianView({
                             {obj?.type === "fields" && obj?.fields ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                                     <div className={"grid grid-cols-12 gap-2"}>
-                                        {obj.fields.map((field: InfoViewField, index: number) => (
-                                            <div
+                                        {obj.fields.map((field: FormField, index: number) => {
+                                            if(isHidden(field.hidden)) return null;
+                                            return <div
                                                 key={field?.name ?? `field-${index}`}
-                                                className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-2"
+                                                className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(Number(field.width))] || "lg:col-span-2"
                                                     }`}
                                             >
                                                 <InfoFieldRenderer
@@ -140,7 +141,7 @@ export default function AccordianView({
                                                     refid={refid}
                                                 />
                                             </div>
-                                        ))}
+                    })}
                                     </div>
                                 </div>
                             ) : obj?.type === "component" && node ? (

@@ -7,25 +7,57 @@ export type DbOpsPayload = {
     datahash: string;
     refid1?: string | number;
 };
-export interface InfoViewField {
+export interface FormField {
     name: string;
     label?: string;
-    width?: number;
+    parameter?: string | Record<string, string>;
+    width?: number | string;
+    options?: Record<string, any>;
     group?: string;
     type?: string;
+    regex?: string;
     required?: boolean;
-    options?: Record<string, any>;
-    source?: Record<string, any>;
+    disabled?: boolean;
+    error_message?: string;
+    placeholder?: string;
+    field_error?: string;
+    axiosObject?: AxiosRequestConfig;
     valueKey?: string;
     labelKey?: string;
     groupKey?: string;
+    source?: Record<string, any>;
+    multiple?: boolean;
+    icon?: string;
     table?: string;
     columns?: string;
     where?: Record<string, string>;
+    autocomplete?: "off" | AutocompleteConfig;
+    ajaxchain?: AutocompleteConfig | AutocompleteConfig[];
+    validate?: Record<string, string | number | boolean>;
     groupid?: string;
+    hidden?: boolean;
+    value?: string | undefined;
+    default?: string | number | boolean | string[] | number[] | null;
     cols?: string;
+    search?: boolean;
     method?: string;
+    vmode?: string;
+    "no-option"?: string;
+    "nodb"?: boolean;
+    "nosave"?: boolean;
     queryid?: string;
+    min?: number | string;
+    max?: number | string;
+    minlength?: number;
+    maxlength?: number;
+    onChange?: string;
+    onBlur?: string;
+    onFocus?: string;
+    onClick?: string;
+    step?: string | number;
+    persistent?: string | boolean;
+    content?: string;
+    accept?: string;
 }
 export interface sqlQueryProps {
     table: string;
@@ -38,7 +70,7 @@ export interface InfoViewGroup {
     label: string;
     type: string;
     component?: string;
-    fields?: InfoViewField[];
+    fields?: FormField[];
     config?: Record<string, any>;
     width?: number;
     vmode?: string;
@@ -49,7 +81,7 @@ export interface Infoview {
 }
 export interface InfoviewJson {
     script?: string;
-    fields: Record<string, Omit<InfoViewField, "name">>;
+    fields: Record<string, Omit<FormField, "name">>;
     infoview?: Infoview;
     source?: Record<string, any>;
     endPoints: SqlEndpoints;
@@ -93,7 +125,7 @@ export interface InfoData {
     [key: string]: string | number | boolean | null | undefined;
 }
 export interface InfoFieldRendererProps {
-    field: InfoViewField;
+    field: FormField;
     methods?: Record<string, Function>;
     sqlOpsUrls: SqlEndpoints;
     data?: Record<string, string | number | boolean | null | undefined>;
@@ -148,58 +180,6 @@ export type AutocompleteConfig = {
     src: AutocompleteSrc;
 };
 export type FileCategory = "image" | "pdf" | "video" | "text" | "other";
-export interface FormField {
-    name: string;
-    label?: string;
-    parameter?: string | Record<string, string>;
-    width?: number | string;
-    options?: Record<string, any>;
-    group?: string;
-    type?: string;
-    regex?: string;
-    required?: boolean;
-    disabled?: boolean;
-    error_message?: string;
-    placeholder?: string;
-    field_error?: string;
-    axiosObject?: AxiosRequestConfig;
-    valueKey?: string;
-    labelKey?: string;
-    groupKey?: string;
-    source?: Record<string, any>;
-    multiple?: boolean;
-    icon?: string;
-    table?: string;
-    columns?: string;
-    where?: Record<string, string>;
-    autocomplete?: "off" | AutocompleteConfig;
-    ajaxchain?: AutocompleteConfig | AutocompleteConfig[];
-    validate?: Record<string, string | number | boolean>;
-    groupid?: string;
-    hidden?: boolean;
-    value?: string | undefined;
-    default?: string | number | boolean | string[] | number[] | null;
-    cols?: string;
-    search?: boolean;
-    method?: string;
-    vmode?: string;
-    "no-option"?: string;
-    "nodb"?: boolean;
-    "nosave"?: boolean;
-    queryid?: string;
-    min?: number | string;
-    max?: number | string;
-    minlength?: number;
-    maxlength?: number;
-    onChange?: string;
-    onBlur?: string;
-    onFocus?: string;
-    onClick?: string;
-    step?: string | number;
-    persistent?: string | boolean;
-    content?: string;
-    accept?: string;
-}
 export type FileItem = {
     fileId: number;
     path: string;

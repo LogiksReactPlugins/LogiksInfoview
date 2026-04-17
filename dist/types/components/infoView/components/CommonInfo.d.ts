@@ -1,9 +1,9 @@
-import { InfoViewField, InfoData, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
+import { FormField, InfoData, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
 interface CommonInfoProps {
     infoData: InfoData;
     sqlOpsUrls: SqlEndpoints;
     commonInfo: {
-        fields?: InfoViewField[];
+        fields?: FormField[];
         label: string;
         type: string;
     };

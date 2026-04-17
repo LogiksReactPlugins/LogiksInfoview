@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import type { ComponentType, ReactNode } from "react";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
-import Accordion from './Accordian.js';
 import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 
-import { groupFields, tailwindCols, tailwindGrid, toColWidth } from '../utils.js';
-import type { InfoViewGroup, InfoViewProps, InfoViewField, InfoData, Infoview, SqlEndpoints, SelectOptions, InfoviewJson, Toast } from '../InfoView.types.js';
+import { isHidden, tailwindCols, toColWidth } from '../utils.js';
+import type { InfoViewGroup, FormField, InfoData, SqlEndpoints, SelectOptions, InfoviewJson, Toast } from '../InfoView.types.js';
 import Card from './Card.js';
 import { resolveComponent } from '@/components/helpers/resolveComponent.js';
 
@@ -26,7 +25,7 @@ interface CardViewProps {
         fieldName: string,
         options: SelectOptions
     ) => void;
-   components?: Record<string, ComponentType<any> | ReactNode>;
+    components?: Record<string, ComponentType<any> | ReactNode>;
 }
 
 export default function CardView({
@@ -111,16 +110,17 @@ export default function CardView({
                             return false;
                         }) : [];
 
-                      const node = resolveComponent(obj.component, components);
+                        const node = resolveComponent(obj.component, components);
 
                         return <Card key={group} title={obj.label} >
                             {obj?.type === "fields" && obj?.fields ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                                     <div className={"grid grid-cols-12 gap-2"}>
-                                        {obj.fields.map((field: InfoViewField, index: number) => (
-                                            <div
+                                        {obj.fields.map((field: FormField, index: number) => {
+                                            if (isHidden(field.hidden)) return null;
+                                            return <div
                                                 key={field?.name ?? `field-${index}`}
-                                                className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(field.width)] || "lg:col-span-2"
+                                                className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(Number(field.width))] || "lg:col-span-2"
                                                     }`}
                                             >
                                                 <InfoFieldRenderer
@@ -136,7 +136,7 @@ export default function CardView({
                                                     refid={refid}
                                                 />
                                             </div>
-                                        ))}
+                                        })}
                                     </div>
                                 </div>
                             ) : obj?.type === "component" && node ? (

@@ -272,9 +272,6 @@ export default function InfoFieldRenderer({
 
   const rawVal = field?.name ? data?.[field.name] : undefined;
 
-  //console.log("field?.name ,Val",field?.name,rawVal);
-
-
   React.useEffect(() => {
     if (ranRef.current) return;
     if (!setFieldOptions || !rawVal) return;
@@ -289,8 +286,6 @@ export default function InfoFieldRenderer({
       values: data ?? {}
     });
   }, [rawVal, sqlOpsUrls, setFieldOptions]);
-
-
 
 
   let displayVal;
