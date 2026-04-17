@@ -69,6 +69,21 @@ export async function fetchGeolocation(): Promise<string | null> {
   }
 }
 
+export function filterSavableValues(
+  values: Record<string, any>,
+  flatFields: FormField[]
+): Record<string, any> {
+  const excluded = new Set(
+    flatFields
+      .filter(f => f.nodb === true || f.nosave === true)
+      .map(f => f.name)
+  );
+
+  return Object.fromEntries(
+    Object.entries(values).filter(([key]) => !excluded.has(key))
+  );
+}
+
 export function transformedObject(originalObject: Record<string, any>, operation: string = "create") {
 
   const fields: Record<string, { label: string; required: boolean }> = {}
