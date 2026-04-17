@@ -74,7 +74,7 @@ function bs() {
             return "Portal";
           case g:
             return (T.displayName || "Context") + ".Provider";
-          case h:
+          case m:
             return (T._context.displayName || "Context") + ".Consumer";
           case N:
             var k = T.render;
@@ -238,16 +238,16 @@ React keys must be passed directly to JSX without using spread:
     function b(T) {
       typeof T == "object" && T !== null && T.$$typeof === A && T._store && (T._store.validated = 1);
     }
-    var m = se, A = Symbol.for("react.transitional.element"), w = Symbol.for("react.portal"), E = Symbol.for("react.fragment"), x = Symbol.for("react.strict_mode"), y = Symbol.for("react.profiler"), h = Symbol.for("react.consumer"), g = Symbol.for("react.context"), N = Symbol.for("react.forward_ref"), R = Symbol.for("react.suspense"), O = Symbol.for("react.suspense_list"), F = Symbol.for("react.memo"), P = Symbol.for("react.lazy"), B = Symbol.for("react.activity"), L = Symbol.for("react.client.reference"), p = m.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, H = Object.prototype.hasOwnProperty, Q = Array.isArray, X = console.createTask ? console.createTask : function() {
+    var h = se, A = Symbol.for("react.transitional.element"), w = Symbol.for("react.portal"), E = Symbol.for("react.fragment"), x = Symbol.for("react.strict_mode"), y = Symbol.for("react.profiler"), m = Symbol.for("react.consumer"), g = Symbol.for("react.context"), N = Symbol.for("react.forward_ref"), R = Symbol.for("react.suspense"), O = Symbol.for("react.suspense_list"), F = Symbol.for("react.memo"), P = Symbol.for("react.lazy"), B = Symbol.for("react.activity"), L = Symbol.for("react.client.reference"), p = h.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, H = Object.prototype.hasOwnProperty, Q = Array.isArray, X = console.createTask ? console.createTask : function() {
       return null;
     };
-    m = {
+    h = {
       react_stack_bottom_frame: function(T) {
         return T();
       }
     };
-    var ne, te = {}, Te = m.react_stack_bottom_frame.bind(
-      m,
+    var ne, te = {}, Te = h.react_stack_bottom_frame.bind(
+      h,
       o
     )(), je = X(r(o)), Oe = {};
     st.Fragment = E, st.jsx = function(T, k, J, S, C) {
@@ -627,7 +627,7 @@ function Bt(e, t, n) {
     }
     return fr(w) ? !0 : (t.append(Vr(x, E, o), f(w)), !1);
   }
-  const b = [], m = Object.assign(ia, {
+  const b = [], h = Object.assign(ia, {
     defaultVisitor: u,
     convertValue: f,
     isVisitable: fr
@@ -636,14 +636,14 @@ function Bt(e, t, n) {
     if (!v.isUndefined(w)) {
       if (b.indexOf(w) !== -1)
         throw Error("Circular reference detected in " + E.join("."));
-      b.push(w), v.forEach(w, function(y, h) {
+      b.push(w), v.forEach(w, function(y, m) {
         (!(v.isUndefined(y) || y === null) && s.call(
           t,
           y,
-          v.isString(h) ? h.trim() : h,
+          v.isString(m) ? m.trim() : m,
           E,
-          m
-        )) === !0 && A(y, E ? E.concat(h) : [h]);
+          h
+        )) === !0 && A(y, E ? E.concat(m) : [m]);
       }), b.pop();
     }
   }
@@ -1128,13 +1128,13 @@ function Ra(e, t) {
   return t = t !== void 0 ? t : 1e3, function(d) {
     const f = Date.now(), u = r[o];
     i || (i = f), n[s] = d, r[s] = f;
-    let b = o, m = 0;
+    let b = o, h = 0;
     for (; b !== s; )
-      m += n[b++], b = b % e;
+      h += n[b++], b = b % e;
     if (s = (s + 1) % e, s === o && (o = (o + 1) % e), f - i < t)
       return;
     const A = u && f - u;
-    return A ? Math.round(m * 1e3 / A) : void 0;
+    return A ? Math.round(h * 1e3 / A) : void 0;
   };
 }
 function _a(e, t) {
@@ -1219,14 +1219,14 @@ const en = (e) => e instanceof we ? { ...e } : e;
 function Ge(e, t) {
   t = t || {};
   const n = {};
-  function r(f, u, b, m) {
-    return v.isPlainObject(f) && v.isPlainObject(u) ? v.merge.call({ caseless: m }, f, u) : v.isPlainObject(u) ? v.merge({}, u) : v.isArray(u) ? u.slice() : u;
+  function r(f, u, b, h) {
+    return v.isPlainObject(f) && v.isPlainObject(u) ? v.merge.call({ caseless: h }, f, u) : v.isPlainObject(u) ? v.merge({}, u) : v.isArray(u) ? u.slice() : u;
   }
-  function s(f, u, b, m) {
+  function s(f, u, b, h) {
     if (v.isUndefined(u)) {
       if (!v.isUndefined(f))
-        return r(void 0, f, b, m);
-    } else return r(f, u, b, m);
+        return r(void 0, f, b, h);
+    } else return r(f, u, b, h);
   }
   function o(f, u) {
     if (!v.isUndefined(u))
@@ -1276,8 +1276,8 @@ function Ge(e, t) {
     headers: (f, u, b) => s(en(f), en(u), b, !0)
   };
   return v.forEach(Object.keys({ ...e, ...t }), function(u) {
-    const b = d[u] || s, m = b(e[u], t[u], u);
-    v.isUndefined(m) && b !== l || (n[u] = m);
+    const b = d[u] || s, h = b(e[u], t[u], u);
+    v.isUndefined(h) && b !== l || (n[u] = h);
   }), n;
 }
 const zn = (e) => {
@@ -1306,7 +1306,7 @@ const zn = (e) => {
     const s = zn(e);
     let o = s.data;
     const i = we.from(s.headers).normalize();
-    let { responseType: l, onUploadProgress: d, onDownloadProgress: f } = s, u, b, m, A, w;
+    let { responseType: l, onUploadProgress: d, onDownloadProgress: f } = s, u, b, h, A, w;
     function E() {
       A && A(), w && w(), s.cancelToken && s.cancelToken.unsubscribe(u), s.signal && s.signal.removeEventListener("abort", u);
     }
@@ -1348,12 +1348,12 @@ const zn = (e) => {
       )), x = null;
     }, o === void 0 && i.setContentType(null), "setRequestHeader" in x && v.forEach(i.toJSON(), function(N, R) {
       x.setRequestHeader(R, N);
-    }), v.isUndefined(s.withCredentials) || (x.withCredentials = !!s.withCredentials), l && l !== "json" && (x.responseType = s.responseType), f && ([m, w] = It(f, !0), x.addEventListener("progress", m)), d && x.upload && ([b, A] = It(d), x.upload.addEventListener("progress", b), x.upload.addEventListener("loadend", A)), (s.cancelToken || s.signal) && (u = (g) => {
+    }), v.isUndefined(s.withCredentials) || (x.withCredentials = !!s.withCredentials), l && l !== "json" && (x.responseType = s.responseType), f && ([h, w] = It(f, !0), x.addEventListener("progress", h)), d && x.upload && ([b, A] = It(d), x.upload.addEventListener("progress", b), x.upload.addEventListener("loadend", A)), (s.cancelToken || s.signal) && (u = (g) => {
       x && (r(!g || g.type ? new Je(null, e, x) : g), x.abort(), x = null);
     }, s.cancelToken && s.cancelToken.subscribe(u), s.signal && (s.signal.aborted ? u() : s.signal.addEventListener("abort", u)));
-    const h = Sa(s.url);
-    if (h && de.protocols.indexOf(h) === -1) {
-      r(new K("Unsupported protocol " + h + ":", K.ERR_BAD_REQUEST, e));
+    const m = Sa(s.url);
+    if (m && de.protocols.indexOf(m) === -1) {
+      r(new K("Unsupported protocol " + m + ":", K.ERR_BAD_REQUEST, e));
       return;
     }
     x.send(o || null);
@@ -1424,8 +1424,8 @@ const zn = (e) => {
         }
         let b = u.byteLength;
         if (n) {
-          let m = o += b;
-          n(m);
+          let h = o += b;
+          n(h);
         }
         d.enqueue(new Uint8Array(u));
       } catch (f) {
@@ -1494,7 +1494,7 @@ const Ua = async (e) => {
     responseType: f,
     headers: u,
     withCredentials: b = "same-origin",
-    fetchOptions: m
+    fetchOptions: h
   } = zn(e);
   f = f ? (f + "").toLowerCase() : "text";
   let A = Fa([s, o && o.toAbortSignal()], i), w;
@@ -1520,7 +1520,7 @@ const Ua = async (e) => {
     v.isString(b) || (b = b ? "include" : "omit");
     const y = "credentials" in Request.prototype;
     w = new Request(t, {
-      ...m,
+      ...h,
       signal: A,
       method: n.toUpperCase(),
       headers: u.normalize().toJSON(),
@@ -1528,32 +1528,32 @@ const Ua = async (e) => {
       duplex: "half",
       credentials: y ? b : void 0
     });
-    let h = await fetch(w, m);
+    let m = await fetch(w, h);
     const g = mr && (f === "stream" || f === "response");
     if (mr && (l || g && E)) {
       const R = {};
       ["status", "statusText", "headers"].forEach((B) => {
-        R[B] = h[B];
+        R[B] = m[B];
       });
-      const O = v.toFiniteNumber(h.headers.get("content-length")), [F, P] = l && Zr(
+      const O = v.toFiniteNumber(m.headers.get("content-length")), [F, P] = l && Zr(
         O,
         It(Jr(l), !0)
       ) || [];
-      h = new Response(
-        tn(h.body, rn, F, () => {
+      m = new Response(
+        tn(m.body, rn, F, () => {
           P && P(), E && E();
         }),
         R
       );
     }
     f = f || "text";
-    let N = await Pt[v.findKey(Pt, f) || "text"](h, e);
+    let N = await Pt[v.findKey(Pt, f) || "text"](m, e);
     return !g && E && E(), await new Promise((R, O) => {
       $n(R, O, {
         data: N,
-        headers: we.from(h.headers),
-        status: h.status,
-        statusText: h.statusText,
+        headers: we.from(m.headers),
+        status: m.status,
+        statusText: m.statusText,
         config: e,
         request: w
       });
@@ -1749,16 +1749,16 @@ let He = class {
     this.interceptors.response.forEach(function(E) {
       f.push(E.fulfilled, E.rejected);
     });
-    let u, b = 0, m;
+    let u, b = 0, h;
     if (!d) {
       const w = [sn.bind(this), void 0];
-      for (w.unshift(...l), w.push(...f), m = w.length, u = Promise.resolve(n); b < m; )
+      for (w.unshift(...l), w.push(...f), h = w.length, u = Promise.resolve(n); b < h; )
         u = u.then(w[b++], w[b++]);
       return u;
     }
-    m = l.length;
+    h = l.length;
     let A = n;
-    for (b = 0; b < m; ) {
+    for (b = 0; b < h; ) {
       const w = l[b++], E = l[b++];
       try {
         A = w(A);
@@ -1772,7 +1772,7 @@ let He = class {
     } catch (w) {
       return Promise.reject(w);
     }
-    for (b = 0, m = f.length; b < m; )
+    for (b = 0, h = f.length; b < h; )
       u = u.then(f[b++], f[b++]);
     return u;
   }
@@ -1982,22 +1982,22 @@ U.getAdapter = Gn.getAdapter;
 U.HttpStatusCode = yr;
 U.default = U;
 const {
-  Axios: di,
-  AxiosError: fi,
-  CanceledError: pi,
-  isCancel: mi,
-  CancelToken: hi,
-  VERSION: yi,
-  all: gi,
-  Cancel: bi,
-  isAxiosError: xi,
-  spread: wi,
-  toFormData: vi,
-  AxiosHeaders: Ai,
-  HttpStatusCode: Ei,
-  formToJSON: Ni,
-  getAdapter: Ti,
-  mergeConfig: ji
+  Axios: fi,
+  AxiosError: pi,
+  CanceledError: mi,
+  isCancel: hi,
+  CancelToken: yi,
+  VERSION: gi,
+  all: bi,
+  Cancel: xi,
+  isAxiosError: wi,
+  spread: vi,
+  toFormData: Ai,
+  AxiosHeaders: Ei,
+  HttpStatusCode: Ni,
+  formToJSON: Ti,
+  getAdapter: ji,
+  mergeConfig: Si
 } = U;
 /*! @license DOMPurify 3.3.1 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.3.1/LICENSE */
 const {
@@ -2165,9 +2165,9 @@ function Qn() {
     NodeFilter: f,
     NamedNodeMap: u = e.NamedNodeMap || e.MozNamedAttrMap,
     HTMLFormElement: b,
-    DOMParser: m,
+    DOMParser: h,
     trustedTypes: A
-  } = e, w = d.prototype, E = ct(w, "cloneNode"), x = ct(w, "remove"), y = ct(w, "nextSibling"), h = ct(w, "childNodes"), g = ct(w, "parentNode");
+  } = e, w = d.prototype, E = ct(w, "cloneNode"), x = ct(w, "remove"), y = ct(w, "nextSibling"), m = ct(w, "childNodes"), g = ct(w, "parentNode");
   if (typeof i == "function") {
     const z = n.createElement("template");
     z.content && z.content.ownerDocument && (n = z.content.ownerDocument);
@@ -2316,7 +2316,7 @@ function Qn() {
     const re = N ? N.createHTML(c) : c;
     if (Ke === Fe)
       try {
-        _ = new m().parseFromString(re, rt);
+        _ = new h().parseFromString(re, rt);
       } catch {
       }
     if (!_ || !_.documentElement) {
@@ -2360,7 +2360,7 @@ function Qn() {
       if (!D[M] && Br(M) && (j.tagNameCheck instanceof RegExp && fe(j.tagNameCheck, M) || j.tagNameCheck instanceof Function && j.tagNameCheck(M)))
         return !1;
       if (Gt && !Le[M]) {
-        const re = g(c) || c.parentNode, ue = h(c) || c.childNodes;
+        const re = g(c) || c.parentNode, ue = m(c) || c.childNodes;
         if (ue && re) {
           const ae = ue.length;
           for (let he = ae - 1; he >= 0; --he) {
@@ -2594,6 +2594,14 @@ async function wr() {
     }
   }
 }
+function So(e, t) {
+  const n = new Set(
+    t.filter((r) => r.nodb === !0 || r.nosave === !0).map((r) => r.name)
+  );
+  return Object.fromEntries(
+    Object.entries(e).filter(([r]) => !n.has(r))
+  );
+}
 function Dt(e, t = "create") {
   const n = {};
   return Object.keys(e).forEach((r) => {
@@ -2603,7 +2611,7 @@ function Dt(e, t = "create") {
     });
   }), n;
 }
-function So(e, t = "create") {
+function Ro(e, t = "create") {
   return Object.entries(e).filter(([, n]) => !(n.vmode === "edit" && t === "create")).map(([n, r]) => ({
     ...r,
     name: n
@@ -2663,7 +2671,7 @@ function yn(e, t) {
   }
   return e;
 }
-const Ht = (e) => e === !0 || e === "true", Ro = (e, t, n, r) => {
+const Ht = (e) => e === !0 || e === "true", _o = (e, t, n, r) => {
   e.forEach((s) => {
     const o = s?.name;
     if (!o) return;
@@ -2709,9 +2717,9 @@ const Ht = (e) => e === !0 || e === "true", Ro = (e, t, n, r) => {
             "Invalid date format (expected dd/MM/yyyy or dd-MM-yyyy)",
             (u) => {
               if (u == null || u === "") return !0;
-              const b = u.replace(/-/g, "/"), [m, A, w] = b.split("/");
-              if (!m || !A || !w) return !1;
-              const E = /* @__PURE__ */ new Date(`${w}-${A}-${m}`);
+              const b = u.replace(/-/g, "/"), [h, A, w] = b.split("/");
+              if (!h || !A || !w) return !1;
+              const E = /* @__PURE__ */ new Date(`${w}-${A}-${h}`);
               return !isNaN(E.getTime());
             }
           );
@@ -2736,13 +2744,13 @@ const Ht = (e) => e === !0 || e === "true", Ro = (e, t, n, r) => {
         case "decimal":
           l = Ee.number().typeError("Must be a decimal").transform((u, b) => {
             if (b == null || b === "") return;
-            const m = Number(b);
-            if (isNaN(m)) return u;
+            const h = Number(b);
+            if (isNaN(h)) return u;
             if (typeof u == "number" && !isNaN(u)) {
               const A = Number(u);
-              return Number.isInteger(A) ? Number(m.toFixed(A)) : m;
+              return Number.isInteger(A) ? Number(h.toFixed(A)) : h;
             }
-            return m;
+            return h;
           });
           break;
         case "alphanumeric":
@@ -2785,12 +2793,12 @@ const Ht = (e) => e === !0 || e === "true", Ro = (e, t, n, r) => {
 }, Ft = (e) => !e || typeof e != "object" ? !1 : Object.values(e).every(
   (t) => typeof t == "object" && t !== null
 );
-function _o(e) {
+function Co(e) {
   if (!e || typeof e != "object") return !1;
   const t = e.src;
   return typeof e.target == "string" && typeof t == "object" && t !== null && (t.type === "api" || typeof t.queryid == "string" || typeof t.table == "string" && typeof t.columns < "u");
 }
-function Co(e) {
+function Oo(e) {
   return e.split(",").map((t) => t.trim()).map((t) => {
     const n = t.match(/^(.+?)\s+as\s+.+$/i);
     return n ? n[1]?.trim() : t;
@@ -2804,7 +2812,7 @@ const Nr = (e, t) => {
   for (const s of Object.values(e))
     if (n in s)
       return s[n];
-}, Oo = (e) => {
+}, Lo = (e) => {
   if (!e) return [];
   if (Array.isArray(e))
     return e.map(
@@ -2820,7 +2828,7 @@ const Nr = (e, t) => {
     )
   ) : [];
 };
-function Lo(e) {
+function Io(e) {
   return e ? Ft(e) ? Object.values(e).reduce((t, n) => (Object.assign(t, n), t), {}) : e : {};
 }
 const ge = (e) => {
@@ -2835,7 +2843,7 @@ const ge = (e) => {
   }
   return t;
 };
-function Io(e) {
+function Po(e) {
   if (!e || e.type !== "Buffer" || !Array.isArray(e.data)) return null;
   const t = new TextDecoder().decode(new Uint8Array(e.data)).trim();
   if (t.startsWith("data:image/"))
@@ -2852,10 +2860,10 @@ function Io(e) {
   }
   return null;
 }
-function Po(e = "") {
+function Do(e = "") {
   return e.split(".").pop()?.toLowerCase() ?? "";
 }
-function Do(e) {
+function Fo(e) {
   return wo.includes(e) ? "image" : vo.includes(e) ? "video" : Eo.includes(e) ? "pdf" : Ao.includes(e) ? "text" : "other";
 }
 const gn = {
@@ -2864,24 +2872,24 @@ const gn = {
   video: "fa fa-file-video",
   text: "fa fa-file-lines",
   other: "fa fa-file"
-}, Fo = "__form_persist__", Jn = (e) => `${Fo}:${e}`;
-function ko(e) {
+}, ko = "__form_persist__", Jn = (e) => `${ko}:${e}`;
+function Mo(e) {
   return bo.sanitize(e, {
     USE_PROFILES: { html: !0 }
   });
 }
-function Mo(e) {
+function $o(e) {
   try {
     return JSON.parse(localStorage.getItem(Jn(e)) || "{}");
   } catch {
     return {};
   }
 }
-function $o(e) {
+function Bo(e) {
   return e.persistent ? e.persistent === !0 ? e.name : typeof e.persistent == "string" ? e.persistent : null : null;
 }
-function Bo(e, t, n) {
-  const r = Mo(e);
+function zo(e, t, n) {
+  const r = $o(e);
   localStorage.setItem(
     Jn(e),
     JSON.stringify({
@@ -2891,8 +2899,8 @@ function Bo(e, t, n) {
   );
 }
 function ze(e, t, n) {
-  const r = $o(t);
-  r && n && Bo(n, r, e);
+  const r = Bo(t);
+  r && n && zo(n, r, e);
 }
 function ir(e) {
   return U.isAxiosError(e) ? e.response?.data?.message || e.message || "Something went wrong" : e instanceof Error ? e.message : typeof e == "string" ? e : "Something went wrong";
@@ -2907,7 +2915,7 @@ const es = ({
 }) => {
   const r = Array.isArray(t) ? t : t ? [t] : [], s = e.map((o) => `${o.fileId}&${o.path}`);
   return [...r, ...s];
-}, zo = (e) => {
+}, Uo = (e) => {
   switch (e.type) {
     case "camera2":
       return {
@@ -2922,7 +2930,7 @@ const es = ({
         accept: "image/*"
       };
   }
-}, Uo = (e) => {
+}, Ho = (e) => {
   switch (e.type) {
     case "camera2":
       return "fa-camera";
@@ -2935,7 +2943,7 @@ const es = ({
     default:
       return "fa-image";
   }
-}, Ho = (e) => e === "today" ? (/* @__PURE__ */ new Date()).toISOString().split("T")[0] : e, Go = ({ fileUrl: e, category: t }) => e ? t === "image" ? /* @__PURE__ */ a.jsx("img", { src: e, className: "max-h-[80vh] mx-auto" }) : t === "pdf" || t === "text" ? /* @__PURE__ */ a.jsx("iframe", { src: e, className: "w-full h-[80vh]" }) : t === "video" ? /* @__PURE__ */ a.jsx("video", { controls: !0, className: "w-full max-h-[80vh]", children: /* @__PURE__ */ a.jsx("source", { src: e }) }) : /* @__PURE__ */ a.jsxs("div", { className: "text-center p-4", children: [
+}, Go = (e) => e === "today" ? (/* @__PURE__ */ new Date()).toISOString().split("T")[0] : e, Wo = ({ fileUrl: e, category: t }) => e ? t === "image" ? /* @__PURE__ */ a.jsx("img", { src: e, className: "max-h-[80vh] mx-auto" }) : t === "pdf" || t === "text" ? /* @__PURE__ */ a.jsx("iframe", { src: e, className: "w-full h-[80vh]" }) : t === "video" ? /* @__PURE__ */ a.jsx("video", { controls: !0, className: "w-full max-h-[80vh]", children: /* @__PURE__ */ a.jsx("source", { src: e }) }) : /* @__PURE__ */ a.jsxs("div", { className: "text-center p-4", children: [
   /* @__PURE__ */ a.jsx("p", { children: "Preview not available" }),
   /* @__PURE__ */ a.jsx("a", { href: e, download: !0, className: "text-blue-600 underline", children: "Download file" })
 ] }) : null, dt = (e) => ({
@@ -2947,7 +2955,7 @@ const es = ({
   e.baseURL + e.dbopsGetRefId,
   t,
   { headers: dt(e) }
-)).data.refid, Wo = {
+)).data.refid, qo = {
   async fetch(e, t, n, r) {
     const s = await cr(e);
     let o = !1, i;
@@ -3024,7 +3032,7 @@ async function Xe(e, t, n, r = void 0, s = void 0, o = {}) {
     throw i;
   }
 }
-async function qo({
+async function Ko({
   field: e,
   value: t,
   sqlOpsUrls: n,
@@ -3038,12 +3046,12 @@ async function qo({
     if (!i || typeof i != "object" || !l || typeof l != "object") continue;
     let d;
     if ("type" in l && l.type === "api") {
-      let m = e.name;
-      typeof e.parameter == "string" && e.parameter && (m = e.parameter);
-      const A = { [m]: t, refid: t };
+      let h = e.name;
+      typeof e.parameter == "string" && e.parameter && (h = e.parameter);
+      const A = { [h]: t, refid: t };
       if (typeof e.parameter == "object" && e.parameter !== null && Object.keys(e.parameter).length > 0)
         for (const [x, y] of Object.entries(e.parameter))
-          A[x] = x === m ? t : s?.[y];
+          A[x] = x === h ? t : s?.[y];
       const w = {
         method: l.method || "GET",
         url: n?.baseURL + l.endpoint,
@@ -3054,12 +3062,12 @@ async function qo({
       }, { data: E } = await U(w);
       d = E;
     } else {
-      let m;
+      let h;
       if (!l.queryid) {
         if (!l.table || !l.columns)
           throw new Error("SQL query requires field.table");
         const w = be(l.where ?? {}, { refid: t });
-        m = {
+        h = {
           ...l,
           table: l.table,
           cols: l.columns,
@@ -3068,7 +3076,7 @@ async function qo({
       }
       const { data: A } = await Xe(
         n,
-        m,
+        h,
         l.queryid,
         t
       );
@@ -3123,17 +3131,17 @@ async function ns(e, t) {
     }
   )).data;
 }
-function Ko(e) {
+function Vo(e) {
   const t = gn[e] ?? gn.other;
   return /* @__PURE__ */ a.jsx("i", { className: `${t} text-2xl text-gray-600` });
 }
 const ss = ({ filePath: e, sqlOpsUrls: t }) => {
-  const n = e.replace(/^[^&]*&/, ""), [r, s] = ce(null), [o, i] = ce(!1), l = Po(n), d = Do(l);
+  const n = e.replace(/^[^&]*&/, ""), [r, s] = ce(null), [o, i] = ce(!1), l = Do(n), d = Fo(l);
   ye(() => {
     if (!t || d !== "image" && !o) return;
     let u = !0, b = null;
-    return ts(n, t).then((m) => {
-      u && (b = m, s(m));
+    return ts(n, t).then((h) => {
+      u && (b = h, s(h));
     }), () => {
       u = !1, b && URL.revokeObjectURL(b);
     };
@@ -3159,7 +3167,7 @@ const ss = ({ filePath: e, sqlOpsUrls: t }) => {
         className: "inline-flex cursor-pointer items-center gap-1",
         title: "Click to preview",
         children: [
-          Ko(d),
+          Vo(d),
           /* @__PURE__ */ a.jsx("span", { className: "text-sm", children: f })
         ]
       }
@@ -3173,7 +3181,7 @@ const ss = ({ filePath: e, sqlOpsUrls: t }) => {
           children: "✕"
         }
       ),
-      r ? /* @__PURE__ */ a.jsx(Go, { fileUrl: r, category: d }) : /* @__PURE__ */ a.jsx("div", { className: "text-center p-8", children: "Loading preview…" })
+      r ? /* @__PURE__ */ a.jsx(Wo, { fileUrl: r, category: d }) : /* @__PURE__ */ a.jsx("div", { className: "text-center p-8", children: "Loading preview…" })
     ] }) })
   ] });
 };
@@ -3194,12 +3202,12 @@ function xt({
     block text-sm font-semibold  transition-all duration-300 text-gray-700 capitalize
   `, [u, b] = ce(
     i ?? e.options ?? {}
-  ), m = se.useRef(!1);
+  ), h = se.useRef(!1);
   se.useEffect(() => {
     i && b(i);
   }, [i]);
   const A = se.useMemo(
-    () => Lo(u),
+    () => Io(u),
     [u]
   );
   se.useEffect(() => {
@@ -3326,7 +3334,7 @@ function xt({
   ]);
   const w = e?.name ? t?.[e.name] : void 0;
   se.useEffect(() => {
-    m.current || !l || !w || (m.current = !0, qo({
+    h.current || !l || !w || (h.current = !0, Ko({
       field: e,
       value: w,
       sqlOpsUrls: r,
@@ -3336,7 +3344,7 @@ function xt({
   }, [w, r, l]);
   let E;
   typeof w == "string" ? e.type === "date" ? E = w.split("T")[0] : e.type === "time" ? E = w.includes("T") ? w.slice(11, 16) : w.slice(0, 5) : E = yn(w, A) : E = yn(w, A);
-  const x = E == null ? "" : typeof E == "string" || typeof E == "number" ? E : JSON.stringify(E), y = Io(w), h = e.type === "richtextarea" && typeof x == "string" ? ko(x) : null;
+  const x = E == null ? "" : typeof E == "string" || typeof E == "number" ? E : JSON.stringify(E), y = Po(w), m = e.type === "richtextarea" && typeof x == "string" ? Mo(x) : null;
   return /* @__PURE__ */ a.jsxs("div", { className: "px-3 py-2 bg-gray-50 rounded-lg", children: [
     /* @__PURE__ */ a.jsx("label", { className: f, children: e?.label }),
     /* @__PURE__ */ a.jsx("div", { className: "relative", children: y ? y.type === "drawn" ? /* @__PURE__ */ a.jsx("svg", { viewBox: "0 0 300 150", className: "h-24 w-full border bg-white rounded", children: y.paths.map((g, N) => /* @__PURE__ */ a.jsx(
@@ -3384,7 +3392,7 @@ function xt({
       "div",
       {
         className: "tiptap border border-gray-200 min-h-[400px] max-h-[220px] overflow-auto bg-white rounded p-2 text-sm",
-        dangerouslySetInnerHTML: { __html: h ?? "" }
+        dangerouslySetInnerHTML: { __html: m ?? "" }
       }
     ) : /* @__PURE__ */ a.jsx("p", { className: d, children: x }) })
   ] });
@@ -3413,7 +3421,7 @@ function as({ filePath: e, field_name: t, sqlOpsUrls: n }) {
     }
   ) : null;
 }
-function Vo({
+function Yo({
   commonInfo: e,
   infoData: t,
   hiddenFields: n = [],
@@ -3425,7 +3433,7 @@ function Vo({
   methods: d
 }) {
   const f = Rt(
-    () => e?.fields?.find((m) => m.type === "avatar"),
+    () => e?.fields?.find((h) => h.type === "avatar"),
     [e?.fields]
   ), u = f?.name, b = u && typeof t?.[u] == "string" ? t[u].trim() : "";
   return /* @__PURE__ */ a.jsx("div", { className: "bg-white border border-gray-100 p-4 min-h-3/10 overflow-auto", children: /* @__PURE__ */ a.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-6", children: [
@@ -3444,20 +3452,20 @@ function Vo({
         className: "w-full h-full object-cover opacity-60"
       }
     ) }) }),
-    /* @__PURE__ */ a.jsx("div", { className: `min-h-0 max-h-40 overflow-y-auto custom-scrollbar ${f ? "lg:col-span-10" : "lg:col-span-12"}`, children: /* @__PURE__ */ a.jsx("div", { className: "grid grid-cols-12 gap-2", children: e.fields?.map((m, A) => n.includes(m.name) || m.type === "avatar" ? null : /* @__PURE__ */ a.jsx("div", { className: `hover:bg-gray-100 transition-colors duration-200 col-span-12 sm:col-span-6 ${gt[bt(Number(m.width))] || "lg:col-span-4"}`, children: /* @__PURE__ */ a.jsx(
+    /* @__PURE__ */ a.jsx("div", { className: `min-h-0 max-h-40 overflow-y-auto custom-scrollbar ${f ? "lg:col-span-10" : "lg:col-span-12"}`, children: /* @__PURE__ */ a.jsx("div", { className: "grid grid-cols-12 gap-2", children: e.fields?.map((h, A) => n.includes(h.name) || h.type === "avatar" ? null : /* @__PURE__ */ a.jsx("div", { className: `hover:bg-gray-100 transition-colors duration-200 col-span-12 sm:col-span-6 ${gt[bt(Number(h.width))] || "lg:col-span-4"}`, children: /* @__PURE__ */ a.jsx(
       xt,
       {
-        field: m,
+        field: h,
         data: t ?? {},
         sqlOpsUrls: r,
         methods: d,
         refid: l,
         module_refid: i,
         setFieldOptions: s,
-        ...o[m.name] ? { optionsOverride: o[m.name] } : {}
+        ...o[h.name] ? { optionsOverride: o[h.name] } : {}
       },
-      m?.name
-    ) }, m.name)) }) })
+      h?.name
+    ) }, h.name)) }) })
   ] }) });
 }
 function Tr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module_refid: o, setFieldOptions: i, fieldOptions: l }) {
@@ -3465,13 +3473,13 @@ function Tr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
   return se.useEffect(() => {
     let u = !1;
     return (async () => {
-      const m = e?.config;
-      if (!m?.type) {
+      const h = e?.config;
+      if (!h?.type) {
         u || f(null);
         return;
       }
-      if (m.type === "method") {
-        const A = m.method, w = A ? t[A] : void 0;
+      if (h.type === "method") {
+        const A = h.method, w = A ? t[A] : void 0;
         if (w)
           try {
             const E = await Promise.resolve(w());
@@ -3482,31 +3490,31 @@ function Tr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
         else
           u || f(null);
       }
-      if (m.type === "api")
+      if (h.type === "api")
         try {
           const A = await U({
-            method: m.method || "GET",
+            method: h.method || "GET",
             // GET, POST, etc.
-            url: m.url,
-            data: m.body || {},
+            url: h.url,
+            data: h.body || {},
             // request body
-            params: m.params || {},
+            params: h.params || {},
             // query params
-            headers: m.headers || {}
+            headers: h.headers || {}
             // optional headers
           });
           u || f(A.data || null);
         } catch (A) {
           console.error("API fetch failed:", A), u || f(null);
         }
-      if (m.type === "sql" && s && s != "0" || m?.dbopsid) {
+      if (h.type === "sql" && s && s != "0" || h?.dbopsid) {
         if (!r) {
           console.error("SQL source requires formJson.endPoints but it is missing");
           return;
         }
         try {
           let A = !1, w;
-          m?.dbopsid && (A = !0, w = m?.dbopsid);
+          h?.dbopsid && (A = !0, w = h?.dbopsid);
           const E = await U({
             method: "GET",
             url: r.baseURL + r.dbopsGetHash,
@@ -3515,12 +3523,12 @@ function Tr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
             }
           });
           if (!A) {
-            let h = {
-              ...m
+            let m = {
+              ...h
             };
-            m.where && (h = {
-              ...m,
-              where: be(m.where, {
+            h.where && (m = {
+              ...h,
+              where: be(h.where, {
                 refid: s
               })
             }), w = (await U({
@@ -3528,9 +3536,9 @@ function Tr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
               url: r.baseURL + r.dbopsGetRefId,
               data: {
                 operation: "fetch",
-                source: h,
-                fields: Dt(m.fields, r.operation),
-                forcefill: m.forcefill,
+                source: m,
+                fields: Dt(h.fields, r.operation),
+                forcefill: h.forcefill,
                 datahash: E.data.refhash,
                 srcid: o
               },
@@ -3566,7 +3574,7 @@ function Tr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
     JSON.stringify(e?.config?.body || {}),
     JSON.stringify(e?.config?.headers || {})
   ]), /* @__PURE__ */ a.jsx("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ a.jsx("div", { className: "grid grid-cols-12 gap-2", children: d ? Object.keys(d).map((u, b) => {
-    let m = { name: u, label: u };
+    let h = { name: u, label: u };
     return /* @__PURE__ */ a.jsx(
       "div",
       {
@@ -3574,13 +3582,13 @@ function Tr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
         children: /* @__PURE__ */ a.jsx(
           xt,
           {
-            field: m,
+            field: h,
             data: d ?? {},
             methods: t,
             refid: s,
             sqlOpsUrls: r,
             setFieldOptions: i,
-            ...l[m.name] ? { optionsOverride: l[m.name] } : {}
+            ...l[h.name] ? { optionsOverride: l[h.name] } : {}
           },
           u
         )
@@ -3596,7 +3604,7 @@ function Tr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, module
     /* @__PURE__ */ a.jsx("p", { className: "text-sm text-gray-500 text-center max-w-sm", children: "There are no records to display  at the moment." })
   ] }) }) }) });
 }
-function Yo({
+function Xo({
   open: e,
   title: t = "Confirm Delete",
   message: n = "Are you sure you want to delete this record?",
@@ -3626,7 +3634,7 @@ function Yo({
     ] })
   ] }) }) : null;
 }
-function Xo({
+function Qo({
   field: e,
   formik: t,
   methods: n = {},
@@ -3636,30 +3644,30 @@ function Xo({
   optionsOverride: i,
   setFieldOptions: l
 }) {
-  const [d, f] = ce(!1), [u, b] = ce(!1), [m, A] = ce(
+  const [d, f] = ce(!1), [u, b] = ce(!1), [h, A] = ce(
     i ?? e.options ?? {}
-  ), [w, E] = ce(""), [x, y] = ce(0), h = Qe(null), g = Qe(null), [N, R] = ce(!1), O = Qe(w), F = e.disabled === !0;
+  ), [w, E] = ce(""), [x, y] = ce(0), m = Qe(null), g = Qe(null), [N, R] = ce(!1), O = Qe(w), F = e.disabled === !0;
   ye(() => {
     O.current = w;
   }, [w]), ye(() => {
-    if (e.type !== "select" || e.multiple || e["no-option"] !== "false" || t.values[P] || !m) return;
+    if (e.type !== "select" || e.multiple || e["no-option"] !== "false" || t.values[P] || !h) return;
     let j;
-    if (Array.isArray(m))
-      j = m[0]?.value;
-    else if (!Ft(m))
-      j = Object.keys(m)[0];
+    if (Array.isArray(h))
+      j = h[0]?.value;
+    else if (!Ft(h))
+      j = Object.keys(h)[0];
     else {
-      const D = Object.values(m)[0];
+      const D = Object.values(h)[0];
       j = D ? Object.keys(D)[0] : void 0;
     }
     j != null && t.setFieldValue(P, String(j), !1);
-  }, [m]), ye(() => {
+  }, [h]), ye(() => {
     i && A(i);
   }, [i]), ye(() => {
     if (!N) return;
     const C = (j) => {
       const D = j.target;
-      g.current?.contains(D) || h.current?.contains(D) || (R(!1), E(""));
+      g.current?.contains(D) || m.current?.contains(D) || (R(!1), E(""));
     };
     return document.addEventListener("mousedown", C), () => {
       document.removeEventListener("mousedown", C);
@@ -3804,8 +3812,8 @@ function Xo({
   `, p = `
     block text-sm font-semibold mb-1  transition-all duration-300 text-gray-700
   `, H = Rt(
-    () => Oo(m),
-    [m]
+    () => Lo(h),
+    [h]
   ), Q = Rt(() => {
     if (!e.type || !["suggest", "autosuggest", "autocomplete"].includes(e.type) || !w.trim()) return null;
     const C = w.trim().toLowerCase();
@@ -3833,7 +3841,7 @@ function Xo({
       } else C.key === "Escape" && (E(""), R(!1));
   };
   ye(() => {
-    h.current?.querySelector(
+    m.current?.querySelector(
       `[data-index="${x}"]`
     )?.scrollIntoView({ block: "nearest" });
   }, [x]), ye(() => {
@@ -3846,7 +3854,7 @@ function Xo({
     const V = Array.isArray(j) ? j : j ? [j] : [];
     (async () => {
       try {
-        if (_o(C)) {
+        if (Co(C)) {
           const I = C.src;
           if (!I || !r) return;
           let $;
@@ -3942,7 +3950,7 @@ function Xo({
     })();
   }, [t.values[e.name]]), ye(() => {
     if (!ne || !w.trim() || !r) return;
-    const C = Co(e.columns ?? ""), j = new AbortController(), D = setTimeout(async () => {
+    const C = Oo(e.columns ?? ""), j = new AbortController(), D = setTimeout(async () => {
       try {
         let V;
         if (!e.queryid) {
@@ -4051,12 +4059,12 @@ function Xo({
     labelClasses: p,
     search: w,
     highlightedIndex: x,
-    options: m,
+    options: h,
     isDisabled: F,
     key: P,
     filteredOptions: te,
     open: N,
-    listRef: h,
+    listRef: m,
     isFocused: d,
     exactMatch: Q,
     triggerRef: g,
@@ -4074,7 +4082,7 @@ function jr({
   return ms(() => {
     if (!t || !e.current) return;
     const l = e.current, d = () => {
-      const u = l.getBoundingClientRect(), m = window.innerHeight - u.bottom, A = u.top, E = m < s && A > m ? u.top - Math.min(s, A) - r : u.bottom + r;
+      const u = l.getBoundingClientRect(), h = window.innerHeight - u.bottom, A = u.top, E = h < s && A > h ? u.top - Math.min(s, A) - r : u.bottom + r;
       i({
         position: "fixed",
         top: E,
@@ -4107,7 +4115,7 @@ function bn({
   formik: f,
   executeFieldMethod: u,
   handlePersist: b,
-  module_refid: m,
+  module_refid: h,
   options: A,
   triggerRef: w,
   open: E,
@@ -4129,10 +4137,10 @@ function bn({
         ref: w,
         tabIndex: 0,
         onClick: () => {
-          x((h) => !h);
+          x((m) => !m);
         },
-        onKeyDown: (h) => {
-          t || n(h, !0);
+        onKeyDown: (m) => {
+          t || n(m, !0);
         },
         children: [
           /* @__PURE__ */ a.jsx("span", { className: "text-sm text-gray-700", children: f.values[y] ? Nr(A, f.values[y]) ?? "Select option" : `Select ${e.label}` }),
@@ -4168,10 +4176,10 @@ function bn({
             {
               type: "text",
               value: o,
-              onChange: (h) => {
-                d(h.target.value);
+              onChange: (m) => {
+                d(m.target.value);
               },
-              onKeyDown: (h) => n(h, !0),
+              onKeyDown: (m) => n(m, !0),
               placeholder: "Search...",
               className: `px-2 py-[5px] rounded w-full border border-gray-200 transition-all duration-300 
                       bg-white/80 backdrop-blur-sm text-gray-800 placeholder-gray-400
@@ -4181,26 +4189,26 @@ function bn({
           i.length > 0 && /* @__PURE__ */ a.jsx(
             "div",
             {
-              onClick: (h) => {
-                h.preventDefault(), h.stopPropagation(), f.setFieldValue(y, ""), x(!1), b("", e, m), d("");
+              onClick: (m) => {
+                m.preventDefault(), m.stopPropagation(), f.setFieldValue(y, ""), x(!1), b("", e, h), d("");
               },
               className: "px-2 py-1 hover:bg-gray-50 text-gray-500 rounded cursor-pointer text-sm hover:bg-gray-50",
               children: "Clear selection"
             }
           ),
-          i.length > 0 ? i.map(([h, g], N) => /* @__PURE__ */ a.jsx(
+          i.length > 0 ? i.map(([m, g], N) => /* @__PURE__ */ a.jsx(
             "div",
             {
-              id: `${y}-${h}`,
+              id: `${y}-${m}`,
               "data-index": N,
               onClick: (R) => {
-                R.preventDefault(), R.stopPropagation(), f.setFieldValue(y, h), b(h, e, m), x(!1), d(""), u("onChange", e, `${y}-${h}`);
+                R.preventDefault(), R.stopPropagation(), f.setFieldValue(y, m), b(m, e, h), x(!1), d(""), u("onChange", e, `${y}-${m}`);
               },
               className: `px-2 py-1 hover:bg-gray-50 rounded cursor-pointer text-sm 
-                            ${f.values[y] === h ? "bg-indigo-50 text-indigo-600 font-medium" : l === N ? "bg-gray-100" : "hover:bg-gray-50"}`,
+                            ${f.values[y] === m ? "bg-indigo-50 text-indigo-600 font-medium" : l === N ? "bg-gray-100" : "hover:bg-gray-50"}`,
               children: g
             },
-            h
+            m
           )) : /* @__PURE__ */ a.jsx("div", { className: "px-2 py-1 text-gray-400 text-sm", children: "No results" })
         ]
       }
@@ -4221,14 +4229,14 @@ function xn({
   setSearch: f,
   formik: u,
   executeFieldMethod: b,
-  handlePersist: m,
+  handlePersist: h,
   module_refid: A,
   options: w,
   triggerRef: E,
   open: x,
   setOpen: y
 }) {
-  const h = e.name;
+  const m = e.name;
   return /* @__PURE__ */ a.jsxs("div", { className: "relative", children: [
     /* @__PURE__ */ a.jsxs("label", { className: s, children: [
       e.label,
@@ -4295,19 +4303,19 @@ function xn({
       l.length > 0 ? l.map(([g, N], R) => /* @__PURE__ */ a.jsxs(
         "label",
         {
-          htmlFor: `${h}-${g}`,
+          htmlFor: `${m}-${g}`,
           className: `flex items-center gap-x-2 px-2 py-1 hover:bg-gray-50 rounded cursor-pointer text-sm
                         ${r?.includes(g) ? "bg-indigo-50 text-indigo-600 font-medium" : d === R ? "bg-gray-100" : "hover:bg-gray-50"}`,
           children: [
             /* @__PURE__ */ a.jsx(
               "input",
               {
-                id: `${h}-${g}`,
+                id: `${m}-${g}`,
                 type: "checkbox",
                 checked: r?.includes(g),
                 onChange: (O) => {
                   const F = O.target.checked ? [...r, g] : r?.filter((P) => P !== g);
-                  u.setFieldValue(h, F), m(F, e, A), b("onChange", e, `${h}-${g}`);
+                  u.setFieldValue(m, F), h(F, e, A), b("onChange", e, `${m}-${g}`);
                 },
                 onBlur: u.handleBlur,
                 disabled: t,
@@ -4320,22 +4328,22 @@ function xn({
         g
       )) : /* @__PURE__ */ a.jsx("div", { className: "px-2 py-1 text-gray-400 text-sm", children: "No results" })
     ] }) }),
-    u.touched[h] && u.errors[h] && /* @__PURE__ */ a.jsx("span", { className: "text-xs text-red-500 ml-2", children: String(u.errors[h]) })
+    u.touched[m] && u.errors[m] && /* @__PURE__ */ a.jsx("span", { className: "text-xs text-red-500 ml-2", children: String(u.errors[m]) })
   ] });
 }
-function Qo({
+function Zo({
   formik: e,
   field: t,
   sqlOpsUrls: n,
   module_refid: r
 }) {
   let s = t?.name;
-  const o = Qe(null), i = t.max !== void 0 ? Number(t.max) : 1 / 0, l = Array.isArray(e.values[s]) ? e.values[s] : e.values[s] ? [e.values[s]] : [], d = async (m) => {
-    const A = m.currentTarget.files;
+  const o = Qe(null), i = t.max !== void 0 ? Number(t.max) : 1 / 0, l = Array.isArray(e.values[s]) ? e.values[s] : e.values[s] ? [e.values[s]] : [], d = async (h) => {
+    const A = h.currentTarget.files;
     if (!A?.length) return;
-    const w = Array.from(m.currentTarget.files || []);
+    const w = Array.from(h.currentTarget.files || []);
     if (l.length + w.length > i) {
-      alert(`You can upload maximum ${i} file(s)`), m.currentTarget.value = "";
+      alert(`You can upload maximum ${i} file(s)`), h.currentTarget.value = "";
       return;
     }
     try {
@@ -4347,22 +4355,22 @@ function Qo({
       e.setFieldValue(
         s,
         y
-      ), ze(y, t, r), m.target.value = "";
+      ), ze(y, t, r), h.target.value = "";
     } catch (x) {
       console.error("File upload failed", x), e.setFieldError(s, "File upload failed");
     }
-  }, f = async (m) => {
-    const A = Array.isArray(e.values[s]) ? e.values[s] : [], w = m.split("&")[0];
+  }, f = async (h) => {
+    const A = Array.isArray(e.values[s]) ? e.values[s] : [], w = h.split("&")[0];
     if (!w) return;
     const E = A.filter((x) => x.split("&")[0] !== w);
     e.setFieldValue(s, E);
     try {
-      if (!m.split("&")[0]) return;
+      if (!h.split("&")[0]) return;
       await ns(n, w), ze(E, t, r);
     } catch {
       e.setFieldValue(s, A), window.alert("Failed to delete file due to a technical issue. Please try again.");
     }
-  }, u = zo(t), b = t.multiple === !0;
+  }, u = Uo(t), b = t.multiple === !0;
   return /* @__PURE__ */ a.jsxs("div", { children: [
     /* @__PURE__ */ a.jsxs("label", { className: "block text-sm font-semibold mb-1  transition-all duration-300 text-gray-700", children: [
       t.label,
@@ -4384,12 +4392,12 @@ function Qo({
       {
         className: "flex flex-wrap gap-2",
         children: [
-          l.length > 0 ? l.map((m) => /* @__PURE__ */ a.jsxs("div", { className: "relative group", children: [
+          l.length > 0 ? l.map((h) => /* @__PURE__ */ a.jsxs("div", { className: "relative group", children: [
             /* @__PURE__ */ a.jsx(
               as,
               {
-                field_name: m,
-                filePath: m,
+                field_name: h,
+                filePath: h,
                 sqlOpsUrls: n
               }
             ),
@@ -4398,19 +4406,19 @@ function Qo({
               {
                 type: "button",
                 onClick: () => {
-                  f(m);
+                  f(h);
                 },
                 className: "absolute -top-2 -right-2 cursor-pointer bg-white text-red-500 rounded-full w-5 h-5 flex items-center justify-center text-xl cursor-pointer transition",
                 children: "×"
               }
             )
-          ] }, m)) : null,
+          ] }, h)) : null,
           /* @__PURE__ */ a.jsx(
             "div",
             {
               onClick: () => o.current?.click(),
               className: "w-24 h-24 flex items-center justify-center border border-dashed rounded-md bg-gray-50 hover:bg-gray-100 cursor-pointer",
-              children: /* @__PURE__ */ a.jsx("i", { className: `fa-solid ${Uo(t)} text-2xl text-gray-400` })
+              children: /* @__PURE__ */ a.jsx("i", { className: `fa-solid ${Ho(t)} text-2xl text-gray-400` })
             }
           )
         ]
@@ -4419,7 +4427,7 @@ function Qo({
     e.touched[s] && e.errors[s] && /* @__PURE__ */ a.jsx("span", { className: "text-xs text-red-500", children: String(e.errors[s]) })
   ] });
 }
-function Zo({
+function Jo({
   field: e,
   formik: t,
   methods: n = {},
@@ -4434,13 +4442,13 @@ function Zo({
     handleFileUpload: f,
     handleKeyDown: u,
     setSearch: b,
-    setOpen: m,
+    setOpen: h,
     setIsFocused: A,
     handleInputChange: w,
     handleSelect: E,
     handlePersist: x,
     setLoading: y,
-    removeFile: h,
+    removeFile: m,
     optionCount: g,
     baseInputClasses: N,
     focusClasses: R,
@@ -4457,7 +4465,7 @@ function Zo({
     isFocused: te,
     exactMatch: Te,
     loading: je
-  } = Xo({
+  } = Qo({
     field: e,
     formik: t,
     methods: n,
@@ -4485,7 +4493,7 @@ function Zo({
             placeholder: e.placeholder || "Type to search...",
             onChange: w,
             onBlur: () => {
-              setTimeout(() => m(!1), 150);
+              setTimeout(() => h(!1), 150);
             },
             onKeyDown: (j) => {
               if (j.key === "Enter") {
@@ -4493,7 +4501,7 @@ function Zo({
                   const [D] = Te;
                   t.setFieldValue(p, D), x(D, e, o);
                 } else F.trim() && (t.setFieldValue(p, F.trim()), x(F.trim(), e, o));
-                m(!1);
+                h(!1);
                 return;
               }
               u(j, !0);
@@ -4549,7 +4557,7 @@ function Zo({
             options: B,
             triggerRef: ne,
             open: Q,
-            setOpen: m
+            setOpen: h
           }
         );
       }
@@ -4572,7 +4580,7 @@ function Zo({
           options: B,
           triggerRef: ne,
           open: Q,
-          setOpen: m
+          setOpen: h
         }
       );
     }
@@ -4626,7 +4634,7 @@ function Zo({
             options: B,
             triggerRef: ne,
             open: Q,
-            setOpen: m
+            setOpen: h
           }
         );
       }
@@ -4649,7 +4657,7 @@ function Zo({
           options: B,
           triggerRef: ne,
           open: Q,
-          setOpen: m
+          setOpen: h
         }
       ) : /* @__PURE__ */ a.jsxs("div", { className: "relative", children: [
         /* @__PURE__ */ a.jsxs("label", { className: O, children: [
@@ -4849,7 +4857,7 @@ function Zo({
     case "photo":
     case "avatar":
       return /* @__PURE__ */ a.jsx(
-        Qo,
+        Zo,
         {
           formik: t,
           field: e,
@@ -4904,7 +4912,7 @@ function Zo({
             "button",
             {
               type: "button",
-              onClick: () => h(S),
+              onClick: () => m(S),
               className: "absolute -top-2 -right-2 bg-white text-red-500 rounded-full w-5 h-5 flex items-center justify-center text-xl cursor-pointer transition",
               children: "×"
             }
@@ -4945,7 +4953,7 @@ function Zo({
         t.touched[p] && t.errors[p] && /* @__PURE__ */ a.jsx("span", { className: "text-xs text-red-500", children: String(t.errors[p]) })
       ] });
     case "date": {
-      const S = Ho(e.max);
+      const S = Go(e.max);
       return /* @__PURE__ */ a.jsxs("div", { className: "relative", children: [
         /* @__PURE__ */ a.jsxs("label", { className: O, children: [
           e.label,
@@ -5095,7 +5103,7 @@ function Zo({
       ] });
   }
 }
-function Jo({
+function ei({
   title: e,
   fields: t,
   data: n,
@@ -5108,25 +5116,26 @@ function Jo({
   refid: l,
   module_refid: d
 }) {
-  const f = So(t, i?.operation), [u, b] = se.useState({}), m = (y, h) => {
+  const f = Ro(t, i?.operation), [u, b] = se.useState({}), h = (y, m) => {
     b((g) => ({
       ...g,
-      [y]: h
+      [y]: m
     }));
   }, { initialValues: A, validationSchema: w } = se.useMemo(() => {
-    const y = {}, h = {};
+    const y = {}, m = {};
     return f.forEach((g) => {
-      Ro([g], y, h, n);
+      _o([g], y, m, n);
     }), {
       initialValues: y,
-      validationSchema: h
+      validationSchema: m
     };
   }, [f, n]), E = hs({
     initialValues: A,
     enableReinitialize: !0,
     validationSchema: Ee.object().shape(w),
     onSubmit: (y) => {
-      r(y), E.resetForm();
+      let m = So(y, f);
+      r(m), E.resetForm();
     }
   });
   function x(y) {
@@ -5134,11 +5143,11 @@ function Jo({
   }
   return /* @__PURE__ */ a.jsx("div", { className: "relative  max-w-full ", children: /* @__PURE__ */ a.jsx("div", { className: "bg-white border border-gray-100 rounded-md animate-in fade-in duration-300", children: /* @__PURE__ */ a.jsxs("form", { onSubmit: E.handleSubmit, className: "p-4  mx-auto", children: [
     /* @__PURE__ */ a.jsxs("div", { className: "grid grid-flow-col auto-cols-max gap-4  overflow-x-auto", children: [
-      f.map((y, h) => Ht(y.hidden) || y.type === "geolocation" || y.vmode === "edit" && i?.operation === "create" ? null : /* @__PURE__ */ a.jsx(
+      f.map((y, m) => Ht(y.hidden) || y.type === "geolocation" || y.vmode === "edit" && i?.operation === "create" ? null : /* @__PURE__ */ a.jsx(
         "div",
         {
           children: /* @__PURE__ */ a.jsx(
-            Zo,
+            Jo,
             {
               refid: l,
               module_refid: d,
@@ -5146,12 +5155,12 @@ function Jo({
               field: y,
               formik: E,
               methods: o,
-              setFieldOptions: m,
+              setFieldOptions: h,
               ...u[y.name] ? { optionsOverride: u[y.name] } : {}
             }
           )
         },
-        y?.name ?? `field-${h}`
+        y?.name ?? `field-${m}`
       )),
       /* @__PURE__ */ a.jsxs("div", { className: "", children: [
         /* @__PURE__ */ a.jsx("div", { children: "  " }),
@@ -5167,7 +5176,7 @@ function Jo({
     /* @__PURE__ */ a.jsx("div", { className: "mt-8 flex justify-between space-x-3", children: /* @__PURE__ */ a.jsx("p", { className: "text-sm text-gray-700", children: "All fields marked (*) are required" }) })
   ] }) }) });
 }
-function ei({
+function ti({
   formJson: e,
   methods: t = {},
   onCancel: n = () => {
@@ -5179,25 +5188,25 @@ function ei({
   setEditData: i,
   toast: l
 }) {
-  const d = e.endPoints, f = e?.source?.refid, [u, b] = se.useState(o ?? {}), m = se.useMemo(() => jo(e.fields), [e.fields]);
+  const d = e.endPoints, f = e?.source?.refid, [u, b] = se.useState(o ?? {}), h = se.useMemo(() => jo(e.fields), [e.fields]);
   se.useEffect(() => {
     let x = !0;
     return (async () => {
       try {
-        const h = await wr();
+        const m = await wr();
         x && b((g) => ({
           ...g,
           ...Object.fromEntries(
-            m.map((N) => [N, h])
+            h.map((N) => [N, m])
           )
         }));
-      } catch (h) {
-        console.warn("Geo fetch failed", h);
+      } catch (m) {
+        console.warn("Geo fetch failed", m);
       }
     })(), () => {
       x = !1;
     };
-  }, [m]), se.useEffect(() => {
+  }, [h]), se.useEffect(() => {
     b(o ?? {});
   }, [o]);
   const A = se.useCallback(
@@ -5209,10 +5218,10 @@ function ei({
   se.useEffect(() => {
     let x = !0;
     return (async () => {
-      const h = e?.source ?? {};
-      if (h?.type) {
-        if (h.type === "method" && d?.operation !== "create") {
-          const g = h.method, N = g ? t[g] : void 0;
+      const m = e?.source ?? {};
+      if (m?.type) {
+        if (m.type === "method" && d?.operation !== "create") {
+          const g = m.method, N = g ? t[g] : void 0;
           if (N)
             try {
               const R = await N();
@@ -5221,37 +5230,37 @@ function ei({
               console.error("Method execution failed:", R);
             }
         }
-        if (h.type === "api" && d?.operation !== "create")
+        if (m.type === "api" && d?.operation !== "create")
           try {
             const g = {
-              method: h.method || "GET",
-              url: d?.baseURL + h.endpoint,
+              method: m.method || "GET",
+              url: d?.baseURL + m.endpoint,
               headers: {
                 Authorization: `Bearer ${d?.accessToken}`
               },
-              ...h.method === "GET" ? { params: { refid: h.refid } } : { data: { refid: h.refid } }
+              ...m.method === "GET" ? { params: { refid: m.refid } } : { data: { refid: m.refid } }
             }, N = await U(g);
             x && A(N.data);
           } catch (g) {
             console.error("API fetch failed:", g);
           }
-        if (h.type === "sql" && h.refid && h.refid !== "0" && d?.operation !== "create" || d?.operation !== "create" && h.dbopsid) {
+        if (m.type === "sql" && m.refid && m.refid !== "0" && d?.operation !== "create" || d?.operation !== "create" && m.dbopsid) {
           if (!d) {
             console.error("SQL source requires formJson.endPoints but it is missing");
             return;
           }
           try {
-            const g = await Wo.fetch(d, {
+            const g = await qo.fetch(d, {
               source: {
-                ...h,
-                table: h.table,
-                columns: h.columns,
-                where: be(h.where, {
+                ...m,
+                table: m.table,
+                columns: m.columns,
+                where: be(m.where, {
                   refid: f
                 })
               },
               fields: Dt(e.fields, d.operation)
-            }, h?.dbopsid, e?.module_refid);
+            }, m?.dbopsid, e?.module_refid);
             x && A(g);
           } catch (g) {
             console.error("API fetch failed:", g);
@@ -5272,13 +5281,13 @@ function ei({
   ]);
   const w = async (x) => {
     const y = e?.source ?? {};
-    let h = { ...x };
-    if (m.length > 0) {
-      const g = m.filter((N) => !x[N]);
+    let m = { ...x };
+    if (h.length > 0) {
+      const g = h.filter((N) => !x[N]);
       if (g.length > 0)
         try {
           const N = await wr();
-          h = {
+          m = {
             ...x,
             ...Object.fromEntries(
               g.map((R) => [R, N])
@@ -5292,7 +5301,7 @@ function ei({
       const g = y.method, N = g ? t[g] : void 0;
       if (N)
         try {
-          const R = await N(h);
+          const R = await N(m);
           i?.(null), s?.(R), l?.success?.(lr(R));
         } catch (R) {
           s?.(R), l?.error?.(ir(R)), console.error("Method execution failed:", R);
@@ -5307,7 +5316,7 @@ function ei({
         const g = await U({
           method: y.method || "POST",
           url: d.baseURL + y.endpoint,
-          data: h ?? {},
+          data: m ?? {},
           headers: {
             Authorization: `Bearer ${d?.accessToken}`
           }
@@ -5360,7 +5369,7 @@ function ei({
         }
         let F = {
           refid: R,
-          fields: h,
+          fields: m,
           datahash: O.data.refhash,
           refid1: g.refid
         };
@@ -5380,7 +5389,7 @@ function ei({
     }
   }, E = {
     simple: /* @__PURE__ */ a.jsx(
-      Jo,
+      ei,
       {
         title: e?.title ?? "",
         fields: e.fields,
@@ -5398,14 +5407,14 @@ function ei({
   return /* @__PURE__ */ a.jsx("div", { className: "relative", children: E.simple });
 }
 function Sr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, Reports: o, toast: i, handleAction: l, infoViewJson: d }) {
-  const [f, u] = ce(!1), [b, m] = ce(null), [A, w] = se.useState(0), [E, x] = se.useState(null), y = e?.config, h = e?.config, g = h?.["popup.form"] ? "popup.form" : (h?.form, "form"), N = h?.[g] && Object.keys(h?.[g]).length > 0, R = (L) => {
+  const [f, u] = ce(!1), [b, h] = ce(null), [A, w] = se.useState(0), [E, x] = se.useState(null), y = e?.config, m = e?.config, g = m?.["popup.form"] ? "popup.form" : (m?.form, "form"), N = m?.[g] && Object.keys(m?.[g]).length > 0, R = (L) => {
     let p = ge(L.data);
     x(p);
   }, O = (L) => {
     x(L), w((p) => p + 1);
   }, F = (L) => {
     let p = ge(L.data);
-    m(p), u(!0);
+    h(p), u(!0);
   }, P = async () => {
     if (b?.id) {
       if (!r) {
@@ -5464,11 +5473,11 @@ function Sr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, Report
       } catch (L) {
         console.error(L), window.alert("Failed to delete record. Please try again");
       } finally {
-        m(null), u(!1);
+        h(null), u(!1);
       }
     }
   }, B = () => {
-    m(null), u(!1);
+    h(null), u(!1);
   };
   return /* @__PURE__ */ a.jsx(a.Fragment, { children: o ? /* @__PURE__ */ a.jsxs(a.Fragment, { children: [
     /* @__PURE__ */ a.jsx(
@@ -5495,12 +5504,12 @@ function Sr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, Report
       }
     ),
     N && /* @__PURE__ */ a.jsx(
-      ei,
+      ti,
       {
         formJson: {
-          ...h[g],
+          ...m[g],
           source: {
-            ...h?.[g].source,
+            ...m?.[g].source,
             refid: E?.id
           },
           endPoints: {
@@ -5516,7 +5525,7 @@ function Sr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: s, Report
       }
     ),
     /* @__PURE__ */ a.jsx(
-      Yo,
+      Xo,
       {
         open: f,
         onConfirm: P,
@@ -5551,7 +5560,7 @@ const wn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
       s
     )) : /* @__PURE__ */ a.jsx("div", { className: "py-3 px-2 text-sm text-gray-500", children: "No group available" })
   }
-), ti = ({
+), ri = ({
   groups: e,
   groupNames: t,
   setActiveTabIndex: n,
@@ -5563,8 +5572,8 @@ const wn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
 }) => {
   const [d, f] = ce(!1), u = Qe(null);
   return ye(() => {
-    const b = (m) => {
-      u.current && !u.current.contains(m.target) && f(!1);
+    const b = (h) => {
+      u.current && !u.current.contains(h.target) && f(!1);
     };
     return document.addEventListener("mousedown", b), () => document.removeEventListener("mousedown", b);
   }, []), /* @__PURE__ */ a.jsxs("div", { className: s?.tabNavClass || "relative z-10", children: [
@@ -5594,14 +5603,14 @@ const wn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
             children: "⋮"
           }
         ),
-        d && /* @__PURE__ */ a.jsx("div", { className: "absolute right-0 mt-2 w-48 max-h-100 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30", children: t.map((b, m) => /* @__PURE__ */ a.jsx(
+        d && /* @__PURE__ */ a.jsx("div", { className: "absolute right-0 mt-2 w-48 max-h-100 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30", children: t.map((b, h) => /* @__PURE__ */ a.jsx(
           "button",
           {
             type: "button",
             onClick: () => {
-              n(m), f(!1);
+              n(h), f(!1);
             },
-            className: `w-full text-left px-3 py-2 text-sm truncate hover:bg-gray-100 ${r === m ? "bg-gray-50 font-semibold text-action" : "text-gray-700"}`,
+            className: `w-full text-left px-3 py-2 text-sm truncate hover:bg-gray-100 ${r === h ? "bg-gray-50 font-semibold text-action" : "text-gray-700"}`,
             children: e[b]?.label || b
           },
           b
@@ -5617,18 +5626,18 @@ const wn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
           scrollbarWidth: "none",
           msOverflowStyle: "none"
         },
-        children: t.length > 0 ? t.map((b, m) => /* @__PURE__ */ a.jsx(
+        children: t.length > 0 ? t.map((b, h) => /* @__PURE__ */ a.jsx(
           "button",
           {
             type: "button",
-            onClick: () => n(m),
+            onClick: () => n(h),
             className: `relative cursor-pointer flex-shrink-0
             min-w-[8rem]   
             py-2 px-8
             rounded-t-lg text-xs sm:text-sm font-semibold
             transition-all duration-300 ease-out
             focus:outline-none whitespace-nowrap
-            ${r === m ? "text-action bg-white" : "text-gray-600 hover:text-gray-800 hover:bg-white/50"}`,
+            ${r === h ? "text-action bg-white" : "text-gray-600 hover:text-gray-800 hover:bg-white/50"}`,
             children: /* @__PURE__ */ a.jsx("span", { className: "relative z-10 flex items-center justify-center gap-1 sm:gap-2", children: /* @__PURE__ */ a.jsx("span", { className: "truncate", children: e[b]?.label || b }) })
           },
           b
@@ -5649,7 +5658,7 @@ const wn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
   sqlOpsUrls: f,
   module_refid: u,
   fieldOptions: b,
-  setFieldOptions: m,
+  setFieldOptions: h,
   buttons: A,
   handleAction: w,
   components: E
@@ -5667,7 +5676,7 @@ const wn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
     }
     w?.({ [g]: N }, s);
   }
-  const h = Rr(r?.component, E);
+  const m = Rr(r?.component, E);
   return /* @__PURE__ */ a.jsxs(
     "div",
     {
@@ -5686,13 +5695,13 @@ const wn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
                 refid: d,
                 sqlOpsUrls: f,
                 module_refid: u,
-                setFieldOptions: m,
+                setFieldOptions: h,
                 ...b[g.name] ? { optionsOverride: b[g.name] } : {}
               }
             )
           },
           g?.name ?? `field-${N}`
-        )) }) }) : r?.type === "component" && h ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: h }) : r ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: i(r, e[t] || "") }) : null : /* @__PURE__ */ a.jsx("div", { className: "flex-1 col-span-full text-center py-8 text-gray-500", children: "No data available" }),
+        )) }) }) : r?.type === "component" && m ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: m }) : r ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: i(r, e[t] || "") }) : null : /* @__PURE__ */ a.jsx("div", { className: "flex-1 col-span-full text-center py-8 text-gray-500", children: "No data available" }),
         /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 pt-3 border-t border-gray-100", children: x && x.map(([g, N]) => /* @__PURE__ */ a.jsx(
           "button",
           {
@@ -5779,12 +5788,12 @@ function An({
   toast: u,
   handleAction: b = () => {
   },
-  infoViewJson: m,
+  infoViewJson: h,
   fieldOptions: A,
   setFieldOptions: w,
   components: E
 }) {
-  const [x, y] = ce(0), [h, g] = ce(!1), N = Qe(null), R = Object.keys(e);
+  const [x, y] = ce(0), [m, g] = ce(!1), N = Qe(null), R = Object.keys(e);
   ye(() => {
     const Q = () => {
       if (N.current) {
@@ -5804,7 +5813,7 @@ function An({
     }
   }, [x, R.length]);
   const O = i === "tableft", F = i === "tabright", P = !O && !F, B = e[R[x] ?? ""] || null, L = {
-    single: (Q, X) => /* @__PURE__ */ a.jsx(Tr, { fieldOptions: A, setFieldOptions: w, module_refid: m.module_refid, tabObj: Q, methods: t, tabName: X, sqlOpsUrls: l, refid: d }),
+    single: (Q, X) => /* @__PURE__ */ a.jsx(Tr, { fieldOptions: A, setFieldOptions: w, module_refid: h.module_refid, tabObj: Q, methods: t, tabName: X, sqlOpsUrls: l, refid: d }),
     grid: (Q, X) => /* @__PURE__ */ a.jsx(
       Sr,
       {
@@ -5816,13 +5825,13 @@ function An({
         tabName: X,
         sqlOpsUrls: l,
         refid: d,
-        infoViewJson: m
+        infoViewJson: h
       }
     )
   }, p = B?.config?.uimode, H = r[p] || L[p] || (() => /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex justify-center p-4", children: "No UI mode for this type" }));
   return P ? /* @__PURE__ */ a.jsxs("div", { className: "flex-1 flex flex-col min-h-0 ", children: [
     /* @__PURE__ */ a.jsx(
-      ti,
+      ri,
       {
         groupNames: R,
         groups: e,
@@ -5830,7 +5839,7 @@ function An({
         activeTabIndex: x,
         tabsNavRef: N,
         isCommonInfo: s,
-        showScrollHint: h,
+        showScrollHint: m,
         layoutConfig: o
       }
     ),
@@ -5848,10 +5857,10 @@ function An({
         methods: t,
         refid: d,
         sqlOpsUrls: l,
-        module_refid: m.module_refid,
+        module_refid: h.module_refid,
         fieldOptions: A,
         setFieldOptions: w,
-        buttons: m.buttons,
+        buttons: h.buttons,
         handleAction: b,
         ...E ? { components: E } : {}
       }
@@ -5879,7 +5888,7 @@ function An({
         groups: e,
         methods: t,
         refid: d,
-        module_refid: m.module_refid,
+        module_refid: h.module_refid,
         sqlOpsUrls: l,
         fieldOptions: A,
         setFieldOptions: w,
@@ -5898,7 +5907,7 @@ function An({
     ) })
   ] });
 }
-function ri({ title: e, children: t, isFirst: n }) {
+function ni({ title: e, children: t, isFirst: n }) {
   const [r, s] = ce(n);
   return /* @__PURE__ */ a.jsx("div", { className: "group relative mt-1 flex-1 flex flex-col min-h-0 max-h-screen", children: /* @__PURE__ */ a.jsxs("div", { className: "flex-1 flex flex-col min-h-0 relative bg-white rounded-lg border border-gray-100 shadow-xs hover:shadow-sm transition-all duration-300 overflow-hidden ", children: [
     /* @__PURE__ */ a.jsxs(
@@ -5936,7 +5945,7 @@ function ri({ title: e, children: t, isFirst: n }) {
     )
   ] }) });
 }
-function ni({
+function si({
   groups: e,
   methods: t = {},
   infoData: n,
@@ -5950,15 +5959,15 @@ function ni({
   infoViewJson: f,
   fieldOptions: u,
   setFieldOptions: b,
-  components: m
+  components: h
 }) {
   const A = {
-    single: (y, h) => /* @__PURE__ */ a.jsx(
+    single: (y, m) => /* @__PURE__ */ a.jsx(
       Tr,
       {
         tabObj: y,
         methods: t,
-        tabName: h,
+        tabName: m,
         sqlOpsUrls: s,
         fieldOptions: u,
         setFieldOptions: b,
@@ -5966,7 +5975,7 @@ function ni({
         module_refid: f?.module_refid
       }
     ),
-    grid: (y, h) => /* @__PURE__ */ a.jsx(
+    grid: (y, m) => /* @__PURE__ */ a.jsx(
       Sr,
       {
         ...i ? { Reports: i } : {},
@@ -5975,14 +5984,14 @@ function ni({
         handleAction: d,
         tabObj: y,
         methods: t,
-        tabName: h,
+        tabName: m,
         sqlOpsUrls: s,
         refid: o
       }
     )
   }, w = f?.buttons;
-  let E = w ? Object.entries(w).filter(([y, h]) => !(h.groups && h.groups.length > 0)) : [];
-  async function x(y, h) {
+  let E = w ? Object.entries(w).filter(([y, m]) => !(m.groups && m.groups.length > 0)) : [];
+  async function x(y, m) {
     const g = t?.[y];
     if (g) {
       try {
@@ -5992,14 +6001,14 @@ function ni({
       }
       return;
     }
-    d?.({ [y]: h }, n);
+    d?.({ [y]: m }, n);
   }
   return /* @__PURE__ */ a.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ a.jsx("div", { className: "mx-auto", children: /* @__PURE__ */ a.jsxs("div", { className: "space-y-1 flex flex-col min-h-0", children: [
-    e && Object.entries(e).map(([y, h], g) => {
+    e && Object.entries(e).map(([y, m], g) => {
       let N = w ? Object.entries(w).filter(([O, F]) => F.groups ? F.groups.includes(y) : !1) : [];
-      const R = Rr(h.component, m);
-      return /* @__PURE__ */ a.jsxs(ri, { title: h.label, isFirst: g === 0, children: [
-        h?.type === "fields" && h?.fields ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ a.jsx("div", { className: "grid grid-cols-12 gap-2", children: h.fields.map((O, F) => Ht(O.hidden) ? null : /* @__PURE__ */ a.jsx(
+      const R = Rr(m.component, h);
+      return /* @__PURE__ */ a.jsxs(ni, { title: m.label, isFirst: g === 0, children: [
+        m?.type === "fields" && m?.fields ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ a.jsx("div", { className: "grid grid-cols-12 gap-2", children: m.fields.map((O, F) => Ht(O.hidden) ? null : /* @__PURE__ */ a.jsx(
           "div",
           {
             className: `col-span-12 sm:col-span-6 ${gt[bt(Number(O.width))] || "lg:col-span-2"}`,
@@ -6018,7 +6027,7 @@ function ni({
             )
           },
           O?.name ?? `field-${F}`
-        )) }) }) : h?.type === "component" && R ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: R }) : h ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: r[h.config?.uimode]?.(h) || A[h.config?.uimode]?.(h, y) || /* @__PURE__ */ a.jsx("div", { children: "No renderer for this type" }) }) : null,
+        )) }) }) : m?.type === "component" && R ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: R }) : m ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: r[m.config?.uimode]?.(m) || A[m.config?.uimode]?.(m, y) || /* @__PURE__ */ a.jsx("div", { children: "No renderer for this type" }) }) : null,
         /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 pt-3 border-t border-gray-100", children: N && N.map(([O, F]) => /* @__PURE__ */ a.jsx(
           "button",
           {
@@ -6030,18 +6039,18 @@ function ni({
         )) })
       ] }, y);
     }),
-    /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 pt-3 border-t border-gray-100", children: E && E.map(([y, h]) => /* @__PURE__ */ a.jsx(
+    /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 pt-3 border-t border-gray-100", children: E && E.map(([y, m]) => /* @__PURE__ */ a.jsx(
       "button",
       {
-        onClick: () => x(y, h),
+        onClick: () => x(y, m),
         className: "px-5 py-2 bg-action font-semibold rounded-lg border-2 border-gray-200 shadow-sm hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer",
-        children: h.label
+        children: m.label
       },
       y
     )) })
   ] }) }) });
 }
-function si({ title: e, children: t }) {
+function ai({ title: e, children: t }) {
   return /* @__PURE__ */ a.jsx("div", { className: "group relative mt-1 flex-1 flex flex-col min-h-0 max-h-screen", children: /* @__PURE__ */ a.jsxs("div", { className: "flex flex-col min-h-0 relative  bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden ", children: [
     /* @__PURE__ */ a.jsx(
       "button",
@@ -6063,7 +6072,7 @@ function si({ title: e, children: t }) {
     )
   ] }) });
 }
-function ai({
+function oi({
   groups: e,
   methods: t = {},
   infoData: n,
@@ -6077,11 +6086,11 @@ function ai({
   infoViewJson: f,
   fieldOptions: u,
   setFieldOptions: b,
-  components: m
+  components: h
 }) {
   const A = {
-    single: (y, h) => /* @__PURE__ */ a.jsx(Tr, { fieldOptions: u, setFieldOptions: b, module_refid: f?.module_refid, tabObj: y, methods: t, tabName: h, sqlOpsUrls: s, refid: o }),
-    grid: (y, h) => /* @__PURE__ */ a.jsx(
+    single: (y, m) => /* @__PURE__ */ a.jsx(Tr, { fieldOptions: u, setFieldOptions: b, module_refid: f?.module_refid, tabObj: y, methods: t, tabName: m, sqlOpsUrls: s, refid: o }),
+    grid: (y, m) => /* @__PURE__ */ a.jsx(
       Sr,
       {
         ...i ? { Reports: i } : {},
@@ -6089,15 +6098,15 @@ function ai({
         handleAction: d,
         tabObj: y,
         methods: t,
-        tabName: h,
+        tabName: m,
         sqlOpsUrls: s,
         refid: o,
         infoViewJson: f
       }
     )
   }, w = f?.buttons;
-  let E = w ? Object.entries(w).filter(([y, h]) => !(h.groups && h.groups.length > 0)) : [];
-  async function x(y, h) {
+  let E = w ? Object.entries(w).filter(([y, m]) => !(m.groups && m.groups.length > 0)) : [];
+  async function x(y, m) {
     const g = t?.[y];
     if (g) {
       try {
@@ -6107,14 +6116,14 @@ function ai({
       }
       return;
     }
-    d?.({ [y]: h }, n);
+    d?.({ [y]: m }, n);
   }
   return /* @__PURE__ */ a.jsx("div", { className: "bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100", children: /* @__PURE__ */ a.jsx("div", { className: "mx-auto", children: /* @__PURE__ */ a.jsxs("div", { className: "space-y-2  flex flex-col min-h-0", children: [
-    e && Object.entries(e).map(([y, h], g) => {
+    e && Object.entries(e).map(([y, m], g) => {
       let N = w ? Object.entries(w).filter(([O, F]) => F.groups ? F.groups.includes(y) : !1) : [];
-      const R = Rr(h.component, m);
-      return /* @__PURE__ */ a.jsxs(si, { title: h.label, children: [
-        h?.type === "fields" && h?.fields ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ a.jsx("div", { className: "grid grid-cols-12 gap-2", children: h.fields.map((O, F) => Ht(O.hidden) ? null : /* @__PURE__ */ a.jsx(
+      const R = Rr(m.component, h);
+      return /* @__PURE__ */ a.jsxs(ai, { title: m.label, children: [
+        m?.type === "fields" && m?.fields ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: /* @__PURE__ */ a.jsx("div", { className: "grid grid-cols-12 gap-2", children: m.fields.map((O, F) => Ht(O.hidden) ? null : /* @__PURE__ */ a.jsx(
           "div",
           {
             className: `col-span-12 sm:col-span-6 ${gt[bt(Number(O.width))] || "lg:col-span-2"}`,
@@ -6133,7 +6142,7 @@ function ai({
             )
           },
           O?.name ?? `field-${F}`
-        )) }) }) : h?.type === "component" && R ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: R }) : h ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: r[h.config?.uimode]?.(h) || A[h.config?.uimode]?.(h, y) || /* @__PURE__ */ a.jsx("div", { children: "No renderer for this type" }) }) : null,
+        )) }) }) : m?.type === "component" && R ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: R }) : m ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: r[m.config?.uimode]?.(m) || A[m.config?.uimode]?.(m, y) || /* @__PURE__ */ a.jsx("div", { children: "No renderer for this type" }) }) : null,
         /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 pt-3 border-t border-gray-100", children: N && N.map(([O, F]) => /* @__PURE__ */ a.jsx(
           "button",
           {
@@ -6145,18 +6154,18 @@ function ai({
         )) })
       ] }, y);
     }),
-    /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 pt-3 border-t border-gray-100", children: E && E.map(([y, h]) => /* @__PURE__ */ a.jsx(
+    /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 pt-3 border-t border-gray-100", children: E && E.map(([y, m]) => /* @__PURE__ */ a.jsx(
       "button",
       {
-        onClick: () => x(y, h),
+        onClick: () => x(y, m),
         className: "px-5 py-2 bg-action font-semibold rounded-lg border-2 border-gray-200 shadow-sm hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer",
-        children: h.label
+        children: m.label
       },
       y
     )) })
   ] }) }) });
 }
-function Si({
+function Ri({
   infoViewJson: e,
   hiddenFields: t = [],
   groupFieldsFn: n = To,
@@ -6169,12 +6178,12 @@ function Si({
   },
   components: f
 }) {
-  const [u, b] = se.useState({}), m = No(e.infoview ?? {}), A = e.endPoints, w = se.useMemo(
+  const [u, b] = se.useState({}), h = No(e.infoview ?? {}), A = e.endPoints, w = se.useMemo(
     () => n(e.fields || {}),
     [e.fields, n]
   ), [E, x] = se.useState({}), y = (O, F) => {
     x((P) => ({ ...P, [O]: F }));
-  }, h = e?.source?.refid;
+  }, m = e?.source?.refid;
   let g = { ...w };
   e.infoview?.groups && (g = { ...g, ...e.infoview.groups }), se.useEffect(() => {
     let O = !1;
@@ -6231,7 +6240,7 @@ function Si({
             P.where && (X = {
               ...P,
               where: be(P.where, {
-                refid: h
+                refid: m
               })
             }), L = (await U({
               method: "POST",
@@ -6283,14 +6292,14 @@ function Si({
     switch (O) {
       case "accordion":
         return /* @__PURE__ */ a.jsx(
-          ni,
+          si,
           {
             groups: g,
             methods: o,
             infoData: u,
             viewRenderers: s,
             sqlOpsUrls: A,
-            refid: h,
+            refid: m,
             ...i ? { Reports: i } : {},
             toast: l,
             handleAction: d,
@@ -6314,7 +6323,7 @@ function Si({
             isCommonInfo: !!N,
             viewMode: O,
             sqlOpsUrls: A,
-            refid: h,
+            refid: m,
             ...i ? { Reports: i } : {},
             toast: l,
             handleAction: d,
@@ -6326,14 +6335,14 @@ function Si({
         );
       case "cards":
         return /* @__PURE__ */ a.jsx(
-          ai,
+          oi,
           {
             groups: g,
             viewRenderers: s,
             methods: o,
             infoData: u,
             sqlOpsUrls: A,
-            refid: h,
+            refid: m,
             ...i ? { Reports: i } : {},
             toast: l,
             handleAction: d,
@@ -6355,7 +6364,7 @@ function Si({
             isCommonInfo: !!N,
             viewMode: O,
             sqlOpsUrls: A,
-            refid: h,
+            refid: m,
             ...i ? { Reports: i } : {},
             toast: l,
             handleAction: d,
@@ -6369,7 +6378,7 @@ function Si({
   };
   return /* @__PURE__ */ a.jsxs("div", { className: r.containerClass || "h-screen flex flex-col ", children: [
     N && A && /* @__PURE__ */ a.jsx(
-      Vo,
+      Yo,
       {
         commonInfo: N,
         infoData: u,
@@ -6378,13 +6387,13 @@ function Si({
         setFieldOptions: y,
         fieldOptions: E,
         module_refid: e.module_refid,
-        refid: h,
+        refid: m,
         methods: o
       }
     ),
-    R(m)
+    R(h)
   ] });
 }
 export {
-  Si as InfoView
+  Ri as InfoView
 };

@@ -4,6 +4,7 @@ export declare function determineViewMode(json: Infoview): string;
 export declare function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup>;
 export declare const getGeoFieldKeys: (fields: Record<string, Omit<FormField, "name">>) => string[];
 export declare function fetchGeolocation(): Promise<string | null>;
+export declare function filterSavableValues(values: Record<string, any>, flatFields: FormField[]): Record<string, any>;
 export declare function transformedObject(originalObject: Record<string, any>, operation?: string): Record<string, {
     label: string;
     required: boolean;
