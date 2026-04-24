@@ -1,6 +1,7 @@
 import { AutocompleteConfig, FileCategory, FileItem, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions } from './InfoView.types.js';
 import * as Yup from "yup";
 export declare function determineViewMode(json: Infoview): string;
+export declare const isAbsoluteUrl: (path: string) => boolean;
 export declare function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup>;
 export declare const getGeoFieldKeys: (fields: Record<string, Omit<FormField, "name">>) => string[];
 export declare function fetchGeolocation(): Promise<string | null>;

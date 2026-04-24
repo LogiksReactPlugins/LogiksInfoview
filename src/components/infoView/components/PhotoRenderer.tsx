@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import type { SqlEndpoints } from '../InfoView.types.js';
 import { getPreviewUrl } from '../service.js';
 import { DEFAULT_LOGO } from "../constant.js";
+import { isAbsoluteUrl } from '../utils.js';
 type FilePreviewTriggerProps = {
     filePath: string;
     field_name: string;
@@ -13,7 +14,14 @@ export default function PhotoRenderer({ filePath, field_name, sqlOpsUrls }: File
     const cleanPath = filePath.replace(/^[^&]*&/, "");
     useEffect(() => {
 
+        if (isAbsoluteUrl(cleanPath)) {
+            setPreviewUrl(cleanPath);
+            return;
+        }
+
         if (!open || !sqlOpsUrls) return;
+
+
         let active = true;
         let objectUrl: string | null = null;
 
@@ -36,7 +44,7 @@ export default function PhotoRenderer({ filePath, field_name, sqlOpsUrls }: File
         <img src={previewUrl}
             alt={field_name}
             title={field_name}
-           className="h-24 w-24 object-cover rounded border border-dashed   hover:opacity-90"
+            className="h-24 w-24 object-cover rounded border border-dashed   hover:opacity-90"
             onError={(e) => {
                 // Fallback to placeholder if image fails to load
                 const target = e.currentTarget as HTMLImageElement; // <-- cast here

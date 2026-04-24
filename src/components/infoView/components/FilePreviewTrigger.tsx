@@ -1,5 +1,5 @@
 import { useEffect, useState, type JSX } from "react";
-import { fileIconClassMap, getFileExtension, getMimeCategory } from "../utils.js";
+import { fileIconClassMap, getFileExtension, getMimeCategory, isAbsoluteUrl } from "../utils.js";
 import type { FileCategory, SqlEndpoints } from "../InfoView.types.js";
 import FilePreview from "./FilePreview.js";
 import { getPreviewUrl } from "../service.js";
@@ -13,6 +13,8 @@ function getFileIcon(category: FileCategory): JSX.Element {
   return <i className={`${iconClass} text-2xl text-gray-600`} />;
 }
 
+
+
 const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) => {
   const cleanPath = filePath.replace(/^[^&]*&/, "");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -21,6 +23,11 @@ const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) =
   const ext = getFileExtension(cleanPath);
   const category = getMimeCategory(ext);
   useEffect(() => {
+
+      if (isAbsoluteUrl(cleanPath)) {
+      setPreviewUrl(cleanPath);
+      return;
+    }
 
     if (!sqlOpsUrls) return;
 

@@ -10,6 +10,8 @@ export function determineViewMode(json: Infoview) {
   return json.template ? json.template : 'tab'
 }
 
+export const isAbsoluteUrl = (path: string) => /^https?:\/\//i.test(path);
+
 export function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup> {
   const grouped: Record<string, InfoViewGroup> = {};
   Object.entries(fields).forEach(([key, config]) => {
