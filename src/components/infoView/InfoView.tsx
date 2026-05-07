@@ -19,7 +19,7 @@ export default function LogiksInfoView({
     viewRenderers = {},
     methods = {},
     Reports,
-    toast ,
+    toast,
     handleAction = () => { },
     components
 }: InfoViewProps) {
@@ -50,7 +50,7 @@ export default function LogiksInfoView({
         groups = { ...groups, ...infoViewJson.infoview.groups };
     }
 
-  
+
 
     React.useEffect(() => {
         let cancelled = false;
@@ -81,14 +81,27 @@ export default function LogiksInfoView({
 
             if (source.type === "api") {
                 try {
-                    const response = await axios({
+                    const config = {
                         method: source.method || "GET",
-                        url: source.url,
-                        data: source.body || {},
-                        params: source.params || {},
-                        headers: source.headers || {},
-                    });
-                    if (!cancelled) setInfoData(response.data || {});
+                        url: sqlOpsUrls?.baseURL + source.endpoint,
+
+                        headers: {
+                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                        },
+                        ...(source.method === "GET"
+                            ? { params: { refid: source.refid } }
+                            : { data: { refid: source.refid } }),
+                    }
+
+                    const { data } = await axios(config);
+
+                    const value = data?.results?.options ?
+                        data?.results?.options : data.data
+                            ? data.data
+                            : data.results
+                                ? data.results
+                                : data
+                    if (!cancelled) setInfoData(value || {});
                 } catch (error) {
                     console.error("API fetch failed:", error);
                     if (!cancelled) setInfoData({});

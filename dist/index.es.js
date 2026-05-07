@@ -5711,7 +5711,7 @@ const wn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
           },
           g?.name ?? `field-${N}`
         )) }) }) : r?.type === "component" && m ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: m }) : r ? /* @__PURE__ */ a.jsx("div", { className: "flex-1 flex flex-col overflow-y-auto min-h-0", children: i(r, e[t] || "") }) : null : /* @__PURE__ */ a.jsx("div", { className: "flex-1 col-span-full text-center py-8 text-gray-500", children: "No data available" }),
-        /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 pt-3 border-t border-gray-100", children: x && x.map(([g, N]) => /* @__PURE__ */ a.jsx(
+        /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 p-3 border-t border-gray-100", children: x && x.map(([g, N]) => /* @__PURE__ */ a.jsx(
           "button",
           {
             onClick: () => y(g, N),
@@ -5763,7 +5763,7 @@ const wn = ({ groups: e, groupNames: t, setActiveTabIndex: n, activeTabIndex: r 
             )
           ] })
         ] }),
-        e.length <= 5 && /* @__PURE__ */ a.jsx("div", { className: "mt-6 pt-3 border-t border-gray-100", children: /* @__PURE__ */ a.jsxs("div", { className: "flex items-center justify-between text-sm text-gray-500", children: [
+        e.length <= 5 && /* @__PURE__ */ a.jsx("div", { className: " pt-3 border-t border-gray-100", children: /* @__PURE__ */ a.jsxs("div", { className: "flex items-center justify-between text-sm text-gray-500", children: [
           /* @__PURE__ */ a.jsxs("span", { children: [
             "Tab ",
             t + 1,
@@ -6048,7 +6048,7 @@ function ai({
         )) })
       ] }, y);
     }),
-    /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 pt-3 border-t border-gray-100", children: E && E.map(([y, m]) => /* @__PURE__ */ a.jsx(
+    /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 p-3 border-t border-gray-100", children: E && E.map(([y, m]) => /* @__PURE__ */ a.jsx(
       "button",
       {
         onClick: () => x(y, m),
@@ -6163,7 +6163,7 @@ function ii({
         )) })
       ] }, y);
     }),
-    /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 pt-3 border-t border-gray-100", children: E && E.map(([y, m]) => /* @__PURE__ */ a.jsx(
+    /* @__PURE__ */ a.jsx("div", { className: "flex justify-end gap-2 p-3 border-t border-gray-100", children: E && E.map(([y, m]) => /* @__PURE__ */ a.jsx(
       "button",
       {
         onClick: () => x(y, m),
@@ -6216,14 +6216,15 @@ function _i({
       }
       if (P.type === "api")
         try {
-          const B = await U({
+          const B = {
             method: P.method || "GET",
-            url: P.url,
-            data: P.body || {},
-            params: P.params || {},
-            headers: P.headers || {}
-          });
-          O || b(B.data || {});
+            url: A?.baseURL + P.endpoint,
+            headers: {
+              Authorization: `Bearer ${A?.accessToken}`
+            },
+            ...P.method === "GET" ? { params: { refid: P.refid } } : { data: { refid: P.refid } }
+          }, { data: L } = await U(B), p = L?.results?.options ? L?.results?.options : L.data ? L.data : L.results ? L.results : L;
+          O || b(p || {});
         } catch (B) {
           console.error("API fetch failed:", B), O || b({});
         }

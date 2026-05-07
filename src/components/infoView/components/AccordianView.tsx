@@ -172,7 +172,7 @@ export default function AccordianView({
                         </Accordion>
                     })}
 
-                    <div className="flex justify-end gap-2 pt-3 border-t border-gray-100">
+                    <div className="flex justify-end gap-2 p-3 border-t border-gray-100">
                         {commonButtons &&
                             commonButtons.map(([key, val]) => (
                                 <button

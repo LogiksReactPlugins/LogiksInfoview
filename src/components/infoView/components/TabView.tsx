@@ -256,7 +256,7 @@ const ContentArea = (
             </div>
         )}
 
-        <div className="flex justify-end gap-2 pt-3 border-t border-gray-100">
+        <div className="flex justify-end gap-2 p-3 border-t border-gray-100">
             {visibleButtons &&
                 visibleButtons.map(([key, val]) => (
                     <button
@@ -313,7 +313,7 @@ const ContentArea = (
 
         {/* Simple progress for fewer tabs */}
         {groupNames.length <= 5 && (
-            <div className="mt-6 pt-3 border-t border-gray-100">
+            <div className=" pt-3 border-t border-gray-100">
                 <div className="flex items-center justify-between text-sm text-gray-500">
                     <span>Tab {activeTabIndex + 1} of {groupNames.length}</span>
                     <div className="flex gap-1">
