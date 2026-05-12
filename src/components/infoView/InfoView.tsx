@@ -21,12 +21,13 @@ export default function LogiksInfoView({
     Reports,
     toast,
     handleAction = () => { },
-    components
+    components,
+    initialvalues,
 }: InfoViewProps) {
 
 
 
-    const [infoData, setInfoData] = React.useState<InfoData>({});
+    const [infoData, setInfoData] = React.useState<InfoData>(initialvalues ?? {});
     const viewMode = determineViewMode(infoViewJson.infoview ?? {});
     const sqlOpsUrls = infoViewJson.endPoints;
     const groupedFields = React.useMemo(
@@ -50,6 +51,26 @@ export default function LogiksInfoView({
         groups = { ...groups, ...infoViewJson.infoview.groups };
     }
 
+    React.useEffect(() => {
+        if (!initialvalues) return;
+        setInfoData(prev => ({
+            ...prev,
+            ...(initialvalues ?? {})
+        }));
+    }, [initialvalues]);
+
+    const safeSetResolvedData = React.useCallback(
+        (data?: Record<string, any>) => {
+            if (!data) return;
+
+            setInfoData(prev => ({
+                ...prev,
+                ...data,
+            }));
+        },
+        []
+    );
+
 
 
     React.useEffect(() => {
@@ -58,7 +79,7 @@ export default function LogiksInfoView({
         const fetchData = async () => {
             const source = infoViewJson?.source;
             if (!source?.type) {
-                if (!cancelled) setInfoData({});
+                if (!cancelled) safeSetResolvedData({});
                 return;
             }
 
@@ -68,14 +89,14 @@ export default function LogiksInfoView({
 
                 if (methodFn) {
                     try {
-                        const result = await Promise.resolve(methodFn());
-                        if (!cancelled) setInfoData(result || {});
+                        const result = await methodFn();
+                        if (!cancelled) safeSetResolvedData(result || {});
                     } catch (err) {
                         console.error("Method execution failed:", err);
-                        if (!cancelled) setInfoData({});
+                        if (!cancelled) safeSetResolvedData({});
                     }
                 } else {
-                    if (!cancelled) setInfoData({});
+                    if (!cancelled) safeSetResolvedData({});
                 }
             }
 
@@ -101,10 +122,10 @@ export default function LogiksInfoView({
                             : data.results
                                 ? data.results
                                 : data
-                    if (!cancelled) setInfoData(value || {});
+                    if (!cancelled) safeSetResolvedData(value ?? {});
                 } catch (error) {
                     console.error("API fetch failed:", error);
-                    if (!cancelled) setInfoData({});
+                    if (!cancelled) safeSetResolvedData({});
                 }
             }
 
@@ -187,8 +208,9 @@ export default function LogiksInfoView({
 
                     const data = normalizeToObject(res) ?? {};
 
-                    if (!cancelled) setInfoData(data);
+                    if (!cancelled) safeSetResolvedData(data);
                 } catch (err) {
+                    if (!cancelled) safeSetResolvedData({});
                     console.error("API fetch failed:", err);
                 }
             }

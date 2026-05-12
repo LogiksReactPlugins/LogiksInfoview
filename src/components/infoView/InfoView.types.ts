@@ -130,6 +130,7 @@ export interface InfoViewProps {
     methods?: Record<string, Function>,
     Reports?: ComponentType<any>;
     components?: Record<string, ComponentType<any> | ReactNode>;
+    initialvalues?: Record<string, any>;
 
     toast?: Toast;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
