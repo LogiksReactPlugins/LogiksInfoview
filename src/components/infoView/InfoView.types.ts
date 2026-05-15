@@ -18,6 +18,8 @@ export interface FormField {
     parameter?: string | Record<string, string>;
     width?: number | string;
     options?: Record<string, any>;
+    options_top?: Record<string, any>;
+    options_bottom?: Record<string, any>;
     group?: string;
     type?: string;
     regex?: string;
@@ -26,7 +28,6 @@ export interface FormField {
     error_message?: string;      // error message if regex fails
     placeholder?: string;        // input placeholder
     field_error?: string;
-    axiosObject?: AxiosRequestConfig,
     valueKey?: string;
     labelKey?: string;
     groupKey?: string;
@@ -63,6 +64,9 @@ export interface FormField {
     persistent?: string | boolean;
     content?: string;
     accept?: string;
+    file_size?: number;
+    buttons?: Record<string, any> | undefined;
+    alphanumeric?:boolean
 
 }
 
@@ -92,7 +96,7 @@ export interface Infoview {
 
 export interface InfoviewJson {
     script?: string;
-    fields: Record<string, Omit<FormField, "name">>;
+    fields?: Record<string, Omit<FormField, "name">>;
     infoview?: Infoview;
     source?: Record<string, any>,
     endPoints: SqlEndpoints;
@@ -136,9 +140,16 @@ export interface InfoViewProps {
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
 }
 
+export type OptionItem = {
+    value: string;
+    label: string;
+    group?: string;
+    title?: string
+};
+
 export type FlatOptions = Record<string, string>;
 export type GroupedOptions = Record<string, Record<string, string>>;
-export type SelectOptions = FlatOptions | GroupedOptions;
+export type SelectOptions = FlatOptions | GroupedOptions | OptionItem[];
 
 export interface InfoData {
     [key: string]: string | number | boolean | null | undefined;
@@ -152,10 +163,10 @@ export interface InfoFieldRendererProps {
     data?: Record<string, string | number | boolean | null | undefined>; // or data?: Record<string, unknown> if optional
     refid?: string | undefined;
     module_refid?: string | undefined;
-    optionsOverride?: SelectOptions;
+    optionsOverride?: OptionItem[];
     setFieldOptions: (
         fieldName: string,
-        options: SelectOptions
+        options: OptionItem[]
     ) => void;
 }
 
@@ -280,6 +291,10 @@ export interface SimpleFormViewProps extends BaseFormViewProps {
     fields: Record<string, Omit<FormField, "name">>;
 }
 
+type FieldName = string; 
+
+export type ChainMap = Record<FieldName, FieldName[]>;
+
 export interface FieldRendererProps {
     field: FormField;
     formik: FormikProps<Record<string, any>>;
@@ -288,11 +303,12 @@ export interface FieldRendererProps {
     sqlOpsUrls?: SqlEndpoints | undefined;
     refid?: string | undefined;
     module_refid?: string | undefined;
-    optionsOverride?: SelectOptions;
+    optionsOverride?: OptionItem[];
     setFieldOptions?: (
         fieldName: string,
-        options: SelectOptions
+        options: OptionItem[]
     ) => void;
+    chainMap: ChainMap;
 }
 
 
@@ -315,10 +331,10 @@ export interface TabViewProps {
     toast?: Toast | undefined;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoViewJson: InfoviewJson;
-    fieldOptions: Record<string, SelectOptions>;
+    fieldOptions: Record<string, OptionItem[]>;
     setFieldOptions: (
         fieldName: string,
-        options: SelectOptions
+        options: OptionItem[]
     ) => void;
 }
 
@@ -359,8 +375,8 @@ export interface ContentAreaProps extends VerticalNavProps {
     sqlOpsUrls: SqlEndpoints;
     refid?: string | undefined;
     module_refid?: string | undefined;
-    fieldOptions: Record<string, SelectOptions>;
-    setFieldOptions: (name: string, options: SelectOptions) => void;
+    fieldOptions: Record<string, OptionItem[]>;
+    setFieldOptions: (name: string, options: OptionItem[]) => void;
     buttons?: Record<string, any> | undefined;
 
 }

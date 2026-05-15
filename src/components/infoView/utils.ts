@@ -1,8 +1,9 @@
 import * as Yup from "yup";
 import axios from "axios";
+import type { FormikProps } from "formik";
 
 import DOMPurify from "dompurify";
-import type { AutocompleteConfig, FileCategory, FileItem, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions, } from "./InfoView.types.js";
+import type { AutocompleteConfig, ChainMap, FileCategory, FileItem, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, OptionItem, SelectOptions, } from "./InfoView.types.js";
 import { FILE_TYPES, IMAGE_EXT, PDF_EXT, TEXT_EXT, VIDEO_EXT } from "./constant.js";
 
 export function determineViewMode(json: Infoview) {
@@ -25,13 +26,85 @@ export function groupFields(fields: Record<string, any>): Record<string, InfoVie
 
   return grouped;
 }
+
 export const getGeoFieldKeys = (fields: Record<string, Omit<FormField, "name">>) => {
   return Object.entries(fields ?? {})
     .filter(([, field]: any) => field.type === "geolocation")
     .map(([key]) => key);
 };
 
-export async function fetchGeolocation(): Promise<string | null> {
+export const groupOptions = (options: OptionItem[]) => {
+  return options.reduce<Record<string, OptionItem[]>>((acc, opt) => {
+    const key = opt.group || "__ungrouped__";
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(opt);
+    return acc;
+  }, {});
+};
+
+type ValidateFileInputParams = {
+  e: React.ChangeEvent<HTMLInputElement>;
+  existingFiles: string[];
+  maxFiles: number;
+  maxFileSize?: number | undefined; // bytes
+};
+
+const formatSize = (bytes: number) => {
+  if (bytes >= 1024 * 1024) {
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+  }
+  return `${(bytes / 1024).toFixed(0)} KB`;
+};
+
+export const validateFiles = ({
+  e,
+  existingFiles,
+  maxFiles,
+  maxFileSize
+}: ValidateFileInputParams) => {
+  const selectedFiles = e.currentTarget.files;
+  if (!selectedFiles) return null;
+  const fileArray = Array.from(selectedFiles);
+  const total = existingFiles.length + fileArray.length;
+  if (total > maxFiles) {
+    alert(`You can upload maximum ${maxFiles} file(s)`);
+    e.currentTarget.value = "";
+    return null;
+
+  }
+  // file size validation
+  if (maxFileSize) {
+    const maxSize = Number(maxFileSize); // assume bytes
+    const invalidFile = fileArray.find((f) => f.size > maxSize);
+
+    if (invalidFile) {
+      alert(
+        `File "${invalidFile.name}" exceeds max size of ${formatSize(maxFileSize)}`);
+      e.currentTarget.value = "";
+      return null;
+    }
+  }
+
+  return selectedFiles
+}
+
+
+export const getAltitudeFieldKeys = (
+  fields: Record<string, Omit<FormField, "name">>
+) => {
+  return Object.entries(fields ?? {})
+    .filter(([, field]: any) => field.type === "altitude")
+    .map(([key]) => key);
+};
+
+export type GeolocationData = {
+  latitude: number;
+  longitude: number;
+  altitude: number | null;
+  accuracy: number;
+};
+
+export async function fetchGeolocation(): Promise<GeolocationData> {
   if (!("geolocation" in navigator)) {
     throw new Error(
       "Geolocation is not supported by this browser. You cannot access this portal."
@@ -49,8 +122,19 @@ export async function fetchGeolocation(): Promise<string | null> {
       }
     );
 
-    const { latitude, longitude } = position.coords;
-    return `${latitude},${longitude}`;
+    const {
+      latitude,
+      longitude,
+      altitude,
+      accuracy,
+    } = position.coords;
+
+    return {
+      latitude,
+      longitude,
+      altitude,
+      accuracy,
+    };
   } catch (error) {
     if (!(error instanceof GeolocationPositionError)) {
       throw new Error("Failed to get your location.");
@@ -181,6 +265,29 @@ export async function copyToClipboard(content: string) {
   }
 }
 
+export const buildChainMap = (fields: FormField[]): ChainMap => {
+  const map: ChainMap = {};
+
+  for (const field of fields) {
+    const source = field.name;
+    if (!source) continue;
+
+    const chains = field.ajaxchain;
+    if (!chains) continue;
+
+    const arr = Array.isArray(chains) ? chains : [chains];
+
+    for (const c of arr) {
+      if (!c?.target) continue;
+
+      if (!map[source]) map[source] = [];
+      map[source].push(c.target);
+    }
+  }
+
+  return map;
+};
+
 
 export const replacePlaceholders = (
   input: any,
@@ -225,8 +332,8 @@ export const formatOptions = (
   labelKey: string,
   items: any[],
   groupKey?: string
-): SelectOptions => {
-  if (!Array.isArray(items) || items.length === 0) return {};
+): OptionItem[] => {
+  if (!Array.isArray(items) || items.length === 0) return [];
 
   const resolvedGroupKey =
     groupKey ??
@@ -234,55 +341,74 @@ export const formatOptions = (
       ? "category"
       : undefined);
 
-  // ---- flat options ----
-  if (!resolvedGroupKey) {
-    const mapped: FlatOptions = {};
-    items.forEach(item => {
+  return items
+    .map((item) => {
       const value = item[valueKey];
       const label = item[labelKey];
-      if (value != null && label != null) {
-        mapped[String(value)] = String(label);
-      }
-    });
-    return mapped;
-  }
 
-  // ---- grouped options ----
-  const grouped: GroupedOptions = {};
+      if (value == null || label == null) return null;
 
-  items.forEach(item => {
-    const group = item[resolvedGroupKey] ?? "Others";
-    const value = item[valueKey];
-    const label = item[labelKey];
-
-    if (value == null || label == null) return;
-
-    if (!grouped[group]) grouped[group] = {};
-    grouped[group][String(value)] = String(label);
-  });
-
-  return grouped;
+      return {
+        value: String(value),
+        label: String(label),
+        group:
+          resolvedGroupKey && item[resolvedGroupKey]
+            ? String(item[resolvedGroupKey])
+            : undefined,
+      };
+    })
+    .filter(Boolean) as OptionItem[];
 };
 
+export const mergeOptions = (
+  field: {
+    options?: any;
+    options_top?: any;
+    options_bottom?: any;
+  },
+  dynamicOpts?: OptionItem[]
+): OptionItem[] => {
+  const top = normalizeOptions(field.options_top);
+  const base = normalizeOptions(field.options);
+  const dynamic = dynamicOpts ?? [];
+  const bottom = normalizeOptions(field.options_bottom);
 
+  const seen = new Set<string>();
+
+  const dedupe = (arr: OptionItem[]) =>
+    arr.filter((o) => {
+      if (seen.has(o.value)) return false;
+      seen.add(o.value);
+      return true;
+    });
+
+  return [
+    ...dedupe(top),
+    ...dedupe(base),
+    ...dedupe(dynamic),
+    ...dedupe(bottom),
+  ];
+};
 
 export function resolveDisplayValue(
   fieldValue: unknown,
-  options: FlatOptions
+  options: OptionItem[]
 ) {
+  if (!options?.length) return fieldValue;
 
-
-  if (!options || Object.keys(options).length === 0) return fieldValue;
+  const getLabel = (value: string) => {
+    return options.find(opt => String(opt.value) === value)?.label;
+  };
 
   if (typeof fieldValue === "number") {
-    return options[String(fieldValue)] ?? fieldValue;
+    return getLabel(String(fieldValue)) ?? fieldValue;
   }
 
   if (typeof fieldValue === "string") {
     const parts = fieldValue.split(",").map(v => v.trim());
 
     const labels = parts
-      .map(v => options[v])
+      .map(getLabel)
       .filter(Boolean);
 
     return labels.length ? labels.join(", ") : fieldValue;
@@ -291,8 +417,118 @@ export function resolveDisplayValue(
   return fieldValue;
 }
 
+export const buildApiParams = ({
+  field,
+  formValues,
+}: {
+  field: FormField;
+  formValues: Record<string, any>;
+}) => {
+
+  const params: Record<string, any> = {
+
+  };
+
+  if (typeof field.parameter === "string" && field.parameter) {
+    params[field.parameter] =
+      formValues[field.parameter];
+    return params;
+
+  }
 
 
+
+  if (
+    typeof field.parameter === "object" &&
+    field.parameter !== null &&
+    Object.keys(field.parameter).length > 0
+  ) {
+    for (const [key, val] of Object.entries(field.parameter)) {
+      params[key] = formValues?.[val as string];
+    }
+  }
+
+
+  return params;
+};
+
+
+export const resolveDateValue = (
+  value?: string | number
+): string | number | undefined => {
+  if (value == null) return undefined;
+
+  if (typeof value === "number") {
+    return value;
+  }
+
+  const trimmed = value.trim();
+
+  // already valid yyyy-mm-dd
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  const date = new Date();
+
+  switch (trimmed.toLowerCase()) {
+    case "today":
+      break;
+
+    case "tomorrow":
+      date.setDate(date.getDate() + 1);
+      break;
+
+    case "yesterday":
+      date.setDate(date.getDate() - 1);
+      break;
+
+    case "startofmonth":
+      date.setDate(1);
+      break;
+
+    case "endofmonth":
+      date.setMonth(date.getMonth() + 1, 0);
+      break;
+
+    case "startofyear":
+      date.setMonth(0, 1);
+      break;
+
+    case "endofyear":
+      date.setMonth(11, 31);
+      break;
+
+    default: {
+      const match = trimmed.match(/^([+-]\d+)([dmy])$/i);
+
+      if (match) {
+        const [, amountStr, unitStr] = match;
+
+        if (!amountStr || !unitStr) {
+          return trimmed;
+        }
+        const amount = Number(amountStr);
+        const unit = unitStr.toLowerCase();
+
+        if (unit === "d") {
+          date.setDate(date.getDate() + amount);
+        } else if (unit === "m") {
+          date.setMonth(date.getMonth() + amount);
+        } else if (unit === "y") {
+          date.setFullYear(date.getFullYear() + amount);
+        }
+
+        return date.toISOString().split("T")[0];
+      }
+
+      // unknown value -> return as-is
+      return trimmed;
+    }
+  }
+
+  return date.toISOString().split("T")[0];
+};
 
 export const isHidden = (hidden?: boolean | string): boolean =>
   hidden === true || hidden === "true";
@@ -341,8 +577,12 @@ export const intializeForm = (
     }
 
     else if (field.type === "date") {
+      const resolvedValue = resolveDateValue(value);
+
       initialValues[name] =
-        typeof value === "string" && value.trim() ? value.slice(0, 10) : null;
+        typeof resolvedValue === "string" && resolvedValue.trim()
+          ? resolvedValue.slice(0, 10)
+          : null;
     }
 
     else if (field.type === "time") {
@@ -648,22 +888,44 @@ export const flattenOptions = (options: SelectOptions): FlatEntry[] => {
 };
 
 
+export const sanitizeAlphaNumeric = (
+  value: string,
+  allowedSpecialChars: string[] = [" ", "-", "_", ".", ",", "@", "/"]
+) => {
+  const escapedChars = allowedSpecialChars
+    .map((char) => char.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&"))
+    .join("");
 
+  const regex = new RegExp(`[^a-zA-Z0-9${escapedChars}]`, "g");
 
-export function normalizeOptions(
-  options?: SelectOptions
-): FlatOptions {
-  if (!options) return {};
+  return value.replace(regex, "");
+};
 
-  if (!isGroupedOptions(options)) {
-    return options;
+export const normalizeOptions = (opts?: any): OptionItem[] => {
+  if (!opts) return [];
+
+  // array input
+  if (Array.isArray(opts)) {
+    return opts.map((o) => ({
+      value: String(o.value),
+      label: String(o.label ?? o.title ?? o.value),
+      group:
+        o.group ??
+        o.category ?? //  support category if present
+        undefined,
+    }));
   }
 
-  return Object.values(options).reduce<FlatOptions>((acc, group) => {
-    Object.assign(acc, group);
-    return acc;
-  }, {});
-}
+  // flat object: { "1": "Apple" }
+  if (typeof opts === "object") {
+    return Object.entries(opts).map(([value, label]) => ({
+      value: String(value),
+      label: String(label),
+    }));
+  }
+
+  return [];
+};
 type Row = Record<string, unknown>;
 
 export const normalizeRowSafe = (row: Row): Row => {
@@ -906,6 +1168,44 @@ export const getMaxDate = (max?: string | number) => {
     return new Date().toISOString().split("T")[0]; // yyyy-mm-dd
   }
   return max;
+};
+
+export const resetChain = (
+  sourceKey: keyof ChainMap,
+  chainMap: ChainMap,
+  formik: FormikProps<Record<string, any>>,
+  visited: Set<keyof ChainMap> = new Set()
+): void => {
+  if (visited.has(sourceKey)) return;
+  visited.add(sourceKey);
+
+
+  const targets = chainMap[sourceKey] ?? [];
+
+
+
+  for (const target of targets) {
+    formik.setFieldValue(
+      target,
+      formik.initialValues[target]
+    );
+
+
+
+    resetChain(target, chainMap, formik, visited);
+  }
+};
+
+
+export const getFirstRow = (res: any) => {
+  const data = res?.data;
+
+  if (Array.isArray(data?.results?.options)) return data.results.options[0];
+  if (Array.isArray(data?.data)) return data.data[0];
+  if (Array.isArray(data?.results)) return data.results[0];
+  if (Array.isArray(data)) return data[0];
+
+  return data?.results ?? data;
 };
 
 

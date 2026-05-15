@@ -1,10 +1,23 @@
 import { useRef, useState, useEffect, useMemo } from "react";
 import axios from 'axios';
-import type { FieldRendererProps, FileItem, FormField, SelectOptions, sqlQueryProps } from "../InfoView.types.js";
-import { buildFileValue, flattenOptions, formatOptions, getSearchColumns, handlePersist, isAutocompleteConfig, isGroupedOptions, normalizeRowSafe, replacePlaceholders, writePersistedValue } from "../utils.js";
+import type { FieldRendererProps, FormField, OptionItem, sqlQueryProps } from "../InfoView.types.js";
+import { buildApiParams, buildFileValue, flattenOptions, formatOptions, getFirstRow, getSearchColumns, handlePersist, isAutocompleteConfig, mergeOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resetChain } from "../utils.js";
 import { deleteFile, fetchDataByquery, uploadFiles } from "../service.js";
 
 //DRY implementation pending
+declare global {
+    interface Window {
+        formAPI: {
+            setValue: (name: string, value: any) => void;
+            getValue: (name: string) => any;
+            setValues: (values: Record<string, any>) => void;
+            getValues: () => Record<string, any>;
+        };
+
+        // optional: backward compatibility
+        setFieldValue: (name: string, value: any) => void;
+    }
+}
 
 export default function useFieldRenderer({
     field,
@@ -14,14 +27,17 @@ export default function useFieldRenderer({
     refid,
     module_refid = "menuManager.main",
     optionsOverride,
-    setFieldOptions
+    setFieldOptions,
+    chainMap
 }: FieldRendererProps) {
-   
+
     const [isFocused, setIsFocused] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [options, setOptions] = useState<SelectOptions>(
-        optionsOverride ?? field.options ?? {}
+    const [options, setOptions] = useState<OptionItem[]>(
+        mergeOptions(field, optionsOverride ?? [])
     );
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
+
 
 
     const [search, setSearch] = useState("");
@@ -46,28 +62,12 @@ export default function useFieldRenderer({
         const currentValue = formik.values[key];
         if (currentValue) return;
 
-        if (!options) return;
+        if (options.length === 0) return;
 
-        let firstValue: string | number | undefined;
-
-        // Array format
-        if (Array.isArray(options)) {
-            firstValue = options[0]?.value;
-        }
-
-        // Flat object format
-        else if (!isGroupedOptions(options)) {
-            firstValue = Object.keys(options)[0];
-        }
-
-        //  Grouped object format
-        else {
-            const firstGroup = Object.values(options)[0] as Record<string, string>;
-            firstValue = firstGroup ? Object.keys(firstGroup)[0] : undefined;
-        }
+        const firstValue = options[0]?.value;
 
         if (firstValue !== undefined && firstValue !== null) {
-            formik.setFieldValue(key, String(firstValue), false);
+            formik.setFieldValue(key, firstValue, false);
         }
     }, [options]);
 
@@ -76,8 +76,35 @@ export default function useFieldRenderer({
     useEffect(() => {
         if (!optionsOverride) return;
 
-        setOptions(optionsOverride);
+        setOptions(mergeOptions(field, optionsOverride));
     }, [optionsOverride]);
+
+
+
+
+    useEffect(() => {
+        window.formAPI = {
+            setValue: (name, value) => {
+                formik.setFieldValue(name, value);
+            },
+            getValue: (name) => {
+                return formik.values[name];
+            },
+            setValues: (values) => {
+                Object.entries(values).forEach(([k, v]) => {
+                    formik.setFieldValue(k, v);
+                });
+            },
+            getValues: () => {
+                return formik.values;
+            }
+        };
+
+        // backward compatibility
+        window.setFieldValue = (name, value) => {
+            formik.setFieldValue(name, value);
+        };
+    }, [formik]);
 
 
 
@@ -110,45 +137,10 @@ export default function useFieldRenderer({
         let isMounted = true;
 
         const fetchData = async () => {
+
+
             let valueKey = field.valueKey ?? "value";
             let labelKey = field.labelKey ?? "title";
-            let opts = field?.options;
-
-            if (opts && (
-                (Array.isArray(opts) && opts.length > 0) ||
-                (!Array.isArray(opts) && Object.keys(opts).length > 0)
-            )) {
-
-                //  CASE 1: flat or grouped object
-                // { "1": "WEL" } OR { quarter1: { "1": "January" } }
-                if (
-                    typeof field.options === "object" &&
-                    !Array.isArray(field.options)
-                ) {
-                    const values = Object.values(field.options);
-                    if (values.length && typeof values[0] === "string") {
-                        setOptions(field.options as SelectOptions);
-                        return;
-                    }
-                }
-
-                // CASE 2 / 3: array of rows (flat or grouped via `category`)
-                const rawItems = Array.isArray(field.options)
-                    ? field.options
-                    : [field.options];
-
-                const normalizedItems = rawItems.map(normalizeRowSafe);
-
-                const mapped = formatOptions(
-                    valueKey,
-                    labelKey,
-                    normalizedItems,
-                    field.groupKey // auto-uses `category` if present
-                );
-
-                setOptions(mapped);
-                return;
-            }
 
             const source = field?.source ?? {};
 
@@ -168,16 +160,6 @@ export default function useFieldRenderer({
                                         ? res.data
                                         : res;
 
-                        if (
-                            typeof rawItems === "object" &&
-                            !Array.isArray(rawItems)
-                        ) {
-                            const values = Object.values(rawItems);
-                            if (values.length && typeof values[0] === "string") {
-                                setOptions(rawItems as SelectOptions);
-                                return;
-                            }
-                        }
 
                         const normalizedItems = Array.isArray(rawItems)
                             ? rawItems.map(normalizeRowSafe)
@@ -185,15 +167,15 @@ export default function useFieldRenderer({
 
                         const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
 
-                        if (isMounted) setOptions(mapped);
+                        if (isMounted) setOptions(mergeOptions(field, mapped));;
                         return;
                     } catch (err) {
                         console.error("Method execution failed:", err);
-                        if (isMounted) setOptions({});
+                        if (isMounted) setOptions([]);;
                         return;
                     }
                 } else {
-                    if (isMounted) setOptions({});
+                    if (isMounted) setOptions([]);
                     return;
                 }
             }
@@ -201,6 +183,19 @@ export default function useFieldRenderer({
             // Case 2: API source
             if (source.type === "api" && source.endpoint) {
                 try {
+                    let payload: Record<string, any> = {};
+                    if (source.refid) {
+                        payload.refid = source.refid;
+                    }
+                    if (field.parameter) {
+                        const params = buildApiParams({ field, formValues: formik.values });
+                        console.log("paramsssssss",field.name, params);
+                        console.log("payload", payload);
+
+
+                        payload = { ...payload, ...params }
+                    }
+
                     const config = {
                         method: source.method || "GET",
                         url: sqlOpsUrls?.baseURL + source.endpoint,
@@ -210,7 +205,7 @@ export default function useFieldRenderer({
                         },
                         ...(source.method === "GET"
                             ? { params: { refid: source.refid } }
-                            : { data: { refid: source.refid } }),
+                            : { data: payload }),
                     }
 
                     const res = await axios(config);
@@ -224,28 +219,21 @@ export default function useFieldRenderer({
                                     ? res.data
                                     : res;
 
-                    if (
-                        typeof rawItems === "object" &&
-                        !Array.isArray(rawItems)
-                    ) {
-                        const values = Object.values(rawItems);
-                        if (values.length && typeof values[0] === "string") {
-                            setOptions(rawItems as SelectOptions);
-                            return;
-                        }
-                    }
+
 
                     const normalizedItems = Array.isArray(rawItems)
                         ? rawItems.map(normalizeRowSafe)
                         : [];
 
                     const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey)
-                    if (isMounted) setOptions(mapped);
+
+
+                    if (isMounted) setOptions(mergeOptions(field, mapped));
                     return;
 
                 } catch (err) {
                     console.error("API execution failed:", err);
-                    if (isMounted) setOptions({});
+                    if (isMounted) setOptions([]);
                     return;
                 }
             }
@@ -300,25 +288,13 @@ export default function useFieldRenderer({
                             ? res.data
                             : res;
 
-
-                    if (
-                        typeof rawItems === "object" &&
-                        !Array.isArray(rawItems)
-                    ) {
-                        const values = Object.values(rawItems);
-                        if (values.length && typeof values[0] === "string") {
-                            setOptions(rawItems as SelectOptions);
-                            return;
-                        }
-                    }
-
                     const normalizedItems = Array.isArray(rawItems)
                         ? rawItems.map(normalizeRowSafe)
                         : [];
 
                     const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
 
-                    if (isMounted) setOptions(mapped);
+                    if (isMounted) setOptions(mergeOptions(field, mapped));
 
                 } catch (err) {
                     console.error("API fetch failed:", err);
@@ -340,7 +316,8 @@ export default function useFieldRenderer({
         field.queryid,
         field.groupKey,
         field.valueKey,
-        field.labelKey
+        field.labelKey,
+        refreshTrigger
     ]);
 
 
@@ -508,15 +485,8 @@ export default function useFieldRenderer({
                                 : { data: params }),
                         }
 
-                        const { data: res } = await axios(config);
-                        row = Array.isArray(res?.data?.results?.options) ? res?.data?.results?.options[0] :
-                            Array.isArray(res?.data?.data)
-                                ? res.data.data[0]
-                                : Array.isArray(res?.data?.results)
-                                    ? res.data.results[0]
-                                    : Array.isArray(res?.data)
-                                        ? res.data[0]
-                                        : res?.data;
+                        const res = await axios(config);
+                        row = getFirstRow(res)
                     } else {
 
                         let query: sqlQueryProps | undefined;
@@ -651,6 +621,8 @@ export default function useFieldRenderer({
                         field.groupKey
                     );
 
+                    formik.setFieldValue(chain.target, formik.initialValues[chain.target]);
+                    // resetChain(field.name, chainMap, formik);                                        
                     setFieldOptions?.(chain.target, mapped);
                 }
             } catch (err) {
@@ -660,6 +632,7 @@ export default function useFieldRenderer({
 
         run();
     }, [formik.values[field.name]]);
+
 
 
     useEffect(() => {
@@ -693,7 +666,6 @@ export default function useFieldRenderer({
                     };
                 }
 
-
                 let filter: Record<string, [string, string]> = {};
 
                 if (Array.isArray(searchColumns)) {
@@ -711,6 +683,8 @@ export default function useFieldRenderer({
                         ? res.data
                         : res;
 
+
+
                 const normalizedItems = Array.isArray(rawItems)
                     ? rawItems.map(normalizeRowSafe)
                     : [];
@@ -722,7 +696,7 @@ export default function useFieldRenderer({
                     field.groupKey
                 );
 
-                setOptions(mapped);
+                setOptions(mergeOptions(field, mapped));
             } catch (err) {
                 if (axios.isCancel(err)) return;
                 console.error("Search fetch failed", err);
@@ -784,7 +758,7 @@ export default function useFieldRenderer({
         } catch (err) {
             console.log(err)
             formik.setFieldValue(key, existing);
-              window.alert("Failed to delete file due to a technical issue. Please try again.")
+            window.alert("Failed to delete file due to a technical issue. Please try again.")
         }
     };
 
@@ -835,12 +809,6 @@ export default function useFieldRenderer({
 
 
 
-    function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const files = e.currentTarget.files;
-        if (files) handleFileUpload(files);
-    }
-
-
     return {
         setHighlightedIndex,
         executeFieldMethod,
@@ -852,7 +820,6 @@ export default function useFieldRenderer({
         handleInputChange,
         handleSelect,
         handlePersist,
-        handleFileChange,
         setLoading,
         removeFile,
         optionCount,
@@ -870,7 +837,8 @@ export default function useFieldRenderer({
         isFocused,
         exactMatch,
         triggerRef,
-        loading
+        loading,
+        refreshOptions: () => setRefreshTrigger(c => c + 1),
 
 
     }

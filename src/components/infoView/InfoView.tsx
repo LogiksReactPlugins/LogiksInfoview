@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { determineViewMode, groupFields, normalizeToObject, replacePlaceholders, transformedObject } from './utils.js';
 
-import type { InfoViewGroup, InfoViewProps, InfoData, SelectOptions } from './InfoView.types.js';
+import type { InfoViewGroup, InfoViewProps, InfoData, SelectOptions, OptionItem } from './InfoView.types.js';
 
 import CommonInfo from "./components/CommonInfo.js";
 import TabView from "./components/TabView.js";
@@ -36,13 +36,16 @@ export default function LogiksInfoView({
     );
 
 
-    const [fieldOptions, setFieldOptions] = React.useState<
-        Record<string, SelectOptions>
-    >({});
+  const [fieldOptions, setFieldOptions] = React.useState<
+    Record<string, OptionItem[]>
+  >({});
 
-    const setOptionsForField = (name: string, options: SelectOptions) => {
-        setFieldOptions(prev => ({ ...prev, [name]: options }));
-    };
+  const setOptionsForField = (name: string, options: OptionItem[]) => {
+    setFieldOptions(prev => ({
+      ...prev,
+      [name]: options,
+    }));
+  };
 
     const refid = infoViewJson?.source?.refid;
     let groups: Record<string, InfoViewGroup> = { ...groupedFields };
@@ -178,7 +181,7 @@ export default function LogiksInfoView({
                             data: {
                                 "operation": "fetch",
                                 "source": query,
-                                "fields": transformedObject(infoViewJson.fields, sqlOpsUrls.operation),
+                                "fields": transformedObject(infoViewJson.fields ?? {}, sqlOpsUrls.operation),
                                 "forcefill": infoViewJson.forcefill,
                                 "datahash": resHashId.data.refhash,
                                 "srcid": infoViewJson?.module_refid

@@ -1,5 +1,5 @@
 import { default as React, ComponentType, ReactNode } from 'react';
-import { InfoViewGroup, InfoData, SqlEndpoints, SelectOptions, InfoviewJson, Toast } from '../InfoView.types.js';
+import { InfoViewGroup, InfoData, SqlEndpoints, InfoviewJson, Toast, OptionItem } from '../InfoView.types.js';
 interface CardViewProps {
     groups: Record<string, InfoViewGroup>;
     methods?: Record<string, Function>;
@@ -11,8 +11,8 @@ interface CardViewProps {
     toast?: Toast | undefined;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoViewJson: InfoviewJson;
-    fieldOptions: Record<string, SelectOptions>;
-    setFieldOptions: (fieldName: string, options: SelectOptions) => void;
+    fieldOptions: Record<string, OptionItem[]>;
+    setFieldOptions: (fieldName: string, options: OptionItem[]) => void;
     components?: Record<string, ComponentType<any> | ReactNode>;
 }
 export default function CardView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson, fieldOptions, setFieldOptions, components }: CardViewProps): import("react/jsx-runtime").JSX.Element;

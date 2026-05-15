@@ -2,7 +2,7 @@
 import { tailwindCols, toColWidth } from '../utils.js';
 
 import InfoFieldRenderer from './InfoFieldRenderer.js';
-import type { FormField, InfoData, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
+import type { FormField, InfoData, SqlEndpoints, SelectOptions, OptionItem } from '../InfoView.types.js';
 import PhotoRenderer from './PhotoRenderer.js';
 import { useMemo } from 'react';
 
@@ -17,10 +17,10 @@ interface CommonInfoProps {
     };
     methods: Record<string, Function>;
     hiddenFields?: string[];
-    fieldOptions: Record<string, SelectOptions>;
+    fieldOptions: Record<string, OptionItem[]>;
     setFieldOptions: (
         fieldName: string,
-        options: SelectOptions
+        options: OptionItem[]
     ) => void;
     refid: string;
     module_refid: string | undefined;

@@ -1,7 +1,7 @@
 // sqlClient.ts
 
 import axios, { type AxiosResponse } from "axios";
-import type { SelectOptions, SqlEndpoints, sqlQueryProps, UploadResponse } from "./InfoView.types.js";
+import type { OptionItem, SqlEndpoints, sqlQueryProps, UploadResponse } from "./InfoView.types.js";
 import { formatOptions, normalizeRowSafe, replacePlaceholders } from "./utils.js";
 
 
@@ -193,7 +193,7 @@ export async function runAjaxChain({
     field: any;
     value: any;
     sqlOpsUrls: any;
-    setFieldOptions: (name: string, options: SelectOptions) => void;
+    setFieldOptions: (name: string, options: OptionItem[]) => void;
     values: Record<string, any>
 }) {
     if (!field.ajaxchain || !value || !sqlOpsUrls) return;

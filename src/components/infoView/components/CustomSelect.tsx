@@ -1,7 +1,7 @@
 import React from 'react';
 import type { FormikProps } from "formik";
 import { getOptionLabel, type FlatEntry } from '../utils.js';
-import type { FormField, SelectOptions } from '../InfoView.types.js';
+import type { FormField, OptionItem } from '../InfoView.types.js';
 import { DropdownPortal } from './PortalDropdown.js';
 
 
@@ -16,7 +16,7 @@ type MultiSelectProps = {
     listRef: React.RefObject<HTMLDivElement | null>;
 
     labelClasses: string;
-    options: SelectOptions;
+    options: OptionItem[];
     search: string;
     setSearch: React.Dispatch<React.SetStateAction<string>>;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -60,12 +60,20 @@ export default function CustomSelect({
 }: MultiSelectProps) {
     const key = field.name;
 
+
     return <div className="relative">
+        <input
+            type="hidden"
+
+            name={key}
+            value={JSON.stringify(formik.values[key] ?? "")}
+        />
         <label className={labelClasses}>
             {field.label}
             {field.required && <span className="text-red-500 ml-1">*</span>}
         </label>
         <div
+            id={key}
 
             className={`
         relative w-full select-none border rounded-lg px-4 py-2.5 flex justify-between items-center
@@ -78,9 +86,10 @@ export default function CustomSelect({
             ref={triggerRef}
             tabIndex={0}
             onClick={() => {
-                setOpen(v => !v);
-                //setHighlightedIndex(0);
+                if (isDisabled) return;
+                setOpen((prev) => !prev);
             }}
+
 
 
             onKeyDown={(e) => {
@@ -88,12 +97,31 @@ export default function CustomSelect({
                 handleKeyDown(e, true)
             }}
 
+
         >
             <span className="text-sm text-gray-700">
                 {formik.values[key]
                     ? getOptionLabel(options, formik.values[key]) ?? "Select option"
                     : `Select ${field.label}`}
             </span>
+
+            {formik.values[key] && (
+                <button
+                    type="button"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        formik.setFieldValue(key, "");
+                        setOpen(false);
+                        handlePersist("", field, module_refid);
+                        setSearch("");
+                    }}
+                    className="absolute right-10 text-red-500 transition-colors"
+                >
+                    <i className="fa-solid fa-xmark text-sm"></i>
+                </button>
+            )}
             <svg
                 className="w-4 h-4 text-gray-500"
                 fill="none"
@@ -115,7 +143,7 @@ export default function CustomSelect({
             <div
                 ref={listRef}
 
-                className="absolute mt-1 w-full border border-gray-200 rounded-lg bg-white shadow-md z-10 max-h-60 overflow-y-auto p-2">
+                className=" w-full border border-gray-200 rounded-lg bg-white shadow-md  max-h-60 overflow-y-auto p-2">
                 {/*  Search input */}
                 {field.search && <div className="sticky top-0 bg-white p-1">
                     <input
@@ -133,20 +161,7 @@ export default function CustomSelect({
                     />
                 </div>}
 
-                {filteredOptions.length > 0 && <div
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        formik.setFieldValue(key, "");
-                        setOpen(false);
-                        handlePersist("", field, module_refid)
-                        setSearch("");
-                    }}
-                    className={"px-2 py-1 hover:bg-gray-50 text-gray-500 rounded cursor-pointer text-sm hover:bg-gray-50"}
-                >
-                    Clear selection
-                </div>
-                }
+
 
                 {/* Filtered options */}
                 {filteredOptions.length > 0 ? (

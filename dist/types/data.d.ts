@@ -1,73 +1,3 @@
-export declare const example8: {
-    endPoints: {
-        baseURL: string;
-        accessToken: string;
-        dbopsGetHash: string;
-        dbopsGetRefId: string;
-        dbopsCreate: string;
-        dbopsUpdate: string;
-        dbopsFetch: string;
-        registerQuery: string;
-        runQuery: string;
-    };
-    hooks: {};
-    source: {
-        type: string;
-        dbopsid: string;
-        refid: string;
-        where: {
-            id: string;
-        };
-    };
-    forcefill: {
-        groupuid: string;
-        guid: string;
-        last_status: string;
-        company_id: string;
-    };
-    fields: {
-        code: {
-            label: string;
-            group: string;
-            required: boolean;
-            width: number;
-            type: string;
-        };
-        title: {
-            label: string;
-            group: string;
-            required: boolean;
-            width: number;
-            type: string;
-        };
-        location_id: {
-            label: string;
-            group: string;
-            required: boolean;
-            width: number;
-            type: string;
-            valueKey: string;
-            labelKey: string;
-            queryid: string;
-        };
-        blocked: {
-            label: string;
-            group: string;
-            type: string;
-            groupid: string;
-            vmode: string;
-            required: boolean;
-        };
-        description: {
-            label: string;
-            group: string;
-            width: number;
-            type: string;
-        };
-    };
-    module_refid: string;
-    module_type: string;
-};
 export declare const example9: {
     endPoints: {
         baseURL: string;
@@ -337,6 +267,9 @@ export declare const example10: {
         registerQuery: string;
         runQuery: string;
     };
+    hooks: {
+        presubmit: string[];
+    };
     source: {
         type: string;
         dbopsid: string;
@@ -396,16 +329,23 @@ export declare const example10: {
             "no-option": string;
             options: never[];
         };
+        date: {
+            label: string;
+            type: string;
+            required: boolean;
+            max: string;
+            width: number;
+        };
         location_id: {
             label: string;
             type: string;
             required: boolean;
             width: number;
         };
-        date: {
+        photo_attendance: {
             label: string;
             type: string;
-            required: boolean;
+            multiple: boolean;
             width: number;
         };
         conducted_by_department: {
@@ -425,17 +365,17 @@ export declare const example10: {
             label: string;
             type: string;
             width: number;
-            queryid: string;
+            search: boolean;
+            options: {
+                title: string;
+                value: string;
+            }[];
         };
         participant_count: {
             label: string;
             type: string;
             required: boolean;
-            width: number;
-        };
-        photo_attendance: {
-            label: string;
-            type: string;
+            min: number;
             width: number;
         };
     };
@@ -465,6 +405,7 @@ export declare const example10: {
                     "popup.form": {
                         hooks: {
                             presubmit: string[];
+                            postsubmit: string[];
                         };
                         source: {
                             type: string;
@@ -474,6 +415,13 @@ export declare const example10: {
                             guid: string;
                         };
                         fields: {
+                            id: {
+                                label: string;
+                                type: string;
+                                required: boolean;
+                                disabled: boolean;
+                                hidden: boolean;
+                            };
                             hse_induction_id: {
                                 label: string;
                                 type: string;
@@ -502,6 +450,8 @@ export declare const example10: {
                                 label: string;
                                 type: string;
                                 required: boolean;
+                                min: number;
+                                default: number;
                                 width: number;
                             };
                             company: {
@@ -522,12 +472,12 @@ export declare const example10: {
                                 label: string;
                                 disabled: boolean;
                                 type: string;
-                                required: boolean;
                                 width: number;
                             };
                             photograph: {
                                 label: string;
                                 type: string;
+                                multiple: boolean;
                                 width: number;
                             };
                         };
@@ -544,13 +494,13 @@ export declare const example10: {
                             searchable: boolean;
                             sortable: boolean;
                         };
-                        company_name: {
-                            label: string;
-                            searchable: boolean;
-                        };
                         company: {
                             label: string;
                             formatter: string;
+                            searchable: boolean;
+                        };
+                        company_name: {
+                            label: string;
                             searchable: boolean;
                         };
                         photograph: {
@@ -569,57 +519,20 @@ export declare const example10: {
                             label: string;
                             icon: string;
                         };
-                        deleteRecord: {
+                        "api@hse.deleteRecord": {
                             label: string;
                             icon: string;
+                            lgksConfirm: string;
+                            payload: {
+                                table: string;
+                            };
                         };
-                    };
-                    queryid: string;
-                };
-                width: number;
-            };
-            activity_log: {
-                label: string;
-                type: string;
-                src: string;
-                vmode: string;
-                config: {
-                    type: string;
-                    uimode: string;
-                    uiswitcher: boolean;
-                    policy_create: string;
-                    policy_view: string;
-                    policy_delete: string;
-                    policy_update: string;
-                    colkey: string;
-                    datagrid: {
-                        subject: {
+                        "popup@activity_logs.popup_activity_logs/{id}": {
                             label: string;
-                            formatter: string;
-                        };
-                        category: {
-                            label: string;
-                            formatter: string;
-                        };
-                        subcategory: {
-                            label: string;
-                            formatter: string;
-                        };
-                        pre_data: {
-                            label: string;
-                            formatter: string;
-                        };
-                        post_data: {
-                            label: string;
-                            formatter: string;
-                        };
-                        created_by: {
-                            label: string;
-                            formatter: string;
-                        };
-                        created_on: {
-                            label: string;
-                            formatter: string;
+                            params: {
+                                ref_src: string;
+                            };
+                            icon: string;
                         };
                     };
                     queryid: string;

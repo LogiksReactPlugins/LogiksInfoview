@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import type { InfoFieldRendererProps, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
-import { decodeSignature, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, sanitizeHtml } from '../utils.js';
+import type { InfoFieldRendererProps, OptionItem, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
+import { decodeSignature, formatOptions, mergeOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, sanitizeHtml } from '../utils.js';
 import FilePreviewTrigger from './FilePreviewTrigger.js';
 import { fetchDataByquery, runAjaxChain } from '../service.js';
 
@@ -28,8 +28,8 @@ export default function InfoFieldRenderer({
   `;
 
 
-  const [options, setOptions] = useState<SelectOptions>(
-    optionsOverride ?? field.options ?? {}
+  const [options, setOptions] = useState<OptionItem[]>(
+   mergeOptions(field, optionsOverride ?? [])
   );
   const ranRef = React.useRef(false);
 
@@ -64,7 +64,7 @@ export default function InfoFieldRenderer({
         ) {
           const values = Object.values(field.options);
           if (values.length && typeof values[0] === "string") {
-            setOptions(field.options as SelectOptions);
+            setOptions(field.options as OptionItem[]);
             return;
           }
         }
@@ -111,7 +111,7 @@ export default function InfoFieldRenderer({
             ) {
               const values = Object.values(rawItems);
               if (values.length && typeof values[0] === "string") {
-                setOptions(rawItems as SelectOptions);
+                setOptions(rawItems as OptionItem[]);
                 return;
               }
             }
@@ -124,11 +124,11 @@ export default function InfoFieldRenderer({
             return;
           } catch (err) {
             console.error("Method execution failed:", err);
-            if (isMounted) setOptions({});
+            if (isMounted) setOptions([]);
             return;
           }
         } else {
-          if (isMounted) setOptions({});
+          if (isMounted) setOptions([]);
           return;
         }
       }
@@ -164,7 +164,7 @@ export default function InfoFieldRenderer({
           ) {
             const values = Object.values(rawItems);
             if (values.length && typeof values[0] === "string") {
-              setOptions(rawItems as SelectOptions);
+              setOptions(rawItems as OptionItem[]);
               return;
             }
           }
@@ -179,7 +179,7 @@ export default function InfoFieldRenderer({
 
         } catch (err) {
           console.error("API execution failed:", err);
-          if (isMounted) setOptions({});
+          if (isMounted) setOptions([]);
           return
         }
       }
@@ -239,7 +239,7 @@ export default function InfoFieldRenderer({
           ) {
             const values = Object.values(rawItems);
             if (values.length && typeof values[0] === "string") {
-              setOptions(rawItems as SelectOptions);
+              setOptions(rawItems as OptionItem[]);
               return;
             }
           }
@@ -363,7 +363,7 @@ export default function InfoFieldRenderer({
               className="h-24 object-contain border bg-white rounded"
             />
           )
-        ) : (field.type === "file" || field.type === "camera"  || field.type === "camera2" || field.type === "attachement" || field.type === "photo" || field.type === "avatar") && displayVal ? (
+        ) : (field.type === "file" || field.type === "camera" || field.type === "camera2" || field.type === "attachement" || field.type === "photo" || field.type === "avatar") && displayVal ? (
           <div className="flex flex-wrap gap-2">
             {String(displayVal)
               .split(",")

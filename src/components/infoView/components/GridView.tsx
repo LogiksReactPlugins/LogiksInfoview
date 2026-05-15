@@ -16,11 +16,11 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
         sqlOpsUrls: Record<string, any>,
         refid: string;
         Reports?: ComponentType<any>;
-        toast?: Toast| undefined;
+        toast?: Toast | undefined;
         handleAction?: (action: Record<string, any>, data: InfoData) => void;
         infoViewJson: {
             script?: string;
-            fields: Record<string, Omit<FormField, "name">>;
+            fields?: Record<string, Omit<FormField, "name">>;
             infoview?: Infoview;
             source?: Record<string, any>,
             endPoints?: Record<string, any>;
@@ -71,7 +71,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
 
 
     const confirmDelete = async () => {
-   
+
 
         if (!deleteTarget?.id) return;
 
@@ -223,13 +223,13 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                                     operation: editData ? "update" : "create"
 
                                 },
-                                module_refid:infoViewJson?.module_refid
+                                module_refid: infoViewJson?.module_refid
                             }}
                             toast={toast}
                             methods={methods}
                             initialvalues={editData ?? {}}
                             setEditData={handleFormClose}
-                            
+
                         />
                     }
                     <ConfirmModal
@@ -240,10 +240,9 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                 </>
             ) : (
 
-               
-               
-                    <p>Report not available</p>
-                    
+
+                <h3>Report not found</h3>
+
 
             )}
         </>

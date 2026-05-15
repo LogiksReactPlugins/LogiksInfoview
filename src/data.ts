@@ -1,77 +1,6 @@
 
 
-export const example8 = {
-    "endPoints": {
-        "baseURL": "http://192.168.0.20:9999",
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6IjNkdkFLMklCd1BUZ01KaU1wS0dvYUk4WDNpYlBhQWtlY0QrYkIyVFZaYmpKM2VVNjFONUFkWTNGc0tVRTNuTnZTOWRXM1Y1cHhUejBOeFM4M2M0OXJTLy9yODZmcVhKSVVteTRIWDErMkplbHpYZlZCek9ncUhXeUpSNEF5WENsVkwwMm42K25JNHUxbGRpeHhaWEdQRzhZTUJWYjlXRzJFbXZuOUFrbFVFLzkxUzUxV1U5dXVsdDBDQjJsYWxzdUU5bGxJQ0RwVnN5Y0xtalJWMHdoZDZ3MGlTdHE0T0hvMThxd2doU1M0UWFlL2dCY2c4cVQxYStHbk4vcWt1SFZOMG1WZVhldmo2MW53enhFQkkyZ05pUDRVUGZNYm9LWGk0bFdMQT09IiwiaWF0IjoxNzY4NTY4NzgwLCJleHAiOjE3Njg1NzIzODAsImp0aSI6ImFjYzoxOjE3Njg1Njg3ODA3NTY6d2ViIn0.coX6jtfGkp7uOufGdPyejgZ7csxsLEm6X3eNLhO3-nU",
-        "dbopsGetHash": "/api/dbops",
-        "dbopsGetRefId": "/api/dbops/save",
-        "dbopsCreate": "/api/dbops/create",
-        "dbopsUpdate": "/api/dbops/update",
-        "dbopsFetch": "/api/dbops/fetch",
-        "registerQuery": "/api/query/save",
-        "runQuery": "/api/query/run"
-    },
 
-    "hooks": {},
-    "source": {
-        "type": "sql",
-        "dbopsid": "vbknS04SbS0I",
-        refid: "1",
-        where: {
-            id: "#refid#"
-        }
-    },
-    "forcefill": {
-        "groupuid": "#SESS_GROUP_NAME#",
-        "guid": "#SESS_GUID#",
-        "last_status": "open",
-        "company_id": "#SESS_COMP_ID#"
-    },
-    "fields": {
-        "code": {
-            "label": "Code",
-            "group": "Info",
-            "required": true,
-            "width": 6,
-            "type": "text"
-        },
-        "title": {
-            "label": "Title",
-            "group": "Info",
-            "required": true,
-            "width": 6,
-            "type": "text"
-        },
-        "location_id": {
-            "label": "Location",
-            "group": "Info",
-            "required": true,
-            "width": 6,
-            "type": "select",
-            "valueKey": "id",
-            "labelKey": "title",
-            "queryid": "jlO3fzj9Oozo"
-        },
-        "blocked": {
-            "label": "Blocked",
-            "group": "Info",
-            "type": "dataSelector",
-            "groupid": "boolean",
-            "vmode": "edit",
-            "required": true
-        },
-        "description": {
-            "label": "Description",
-            "group": "Info",
-            "width": 12,
-            "type": "textarea"
-        }
-    },
-    "module_refid": "category.main",
-    "module_type": "forms"
-
-}
 
 export const example9 = {
     "endPoints": {
@@ -419,7 +348,7 @@ export const example9 = {
 export const example10 = {
       "endPoints": {
         "baseURL": "http://192.168.0.20:9999",
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6ImZ1a2ZRazBIVnkrRUVBdmU3bytyeWVCQ05Tb3N6L1dQQnJGcTV4SmhwMW1kbUg3Ri84Z3dzMUx5WlFLMHZMTGZnQWtJWEk5RTZNNHBPSURIc09LbTNrQm5abEUwa3Y1eFVmcnNySjkxZERLdEdQeDZXb2ZiR0owUnRDOW5DS21Wa2x2R1pSNFdzUlJUR3ZoS3dObXBjNnFIKzBPdmNYQTIrSmdsdGJsNFZob282ZDNhSS9ac0NXZGowekFJdFYzQ04vY2ZxMjlvTWl1UWVYVTVEc2d0Q0h0WEU5U0d0YjVJZVNHMmtTWFY2aFVnRy8reWZxUjk2N2o1KzJTdDVuQ1Q0eTcwOFlMNFFLQWl1d2ZZWVBWRkR5Z292cS9sajlIVDJsOURucEU9IiwiaWF0IjoxNzY4ODI1NDA5LCJleHAiOjE3Njg4MjkwMDksImp0aSI6ImFjYzoxOjE3Njg4MjU0MDk2OTg6d2ViIn0.G2YpMrZvCeYy81E2_3CUKB6QcsIQfLAxg5DJCLnUQyA",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6IlgxTktFTm9BUmpOTGVTRVBzajVzNVFVYmtsSjNuQzlzWHhNN1dBTEppQ3NBK2hRek9Kb2pZU1k1RGNCN05aQkt2aVVGU3M0ejdkSXE1aWlyMG1ZM1hvL0tId3EzaEtJUnlpSFdwNFd3NDhCZXRUNDNxRzQ2ZnRaSE55OGhKa2FkOG13OVk5dlZQM2NscDlqZzlGeFZBZ3VRRkpiUFRFZzl0TjAxU2x3Y0pwTjlhUElCTDNaUy9rRHU1MXo5TzZUR2htclF3QTR4OGUrUDZGUjJvY2xneVVmcTVwbURvWU9IR091OEJVWFBZZGRtQXcyZllZcVc3V2Myd3FPVTM0aE9vVVI5NWRVZXhQalk1dys4Yi9ZOU5Uczl1VUZCSjRxQ0dSeGFFMmJvN1JLVUxXVEo4aG1NWFZuTk13ZkRuMDU0Mlh4eW8wNEhyc1JHU0pWeUhyL2w0cnZWZ3I1eUNLc1kyMVNiOGZHUHFPQ0k4clFXVlZ4dmc4SWRvVk1oeW5kRkpZSU9WS0hSc2JQSVRlQVJHOTFDWTNaMWRmQUd3ZVNFTmF1OE9hZndhMWNmSVpMd2U4YnJnWG5JcWZUNTMzY05pQTl5S2V3b1Z2QndCT1RIbTd0UWtkTG1YenlPVDNhRzRPRjJKc1ZGaEluZEd3PT0iLCJpYXQiOjE3Nzg4NDc3OTcsImV4cCI6MTc3ODg1MTM5NywianRpIjoiYWNjOjE6MTc3ODg0Nzc5NzE2ODp3ZWIifQ.5uTk2OpgD_ZkERTdn-utLbQEAOj7zdkWQUxb5HtZbnE",
         "dbopsGetHash": "/api/dbops",
         "dbopsGetRefId": "/api/dbops/save",
         "dbopsCreate": "/api/dbops/create",
@@ -428,9 +357,14 @@ export const example10 = {
         "registerQuery": "/api/query/save",
         "runQuery": "/api/query/run"
     },
+    "hooks": {
+        "presubmit": [
+            "hse.avoidSpecialCharacters"
+        ]
+    },
     "source": {
         "type": "sql",
-        "dbopsid": "forms%40hse.induction%4028"
+        "dbopsid": "forms%40hse.induction%4064"
     },
     "forcefill": {
         "guid": "#SESS_GUID#"
@@ -475,7 +409,7 @@ export const example10 = {
                     "src": {
                         "type": "api",
                         "method": "post",
-                        "endpoint": "/api/services/eofficeGlobal/get_project_function"
+                        "endpoint": "/api/services/eofficeGlobal/get_project_function?module=hse&type=project"
                     }
                 }
             ],
@@ -484,12 +418,19 @@ export const example10 = {
             "options": []
         },
         "project_function_id": {
-            "label": "Project Function ",
+            "label": "Project Function",
             "type": "select",
             "required": true,
             "width": 4,
             "no-option": "Select Project Function",
             "options": []
+        },
+        "date": {
+            "label": "Induction Date",
+            "type": "date",
+            "required": true,
+            "max": "today",
+            "width": 4
         },
         "location_id": {
             "label": "Location",
@@ -497,10 +438,10 @@ export const example10 = {
             "required": true,
             "width": 4
         },
-        "date": {
-            "label": "Date",
-            "type": "date",
-            "required": true,
+        "photo_attendance": {
+            "label": "Induction Photo/Attendance (Max. Sizes:10MB)",
+            "type": "camera2",
+            "multiple": true,
             "width": 4
         },
         "conducted_by_department": {
@@ -526,19 +467,233 @@ export const example10 = {
         },
         "conducted_by_name": {
             "label": "Conducted By (Name)",
-            "type": "autocomplete",
+            "type": "select",
             "width": 4,
-            "queryid": "forms%40hse.induction%40undefined"
+            "search": true,
+            "options": [
+                {
+                    "title": "Admin",
+                    "value": "admin"
+                },
+                {
+                    "title": "Shivraj",
+                    "value": "shivraj"
+                },
+                {
+                    "title": "Pramod",
+                    "value": "pramod"
+                },
+                {
+                    "title": "Manthan M",
+                    "value": "manthan"
+                },
+                {
+                    "title": "susamyas",
+                    "value": "susamya_ghosh@welspun.com"
+                },
+                {
+                    "title": "Aniket Birje",
+                    "value": "aniket.birje"
+                },
+                {
+                    "title": "silk-updated",
+                    "value": "100"
+                },
+                {
+                    "title": "Yesh",
+                    "value": "Yesh"
+                },
+                {
+                    "title": "Dharmendra Kushwaha",
+                    "value": "Dharmendra_Kushwaha@welspun.com"
+                },
+                {
+                    "title": "sushant",
+                    "value": "sushant"
+                },
+                {
+                    "title": "pragati",
+                    "value": "pragati"
+                },
+                {
+                    "title": "dipti",
+                    "value": "dipti"
+                },
+                {
+                    "title": "testing",
+                    "value": "test"
+                },
+                {
+                    "title": "indulekha.singh",
+                    "value": "indulekha.singh"
+                },
+                {
+                    "title": "Initial Test",
+                    "value": "initialtest"
+                },
+                {
+                    "title": "User WELS",
+                    "value": "user"
+                },
+                {
+                    "title": "Business",
+                    "value": "business1"
+                },
+                {
+                    "title": "Manager 1",
+                    "value": "manager1"
+                },
+                {
+                    "title": "indulekha",
+                    "value": "indulekha"
+                },
+                {
+                    "title": "wel user",
+                    "value": "wel_user"
+                },
+                {
+                    "title": "Vikas Yadav",
+                    "value": "Vikas_Yadav1@welspun.com"
+                },
+                {
+                    "title": "Suyog Sakhare",
+                    "value": "Suyog_Sakhare@welspun.com"
+                },
+                {
+                    "title": "shital",
+                    "value": "shital"
+                },
+                {
+                    "title": "shitu",
+                    "value": "shitu"
+                },
+                {
+                    "title": "tester1",
+                    "value": "tester1"
+                },
+                {
+                    "title": "tester2",
+                    "value": "tester2"
+                },
+                {
+                    "title": "Manasi Gosavi",
+                    "value": "manasi"
+                },
+                {
+                    "title": "tester3",
+                    "value": "tester3"
+                },
+                {
+                    "title": "Dev Akif",
+                    "value": "akif"
+                },
+                {
+                    "title": "Vaibhav Mahale",
+                    "value": "Vaibhav"
+                },
+                {
+                    "title": "Saurabh Patil",
+                    "value": "saurabh patil"
+                },
+                {
+                    "title": "Manas G",
+                    "value": "manas"
+                },
+                {
+                    "title": "Amit Shah",
+                    "value": "amit.shah@welspun.com"
+                },
+                {
+                    "title": "Priya Mehta",
+                    "value": "priya.mehta@welspun.com"
+                },
+                {
+                    "title": "Rahul Patel",
+                    "value": "rahul.patel@welspun.com"
+                },
+                {
+                    "title": "Sneha Joshi",
+                    "value": "sneha.joshi@welspun.com"
+                },
+                {
+                    "title": "Vikram Singh",
+                    "value": "vikram.singh@welspun.com"
+                },
+                {
+                    "title": "Neha Verma",
+                    "value": "neha.verma@welspun.com"
+                },
+                {
+                    "title": "Karan Desai",
+                    "value": "karan.desai@welspun.com"
+                },
+                {
+                    "title": "Pooja Nair",
+                    "value": "pooja.nair@welspun.com"
+                },
+                {
+                    "title": "Rohan Kulkarni",
+                    "value": "rohan.kulkarni@welspun.com"
+                },
+                {
+                    "title": "Isha Trivedi",
+                    "value": "isha.trivedi@welspun.com"
+                },
+                {
+                    "title": "Arjun Malhotra",
+                    "value": "arjun.malhotra@welspun.com"
+                },
+                {
+                    "title": "Kavya Iyer",
+                    "value": "kavya.iyer@welspun.com"
+                },
+                {
+                    "title": "Nitin Chawla",
+                    "value": "nitin.chawla@welspun.com"
+                },
+                {
+                    "title": "Meera Soni",
+                    "value": "meera.soni@welspun.com"
+                },
+                {
+                    "title": "Yash Thakkar",
+                    "value": "yash.thakkar@welspun.com"
+                },
+                {
+                    "title": "Test User",
+                    "value": "testuser@welspun.com"
+                },
+                {
+                    "title": "Test User",
+                    "value": "testuser1@welspun.com"
+                },
+                {
+                    "title": "Riyan Ali",
+                    "value": "riyan"
+                },
+                {
+                    "title": "shitu2",
+                    "value": "shitu2"
+                },
+                {
+                    "title": "Test User2",
+                    "value": "testuser2@welspun.com"
+                },
+                {
+                    "title": "oliva",
+                    "value": "oliva"
+                },
+                {
+                    "title": "Rajesh Subramanian",
+                    "value": "raasubramanian@deloitte.com"
+                }
+            ]
         },
         "participant_count": {
             "label": "Participant Count",
             "type": "number",
             "required": true,
-            "width": 4
-        },
-        "photo_attendance": {
-            "label": "Induction Photo/Attendance (Max. Sizes:10MB)",
-            "type": "file",
+            "min": 1,
             "width": 4
         }
     },
@@ -568,7 +723,10 @@ export const example10 = {
                     "popup.form": {
                         "hooks": {
                             "presubmit": [
-                                "hse.participant_count_test"
+                                "hse.validateInductionParticipantCount"
+                            ],
+                            "postsubmit": [
+                                "hse.updateParticipantCount"
                             ]
                         },
                         "source": {
@@ -579,10 +737,17 @@ export const example10 = {
                             "guid": "#SESS_GUID#"
                         },
                         "fields": {
+                            "id": {
+                                "label": "ID",
+                                "type": "number",
+                                "required": false,
+                                "disabled": true,
+                                "hidden": true
+                            },
                             "hse_induction_id": {
                                 "label": "",
                                 "type": "hidden",
-                                "default": "28"
+                                "default": "64"
                             },
                             "gender": {
                                 "label": "Gender",
@@ -616,6 +781,8 @@ export const example10 = {
                                 "label": "Count",
                                 "type": "number",
                                 "required": true,
+                                "min": 1,
+                                "default": 1,
                                 "width": 4
                             },
                             "company": {
@@ -656,12 +823,12 @@ export const example10 = {
                                 "label": "Company Name",
                                 "disabled": true,
                                 "type": "text",
-                                "required": true,
                                 "width": 4
                             },
                             "photograph": {
                                 "label": "Photograph",
                                 "type": "file",
+                                "multiple": true,
                                 "width": 6
                             }
                         }
@@ -678,13 +845,13 @@ export const example10 = {
                             "searchable": true,
                             "sortable": true
                         },
-                        "company_name": {
-                            "label": "Company Name",
-                            "searchable": true
-                        },
                         "company": {
                             "label": "Company",
                             "formatter": "pretty",
+                            "searchable": true
+                        },
+                        "company_name": {
+                            "label": "Company Name",
                             "searchable": true
                         },
                         "photograph": {
@@ -703,66 +870,29 @@ export const example10 = {
                             "label": "Edit Record",
                             "icon": "fa fa-pen"
                         },
-                        "deleteRecord": {
+                        "api@hse.deleteRecord": {
                             "label": "Delete Record",
-                            "icon": "fa fa-trash text-red-500"
+                            "icon": "fa fa-trash text-red-500",
+                            "lgksConfirm": "Are you sure you want to delete this record?",
+                            "payload": {
+                                "table": "hse_induction_details"
+                            }
+                        },
+                        "popup@activity_logs.popup_activity_logs/{id}": {
+                            "label": "History",
+                            "params": {
+                                "ref_src": "forms@hse.induction.infoview_popup.participant_details"
+                            },
+                            "icon": "fa-solid fa-clock-rotate-left"
                         }
                     },
                     "queryid": "forms%40hse.induction.infoviewTable.participant_details%40infoview.groups.participant_details"
                 },
                 "width": 12
-            },
-            "activity_log": {
-                "label": "Activity Log",
-                "type": "module",
-                "src": "infoviewTable",
-                "vmode": "view",
-                "config": {
-                    "type": "sql",
-                    "uimode": "grid",
-                    "uiswitcher": false,
-                    "policy_create": "hse.create.access",
-                    "policy_view": "hse.view.access",
-                    "policy_delete": "hse.delete.access",
-                    "policy_update": "hse.update.access",
-                    "colkey": "id",
-                    "datagrid": {
-                        "subject": {
-                            "label": "Subject",
-                            "formatter": "text"
-                        },
-                        "category": {
-                            "label": "Category",
-                            "formatter": "text"
-                        },
-                        "subcategory": {
-                            "label": "Subcategory",
-                            "formatter": "text"
-                        },
-                        "pre_data": {
-                            "label": "Before Changes",
-                            "formatter": "text"
-                        },
-                        "post_data": {
-                            "label": "After Changes",
-                            "formatter": "text"
-                        },
-                        "created_by": {
-                            "label": "Created By",
-                            "formatter": "text"
-                        },
-                        "created_on": {
-                            "label": "Created On",
-                            "formatter": "attachment"
-                        }
-                    },
-                    "queryid": "forms%40hse.induction.infoviewTable.activity_log%40infoview.groups.activity_log"
-                },
-                "width": 12
             }
         }
     },
-    "script": "ZnVuY3Rpb24gY29tcGFueV9yZXF1aXJlZChkYXRhKSB7CiAgY29uc3QgdmFsdWUgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKT8udmFsdWU7CiAgY29uc3QgcmV3b3JrRmllbGQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY29tcGFueV9uYW1lIik7CiAgaWYgKHJld29ya0ZpZWxkKSB7CiAgICByZXdvcmtGaWVsZC5kaXNhYmxlZCA9ICF2YWx1ZTsKICB9Cn0K",
+    "script": "ZnVuY3Rpb24gb25sb2FkKGN0eCkgewogIGNvbnN0IGRhdGVJbnB1dCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJkYXRlIik7CiAgY29uc3QgZGF0ZSA9IGRhdGVJbnB1dD8udmFsdWU7CiAgY29uc3Qgc2Vzc2lvblVzZXIgPSBjdHg/LnVzZXI/LnVzZXI7CgogIGlmICghc2Vzc2lvblVzZXIpIHsKICAgIGNvbnNvbGUud2FybigiU2Vzc2lvbiB1c2VyIG5vdCBmb3VuZCBpbiBjdHgiKTsKICAgIHJldHVybjsKICB9CgogIGNvbnN0IHNlc3Npb25Vc2VySWQgPSBzZXNzaW9uVXNlci51c2VySWQ7CiAgY29uc3Qgc2Vzc2lvbk5hbWUgPSBzZXNzaW9uVXNlci5uYW1lOwoKICBjb25zb2xlLmxvZygic2Vzc2lvblVzZXJJZCIsIHNlc3Npb25Vc2VySWQpOwogIGNvbnNvbGUubG9nKCJzZXNzaW9uTmFtZSIsIHNlc3Npb25OYW1lKTsKCiAgLy8gLS0tLSBjb25kdWN0ZWRfYnkgaGFuZGxpbmcgLS0tLQogIHNldFRpbWVvdXQoKCkgPT4gewogICAgaWYgKHR5cGVvZiB3aW5kb3cuc2V0RmllbGRWYWx1ZSAhPT0gImZ1bmN0aW9uIikgewogICAgICBjb25zb2xlLmVycm9yKCJzZXRGaWVsZFZhbHVlIGlzIG5vdCBhdmFpbGFibGUiKTsKICAgICAgcmV0dXJuOwogICAgfQoKICAgIHdpbmRvdy5zZXRGaWVsZFZhbHVlKCJjb25kdWN0ZWRfYnlfbmFtZSIsIHNlc3Npb25Vc2VySWQpOwogIH0sIDUwMCk7CgogIC8vIC0tLS0gZGF0ZSBoYW5kbGluZyAtLS0tCiAgaWYgKCFkYXRlSW5wdXQpIHsKICAgIGNvbnNvbGUuZXJyb3IoInRidF9kYXRlIGVsZW1lbnQgbm90IGZvdW5kIik7CiAgfSBlbHNlIGlmICghZGF0ZSkgewogICAgY29uc3QgdG9kYXkgPSBuZXcgRGF0ZSgpOwogICAgY29uc3QgZm9ybWF0dGVkRGF0ZSA9IHRvZGF5LnRvSVNPU3RyaW5nKCkuc3BsaXQoIlQiKVswXTsKICAgIHNldE5hdGl2ZUlucHV0VmFsdWUoZGF0ZUlucHV0LCBmb3JtYXR0ZWREYXRlKTsKICB9IGVsc2UgewogICAgY29uc29sZS5sb2coIkVkaXQgZm9ybSDigJQgZGF0ZSBhbHJlYWR5IGV4aXN0czoiLCBkYXRlKTsKICB9Cn0KCmZ1bmN0aW9uIHNldEZpZWxkVmFsdWUoZWxlbWVudCwgdmFsdWUpIHsKICBpZiAoIWVsZW1lbnQpIHJldHVybiBmYWxzZTsKCiAgY29uc3QgdGFnID0gZWxlbWVudC50YWdOYW1lOwoKICBpZiAodGFnID09PSAiU0VMRUNUIikgewogICAgY29uc3Qgc2V0dGVyID0gT2JqZWN0LmdldE93blByb3BlcnR5RGVzY3JpcHRvcigKICAgICAgd2luZG93LkhUTUxTZWxlY3RFbGVtZW50LnByb3RvdHlwZSwKICAgICAgInZhbHVlIgogICAgKT8uc2V0OwogICAgaWYgKHNldHRlcikgc2V0dGVyLmNhbGwoZWxlbWVudCwgdmFsdWUpOwogICAgZWxzZSBlbGVtZW50LnZhbHVlID0gdmFsdWU7CiAgfSBlbHNlIGlmICh0YWcgPT09ICJURVhUQVJFQSIpIHsKICAgIGNvbnN0IHNldHRlciA9IE9iamVjdC5nZXRPd25Qcm9wZXJ0eURlc2NyaXB0b3IoCiAgICAgIHdpbmRvdy5IVE1MVGV4dEFyZWFFbGVtZW50LnByb3RvdHlwZSwKICAgICAgInZhbHVlIgogICAgKT8uc2V0OwogICAgaWYgKHNldHRlcikgc2V0dGVyLmNhbGwoZWxlbWVudCwgdmFsdWUpOwogICAgZWxzZSBlbGVtZW50LnZhbHVlID0gdmFsdWU7CiAgfSBlbHNlIHsKICAgIGNvbnN0IHNldHRlciA9IE9iamVjdC5nZXRPd25Qcm9wZXJ0eURlc2NyaXB0b3IoCiAgICAgIHdpbmRvdy5IVE1MSW5wdXRFbGVtZW50LnByb3RvdHlwZSwKICAgICAgInZhbHVlIgogICAgKT8uc2V0OwogICAgaWYgKHNldHRlcikgc2V0dGVyLmNhbGwoZWxlbWVudCwgdmFsdWUpOwogICAgZWxzZSBlbGVtZW50LnZhbHVlID0gdmFsdWU7CiAgfQoKICBlbGVtZW50LmRpc3BhdGNoRXZlbnQobmV3IEV2ZW50KCJpbnB1dCIsIHsgYnViYmxlczogdHJ1ZSB9KSk7CiAgZWxlbWVudC5kaXNwYXRjaEV2ZW50KG5ldyBFdmVudCgiY2hhbmdlIiwgeyBidWJibGVzOiB0cnVlIH0pKTsKICByZXR1cm4gdHJ1ZTsKfQoKZnVuY3Rpb24gZmluZENvbmR1Y3RlZEJ5TmFtZUZpZWxkKCkgewogIHJldHVybiAoCiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCdbbmFtZT0iY29uZHVjdGVkX2J5X25hbWUiXScpIHx8CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY29uZHVjdGVkX2J5X25hbWUiKQogICk7Cn0KCmZ1bmN0aW9uIHdhaXRBbmRTZXRDb25kdWN0ZWRCeU5hbWUoc2Vzc2lvblVzZXJJZCwgYXR0ZW1wdCkgewogIGNvbnN0IG1heEF0dGVtcHRzID0gMjA7CiAgY29uc3QgZGVsYXkgPSAzMDA7CgogIGNvbnN0IGZpZWxkID0gZmluZENvbmR1Y3RlZEJ5TmFtZUZpZWxkKCk7CgogIGlmICghZmllbGQpIHsKICAgIGlmIChhdHRlbXB0IDwgbWF4QXR0ZW1wdHMpIHsKICAgICAgc2V0VGltZW91dCgoKSA9PiB3YWl0QW5kU2V0Q29uZHVjdGVkQnlOYW1lKHNlc3Npb25Vc2VySWQsIGF0dGVtcHQgKyAxKSwgZGVsYXkpOwogICAgfSBlbHNlIHsKICAgICAgY29uc29sZS53YXJuKCJjb25kdWN0ZWRfYnlfbmFtZSBmaWVsZCBub3QgZm91bmQgYWZ0ZXIgcmV0cmllcyIpOwogICAgfQogICAgcmV0dXJuOwogIH0KCiAgLy8gSWYgYWxyZWFkeSBzZXQsIGRvIG5vdGhpbmcKICBpZiAoZmllbGQudmFsdWUpIHsKICAgIGNvbnNvbGUubG9nKCJjb25kdWN0ZWRfYnlfbmFtZSBhbHJlYWR5IHNlbGVjdGVkOiIsIGZpZWxkLnZhbHVlKTsKICAgIHJldHVybjsKICB9CgogIC8vIE5hdGl2ZSBzZWxlY3QgY2FzZQogIGlmIChmaWVsZC50YWdOYW1lID09PSAiU0VMRUNUIikgewogICAgY29uc3QgaGFzT3B0aW9uID0gQXJyYXkuZnJvbShmaWVsZC5vcHRpb25zKS5zb21lKAogICAgICAob3B0KSA9PiBvcHQudmFsdWUgPT09IHNlc3Npb25Vc2VySWQKICAgICk7CgogICAgaWYgKCFoYXNPcHRpb24pIHsKICAgICAgaWYgKGF0dGVtcHQgPCBtYXhBdHRlbXB0cykgewogICAgICAgIHNldFRpbWVvdXQoKCkgPT4gd2FpdEFuZFNldENvbmR1Y3RlZEJ5TmFtZShzZXNzaW9uVXNlcklkLCBhdHRlbXB0ICsgMSksIGRlbGF5KTsKICAgICAgfSBlbHNlIHsKICAgICAgICBjb25zb2xlLndhcm4oIk5vIG1hdGNoaW5nIG9wdGlvbiBmb3VuZCBmb3IgdXNlcklkOiIsIHNlc3Npb25Vc2VySWQpOwogICAgICB9CiAgICAgIHJldHVybjsKICAgIH0KCiAgICBzZXRGaWVsZFZhbHVlKGZpZWxkLCBzZXNzaW9uVXNlcklkKTsKICAgIGNvbnNvbGUubG9nKCJBdXRvLXNlbGVjdGVkIHVzZXI6Iiwgc2Vzc2lvblVzZXJJZCk7CiAgICByZXR1cm47CiAgfQoKICAvLyBDdXN0b20gZGF0YVNlbGVjdG9yRnJvbVRhYmxlIGNhc2U6CiAgLy8gdHJ5IHRvIGZpbmQgYW4gaW50ZXJuYWwgaW5wdXQvc2VsZWN0IGluc2lkZSB0aGUgc2FtZSB3cmFwcGVyCiAgY29uc3Qgd3JhcHBlciA9CiAgICBmaWVsZC5jbG9zZXN0KCdbaWRePSJ3cmFwcGVyLSJdJykgfHwKICAgIGZpZWxkLnBhcmVudEVsZW1lbnQgfHwKICAgIGRvY3VtZW50OwoKICBjb25zdCBpbm5lckNvbnRyb2wgPQogICAgd3JhcHBlci5xdWVyeVNlbGVjdG9yKCdzZWxlY3RbbmFtZT0iY29uZHVjdGVkX2J5X25hbWUiXScpIHx8CiAgICB3cmFwcGVyLnF1ZXJ5U2VsZWN0b3IoJ2lucHV0W25hbWU9ImNvbmR1Y3RlZF9ieV9uYW1lIl0nKSB8fAogICAgd3JhcHBlci5xdWVyeVNlbGVjdG9yKCdpbnB1dFtpZD0iY29uZHVjdGVkX2J5X25hbWUiXScpIHx8CiAgICB3cmFwcGVyLnF1ZXJ5U2VsZWN0b3IoJ3NlbGVjdFtpZD0iY29uZHVjdGVkX2J5X25hbWUiXScpOwoKICBpZiAoaW5uZXJDb250cm9sKSB7CiAgICBpZiAoIWlubmVyQ29udHJvbC52YWx1ZSkgewogICAgICBzZXRGaWVsZFZhbHVlKGlubmVyQ29udHJvbCwgc2Vzc2lvblVzZXJJZCk7CiAgICAgIGNvbnNvbGUubG9nKCJBdXRvLXNlbGVjdGVkIHVzZXIgaW4gY3VzdG9tIGNvbnRyb2w6Iiwgc2Vzc2lvblVzZXJJZCk7CiAgICB9CiAgICByZXR1cm47CiAgfQoKICBpZiAoYXR0ZW1wdCA8IG1heEF0dGVtcHRzKSB7CiAgICBzZXRUaW1lb3V0KCgpID0+IHdhaXRBbmRTZXRDb25kdWN0ZWRCeU5hbWUoc2Vzc2lvblVzZXJJZCwgYXR0ZW1wdCArIDEpLCBkZWxheSk7CiAgfSBlbHNlIHsKICAgIGNvbnNvbGUud2FybigiQ291bGQgbm90IHNldCBjb25kdWN0ZWRfYnlfbmFtZSBhZnRlciByZXRyaWVzIik7CiAgfQp9CgpmdW5jdGlvbiBzZXROYXRpdmVJbnB1dFZhbHVlKGVsZW1lbnQsIHZhbHVlKSB7CiAgaWYgKCEoZWxlbWVudCBpbnN0YW5jZW9mIEhUTUxJbnB1dEVsZW1lbnQpKSB7CiAgICBjb25zb2xlLmVycm9yKCJJbnZhbGlkIGVsZW1lbnQ6IiwgZWxlbWVudCk7CiAgICByZXR1cm47CiAgfQoKICBjb25zdCBzZXR0ZXIgPSBPYmplY3QuZ2V0T3duUHJvcGVydHlEZXNjcmlwdG9yKAogICAgSFRNTElucHV0RWxlbWVudC5wcm90b3R5cGUsCiAgICAidmFsdWUiCiAgKS5zZXQ7CgogIHNldHRlci5jYWxsKGVsZW1lbnQsIHZhbHVlKTsKICBlbGVtZW50LmRpc3BhdGNoRXZlbnQobmV3IEV2ZW50KCJpbnB1dCIsIHsgYnViYmxlczogdHJ1ZSB9KSk7CiAgZWxlbWVudC5kaXNwYXRjaEV2ZW50KG5ldyBFdmVudCgiY2hhbmdlIiwgeyBidWJibGVzOiB0cnVlIH0pKTsKfQoKZnVuY3Rpb24gY29tcGFueV9yZXF1aXJlZChkYXRhKSB7CiAgY29uc3QgZmllbGQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKTsKICBjb25zdCB2YWx1ZSA9IGZpZWxkPy52YWx1ZTsKCiAgY29uc3QgcmV3b3JrRmllbGQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY29tcGFueV9uYW1lIik7CgogIGlmICghcmV3b3JrRmllbGQpIHsKICAgIGNvbnNvbGUud2FybigiY29tcGFueV9uYW1lIGZpZWxkIG5vdCBmb3VuZCIpOwogICAgcmV0dXJuOwogIH0KCiAgaWYgKCF2YWx1ZSkgewogICAgcmV3b3JrRmllbGQuZGlzYWJsZWQgPSB0cnVlOwogICAgcmV3b3JrRmllbGQuY2xhc3NMaXN0LmFkZCgiY3Vyc29yLW5vdC1hbGxvd2VkIiwgImJnLWdyYXktMTAwIik7CiAgfSBlbHNlIHsKICAgIHJld29ya0ZpZWxkLmRpc2FibGVkID0gZmFsc2U7CiAgICByZXdvcmtGaWVsZC5jbGFzc0xpc3QucmVtb3ZlKCJjdXJzb3Itbm90LWFsbG93ZWQiLCAiYmctZ3JheS0xMDAiKTsKICB9Cn0=",
     "module_refid": "hse.induction",
     "module_type": "forms"
 }

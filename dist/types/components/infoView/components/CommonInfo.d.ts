@@ -1,4 +1,4 @@
-import { FormField, InfoData, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
+import { FormField, InfoData, SqlEndpoints, OptionItem } from '../InfoView.types.js';
 interface CommonInfoProps {
     infoData: InfoData;
     sqlOpsUrls: SqlEndpoints;
@@ -9,8 +9,8 @@ interface CommonInfoProps {
     };
     methods: Record<string, Function>;
     hiddenFields?: string[];
-    fieldOptions: Record<string, SelectOptions>;
-    setFieldOptions: (fieldName: string, options: SelectOptions) => void;
+    fieldOptions: Record<string, OptionItem[]>;
+    setFieldOptions: (fieldName: string, options: OptionItem[]) => void;
     refid: string;
     module_refid: string | undefined;
 }

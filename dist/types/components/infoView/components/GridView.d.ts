@@ -11,7 +11,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoViewJson: {
         script?: string;
-        fields: Record<string, Omit<FormField, "name">>;
+        fields?: Record<string, Omit<FormField, "name">>;
         infoview?: Infoview;
         source?: Record<string, any>;
         endPoints?: Record<string, any>;

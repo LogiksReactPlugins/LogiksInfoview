@@ -2,8 +2,8 @@ import React from 'react';
 import * as Yup from "yup";
 import { useFormik } from 'formik';
 import FieldRenderer from './FieldRenderer.js';
-import { filterSavableValues, flatFields, intializeForm, isHidden, tailwindCols, toColWidth } from '../utils.js';
-import type { SimpleFormViewProps, SelectOptions } from "../InfoView.types.js";
+import { buildChainMap, filterSavableValues, flatFields, intializeForm, isHidden, tailwindCols, toColWidth } from '../utils.js';
+import type { SimpleFormViewProps, SelectOptions, OptionItem } from "../InfoView.types.js";
 
 
 
@@ -22,17 +22,15 @@ export default function NormalFormView({
   const flatfields = flatFields(fields, sqlOpsUrls?.operation);
 
   const [fieldOptions, setFieldOptions] = React.useState<
-    Record<string, SelectOptions>
+    Record<string, OptionItem[]>
   >({});
 
-  const setOptionsForField = (name: string, options: SelectOptions) => {
+  const setOptionsForField = (name: string, options: OptionItem[]) => {
     setFieldOptions(prev => ({
       ...prev,
       [name]: options,
     }));
   };
-
-
 
 
 
@@ -53,10 +51,15 @@ export default function NormalFormView({
     initialValues: initialValues,
     enableReinitialize: true,
     validationSchema: Yup.object().shape(validationSchema),
-    onSubmit: (values) => {
-       let filteredValues = filterSavableValues(values, flatfields)
-      onSubmit(filteredValues);
-      formik.resetForm();
+    onSubmit: async (values) => {
+      try {
+        let filteredValues = filterSavableValues(values, flatfields)
+        onSubmit(filteredValues);
+        formik.resetForm();
+      } catch (error) {
+        console.log("error", error);
+      }
+
     }
   })
 
@@ -66,27 +69,33 @@ export default function NormalFormView({
     formik.resetForm();
   }
 
-
+ const chainMap = React.useMemo(
+    () => buildChainMap(flatfields),
+    [flatfields]
+  );
 
   return (
     <div className="relative  max-w-full ">
       <div className="bg-white border border-gray-100 rounded-md animate-in fade-in duration-300">
         <form onSubmit={formik.handleSubmit} className="p-4  mx-auto">
           <div className="grid grid-flow-col auto-cols-max gap-4  overflow-x-auto">
-            {flatfields.map((field, index) => {
-              if (isHidden(field.hidden) || field.type === "geolocation" || (field.vmode === "edit" && sqlOpsUrls?.operation === "create")) {
-                return null;
-              }
+            {flatfields.map((field) => {
+              const hidden = isHidden(field.hidden);
+
+              const wrapperClass = `${hidden ? "hidden" : ""}`;
 
               return <div
-                key={field?.name ?? `field-${index}`}
+
+                key={field?.name}
+                id={`wrapper-${field.name}`}
+                className={wrapperClass}
 
               >
                 <FieldRenderer
                   refid={refid}
                   module_refid={module_refid}
                   sqlOpsUrls={sqlOpsUrls}
-
+                  chainMap={chainMap}
                   field={field}
                   formik={formik}
                   methods={methods}
