@@ -231,7 +231,7 @@ export const tailwindCols: Record<ColWidth, string> = {
 
 export function toColWidth(width: number | undefined): ColWidth {
   const allowed: ColWidth[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  return allowed.includes(width as ColWidth) ? (width as ColWidth) : 6;
+  return allowed.includes(width as ColWidth) ? (width as ColWidth) : 12;
 }
 
 export function toGrid(width: number | undefined): ColWidth {

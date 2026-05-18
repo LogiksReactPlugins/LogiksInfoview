@@ -2665,7 +2665,7 @@ const Ve = {
   1: "lg:col-span-1"
 };
 function Ye(e) {
-  return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].includes(e) ? e : 6;
+  return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].includes(e) ? e : 12;
 }
 const Mo = (e) => {
   const t = {};
