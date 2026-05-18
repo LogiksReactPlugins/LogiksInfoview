@@ -12,7 +12,7 @@ export default function NormalFormView({
   title,
   fields,
   data,
-  onSubmit = (values) => { },
+  onSubmit = async (values) => { },
   onCancel = () => { },
   methods = {},
   sqlOpsUrls,
@@ -54,7 +54,7 @@ export default function NormalFormView({
     onSubmit: async (values) => {
       try {
         let filteredValues = filterSavableValues(values, flatfields)
-        onSubmit(filteredValues);
+        const res = await onSubmit(filteredValues);
         formik.resetForm();
       } catch (error) {
         console.log("error", error);
@@ -69,7 +69,7 @@ export default function NormalFormView({
     formik.resetForm();
   }
 
- const chainMap = React.useMemo(
+  const chainMap = React.useMemo(
     () => buildChainMap(flatfields),
     [flatfields]
   );

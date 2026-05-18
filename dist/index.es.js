@@ -4611,7 +4611,7 @@ function li({
                   const [z] = je;
                   t.setFieldValue(u, z), m(z, e, o);
                 } else L.trim() && (t.setFieldValue(u, L.trim()), m(L.trim(), e, o));
-                T(!1);
+                y(""), T(!1);
                 return;
               }
               x(j, !0);
@@ -5269,7 +5269,7 @@ function ci({
   title: e,
   fields: t,
   data: n,
-  onSubmit: r = (c) => {
+  onSubmit: r = async (c) => {
   },
   onCancel: a = () => {
   },
@@ -5298,7 +5298,8 @@ function ci({
     onSubmit: async (p) => {
       try {
         let b = Io(p, c);
-        r(b), N.resetForm();
+        const v = await r(b);
+        N.resetForm();
       } catch (b) {
         console.log("error", b);
       }

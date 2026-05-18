@@ -226,7 +226,7 @@ export interface FormProps {
 export interface BaseFormViewProps {
     title?: string | undefined;
     data?: Record<string, any>;
-    onSubmit: (data: Record<string, any>) => void;
+    onSubmit: (data: Record<string, any>) => Promise<any>;
     onCancel: () => void;
     methods?: Record<string, Function>;
     components?: Record<string, ReactNode>;
