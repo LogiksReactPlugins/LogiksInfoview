@@ -117,9 +117,9 @@ export default function CustomSelect({
                         handlePersist("", field, module_refid);
                         setSearch("");
                     }}
-                    className="absolute right-10 text-red-500 transition-colors"
+                    className="absolute right-10 text-gray-500 hover:text-red-500 transition-colors"
                 >
-                    <i className="fa-solid fa-xmark text-sm"></i>
+                    <i className="fa-solid fa-xmark text-xs"></i>
                 </button>
             )}
             <svg

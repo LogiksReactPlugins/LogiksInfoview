@@ -4259,8 +4259,8 @@ function En({
               onClick: (p) => {
                 p.preventDefault(), p.stopPropagation(), c.setFieldValue(m, ""), A(!1), x("", e, y), h("");
               },
-              className: "absolute right-10 text-red-500 transition-colors",
-              children: /* @__PURE__ */ s.jsx("i", { className: "fa-solid fa-xmark text-sm" })
+              className: "absolute right-10 text-gray-500 hover:text-red-500 transition-colors",
+              children: /* @__PURE__ */ s.jsx("i", { className: "fa-solid fa-xmark text-xs" })
             }
           ),
           /* @__PURE__ */ s.jsx(
