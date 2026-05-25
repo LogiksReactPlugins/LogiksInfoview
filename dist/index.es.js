@@ -5674,7 +5674,7 @@ function Cr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: a, Report
     y(null), f(!1);
   };
   return /* @__PURE__ */ s.jsx(s.Fragment, { children: o ? /* @__PURE__ */ s.jsxs(s.Fragment, { children: [
-    /* @__PURE__ */ s.jsx(
+    m?.datagrid && /* @__PURE__ */ s.jsx(
       o,
       {
         methods: { ...t, deleteRecord: L, editRecord: E },

@@ -181,33 +181,34 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
 
 
 
-
     return (
         <>
 
             {Reports ? (
                 <>
-                    <Reports
-                        methods={{ ...methods, deleteRecord: handleDelete, editRecord: handleEdit }}
-                        report={{
-                            ...source,
-                            source: {
-                                table: source?.table,
-                                type: "sql",
-                                cols: source?.cols,
-                                where: source?.where,
-                                orderby: source?.orderby,
-                                queryid: source?.queryid
-                            },
-                            endPoints: sqlOpsUrls,
-                            actions: { ...source?.actions, ...infoViewJson?.buttons, ...infoViewJson.actions },
-                            datagrid: source?.datagrid,
-                            buttons: source?.buttons,
-                            refresh: refreshCounter
+                    {
+                        source?.datagrid && <Reports
+                            methods={{ ...methods, deleteRecord: handleDelete, editRecord: handleEdit }}
+                            report={{
+                                ...source,
+                                source: {
+                                    table: source?.table,
+                                    type: "sql",
+                                    cols: source?.cols,
+                                    where: source?.where,
+                                    orderby: source?.orderby,
+                                    queryid: source?.queryid
+                                },
+                                endPoints: sqlOpsUrls,
+                                actions: { ...source?.actions, ...infoViewJson?.buttons, ...infoViewJson.actions },
+                                datagrid: source?.datagrid,
+                                buttons: source?.buttons,
+                                refresh: refreshCounter
 
-                        }}
-                        onButtonClick={handleAction}
-                    />
+                            }}
+                            onButtonClick={handleAction}
+                        />
+                    }
 
 
                     {
