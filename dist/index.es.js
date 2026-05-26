@@ -5302,7 +5302,7 @@ function ci({
         console.log("valuessssss", y);
         let v = bn(y, c);
         console.log("filteredValues in", v);
-        const E = await r(v);
+        const E = await r(y);
         N.resetForm();
       } catch (v) {
         console.log("error", v);

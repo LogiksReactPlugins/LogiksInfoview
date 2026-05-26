@@ -64,7 +64,7 @@ export default function NormalFormView({
         
         let filteredValues = filterSavableValues(values, flatfields);
          console.log("filteredValues in",filteredValues);
-        const res = await onSubmit(filteredValues);
+        const res = await onSubmit(values);
         formik.resetForm();
       } catch (error) {
         console.log("error", error);
