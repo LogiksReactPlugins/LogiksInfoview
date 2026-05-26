@@ -47,14 +47,19 @@ export default function NormalFormView({
     };
   }, [flatfields, data]);
 
+  console.log("initialValues",initialValues);
+   console.log("flatfields",flatfields);
+   console.log("data",data);
+   
+
   const formik = useFormik({
     initialValues: initialValues,
     enableReinitialize: true,
     validationSchema: Yup.object().shape(validationSchema),
     onSubmit: async (values) => {
       try {
-        console.log("flatfields",flatfields);
-        console.log("values",values);
+       
+        console.log("valuessssss",values);
         
         
         let filteredValues = filterSavableValues(values, flatfields);
