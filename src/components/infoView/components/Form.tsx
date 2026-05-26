@@ -361,6 +361,9 @@ export default function LogiksForm({
           "geolocation": finalGeo
         }
 
+        console.log("payload",payload);
+        
+
         if (source?.refid) {
           payload.refid1 = source?.refid
         }

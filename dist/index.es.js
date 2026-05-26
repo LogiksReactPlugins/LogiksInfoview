@@ -63,7 +63,7 @@ function Ea() {
           return "Suspense";
         case _:
           return "SuspenseList";
-        case $:
+        case k:
           return "Activity";
       }
       if (typeof S == "object")
@@ -129,7 +129,7 @@ function Ea() {
       return Error("react-stack-top-frame");
     }
     function i(S) {
-      if (k.call(S, "key")) {
+      if ($.call(S, "key")) {
         var D = Object.getOwnPropertyDescriptor(S, "key").get;
         if (D && D.isReactWarning) return !1;
       }
@@ -198,7 +198,7 @@ function Ea() {
               "React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead."
             );
         else x(O);
-      if (k.call(D, "key")) {
+      if ($.call(D, "key")) {
         O = e(S);
         var B = Object.keys(D).filter(function(H) {
           return H !== "key";
@@ -238,7 +238,7 @@ React keys must be passed directly to JSX without using spread:
     function x(S) {
       typeof S == "object" && S !== null && S.$$typeof === T && S._store && (S._store.validated = 1);
     }
-    var y = ne, T = Symbol.for("react.transitional.element"), g = Symbol.for("react.portal"), N = Symbol.for("react.fragment"), A = Symbol.for("react.strict_mode"), m = Symbol.for("react.profiler"), p = Symbol.for("react.consumer"), b = Symbol.for("react.context"), v = Symbol.for("react.forward_ref"), E = Symbol.for("react.suspense"), _ = Symbol.for("react.suspense_list"), L = Symbol.for("react.memo"), F = Symbol.for("react.lazy"), $ = Symbol.for("react.activity"), R = Symbol.for("react.client.reference"), u = y.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, k = Object.prototype.hasOwnProperty, q = Array.isArray, Q = console.createTask ? console.createTask : function() {
+    var y = ne, T = Symbol.for("react.transitional.element"), g = Symbol.for("react.portal"), N = Symbol.for("react.fragment"), A = Symbol.for("react.strict_mode"), m = Symbol.for("react.profiler"), p = Symbol.for("react.consumer"), b = Symbol.for("react.context"), v = Symbol.for("react.forward_ref"), E = Symbol.for("react.suspense"), _ = Symbol.for("react.suspense_list"), L = Symbol.for("react.memo"), F = Symbol.for("react.lazy"), k = Symbol.for("react.activity"), R = Symbol.for("react.client.reference"), u = y.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, $ = Object.prototype.hasOwnProperty, q = Array.isArray, Q = console.createTask ? console.createTask : function() {
       return null;
     };
     y = {
@@ -1532,8 +1532,8 @@ const qs = async (e) => {
     const b = yr && (c === "stream" || c === "response");
     if (yr && (l || b && N)) {
       const E = {};
-      ["status", "statusText", "headers"].forEach(($) => {
-        E[$] = p[$];
+      ["status", "statusText", "headers"].forEach((k) => {
+        E[k] = p[k];
       });
       const _ = w.toFiniteNumber(p.headers.get("content-length")), [L, F] = l && tn(
         _,
@@ -2177,14 +2177,14 @@ function ta() {
     implementation: _,
     createNodeIterator: L,
     createDocumentFragment: F,
-    getElementsByTagName: $
+    getElementsByTagName: k
   } = n, {
     importNode: R
   } = r;
   let u = yn();
   t.isSupported = typeof Zn == "function" && typeof b == "function" && _ && _.createHTMLDocument !== void 0;
   const {
-    MUSTACHE_EXPR: k,
+    MUSTACHE_EXPR: $,
     ERB_EXPR: q,
     TMPLIT_EXPR: Q,
     DATA_ATTR: te,
@@ -2327,7 +2327,7 @@ function ta() {
       }
     }
     const de = C.body || C.documentElement;
-    return d && M && de.insertBefore(n.createTextNode(M), de.childNodes[0] || null), Ze === ke ? $.call(C, re ? "html" : "body")[0] : re ? C.documentElement : de;
+    return d && M && de.insertBefore(n.createTextNode(M), de.childNodes[0] || null), Ze === ke ? k.call(C, re ? "html" : "body")[0] : re ? C.documentElement : de;
   }, $r = function(d) {
     return L.call(
       d.ownerDocument || d,
@@ -2371,7 +2371,7 @@ function ta() {
       }
       return Pe(d), !0;
     }
-    return d instanceof h && !ga(d) || (M === "noscript" || M === "noembed" || M === "noframes") && pe(/<\/no(script|embed|frames)/i, d.innerHTML) ? (Pe(d), !0) : (W && d.nodeType === pt.text && (C = d.textContent, Ct([k, q, Q], (ae) => {
+    return d instanceof h && !ga(d) || (M === "noscript" || M === "noembed" || M === "noframes") && pe(/<\/no(script|embed|frames)/i, d.innerHTML) ? (Pe(d), !0) : (W && d.nodeType === pt.text && (C = d.textContent, Ct([$, q, Q], (ae) => {
       C = ft(C, ae, " ");
     }), d.textContent !== C && (dt(t.removed, {
       element: d.cloneNode()
@@ -2447,7 +2447,7 @@ function ta() {
         ze(oe, d);
         continue;
       }
-      W && Ct([k, q, Q], (qr) => {
+      W && Ct([$, q, Q], (qr) => {
         ce = ft(ce, qr, " ");
       });
       const Wr = ie(d.nodeName);
@@ -2522,7 +2522,7 @@ function ta() {
     }
     let we = re ? C.outerHTML : C.innerHTML;
     return re && D["!doctype"] && C.ownerDocument && C.ownerDocument.doctype && C.ownerDocument.doctype.name && pe(ea, C.ownerDocument.doctype.name) && (we = "<!DOCTYPE " + C.ownerDocument.doctype.name + `>
-` + we), W && Ct([k, q, Q], (Be) => {
+` + we), W && Ct([$, q, Q], (Be) => {
       we = ft(we, Be, " ");
     }), v && Le ? v.createHTML(we) : we;
   }, t.setConfig = function() {
@@ -3342,8 +3342,8 @@ function Et({
       let L = e?.options;
       if (L && (Array.isArray(L) && L.length > 0 || !Array.isArray(L) && Object.keys(L).length > 0)) {
         if (typeof e.options == "object" && !Array.isArray(e.options)) {
-          const k = Object.values(e.options);
-          if (k.length && typeof k[0] == "string") {
+          const $ = Object.values(e.options);
+          if ($.length && typeof $[0] == "string") {
             x(e.options);
             return;
           }
@@ -3360,18 +3360,18 @@ function Et({
       }
       const F = e?.source ?? {};
       if (e.type === "dataMethod") {
-        const $ = e.method, R = $ ? n[$] : void 0;
+        const k = e.method, R = k ? n[k] : void 0;
         if (R)
           try {
-            const u = await Promise.resolve(R()), k = Array.isArray(u.data?.results?.options) ? u.data?.results?.options : Array.isArray(u?.data?.data) ? u.data.data : Array.isArray(u.data?.results) ? u.data?.results : Array.isArray(u?.data) ? u.data : u;
-            if (typeof k == "object" && !Array.isArray(k)) {
-              const te = Object.values(k);
+            const u = await Promise.resolve(R()), $ = Array.isArray(u.data?.results?.options) ? u.data?.results?.options : Array.isArray(u?.data?.data) ? u.data.data : Array.isArray(u.data?.results) ? u.data?.results : Array.isArray(u?.data) ? u.data : u;
+            if (typeof $ == "object" && !Array.isArray($)) {
+              const te = Object.values($);
               if (te.length && typeof te[0] == "string") {
-                x(k);
+                x($);
                 return;
               }
             }
-            const q = Array.isArray(k) ? k.map(Te) : [], Q = Me(v, E, q, e.groupKey);
+            const q = Array.isArray($) ? $.map(Te) : [], Q = Me(v, E, q, e.groupKey);
             b && x(Q);
             return;
           } catch (u) {
@@ -3385,14 +3385,14 @@ function Et({
       }
       if (F.type === "api" && F.endpoint)
         try {
-          const $ = {
+          const k = {
             method: F.method || "GET",
             url: r?.baseURL + F.endpoint,
             headers: {
               Authorization: `Bearer ${r?.accessToken}`
             },
             ...F.method === "GET" ? { params: { refid: F.refid } } : { data: { refid: F.refid } }
-          }, R = await G($), u = Array.isArray(R.data?.results?.options) ? R.data?.results?.options : Array.isArray(R?.data?.data) ? R.data.data : Array.isArray(R.data?.results) ? R.data?.results : Array.isArray(R?.data) ? R.data : R;
+          }, R = await G(k), u = Array.isArray(R.data?.results?.options) ? R.data?.results?.options : Array.isArray(R?.data?.data) ? R.data.data : Array.isArray(R.data?.results) ? R.data?.results : Array.isArray(R?.data) ? R.data : R;
           if (typeof u == "object" && !Array.isArray(u)) {
             const Q = Object.values(u);
             if (Q.length && typeof Q[0] == "string") {
@@ -3400,11 +3400,11 @@ function Et({
               return;
             }
           }
-          const k = Array.isArray(u) ? u.map(Te) : [], q = Me(v, E, k, e.groupKey);
+          const $ = Array.isArray(u) ? u.map(Te) : [], q = Me(v, E, $, e.groupKey);
           b && x(q);
           return;
-        } catch ($) {
-          console.error("API execution failed:", $), b && x([]);
+        } catch (k) {
+          console.error("API execution failed:", k), b && x([]);
           return;
         }
       if (e.table || e.type === "dataSelector" || e.queryid) {
@@ -3413,9 +3413,9 @@ function Et({
           return;
         }
         try {
-          let $;
+          let k;
           if (e.type === "dataSelector")
-            $ = {
+            k = {
               table: "do_lists",
               cols: "title,value",
               where: {
@@ -3427,13 +3427,13 @@ function Et({
               console.error("Invalid SQL field config", e);
               return;
             }
-            $ = {
+            k = {
               table: e.table,
               cols: e.columns,
               where: e.where ? a ? ve(e.where, { refid: a }) : e.where : void 0
             };
           }
-          const R = await rt(r, $, e?.queryid, void 0, o), u = Array.isArray(R?.data?.data) ? R.data.data : Array.isArray(R?.data) ? R.data : R;
+          const R = await rt(r, k, e?.queryid, void 0, o), u = Array.isArray(R?.data?.data) ? R.data.data : Array.isArray(R?.data) ? R.data : R;
           if (typeof u == "object" && !Array.isArray(u)) {
             const Q = Object.values(u);
             if (Q.length && typeof Q[0] == "string") {
@@ -3441,10 +3441,10 @@ function Et({
               return;
             }
           }
-          const k = Array.isArray(u) ? u.map(Te) : [], q = Me(v, E, k, e.groupKey);
+          const $ = Array.isArray(u) ? u.map(Te) : [], q = Me(v, E, $, e.groupKey);
           b && x(q);
-        } catch ($) {
-          console.error("API fetch failed:", $);
+        } catch (k) {
+          console.error("API fetch failed:", k);
         }
       }
     })(), () => {
@@ -3777,9 +3777,9 @@ function oi({
 }) {
   const [c, f] = le(!1), [x, y] = le(!1), [T, g] = le(
     Ue(e, i ?? [])
-  ), [N, A] = le(0), [m, p] = le(""), [b, v] = le(0), E = We(null), _ = We(null), [L, F] = le(!1), $ = We(m), R = e.disabled === !0;
+  ), [N, A] = le(0), [m, p] = le(""), [b, v] = le(0), E = We(null), _ = We(null), [L, F] = le(!1), k = We(m), R = e.disabled === !0;
   ge(() => {
-    $.current = m;
+    k.current = m;
   }, [m]), ge(() => {
     if (e.type !== "select" || e.multiple || e["no-option"] !== "false" || t.values[u] || T.length === 0) return;
     const z = T[0]?.value;
@@ -3902,7 +3902,7 @@ function oi({
     e.labelKey,
     N
   ]);
-  const k = `
+  const $ = `
   w-full px-4 py-2 rounded-lg border transition-all duration-300
   backdrop-blur-sm text-gray-800 placeholder-gray-400
   focus:outline-none focus:ring-0
@@ -4151,7 +4151,7 @@ function oi({
     setLoading: y,
     removeFile: J,
     optionCount: je,
-    baseInputClasses: k,
+    baseInputClasses: $,
     focusClasses: q,
     labelClasses: Q,
     search: m,
@@ -4564,10 +4564,10 @@ function li({
     labelClasses: _,
     search: L,
     highlightedIndex: F,
-    options: $,
+    options: k,
     isDisabled: R,
     key: u,
-    filteredOptions: k,
+    filteredOptions: $,
     open: q,
     listRef: Q,
     triggerRef: te,
@@ -4589,7 +4589,7 @@ function li({
     case "suggest":
     case "autosuggest":
     case "autocomplete": {
-      const I = t.values[u] ?? "", P = L !== "" ? L : zt($, I) ?? String(I ?? "");
+      const I = t.values[u] ?? "", P = L !== "" ? L : zt(k, I) ?? String(I ?? "");
       return /* @__PURE__ */ s.jsxs("div", { className: "relative", children: [
         /* @__PURE__ */ s.jsxs("label", { className: _, children: [
           e.label,
@@ -4624,7 +4624,7 @@ function li({
           {
             ref: Q,
             className: " w-full bg-white border rounded shadow max-h-52 overflow-y-auto",
-            children: k.length > 0 && je ? k.map(([j, z], O) => /* @__PURE__ */ s.jsx(
+            children: $.length > 0 && je ? $.map(([j, z], O) => /* @__PURE__ */ s.jsx(
               "div",
               {
                 id: `${u}-${j}`,
@@ -4657,14 +4657,14 @@ function li({
             labelClasses: _,
             listRef: Q,
             search: L,
-            filteredOptions: k,
+            filteredOptions: $,
             highlightedIndex: F,
             setSearch: y,
             formik: t,
             executeFieldMethod: c,
             handlePersist: m,
             module_refid: o,
-            options: $,
+            options: k,
             triggerRef: te,
             open: q,
             setOpen: T
@@ -4680,14 +4680,14 @@ function li({
           labelClasses: _,
           listRef: Q,
           search: L,
-          filteredOptions: k,
+          filteredOptions: $,
           highlightedIndex: F,
           setSearch: y,
           formik: t,
           executeFieldMethod: c,
           handlePersist: m,
           module_refid: o,
-          options: $,
+          options: k,
           triggerRef: te,
           open: q,
           setOpen: T
@@ -4735,14 +4735,14 @@ function li({
             labelClasses: _,
             listRef: Q,
             search: L,
-            filteredOptions: k,
+            filteredOptions: $,
             highlightedIndex: F,
             setSearch: y,
             formik: t,
             executeFieldMethod: c,
             handlePersist: m,
             module_refid: o,
-            options: $,
+            options: k,
             triggerRef: te,
             open: q,
             setOpen: T
@@ -4759,20 +4759,20 @@ function li({
             labelClasses: _,
             listRef: Q,
             search: L,
-            filteredOptions: k,
+            filteredOptions: $,
             highlightedIndex: F,
             setSearch: y,
             formik: t,
             executeFieldMethod: c,
             handlePersist: m,
             module_refid: o,
-            options: $,
+            options: k,
             triggerRef: te,
             open: q,
             setOpen: T
           }
         );
-      const S = Oo($);
+      const S = Oo(k);
       return /* @__PURE__ */ s.jsxs("div", { className: "relative", children: [
         /* @__PURE__ */ s.jsxs("label", { className: _, children: [
           e.label,
@@ -4821,7 +4821,7 @@ function li({
           e.label,
           e.required && /* @__PURE__ */ s.jsx("span", { className: "text-red-500 ml-1", children: "*" })
         ] }),
-        /* @__PURE__ */ s.jsx("div", { className: `flex ${$.length > 3 ? "flex-col" : ""} gap-2 ml-1`, children: $.map((I) => /* @__PURE__ */ s.jsxs(
+        /* @__PURE__ */ s.jsx("div", { className: `flex ${k.length > 3 ? "flex-col" : ""} gap-2 ml-1`, children: k.map((I) => /* @__PURE__ */ s.jsxs(
           "label",
           {
             htmlFor: `${u}-${I.value}`,
@@ -4859,7 +4859,7 @@ function li({
           e.label,
           e.required && /* @__PURE__ */ s.jsx("span", { className: "text-red-500 ml-1", children: "*" })
         ] }),
-        /* @__PURE__ */ s.jsx("div", { className: "flex flex-col gap-2 ml-1", children: $.map((j) => {
+        /* @__PURE__ */ s.jsx("div", { className: "flex flex-col gap-2 ml-1", children: k.map((j) => {
           const z = I ? Array.isArray(P) && P.includes(j.value) : P === j.value;
           return /* @__PURE__ */ s.jsxs(
             "label",
@@ -4909,7 +4909,7 @@ function li({
           u,
           Y
         ), m(Y, e, o);
-      }, O = (B) => zt($, B) ?? B;
+      }, O = (B) => zt(k, B) ?? B;
       return /* @__PURE__ */ s.jsxs("div", { className: "relative", children: [
         /* @__PURE__ */ s.jsxs("label", { className: _, children: [
           e.label,
@@ -5298,6 +5298,7 @@ function ci({
     onSubmit: async (p) => {
       try {
         let b = Io(p, c);
+        console.log("filteredValues", b);
         const v = await r(b);
         N.resetForm();
       } catch (b) {
@@ -5305,6 +5306,7 @@ function ci({
       }
     }
   });
+  console.log("flatfields", c);
   function A(p) {
     p.preventDefault(), N.resetForm();
   }
@@ -5371,12 +5373,12 @@ function ui({
     const p = async () => {
       try {
         const { latitude: v, longitude: E, altitude: _ } = await Ar(), L = `${v},${E}`, F = {};
-        y.forEach(($) => {
-          F[$] = L;
-        }), T.forEach(($) => {
-          F[$] = _ ?? "";
-        }), m && x(($) => ({
-          ...$,
+        y.forEach((k) => {
+          F[k] = L;
+        }), T.forEach((k) => {
+          F[k] = _ ?? "";
+        }), m && x((k) => ({
+          ...k,
           ...F
         }));
       } catch (v) {
@@ -5477,7 +5479,7 @@ function ui({
         (u) => !m[u]
       ), F = T.filter(
         (u) => !m[u]
-      ), $ = T[0], R = $ ? m[$] : null;
+      ), k = T[0], R = k ? m[k] : null;
       (L.length > 0 || F.length > 0) && (b = {
         ...m,
         ...Object.fromEntries(
@@ -5560,18 +5562,18 @@ function ui({
             }
           }))?.data.refid;
         }
-        let $ = {
+        let k = {
           refid: L,
           fields: b,
           datahash: F.data.refhash,
           refid1: E.refid,
           geolocation: v
         };
-        p?.refid && ($.refid1 = p?.refid);
+        console.log("payload", k), p?.refid && (k.refid1 = p?.refid);
         const R = await G({
           method: "POST",
           url: E.baseURL + E[E.operation === "update" ? "dbopsUpdate" : "dbopsCreate"],
-          data: $,
+          data: k,
           headers: {
             Authorization: `Bearer ${E?.accessToken}`
           }
@@ -5617,10 +5619,10 @@ function Cr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: a, Report
       }
       try {
         let R = e?.config;
-        const u = R?.["popup.form"] ? "popup.form" : (R?.form, "form"), k = R?.[u];
-        if (!k?.source) throw new Error("Form source missing");
+        const u = R?.["popup.form"] ? "popup.form" : (R?.form, "form"), $ = R?.[u];
+        if (!$?.source) throw new Error("Form source missing");
         let q = !1, Q;
-        k?.source?.dbopsid && (q = !0, Q = k?.source?.dbopsid);
+        $?.source?.dbopsid && (q = !0, Q = $?.source?.dbopsid);
         const te = await G({
           method: "GET",
           url: r.baseURL + r.dbopsGetHash,
@@ -5629,10 +5631,10 @@ function Cr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: a, Report
           }
         });
         if (!q) {
-          let se = { ...k.source, refid: x.id };
-          k.source.where && (se = {
+          let se = { ...$.source, refid: x.id };
+          $.source.where && (se = {
             ...se,
-            where: ve(k.source.where, {
+            where: ve($.source.where, {
               refid: x?.id
             })
           }), Q = (await G({
@@ -5641,8 +5643,8 @@ function Cr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: a, Report
             data: {
               operation: "update",
               source: se,
-              fields: k.fields,
-              forcefill: k.forcefill,
+              fields: $.fields,
+              forcefill: $.forcefill,
               datahash: te.data.refhash,
               scrid: h?.module_refid
             },
@@ -5670,7 +5672,7 @@ function Cr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: a, Report
         y(null), f(!1);
       }
     }
-  }, $ = () => {
+  }, k = () => {
     y(null), f(!1);
   };
   return /* @__PURE__ */ s.jsx(s.Fragment, { children: o ? /* @__PURE__ */ s.jsxs(s.Fragment, { children: [
@@ -5723,7 +5725,7 @@ function Cr({ tabObj: e, methods: t, tabName: n, sqlOpsUrls: r, refid: a, Report
       {
         open: c,
         onConfirm: F,
-        onCancel: $
+        onCancel: k
       }
     )
   ] }) : /* @__PURE__ */ s.jsx("h3", { children: "Report not found" }) });
@@ -6006,7 +6008,7 @@ function jn({
       });
     }
   }, [A, E.length]);
-  const _ = i === "tableft", L = i === "tabright", F = !_ && !L, $ = e[E[A] ?? ""] || null, R = {
+  const _ = i === "tableft", L = i === "tabright", F = !_ && !L, k = e[E[A] ?? ""] || null, R = {
     single: (q, Q) => /* @__PURE__ */ s.jsx(Rr, { fieldOptions: T, setFieldOptions: g, module_refid: y.module_refid, tabObj: q, methods: t, tabName: Q, sqlOpsUrls: l, refid: h }),
     grid: (q, Q) => /* @__PURE__ */ s.jsx(
       Cr,
@@ -6022,7 +6024,7 @@ function jn({
         infoViewJson: y
       }
     )
-  }, u = $?.config?.uimode, k = r[u] || R[u] || (() => /* @__PURE__ */ s.jsx("div", { className: "flex-1 flex justify-center p-4", children: "No UI mode for this type" }));
+  }, u = k?.config?.uimode, $ = r[u] || R[u] || (() => /* @__PURE__ */ s.jsx("div", { className: "flex-1 flex justify-center p-4", children: "No UI mode for this type" }));
   return F ? /* @__PURE__ */ s.jsxs("div", { className: "flex-1 flex flex-col min-h-0 ", children: [
     /* @__PURE__ */ s.jsx(
       di,
@@ -6043,10 +6045,10 @@ function jn({
         groupNames: E,
         activeTabIndex: A,
         layoutConfig: o,
-        tabObj: $,
+        tabObj: k,
         infoData: n,
         setActiveTabIndex: m,
-        renderView: k,
+        renderView: $,
         groups: e,
         methods: t,
         refid: h,
@@ -6075,10 +6077,10 @@ function jn({
         groupNames: E,
         activeTabIndex: A,
         layoutConfig: o,
-        tabObj: $,
+        tabObj: k,
         infoData: n,
         setActiveTabIndex: m,
-        renderView: k,
+        renderView: $,
         groups: e,
         methods: t,
         refid: h,
@@ -6390,10 +6392,10 @@ function Mi({
   const [x, y] = ne.useState(f ?? {}), T = Ro(e.infoview ?? {}), g = e.endPoints, N = ne.useMemo(
     () => n(e.fields || {}),
     [e.fields, n]
-  ), [A, m] = ne.useState({}), p = (F, $) => {
+  ), [A, m] = ne.useState({}), p = (F, k) => {
     m((R) => ({
       ...R,
-      [F]: $
+      [F]: k
     }));
   }, b = e?.source?.refid;
   let v = { ...N };
@@ -6405,8 +6407,8 @@ function Mi({
   }, [f]);
   const E = ne.useCallback(
     (F) => {
-      F && y(($) => ({
-        ...$,
+      F && y((k) => ({
+        ...k,
         ...F
       }));
     },
@@ -6421,10 +6423,10 @@ function Mi({
         return;
       }
       if (R.type === "method") {
-        const u = R.method, k = u ? o[u] : void 0;
-        if (k)
+        const u = R.method, $ = u ? o[u] : void 0;
+        if ($)
           try {
-            const q = await k();
+            const q = await $();
             F || E(q || {});
           } catch (q) {
             console.error("Method execution failed:", q), F || E({});
@@ -6441,7 +6443,7 @@ function Mi({
               Authorization: `Bearer ${g?.accessToken}`
             },
             ...R.method === "GET" ? { params: { refid: R.refid } } : { data: { refid: R.refid } }
-          }, { data: k } = await G(u), q = k?.results?.options ? k?.results?.options : k.data ? k.data : k.results ? k.results : k;
+          }, { data: $ } = await G(u), q = $?.results?.options ? $?.results?.options : $.data ? $.data : $.results ? $.results : $;
           F || E(q ?? {});
         } catch (u) {
           console.error("API fetch failed:", u), F || E({});
@@ -6452,8 +6454,8 @@ function Mi({
           return;
         }
         try {
-          let u = !1, k;
-          R?.dbopsid && (u = !0, k = R?.dbopsid);
+          let u = !1, $;
+          R?.dbopsid && (u = !0, $ = R?.dbopsid);
           const q = await G({
             method: "GET",
             url: g.baseURL + g.dbopsGetHash,
@@ -6470,7 +6472,7 @@ function Mi({
               where: ve(R.where, {
                 refid: b
               })
-            }), k = (await G({
+            }), $ = (await G({
               method: "POST",
               url: g.baseURL + g.dbopsGetRefId,
               data: {
@@ -6490,7 +6492,7 @@ function Mi({
             method: "POST",
             url: g.baseURL + g.dbopsFetch,
             data: {
-              refid: k,
+              refid: $,
               datahash: q.data.refhash,
               module_refid: e.module_refid
             },

@@ -53,7 +53,8 @@ export default function NormalFormView({
     validationSchema: Yup.object().shape(validationSchema),
     onSubmit: async (values) => {
       try {
-        let filteredValues = filterSavableValues(values, flatfields)
+        let filteredValues = filterSavableValues(values, flatfields);
+         console.log("filteredValues",filteredValues);
         const res = await onSubmit(filteredValues);
         formik.resetForm();
       } catch (error) {
@@ -63,6 +64,12 @@ export default function NormalFormView({
     }
   })
 
+  console.log("flatfields",flatfields);
+  
+
+
+
+ 
 
   function handleReset(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
