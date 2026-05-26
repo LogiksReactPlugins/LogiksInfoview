@@ -53,8 +53,12 @@ export default function NormalFormView({
     validationSchema: Yup.object().shape(validationSchema),
     onSubmit: async (values) => {
       try {
+        console.log("flatfields",flatfields);
+        console.log("values",values);
+        
+        
         let filteredValues = filterSavableValues(values, flatfields);
-         console.log("filteredValues",filteredValues);
+         console.log("filteredValues in",filteredValues);
         const res = await onSubmit(filteredValues);
         formik.resetForm();
       } catch (error) {
@@ -64,7 +68,9 @@ export default function NormalFormView({
     }
   })
 
-  console.log("flatfields",flatfields);
+  let filteredValues = filterSavableValues(formik.values, flatfields);
+  console.log("filteredValues outs",filteredValues);
+  
   
 
 
