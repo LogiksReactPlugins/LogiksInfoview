@@ -112,6 +112,7 @@ export interface Toast {
 export interface InfoViewProps {
 
     infoViewJson: InfoviewJson;
+    initialvalues?: Record<string, any>;
 
     /** Fields to hide */
     hiddenFields?: string[];

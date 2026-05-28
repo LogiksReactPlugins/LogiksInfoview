@@ -19,14 +19,15 @@ export default function LogiksInfoView({
     viewRenderers = {},
     methods = {},
     Reports,
-    toast ,
+    toast,
     handleAction = () => { },
-    components
+    components,
+    initialvalues,
 }: InfoViewProps) {
 
 
 
-    const [infoData, setInfoData] = React.useState<InfoData>({});
+    const [infoData, setInfoData] = React.useState<InfoData>(initialvalues ?? {});
     const viewMode = determineViewMode(infoViewJson.infoview ?? {});
     const sqlOpsUrls = infoViewJson.endPoints;
     const groupedFields = React.useMemo(
@@ -50,7 +51,27 @@ export default function LogiksInfoView({
         groups = { ...groups, ...infoViewJson.infoview.groups };
     }
 
-  
+    React.useEffect(() => {
+        if (!initialvalues) return;
+        setInfoData(prev => ({
+            ...prev,
+            ...(initialvalues ?? {})
+        }));
+    }, [initialvalues]);
+
+    const safeSetResolvedData = React.useCallback(
+        (data?: Record<string, any>) => {
+            if (!data) return;
+
+            setInfoData(prev => ({
+                ...prev,
+                ...data,
+            }));
+        },
+        []
+    );
+
+
 
     React.useEffect(() => {
         let cancelled = false;
@@ -58,7 +79,7 @@ export default function LogiksInfoView({
         const fetchData = async () => {
             const source = infoViewJson?.source;
             if (!source?.type) {
-                if (!cancelled) setInfoData({});
+                if (!cancelled) safeSetResolvedData({});
                 return;
             }
 
@@ -68,30 +89,43 @@ export default function LogiksInfoView({
 
                 if (methodFn) {
                     try {
-                        const result = await Promise.resolve(methodFn());
-                        if (!cancelled) setInfoData(result || {});
+                        const result = await methodFn();
+                        if (!cancelled) safeSetResolvedData(result || {});
                     } catch (err) {
                         console.error("Method execution failed:", err);
-                        if (!cancelled) setInfoData({});
+                        if (!cancelled) safeSetResolvedData({});
                     }
                 } else {
-                    if (!cancelled) setInfoData({});
+                    if (!cancelled) safeSetResolvedData({});
                 }
             }
 
             if (source.type === "api") {
                 try {
-                    const response = await axios({
+                    const config = {
                         method: source.method || "GET",
-                        url: source.url,
-                        data: source.body || {},
-                        params: source.params || {},
-                        headers: source.headers || {},
-                    });
-                    if (!cancelled) setInfoData(response.data || {});
+                        url: sqlOpsUrls?.baseURL + source.endpoint,
+
+                        headers: {
+                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                        },
+                        ...(source.method === "GET"
+                            ? { params: { refid: source.refid } }
+                            : { data: { refid: source.refid } }),
+                    }
+
+                    const { data } = await axios(config);
+
+                    const value = data?.results?.options ?
+                        data?.results?.options : data.data
+                            ? data.data
+                            : data.results
+                                ? data.results
+                                : data
+                    if (!cancelled) safeSetResolvedData(value ?? {});
                 } catch (error) {
                     console.error("API fetch failed:", error);
-                    if (!cancelled) setInfoData({});
+                    if (!cancelled) safeSetResolvedData({});
                 }
             }
 
@@ -144,7 +178,7 @@ export default function LogiksInfoView({
                             data: {
                                 "operation": "fetch",
                                 "source": query,
-                                "fields": transformedObject(infoViewJson.fields, sqlOpsUrls.operation),
+                                "fields": transformedObject(infoViewJson.fields ?? {}, sqlOpsUrls.operation),
                                 "forcefill": infoViewJson.forcefill,
                                 "datahash": resHashId.data.refhash,
                                 "srcid": infoViewJson?.module_refid
@@ -174,8 +208,9 @@ export default function LogiksInfoView({
 
                     const data = normalizeToObject(res) ?? {};
 
-                    if (!cancelled) setInfoData(data);
+                    if (!cancelled) safeSetResolvedData(data);
                 } catch (err) {
+                    if (!cancelled) safeSetResolvedData({});
                     console.error("API fetch failed:", err);
                 }
             }
