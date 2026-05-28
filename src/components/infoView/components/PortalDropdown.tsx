@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 export interface DropdownPortalProps {
     anchorRef: React.RefObject<HTMLElement | null>;
@@ -9,6 +9,8 @@ export interface DropdownPortalProps {
     maxHeight?: number;
 }
 
+
+
 export function DropdownPortal({
     anchorRef,
     open,
@@ -16,58 +18,59 @@ export function DropdownPortal({
     offset = 4,
     maxHeight = 240,
 }: DropdownPortalProps) {
-    const [style, setStyle] = useState<React.CSSProperties>({});
+  const [style, setStyle] = useState({});
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
-        if (!open || !anchorRef.current) return;
-        const anchor = anchorRef.current;
+  useLayoutEffect(() => {
+    if (!open || !anchorRef.current || !dropdownRef.current) return;
+ const anchor = anchorRef.current;
+    const update = () => {
+      const rect = anchor.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
 
-        const update = () => {
-            const rect = anchor.getBoundingClientRect();
+      const dropdownHeight =
+        dropdownRef.current?.offsetHeight || maxHeight;
 
-            const viewportHeight = window.innerHeight;
+      const spaceBelow = viewportHeight - rect.bottom;
+      const spaceAbove = rect.top;
 
-            const spaceBelow = viewportHeight - rect.bottom;
-            const spaceAbove = rect.top;
+      const shouldFlip =
+        spaceBelow < dropdownHeight && spaceAbove > spaceBelow;
 
-            const openUpwards = spaceBelow < maxHeight && spaceAbove > spaceBelow;
+      const top = shouldFlip
+        ? rect.top - dropdownHeight - offset
+        : rect.bottom + offset;
 
-            const top = openUpwards
-                ? rect.top - Math.min(maxHeight, spaceAbove) - offset
-                : rect.bottom + offset;
+      setStyle({
+        position: "fixed",
+        top,
+        left: rect.left,
+        width: rect.width,
+        maxHeight,
+        overflowY: "auto",
+        zIndex: 9999,
+      });
+    };
 
-            setStyle({
-                position: "fixed",
-                top,
-                left: rect.left,
-                width: rect.width,
-                maxHeight,
-                zIndex: 9999,
-            });
-        };
+    update();
+    const raf = requestAnimationFrame(update);
 
-        update();
- // run again after layout settles
-  const raf = requestAnimationFrame(update);
-        window.addEventListener("scroll", update, true);
-        window.addEventListener("resize", update);
+    window.addEventListener("scroll", update, true);
+    window.addEventListener("resize", update);
 
-        return () => {
-            cancelAnimationFrame(raf);
-            window.removeEventListener("scroll", update, true);
-            window.removeEventListener("resize", update);
-        };
-    }, [open, anchorRef, offset, maxHeight]);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", update, true);
+      window.removeEventListener("resize", update);
+    };
+  }, [open, anchorRef, offset, maxHeight]);
 
+  if (!open) return null;
 
-    
-
-    if (!open) return null;
-
-    return createPortal(
-        <div style={style}>{children}</div>,
-        document.body
-    );
+  return createPortal(
+    <div ref={dropdownRef} style={style}>
+      {children}
+    </div>,
+    document.body
+  );
 }
-
-

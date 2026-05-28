@@ -187,7 +187,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
 
             {Reports ? (
                 <>
-                    <Reports
+                    {source?.datagrid && <Reports
                         methods={{ ...methods, deleteRecord: handleDelete, editRecord: handleEdit }}
                         report={{
                             ...source,
@@ -207,7 +207,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
 
                         }}
                         onButtonClick={handleAction}
-                    />
+                    />}
 
 
                     {

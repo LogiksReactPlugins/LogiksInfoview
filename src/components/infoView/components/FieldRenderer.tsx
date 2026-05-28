@@ -88,7 +88,7 @@ export default function FieldRenderer({
           <DropdownPortal anchorRef={triggerRef} open={open && !isDisabled}>
             <div
               ref={listRef}
-              className="absolute z-20 w-full bg-white border rounded shadow max-h-52 overflow-y-auto mt-1"
+              className=" w-full bg-white border rounded shadow max-h-52 overflow-y-auto mt-1"
             >
               {filteredOptions.length > 0 && exactMatch ? (
                 filteredOptions.map(([val, label], idx) => (
