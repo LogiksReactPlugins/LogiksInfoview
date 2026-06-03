@@ -5145,7 +5145,7 @@ function ti({
   return /* @__PURE__ */ a.jsx("div", { className: "relative  max-w-full ", children: /* @__PURE__ */ a.jsx("div", { className: "bg-white border border-gray-100 rounded-md animate-in fade-in duration-300", children: /* @__PURE__ */ a.jsxs("form", { onSubmit: E.handleSubmit, className: "p-4  mx-auto", children: [
     /* @__PURE__ */ a.jsxs("div", { className: "grid grid-cols-12 gap-4", children: [
       u.map((x, m) => {
-        const y = Ht(x.hidden), A = `
+        const y = Ht(x.hidden) || x.type === "hidden", A = `
   col-span-12 md:col-span-6
   ${et[tt(Number(x.width))] || "lg:col-span-4"}
   ${y ? "hidden" : ""}
