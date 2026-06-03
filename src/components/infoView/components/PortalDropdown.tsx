@@ -45,7 +45,7 @@ export function DropdownPortal({
         position: "fixed",
         top,
         left: rect.left,
-        width: rect.width,
+        minWidth: rect.width,
         maxHeight,
         overflowY: "auto",
         zIndex: 9999,

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
-import { normalizeToObject, replacePlaceholders, tailwindCols, tailwindGrid, toColWidth, toGrid, transformedObject } from '../utils.js'
+import { normalizeToObject, replacePlaceholders, tailwindCols, toColWidth, transformedObject } from '../utils.js'
 import type { InfoViewGroup, SelectOptions, SqlEndpoints } from '../InfoView.types.js'
 
 export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid, module_refid, setFieldOptions, fieldOptions }:
