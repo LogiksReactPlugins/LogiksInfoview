@@ -6,10 +6,13 @@ type FilePreviewProps = {
     category:string;
     sqlOpsUrls?: SqlEndpoints | undefined;
       blob: Blob | null;
+        filePath: string;
+
 };
 
 const FilePreview = ({ fileUrl,category,  blob,
   sqlOpsUrls,
+  filePath,
  }: FilePreviewProps) => {
     if (!fileUrl) return null;
 
@@ -39,10 +42,10 @@ const handleDownload = async (
     blob
   ) {
     e.preventDefault();
-
+const fileName = filePath.split("/").pop() ?? "download";
     await sqlOpsUrls.native.downloadFile(
       blob,
-      fileUrl
+      fileName
     );
   }
 };
