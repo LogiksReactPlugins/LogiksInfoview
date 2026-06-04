@@ -179,6 +179,12 @@ export interface SqlEndpoints {
     uploadURL?: string;
     removeFileURL?: string;
     refid?: string;
+      native?: {
+    downloadFile?: (
+      blob: Blob,
+      fileName: string
+    ) => Promise<void>;
+  };
 };
 
 

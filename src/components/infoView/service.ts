@@ -321,7 +321,33 @@ export async function getPreviewUrl(
     return URL.createObjectURL(res.data);
 }
 
+export async function getPreviewUrlWithBlob(
+  fileUrl: string,
+  sqlOpsUrls: Record<string, any>
+): Promise<{
+  previewUrl: string;
+  blob: Blob;
+}> {
+  const previewPath =
+    sqlOpsUrls.previewPath ?? "/api/files/preview";
 
+  const { data: blob } = await axios.get(
+    `${sqlOpsUrls.baseURL}${previewPath}?uri=${encodeURIComponent(
+      fileUrl
+    )}`,
+    {
+      responseType: "blob",
+      headers: {
+        Authorization: `Bearer ${sqlOpsUrls?.accessToken}`,
+      },
+    }
+  );
+
+  return {
+    previewUrl: URL.createObjectURL(blob),
+    blob,
+  };
+}
 
 export async function uploadFiles(
     sqlOpsUrls: SqlEndpoints | undefined,

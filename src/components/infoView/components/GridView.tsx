@@ -203,8 +203,8 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                             actions: { ...source?.actions, ...infoViewJson?.buttons, ...infoViewJson.actions },
                             datagrid: source?.datagrid,
                             buttons: source?.buttons,
-                            refresh: refreshCounter
-
+                            refresh: refreshCounter,
+                            native: sqlOpsUrls?.native,
                         }}
                         onButtonClick={handleAction}
                     />}

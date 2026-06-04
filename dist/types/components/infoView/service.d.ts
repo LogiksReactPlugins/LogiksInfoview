@@ -37,6 +37,10 @@ export declare function runAjaxChain({ field, value, sqlOpsUrls, setFieldOptions
     values: Record<string, any>;
 }): Promise<void>;
 export declare function getPreviewUrl(fileUrl: string, sqlOpsUrls: Record<string, any>): Promise<string>;
+export declare function getPreviewUrlWithBlob(fileUrl: string, sqlOpsUrls: Record<string, any>): Promise<{
+    previewUrl: string;
+    blob: Blob;
+}>;
 export declare function uploadFiles(sqlOpsUrls: SqlEndpoints | undefined, files: FileList): Promise<UploadResponse[]>;
 export declare function deleteFile(sqlOpsUrls: SqlEndpoints | undefined, fileId: number | string): Promise<any>;
 export {};

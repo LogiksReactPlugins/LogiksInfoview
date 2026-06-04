@@ -2,7 +2,7 @@ import { useEffect, useState, type JSX } from "react";
 import { fileIconClassMap, getFileExtension, getMimeCategory } from "../utils.js";
 import type { FileCategory, SqlEndpoints } from "../InfoView.types.js";
 import FilePreview from "./FilePreview.js";
-import { getPreviewUrl } from "../service.js";
+import { getPreviewUrl, getPreviewUrlWithBlob } from "../service.js";
 
 type FilePreviewTriggerProps = {
   filePath: string;
@@ -17,7 +17,7 @@ const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) =
   const cleanPath = filePath.replace(/^[^&]*&/, "");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-
+const [blob, setBlob] = useState<Blob | null>(null);
   const ext = getFileExtension(cleanPath);
   const category = getMimeCategory(ext);
   useEffect(() => {
@@ -29,12 +29,15 @@ const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) =
     let active = true;
     let objectUrl: string | null = null;
 
-    getPreviewUrl(cleanPath, sqlOpsUrls).then((url) => {
+   getPreviewUrlWithBlob(cleanPath, sqlOpsUrls).then(
+  ({ previewUrl, blob }) => {
+    if (!active) return;
 
-      if (!active) return;
-      objectUrl = url;
-      setPreviewUrl(url);
-    });
+    objectUrl = previewUrl;
+    setPreviewUrl(previewUrl);
+    setBlob(blob);
+  }
+);
 
     return () => {
       active = false;
@@ -93,7 +96,7 @@ const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) =
             </button>
 
              {previewUrl ? (
-              <FilePreview fileUrl={previewUrl} category={category} />
+              <FilePreview sqlOpsUrls={sqlOpsUrls}   blob={blob}  fileUrl={previewUrl} category={category} />
             ) : (
               <div className="flex flex-col items-center justify-center py-12">
                 <i className="fa-solid fa-spinner fa-spin text-3xl text-gray-900 mb-3" />

@@ -1,11 +1,16 @@
+import type { SqlEndpoints } from "../InfoView.types.js";
 
 
 type FilePreviewProps = {
     fileUrl: string;
     category:string;
+    sqlOpsUrls?: SqlEndpoints | undefined;
+      blob: Blob | null;
 };
 
-const FilePreview = ({ fileUrl,category }: FilePreviewProps) => {
+const FilePreview = ({ fileUrl,category,  blob,
+  sqlOpsUrls,
+ }: FilePreviewProps) => {
     if (!fileUrl) return null;
 
 
@@ -25,11 +30,26 @@ const FilePreview = ({ fileUrl,category }: FilePreviewProps) => {
             </video>
         );
     }
+const handleDownload = async (
+  e: React.MouseEvent<HTMLAnchorElement>
+) => {
+  if (
+    sqlOpsUrls?.native?.downloadFile &&
+    typeof sqlOpsUrls.native.downloadFile === "function" &&
+    blob
+  ) {
+    e.preventDefault();
 
+    await sqlOpsUrls.native.downloadFile(
+      blob,
+      fileUrl
+    );
+  }
+};
     return (
         <div className="text-center p-4">
             <p>Preview not available</p>
-            <a href={fileUrl} download className="text-blue-600 underline">
+            <a   onClick={handleDownload} href={fileUrl} download className="text-blue-600 underline">
                 Download file
             </a>
         </div>
