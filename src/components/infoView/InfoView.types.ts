@@ -293,6 +293,12 @@ export interface FieldRendererProps {
         fieldName: string,
         options: SelectOptions
     ) => void;
+      setFieldLoading?: (
+        fieldName: string,
+        loading: boolean
+    ) => void;
+
+    fieldLoading?: boolean;
 }
 
 

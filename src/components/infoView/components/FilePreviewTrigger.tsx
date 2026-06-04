@@ -46,14 +46,27 @@ const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) =
   return (
     <>
 
-      {category === "image" && previewUrl ? (
-        <img
-          src={previewUrl}
-          alt={fileName}
-          title="Click to preview"
+      {category === "image" ? (
+        <div
+          role="button"
+          tabIndex={0}
           onClick={() => setOpen(true)}
-          className="h-16 w-16 object-cover rounded  cursor-pointer hover:opacity-90"
-        />
+          onKeyDown={(e) => e.key === "Enter" && setOpen(true)}
+          className="h-16 w-16 rounded overflow-hidden cursor-pointer"
+          title="Click to preview"
+        >
+          {previewUrl ? (
+            <img
+              src={previewUrl}
+              alt={fileName}
+              className="h-full w-full object-cover hover:opacity-90"
+            />
+          ) : (
+            <div className="h-full w-full bg-gray-100 flex items-center justify-center">
+              <i className="fa-regular fa-image text-gray-400" />
+            </div>
+          )}
+        </div>
       ) : (
         <div
           role="button"
@@ -79,10 +92,13 @@ const FilePreviewTrigger = ({ filePath, sqlOpsUrls }: FilePreviewTriggerProps) =
               ✕
             </button>
 
-            {previewUrl ? (
+             {previewUrl ? (
               <FilePreview fileUrl={previewUrl} category={category} />
             ) : (
-              <div className="text-center p-8">Loading preview…</div>
+              <div className="flex flex-col items-center justify-center py-12">
+                <i className="fa-solid fa-spinner fa-spin text-3xl text-gray-900 mb-3" />
+                <span className="text-gray-600">Loading preview...</span>
+              </div>
             )}
           </div>
         </div>

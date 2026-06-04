@@ -14,11 +14,22 @@ export default function useFieldRenderer({
     refid,
     module_refid = "menuManager.main",
     optionsOverride,
-    setFieldOptions
+    setFieldOptions,
+    setFieldLoading
 }: FieldRendererProps) {
+     const isOptionField = [
+        "select",
+        "dataSelector",
+        "dataSelectorFromTable",
+        "dataSelectorFromUniques",
+        "dataMethod",
+        "suggest",
+        "autosuggest",
+        "autocomplete",
+    ].includes(field?.type || "text");
    
     const [isFocused, setIsFocused] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(isOptionField);
     const [options, setOptions] = useState<SelectOptions>(
         optionsOverride ?? field.options ?? {}
     );
@@ -110,6 +121,7 @@ export default function useFieldRenderer({
         let isMounted = true;
 
         const fetchData = async () => {
+              try {
             let valueKey = field.valueKey ?? "value";
             let labelKey = field.labelKey ?? "title";
             let opts = field?.options;
@@ -322,6 +334,14 @@ export default function useFieldRenderer({
 
                 } catch (err) {
                     console.error("API fetch failed:", err);
+                }
+            }
+            } catch (err) {
+                console.log(err)
+
+            } finally {
+                if (isMounted && isOptionField) {
+                    setLoading(false);
                 }
             }
         };
@@ -562,6 +582,7 @@ export default function useFieldRenderer({
 
                 // ---------- AJAX CHAIN (ARRAY SAFE) ----------
                 for (const chain of ajaxChains) {
+                    setFieldLoading?.(chain.target, true);
                     const src = chain.src;
                     if (!chain || typeof chain !== "object") continue;
                     if (!src || typeof src !== "object") continue;
@@ -603,8 +624,15 @@ export default function useFieldRenderer({
                                 ? { params }
                                 : { data: params }),
                         }
-                        const { data: res } = await axios(config);
-                        responseData = res;
+                        try {
+                           const { data: res } = await axios(config);
+                        responseData = res; 
+                        } catch (error) {
+                            
+                        } finally {
+                            setFieldLoading?.(chain.target, false);
+                        }
+                        
                     } else {
 
                         let query: sqlQueryProps | undefined;
@@ -624,9 +652,15 @@ export default function useFieldRenderer({
                             };
                         }
 
-
-                        const { data: res } = await fetchDataByquery(sqlOpsUrls, query, src?.queryid, value, module_refid);
-                        responseData = res;
+                         try {
+                           const { data: res } = await fetchDataByquery(sqlOpsUrls, query, src?.queryid, value, module_refid);
+                        responseData = res; 
+                         } catch (error) {
+                            
+                         }finally {
+                            setFieldLoading?.(chain.target, false);
+                        }
+                        
                     }
 
                     let valueKey = field.valueKey ?? "value";
@@ -650,6 +684,7 @@ export default function useFieldRenderer({
                         normalizedItems,
                         field.groupKey
                     );
+                    formik.setFieldValue(chain.target, formik.initialValues[chain.target]);
 
                     setFieldOptions?.(chain.target, mapped);
                 }

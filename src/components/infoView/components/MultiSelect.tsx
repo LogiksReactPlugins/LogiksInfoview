@@ -8,7 +8,7 @@ import { DropdownPortal } from './PortalDropdown.js';
 type MultiSelectProps = {
     field: FormField;
     isDisabled: boolean;
-
+loading: boolean;
 
     handleKeyDown: (e: React.KeyboardEvent, isSingle: boolean) => void;
 
@@ -57,7 +57,8 @@ export default function MultiSelect({
     options,
     triggerRef,
     open,
-    setOpen
+    setOpen,
+    loading
 
 }: MultiSelectProps) {
 
@@ -101,19 +102,23 @@ export default function MultiSelect({
                             .join(", ")
                         : `Select ${field.label}`}
                 </span>
-                <svg
-                    className="w-4 h-4 text-gray-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                    />
-                </svg>
+               {loading ? (
+                    <i className="fa-solid fa-spinner fa-spin text-gray-900" />
+                ) : (
+                    <svg
+                        className="w-4 h-4 text-gray-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                        />
+                    </svg>
+                )}
 
             </div>
 

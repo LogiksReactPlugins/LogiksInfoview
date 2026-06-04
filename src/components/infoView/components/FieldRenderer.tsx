@@ -16,7 +16,9 @@ export default function FieldRenderer({
   refid,
   module_refid = "menuManager.main",
   optionsOverride,
-  setFieldOptions
+  setFieldOptions,
+  fieldLoading,
+  setFieldLoading
 }: FieldRendererProps) {
 
   const {
@@ -28,6 +30,7 @@ export default function FieldRenderer({
   } = useFieldRenderer({
     field, formik, methods, sqlOpsUrls,
     refid, module_refid,
+    ...(setFieldLoading && { setFieldLoading }),
     ...(optionsOverride && { optionsOverride }),
     ...(setFieldOptions && { setFieldOptions }),
   })
@@ -76,6 +79,7 @@ export default function FieldRenderer({
                     handlePersist(search.trim(), field, module_refid);
                   }
                   setOpen(false);
+                  setSearch("")
                   return;
                 }
                 // let existing handler handle arrows / escape etc
@@ -83,6 +87,11 @@ export default function FieldRenderer({
               }}
               disabled={isDisabled}
             />
+            {(loading || fieldLoading) && (
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                <i className="fa-solid fa-spinner fa-spin text-gray-900" />
+              </div>
+            )}
           </div>
 
           <DropdownPortal anchorRef={triggerRef} open={open && !isDisabled}>
@@ -153,6 +162,7 @@ export default function FieldRenderer({
             triggerRef={triggerRef}
             open={open}
             setOpen={setOpen}
+            loading={loading || !!fieldLoading}
           />
         );
 
@@ -177,6 +187,7 @@ export default function FieldRenderer({
           triggerRef={triggerRef}
           open={open}
           setOpen={setOpen}
+          loading={loading || !!fieldLoading}
 
         />
       );
@@ -242,6 +253,7 @@ export default function FieldRenderer({
             triggerRef={triggerRef}
             open={open}
             setOpen={setOpen}
+            loading={loading || !!fieldLoading}
           />
         );
 
@@ -267,6 +279,7 @@ export default function FieldRenderer({
             triggerRef={triggerRef}
             open={open}
             setOpen={setOpen}
+            loading={loading || !!fieldLoading}
 
           />
         )
@@ -319,14 +332,23 @@ export default function FieldRenderer({
             </select>
             {/* Custom dropdown arrow */}
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-              <svg
-                className="w-5 h-5 transition-colors duration-300 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              {(loading || fieldLoading) ? (
+                <i className="fa-solid fa-spinner fa-spin text-gray-900"></i>
+              ) : (
+                <svg
+                  className="w-5 h-5 transition-colors duration-300 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              )}
             </div>
           </div>
           {formik.touched[key] && formik.errors[key] && (
@@ -575,6 +597,11 @@ export default function FieldRenderer({
                 {renderIcon(field)}
               </div>
             )}
+             {loading && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 z-10">
+                  <i className="fa-solid fa-spinner fa-spin text-gray-900" />
+                </div>
+              )}
             <input
               id={key}
               type="file"

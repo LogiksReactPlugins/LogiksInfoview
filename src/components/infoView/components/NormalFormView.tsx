@@ -32,9 +32,16 @@ export default function NormalFormView({
     }));
   };
 
+  const [fieldLoading, setFieldLoading] = React.useState<
+    Record<string, boolean>
+  >({});
 
-
-
+ const updateFieldLoading = (fieldName: string, loading: boolean) => {
+    setFieldLoading(prev => ({
+      ...prev,
+      [fieldName]: loading,
+    }));
+  };
 
   const { initialValues, validationSchema } = React.useMemo(() => {
     const values: Record<string, any> = {};
@@ -99,6 +106,8 @@ export default function NormalFormView({
                   {...(fieldOptions[field.name]
                     ? { optionsOverride: fieldOptions[field.name] }
                     : {})}
+                    fieldLoading={fieldLoading[field.name] ?? false}
+                    setFieldLoading={updateFieldLoading}
                 />
               </div>
             })}

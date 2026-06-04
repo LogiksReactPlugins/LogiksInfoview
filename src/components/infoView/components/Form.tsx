@@ -63,9 +63,19 @@ export default function LogiksForm({
 
   const safeSetResolvedData = React.useCallback(
     (data?: Record<string, any>) => {
-      if (data && Object.keys(data).length > 0) {
-        setResolvedData(data);
-      }
+      if (!data) return;
+
+      setResolvedData(prev => {
+        const merged = { ...prev };
+
+        for (const key in data) {
+          if (data[key] !== null && data[key] !== undefined) {
+            merged[key] = data[key];
+          }
+        }
+
+        return merged;
+      });
     },
     []
   );
@@ -79,8 +89,11 @@ export default function LogiksForm({
 
         return;
       }
+      if (sqlOpsUrls?.operation === "create") {
+        return;
+      }
 
-      if (source.type === "method" && sqlOpsUrls?.operation !== "create") {
+      if (source.type === "method") {
         const methodName = source.method as keyof typeof methods | undefined;
         const methodFn = methodName ? methods[methodName] : undefined;
         if (methodFn) {
@@ -94,7 +107,7 @@ export default function LogiksForm({
         }
       }
 
-      if (source.type === "api" && sqlOpsUrls?.operation !== "create") {
+      if (source.type === "api") {
         try {
           const config = {
             method: source.method || "GET",
@@ -120,9 +133,8 @@ export default function LogiksForm({
 
       if ((source.type === "sql" &&
         source.refid &&
-        source.refid !== "0" &&
-        sqlOpsUrls?.operation !== "create") ||
-        (sqlOpsUrls?.operation !== "create" && source.dbopsid)) {
+        source.refid !== "0") ||
+        (source.dbopsid)) {
 
         if (!sqlOpsUrls) {
           console.error("SQL source requires formJson.endPoints but it is missing");
@@ -157,10 +169,7 @@ export default function LogiksForm({
     sqlOpsUrls,
     formJson?.source?.type || "",
     formJson?.source?.method || "",
-    formJson?.source?.url || "",
-    JSON.stringify(formJson?.source?.params ?? {}),
-    JSON.stringify(formJson?.source?.body ?? {}),
-    JSON.stringify(formJson?.source?.headers ?? {})
+    formJson?.source?.endpoint || ""
   ]);
 
 
@@ -169,18 +178,22 @@ export default function LogiksForm({
     const source = formJson?.source ?? {};
 
     let finalValues = { ...values };
+    let finalGeo = "0,0";
 
     if (geoFieldKeys.length > 0) {
+
+      const geoKey = geoFieldKeys[0];
+      const geoValue = geoKey ? values[geoKey] : null;
+      finalGeo = geoValue || "0,0";
       const missingKeys = geoFieldKeys.filter(k => !values[k]);
 
       if (missingKeys.length > 0) {
         try {
-          const geo = await fetchGeolocation();
 
           finalValues = {
             ...values,
             ...Object.fromEntries(
-              missingKeys.map(k => [k, geo])
+              missingKeys.map(k => [k, finalGeo])
             ),
           };
         } catch (err) {
@@ -196,7 +209,8 @@ export default function LogiksForm({
       const methodFn = methodName ? methods[methodName] : undefined;
       if (methodFn) {
         try {
-          const res = await methodFn(finalValues);
+           let values = finalValues ? { ...finalValues, geolocation: finalGeo } : {}
+          const res = await methodFn(values);
           setEditData?.(null);
           callback?.(res);
           toast?.success?.(getSuccessMessage(res));
@@ -218,7 +232,7 @@ export default function LogiksForm({
         const res = await axios({
           method: source.method || "POST",
           url: sqlOpsUrls.baseURL + source.endpoint,
-          data: finalValues ?? {},
+           data: finalValues ? { ...finalValues, geolocation: finalGeo } : {},
           headers: {
             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
           },
@@ -301,7 +315,8 @@ export default function LogiksForm({
           "refid": dbopsId,
           "fields": finalValues,
           "datahash": resHashId.data.refhash,
-          "refid1": sqlOpsUrls.refid
+          "refid1": sqlOpsUrls.refid,
+          "geolocation": finalGeo
         }
 
         if (source?.refid) {

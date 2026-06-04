@@ -1,6 +1,6 @@
 import { FieldRendererProps, FormField, SelectOptions } from '../InfoView.types.js';
 import { handlePersist } from '../utils.js';
-export default function useFieldRenderer({ field, formik, methods, sqlOpsUrls, refid, module_refid, optionsOverride, setFieldOptions }: FieldRendererProps): {
+export default function useFieldRenderer({ field, formik, methods, sqlOpsUrls, refid, module_refid, optionsOverride, setFieldOptions, setFieldLoading }: FieldRendererProps): {
     setHighlightedIndex: import('react').Dispatch<import('react').SetStateAction<number>>;
     executeFieldMethod: (trigger: "onChange" | "onBlur" | "onFocus" | "onClick", field: FormField, value?: any) => Promise<void>;
     handleFileUpload: (files: FileList) => Promise<void>;

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import PhotoRenderer from './PhotoRenderer.js';
 import type { FormikProps } from "formik";
 import type { FormField, SqlEndpoints } from '../InfoView.types.js';
@@ -21,7 +21,7 @@ export default function PhotoAvatarRenderer({
     let key = field?.name;
     const inputRef = useRef<HTMLInputElement | null>(null);
     const max = field.max !== undefined ? Number(field.max) : Infinity;
-
+    const [loading, setLoading] = useState(false);
     const files = Array.isArray(formik.values[key])
         ? formik.values[key]
         : formik.values[key]
@@ -41,6 +41,7 @@ export default function PhotoAvatarRenderer({
         }
 
         try {
+            setLoading(true);
             const uploads = await uploadFiles(sqlOpsUrls, selectedFiles);
             const value = buildFileValue({
                 uploads,
@@ -57,6 +58,8 @@ export default function PhotoAvatarRenderer({
         } catch (err) {
             console.error("File upload failed", err);
             formik.setFieldError(key, "File upload failed");
+        } finally {
+            setLoading(false);
         }
 
     };
@@ -130,10 +133,18 @@ export default function PhotoAvatarRenderer({
 
 
                 <div
-                    onClick={() => inputRef.current?.click()}
+                    onClick={() => {
+                        if (!loading) {
+                            inputRef.current?.click();
+                        }
+                    }}
                     className="w-24 h-24 flex items-center justify-center border border-dashed rounded-md bg-gray-50 hover:bg-gray-100 cursor-pointer"
                 >
-                    <i className={`fa-solid ${getIcon(field)} text-2xl text-gray-400`} />
+                    {loading ? (
+                        <i className="fa-solid fa-spinner fa-spin text-2xl text-gray-900" />
+                    ) : (
+                        <i className={`fa-solid ${getIcon(field)} text-2xl text-gray-400`} />
+                    )}
                 </div>
 
             </div>

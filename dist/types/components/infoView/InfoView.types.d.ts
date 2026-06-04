@@ -239,6 +239,8 @@ export interface FieldRendererProps {
     module_refid?: string | undefined;
     optionsOverride?: SelectOptions;
     setFieldOptions?: (fieldName: string, options: SelectOptions) => void;
+    setFieldLoading?: (fieldName: string, loading: boolean) => void;
+    fieldLoading?: boolean;
 }
 export interface TabViewProps {
     groups: Record<string, InfoViewGroup>;
