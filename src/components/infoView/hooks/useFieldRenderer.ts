@@ -17,7 +17,7 @@ export default function useFieldRenderer({
     setFieldOptions,
     setFieldLoading
 }: FieldRendererProps) {
-     const isOptionField = [
+    const isOptionField = [
         "select",
         "dataSelector",
         "dataSelectorFromTable",
@@ -27,7 +27,7 @@ export default function useFieldRenderer({
         "autosuggest",
         "autocomplete",
     ].includes(field?.type || "text");
-   
+
     const [isFocused, setIsFocused] = useState(false);
     const [loading, setLoading] = useState(isOptionField);
     const [options, setOptions] = useState<SelectOptions>(
@@ -121,56 +121,112 @@ export default function useFieldRenderer({
         let isMounted = true;
 
         const fetchData = async () => {
-              try {
-            let valueKey = field.valueKey ?? "value";
-            let labelKey = field.labelKey ?? "title";
-            let opts = field?.options;
+            try {
+                let valueKey = field.valueKey ?? "value";
+                let labelKey = field.labelKey ?? "title";
+                let opts = field?.options;
 
-            if (opts && (
-                (Array.isArray(opts) && opts.length > 0) ||
-                (!Array.isArray(opts) && Object.keys(opts).length > 0)
-            )) {
+                if (opts && (
+                    (Array.isArray(opts) && opts.length > 0) ||
+                    (!Array.isArray(opts) && Object.keys(opts).length > 0)
+                )) {
 
-                //  CASE 1: flat or grouped object
-                // { "1": "WEL" } OR { quarter1: { "1": "January" } }
-                if (
-                    typeof field.options === "object" &&
-                    !Array.isArray(field.options)
-                ) {
-                    const values = Object.values(field.options);
-                    if (values.length && typeof values[0] === "string") {
-                        setOptions(field.options as SelectOptions);
+                    //  CASE 1: flat or grouped object
+                    // { "1": "WEL" } OR { quarter1: { "1": "January" } }
+                    if (
+                        typeof field.options === "object" &&
+                        !Array.isArray(field.options)
+                    ) {
+                        const values = Object.values(field.options);
+                        if (values.length && typeof values[0] === "string") {
+                            setOptions(field.options as SelectOptions);
+                            return;
+                        }
+                    }
+
+                    // CASE 2 / 3: array of rows (flat or grouped via `category`)
+                    const rawItems = Array.isArray(field.options)
+                        ? field.options
+                        : [field.options];
+
+                    const normalizedItems = rawItems.map(normalizeRowSafe);
+
+                    const mapped = formatOptions(
+                        valueKey,
+                        labelKey,
+                        normalizedItems,
+                        field.groupKey // auto-uses `category` if present
+                    );
+
+                    setOptions(mapped);
+                    return;
+                }
+
+                const source = field?.source ?? {};
+
+                // Case 1: Method source
+                if (field.type === "dataMethod") {
+                    const methodName = field.method as keyof typeof methods | undefined;
+                    const methodFn = methodName ? methods[methodName] : undefined;
+                    if (methodFn) {
+                        try {
+                            const res = await methodFn();
+                            const rawItems = Array.isArray(res.data?.results?.options) ?
+                                res.data?.results?.options : Array.isArray(res?.data?.data)
+                                    ? res.data.data
+                                    : Array.isArray(res.data?.results)
+                                        ? res.data?.results :
+                                        Array.isArray(res?.data)
+                                            ? res.data
+                                            : res;
+
+                            if (
+                                typeof rawItems === "object" &&
+                                !Array.isArray(rawItems)
+                            ) {
+                                const values = Object.values(rawItems);
+                                if (values.length && typeof values[0] === "string") {
+                                    setOptions(rawItems as SelectOptions);
+                                    return;
+                                }
+                            }
+
+                            const normalizedItems = Array.isArray(rawItems)
+                                ? rawItems.map(normalizeRowSafe)
+                                : [];
+
+                            const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
+
+                            if (isMounted) setOptions(mapped);
+                            return;
+                        } catch (err) {
+                            console.error("Method execution failed:", err);
+                            if (isMounted) setOptions({});
+                            return;
+                        }
+                    } else {
+                        if (isMounted) setOptions({});
                         return;
                     }
                 }
 
-                // CASE 2 / 3: array of rows (flat or grouped via `category`)
-                const rawItems = Array.isArray(field.options)
-                    ? field.options
-                    : [field.options];
-
-                const normalizedItems = rawItems.map(normalizeRowSafe);
-
-                const mapped = formatOptions(
-                    valueKey,
-                    labelKey,
-                    normalizedItems,
-                    field.groupKey // auto-uses `category` if present
-                );
-
-                setOptions(mapped);
-                return;
-            }
-
-            const source = field?.source ?? {};
-
-            // Case 1: Method source
-            if (field.type === "dataMethod") {
-                const methodName = field.method as keyof typeof methods | undefined;
-                const methodFn = methodName ? methods[methodName] : undefined;
-                if (methodFn) {
+                // Case 2: API source
+                if (source.type === "api" && source.endpoint) {
                     try {
-                        const res = await methodFn();
+                        const config = {
+                            method: source.method || "GET",
+                            url: sqlOpsUrls?.baseURL + source.endpoint,
+
+                            headers: {
+                                "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
+                            },
+                            ...(source.method === "GET"
+                                ? { params: { refid: source.refid } }
+                                : { data: { refid: source.refid } }),
+                        }
+
+                        const res = await axios(config);
+
                         const rawItems = Array.isArray(res.data?.results?.options) ?
                             res.data?.results?.options : Array.isArray(res?.data?.data)
                                 ? res.data.data
@@ -195,147 +251,91 @@ export default function useFieldRenderer({
                             ? rawItems.map(normalizeRowSafe)
                             : [];
 
-                        const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
-
+                        const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey)
                         if (isMounted) setOptions(mapped);
                         return;
+
                     } catch (err) {
-                        console.error("Method execution failed:", err);
+                        console.error("API execution failed:", err);
                         if (isMounted) setOptions({});
                         return;
                     }
-                } else {
-                    if (isMounted) setOptions({});
-                    return;
                 }
-            }
 
-            // Case 2: API source
-            if (source.type === "api" && source.endpoint) {
-                try {
-                    const config = {
-                        method: source.method || "GET",
-                        url: sqlOpsUrls?.baseURL + source.endpoint,
+                // Case 3: Sql source
 
-                        headers: {
-                            "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
-                        },
-                        ...(source.method === "GET"
-                            ? { params: { refid: source.refid } }
-                            : { data: { refid: source.refid } }),
+                if (field.table || field.type === "dataSelector" || field.queryid) {
+
+                    if (!sqlOpsUrls) {
+                        console.error("SQL source requires formJson.endPoints but it is missing");
+                        return;
                     }
 
-                    const res = await axios(config);
+                    try {
 
-                    const rawItems = Array.isArray(res.data?.results?.options) ?
-                        res.data?.results?.options : Array.isArray(res?.data?.data)
+                        let query: sqlQueryProps | undefined;
+
+                        if (field.type === "dataSelector") {
+                            query = {
+                                table: "do_lists",
+                                cols: "title,value",
+                                where: {
+                                    groupid: field.groupid ?? "",
+                                },
+                            };
+
+                        } else if (!field.queryid) {
+                            // inline SQL
+                            if (!field.table || !field.columns) {
+                                console.error("Invalid SQL field config", field);
+                                return;
+                            }
+
+                            query = {
+                                table: field.table,
+                                cols: field.columns,
+                                where: field.where
+                                    ? refid
+                                        ? replacePlaceholders(field.where, { refid })
+                                        : field.where
+                                    : undefined,
+                            };
+                        }
+
+                        //  Optional where — added only if present
+
+                        const res = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, undefined, module_refid);
+
+                        const rawItems = Array.isArray(res?.data?.data)
                             ? res.data.data
-                            : Array.isArray(res.data?.results)
-                                ? res.data?.results :
-                                Array.isArray(res?.data)
-                                    ? res.data
-                                    : res;
+                            : Array.isArray(res?.data)
+                                ? res.data
+                                : res;
 
-                    if (
-                        typeof rawItems === "object" &&
-                        !Array.isArray(rawItems)
-                    ) {
-                        const values = Object.values(rawItems);
-                        if (values.length && typeof values[0] === "string") {
-                            setOptions(rawItems as SelectOptions);
-                            return;
-                        }
-                    }
 
-                    const normalizedItems = Array.isArray(rawItems)
-                        ? rawItems.map(normalizeRowSafe)
-                        : [];
-
-                    const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey)
-                    if (isMounted) setOptions(mapped);
-                    return;
-
-                } catch (err) {
-                    console.error("API execution failed:", err);
-                    if (isMounted) setOptions({});
-                    return;
-                }
-            }
-
-            // Case 3: Sql source
-
-            if (field.table || field.type === "dataSelector" || field.queryid) {
-
-                if (!sqlOpsUrls) {
-                    console.error("SQL source requires formJson.endPoints but it is missing");
-                    return;
-                }
-
-                try {
-
-                    let query: sqlQueryProps | undefined;
-
-                    if (field.type === "dataSelector") {
-                        query = {
-                            table: "do_lists",
-                            cols: "title,value",
-                            where: {
-                                groupid: field.groupid ?? "",
-                            },
-                        };
-
-                    } else if (!field.queryid) {
-                        // inline SQL
-                        if (!field.table || !field.columns) {
-                            console.error("Invalid SQL field config", field);
-                            return;
+                        if (
+                            typeof rawItems === "object" &&
+                            !Array.isArray(rawItems)
+                        ) {
+                            const values = Object.values(rawItems);
+                            if (values.length && typeof values[0] === "string") {
+                                setOptions(rawItems as SelectOptions);
+                                return;
+                            }
                         }
 
-                        query = {
-                            table: field.table,
-                            cols: field.columns,
-                            where: field.where
-                                ? refid
-                                    ? replacePlaceholders(field.where, { refid })
-                                    : field.where
-                                : undefined,
-                        };
+                        const normalizedItems = Array.isArray(rawItems)
+                            ? rawItems.map(normalizeRowSafe)
+                            : [];
+
+                        const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
+
+                        if (isMounted) setOptions(mapped);
+
+                    } catch (err) {
+                        console.error("API fetch failed:", err);
                     }
-
-                    //  Optional where — added only if present
-
-                    const res = await fetchDataByquery(sqlOpsUrls, query, field?.queryid, undefined, module_refid);
-
-                    const rawItems = Array.isArray(res?.data?.data)
-                        ? res.data.data
-                        : Array.isArray(res?.data)
-                            ? res.data
-                            : res;
-
-
-                    if (
-                        typeof rawItems === "object" &&
-                        !Array.isArray(rawItems)
-                    ) {
-                        const values = Object.values(rawItems);
-                        if (values.length && typeof values[0] === "string") {
-                            setOptions(rawItems as SelectOptions);
-                            return;
-                        }
-                    }
-
-                    const normalizedItems = Array.isArray(rawItems)
-                        ? rawItems.map(normalizeRowSafe)
-                        : [];
-
-                    const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
-
-                    if (isMounted) setOptions(mapped);
-
-                } catch (err) {
-                    console.error("API fetch failed:", err);
                 }
-            }
             } catch (err) {
                 console.log(err)
 
@@ -625,14 +625,14 @@ export default function useFieldRenderer({
                                 : { data: params }),
                         }
                         try {
-                           const { data: res } = await axios(config);
-                        responseData = res; 
+                            const { data: res } = await axios(config);
+                            responseData = res;
                         } catch (error) {
-                            
+
                         } finally {
                             setFieldLoading?.(chain.target, false);
                         }
-                        
+
                     } else {
 
                         let query: sqlQueryProps | undefined;
@@ -652,15 +652,15 @@ export default function useFieldRenderer({
                             };
                         }
 
-                         try {
-                           const { data: res } = await fetchDataByquery(sqlOpsUrls, query, src?.queryid, value, module_refid);
-                        responseData = res; 
-                         } catch (error) {
-                            
-                         }finally {
+                        try {
+                            const { data: res } = await fetchDataByquery(sqlOpsUrls, query, src?.queryid, value, module_refid);
+                            responseData = res;
+                        } catch (error) {
+
+                        } finally {
                             setFieldLoading?.(chain.target, false);
                         }
-                        
+
                     }
 
                     let valueKey = field.valueKey ?? "value";
@@ -779,6 +779,7 @@ export default function useFieldRenderer({
         }
 
         try {
+            setLoading(true);
             const uploads = await uploadFiles(sqlOpsUrls, files);
 
 
@@ -796,6 +797,8 @@ export default function useFieldRenderer({
         } catch (err) {
             console.error("File upload failed", err);
             formik.setFieldError(key, "File upload failed");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -819,7 +822,7 @@ export default function useFieldRenderer({
         } catch (err) {
             console.log(err)
             formik.setFieldValue(key, existing);
-              window.alert("Failed to delete file due to a technical issue. Please try again.")
+            window.alert("Failed to delete file due to a technical issue. Please try again.")
         }
     };
 

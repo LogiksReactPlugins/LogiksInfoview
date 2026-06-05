@@ -4180,6 +4180,7 @@ function Zo({
       return;
     }
     try {
+      j(!0);
       const I = await ns(r, L), P = rs({
         uploads: I,
         currentValue: t.values[O],
@@ -4191,6 +4192,8 @@ function Zo({
       ), He(P, e, o);
     } catch (I) {
       console.error("File upload failed", I), t.setFieldError(O, "File upload failed");
+    } finally {
+      j(!1);
     }
   }, $ = async (L) => {
     const I = Array.isArray(t.values[O]) ? t.values[O] : [], P = L.split("&")[0];
