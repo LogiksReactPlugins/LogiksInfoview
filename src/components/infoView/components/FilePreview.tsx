@@ -176,7 +176,9 @@ const isNativeDownloadSupported =
             }
           </div>
 
-          <div className="text-sm text-gray-500 break-all px-4">
+          <div 
+          className="text-sm text-gray-500 w-full max-w-xs sm:max-w-md px-4 text-center break-words overflow-hidden"
+          >
             {filePath
               .split("/")
               .pop()}

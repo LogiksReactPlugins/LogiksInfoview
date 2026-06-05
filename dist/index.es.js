@@ -3046,7 +3046,13 @@ const rs = ({
         ),
         /* @__PURE__ */ a.jsxs("div", { className: "text-center", children: [
           /* @__PURE__ */ a.jsx("div", { className: "text-lg font-semibold text-gray-800", children: l.title }),
-          /* @__PURE__ */ a.jsx("div", { className: "text-sm text-gray-500 break-all px-4", children: s.split("/").pop() })
+          /* @__PURE__ */ a.jsx(
+            "div",
+            {
+              className: "text-sm text-gray-500 w-full max-w-xs sm:max-w-md px-4 text-center break-words overflow-hidden",
+              children: s.split("/").pop()
+            }
+          )
         ] }),
         /* @__PURE__ */ a.jsx(
           "a",
