@@ -2,7 +2,7 @@ import { SqlEndpoints } from '../InfoView.types.js';
 type FilePreviewProps = {
     fileUrl: string;
     category: string;
-    sqlOpsUrls?: SqlEndpoints | undefined;
+    sqlOpsUrls: SqlEndpoints | undefined;
     blob: Blob | null;
     filePath: string;
 };

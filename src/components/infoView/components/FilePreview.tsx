@@ -3,7 +3,7 @@ import type { SqlEndpoints } from "../InfoView.types.js";
 type FilePreviewProps = {
   fileUrl: string;
   category: string;
-  sqlOpsUrls?: SqlEndpoints | undefined;
+  sqlOpsUrls: SqlEndpoints | undefined;
   blob: Blob | null;
   filePath: string;
 };
@@ -17,44 +17,78 @@ const FilePreview = ({
 }: FilePreviewProps) => {
   if (!fileUrl) return null;
 
-const isNativeDownloadSupported =
-  typeof sqlOpsUrls?.native?.downloadFile ===
-  "function";
- const handleDownload = async (
-  e: React.MouseEvent<HTMLAnchorElement>
-) => {
-  const downloadFile =
-    sqlOpsUrls?.native?.downloadFile;
+  const fileName =
+    filePath?.split("/").pop() ||
+    "download";
 
-  if (
-    typeof downloadFile === "function" &&
-    blob
-  ) {
-    e.preventDefault();
+  const extension =
+    fileName
+      .split(".")
+      .pop()
+      ?.toLowerCase() || "";
 
-    const fileName =
-      filePath.split("/").pop() ??
-      "download";
+  const fileType =
+    extension === "pdf"
+      ? "pdf"
+      : ["xlsx", "xls"].includes(
+          extension
+        )
+      ? "excel"
+      : extension === "csv"
+      ? "csv"
+      : ["doc", "docx"].includes(
+          extension
+        )
+      ? "doc"
+      : ["ppt", "pptx"].includes(
+          extension
+        )
+      ? "ppt"
+      : ["zip", "rar", "7z"].includes(
+          extension
+        )
+      ? "zip"
+      : category;
 
-    await downloadFile(
-      blob,
-      fileName
-    );
-  }
-};
+  const isNativeDownloadSupported =
+    typeof sqlOpsUrls?.native
+      ?.downloadFile ===
+    "function";
+
+  const handleDownload = async (
+    e: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    const downloadFile =
+      sqlOpsUrls?.native
+        ?.downloadFile;
+
+    if (
+      typeof downloadFile ===
+        "function" &&
+      blob
+    ) {
+      e.preventDefault();
+
+      await downloadFile(
+        blob,
+        fileName
+      );
+    }
+  };
 
   // Image
-  if (category === "image") {
+  if (fileType === "image") {
     return (
       <img
         src={fileUrl}
+        alt={fileName}
         className="max-h-[80vh] mx-auto"
       />
     );
   }
 
   // Text
-  if (category === "text") {
+  if (fileType === "text") {
     return (
       <iframe
         src={fileUrl}
@@ -63,9 +97,9 @@ const isNativeDownloadSupported =
     );
   }
 
-  // PDF preview only when native download is NOT available
+  // Browser PDF Preview
   if (
-    category === "pdf" &&
+    fileType === "pdf" &&
     !isNativeDownloadSupported
   ) {
     return (
@@ -77,7 +111,7 @@ const isNativeDownloadSupported =
   }
 
   // Video
-  if (category === "video") {
+  if (fileType === "video") {
     return (
       <video
         controls
@@ -89,29 +123,34 @@ const isNativeDownloadSupported =
   }
 
   const unsupportedPreview =
-    category === "pdf"
+    fileType === "pdf"
       ? {
-          title: "PDF Document",
+          title:
+            "PDF Document",
           buttonText:
             "Download PDF",
           bg: "from-red-50 to-white",
           button:
             "bg-red-600 hover:bg-red-700",
-          iconBg: "bg-red-600",
+          iconBg:
+            "bg-red-600",
         }
-      : category === "excel"
+      : fileType === "excel"
       ? {
-          title: "Excel File",
+          title:
+            "Excel File",
           buttonText:
             "Download Excel File",
           bg: "from-green-50 to-white",
           button:
             "bg-green-600 hover:bg-green-700",
-          iconBg: "bg-green-600",
+          iconBg:
+            "bg-green-600",
         }
-      : category === "csv"
+      : fileType === "csv"
       ? {
-          title: "CSV File",
+          title:
+            "CSV File",
           buttonText:
             "Download CSV File",
           bg: "from-emerald-50 to-white",
@@ -120,7 +159,7 @@ const isNativeDownloadSupported =
           iconBg:
             "bg-emerald-600",
         }
-      : category === "doc"
+      : fileType === "doc"
       ? {
           title:
             "Word Document",
@@ -129,9 +168,10 @@ const isNativeDownloadSupported =
           bg: "from-blue-50 to-white",
           button:
             "bg-blue-600 hover:bg-blue-700",
-          iconBg: "bg-blue-600",
+          iconBg:
+            "bg-blue-600",
         }
-      : category === "ppt"
+      : fileType === "ppt"
       ? {
           title:
             "PowerPoint Presentation",
@@ -143,7 +183,7 @@ const isNativeDownloadSupported =
           iconBg:
             "bg-orange-600",
         }
-      : category === "zip"
+      : fileType === "zip"
       ? {
           title:
             "Archive File",
@@ -152,7 +192,8 @@ const isNativeDownloadSupported =
           bg: "from-gray-50 to-white",
           button:
             "bg-gray-700 hover:bg-gray-800",
-          iconBg: "bg-gray-700",
+          iconBg:
+            "bg-gray-700",
         }
       : null;
 
@@ -176,21 +217,17 @@ const isNativeDownloadSupported =
             }
           </div>
 
-          <div 
-          className="text-sm text-gray-500 w-full max-w-xs sm:max-w-md px-4 text-center break-words overflow-hidden"
-          >
-            {filePath
-              .split("/")
-              .pop()}
+          <div className="text-sm text-gray-500 w-full max-w-xs sm:max-w-md px-4 break-words">
+            {fileName}
           </div>
         </div>
 
         <a
+          href={fileUrl}
+          download
           onClick={
             handleDownload
           }
-          href={fileUrl}
-          download
           className={`${unsupportedPreview.button} text-white px-5 py-2.5 rounded-lg`}
         >
           {
@@ -201,7 +238,6 @@ const isNativeDownloadSupported =
     );
   }
 
-  // Fallback
   return (
     <div className="text-center p-4">
       <p>
@@ -209,9 +245,11 @@ const isNativeDownloadSupported =
       </p>
 
       <a
-        onClick={handleDownload}
         href={fileUrl}
         download
+        onClick={
+          handleDownload
+        }
         className="text-blue-600 underline"
       >
         Download file
