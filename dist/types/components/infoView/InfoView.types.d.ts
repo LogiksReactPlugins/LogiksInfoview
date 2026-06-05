@@ -204,6 +204,7 @@ export interface FormJson {
     source: Record<string, any>;
     widget?: boolean;
     module_refid?: string | undefined;
+    submit_msg?: boolean | string;
 }
 export interface FormProps {
     formJson: FormJson;

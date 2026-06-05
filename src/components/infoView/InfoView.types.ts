@@ -244,7 +244,8 @@ export interface FormJson {
     fields: Record<string, Omit<FormField, "name">>;
     source: Record<string, any>;
     widget?: boolean;
-    module_refid?: string | undefined
+    module_refid?: string | undefined;
+    submit_msg?: boolean | string;
 
 
 }

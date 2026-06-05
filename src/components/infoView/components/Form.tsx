@@ -209,11 +209,14 @@ export default function LogiksForm({
       const methodFn = methodName ? methods[methodName] : undefined;
       if (methodFn) {
         try {
-           let values = finalValues ? { ...finalValues, geolocation: finalGeo } : {}
+          let values = finalValues ? { ...finalValues, geolocation: finalGeo } : {}
           const res = await methodFn(values);
           setEditData?.(null);
           callback?.(res);
-          toast?.success?.(getSuccessMessage(res));
+          const message = getSuccessMessage(res, formJson?.submit_msg);
+          if (message) {
+            toast?.success?.(message);
+          }
 
         } catch (err) {
           callback?.(err);
@@ -232,14 +235,17 @@ export default function LogiksForm({
         const res = await axios({
           method: source.method || "POST",
           url: sqlOpsUrls.baseURL + source.endpoint,
-           data: finalValues ? { ...finalValues, geolocation: finalGeo } : {},
+          data: finalValues ? { ...finalValues, geolocation: finalGeo } : {},
           headers: {
             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
           },
         });
         setEditData?.(null);
         callback?.(res);
-        toast?.success?.(getSuccessMessage(res))
+        const message = getSuccessMessage(res, formJson?.submit_msg);
+        if (message) {
+          toast?.success?.(message);
+        }
       } catch (err) {
         callback?.(err);
         toast?.error?.(getErrorMessage(err));
@@ -331,7 +337,10 @@ export default function LogiksForm({
             "Authorization": `Bearer ${sqlOpsUrls?.accessToken}`
           },
         });
-        toast?.success?.(getSuccessMessage(res))
+        const message = getSuccessMessage(res, formJson?.submit_msg);
+        if (message) {
+          toast?.success?.(message);
+        }
         setEditData?.(null);
         callback?.(res)
       } catch (err) {

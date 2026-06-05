@@ -821,11 +821,22 @@ export function getErrorMessage(err: unknown): string {
   return "Something went wrong";
 }
 
-export function getSuccessMessage(res: any): string {
+export function getSuccessMessage(
+  res: any,
+  submitMsg?: boolean | string
+): string | null {
+  if (submitMsg === false) return null;
+
+  if (typeof submitMsg === "string") {
+    return submitMsg;
+  }
+
   if (res?.data?.message) return res.data.message;
   if (res?.message) return res.message;
+
   return "Operation completed successfully";
 }
+
 
 export const buildFileValue = ({
   uploads,
