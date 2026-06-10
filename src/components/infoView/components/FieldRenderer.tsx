@@ -18,7 +18,9 @@ export default function FieldRenderer({
   optionsOverride,
   setFieldOptions,
   fieldLoading,
-  setFieldLoading
+  setFieldLoading,
+  AttachmentPopup
+
 }: FieldRendererProps) {
 
   const {
@@ -597,11 +599,11 @@ export default function FieldRenderer({
                 {renderIcon(field)}
               </div>
             )}
-             {loading && (
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 z-10">
-                  <i className="fa-solid fa-spinner fa-spin text-gray-900" />
-                </div>
-              )}
+            {loading && (
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 z-10">
+                <i className="fa-solid fa-spinner fa-spin text-gray-900" />
+              </div>
+            )}
             <input
               id={key}
               type="file"
@@ -638,10 +640,10 @@ export default function FieldRenderer({
               return (
 
                 <div key={file} className="relative group">
-                  <FilePreviewTrigger
-                    sqlOpsUrls={sqlOpsUrls}
-                    filePath={file}
-                  />
+
+                  {AttachmentPopup && (
+                    <AttachmentPopup url={file} />
+                  )}
 
                   {/* Remove button */}
                   <button

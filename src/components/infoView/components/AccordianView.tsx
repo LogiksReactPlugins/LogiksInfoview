@@ -75,6 +75,7 @@ export default function AccordianView({
                 tabName={tabName}
                 sqlOpsUrls={sqlOpsUrls}
                 refid={refid}
+                AttachmentPopup={AttachmentPopup}
             />
         ),
     };

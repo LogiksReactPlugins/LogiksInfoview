@@ -8,7 +8,10 @@ import LogiksForm from './Form.js';
 
 
 
-export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson }:
+export default function GridView({ 
+    tabObj, methods, tabName, sqlOpsUrls, refid, Reports, toast, handleAction,
+     infoViewJson ,AttachmentPopup
+}:
     {
         tabObj: InfoViewGroup,
         methods: Record<string, Function>,
@@ -18,6 +21,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
         Reports?: ComponentType<any>;
         toast?: Toast| undefined;
         handleAction?: (action: Record<string, any>, data: InfoData) => void;
+        AttachmentPopup?: ComponentType<any> | undefined;
         infoViewJson: {
             script?: string;
             fields: Record<string, Omit<FormField, "name">>;
@@ -229,6 +233,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                             methods={methods}
                             initialvalues={editData ?? {}}
                             setEditData={handleFormClose}
+                            AttachmentPopup={AttachmentPopup}
                             
                         />
                     }
@@ -260,6 +265,7 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
                             methods={methods}
                             initialvalues={editData ?? {}}
                             setEditData={handleFormClose}
+                            AttachmentPopup={AttachmentPopup}
                             
                         />
                     

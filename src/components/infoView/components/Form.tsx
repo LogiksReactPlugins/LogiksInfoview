@@ -17,7 +17,8 @@ export default function LogiksForm({
   callback = () => { },
   initialvalues,
   setEditData,
-  toast
+  toast,
+  AttachmentPopup
 
 }: FormProps) {
 
@@ -369,6 +370,7 @@ export default function LogiksForm({
 
       refid={refid}
       module_refid={formJson?.module_refid}
+      AttachmentPopup={AttachmentPopup}
 
     />
   };

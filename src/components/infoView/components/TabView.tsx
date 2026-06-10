@@ -424,6 +424,7 @@ export default function TabView({
                 sqlOpsUrls={sqlOpsUrls}
                 refid={refid}
                 infoViewJson={infoViewJson}
+                AttachmentPopup={AttachmentPopup}
             />
         ),
     };

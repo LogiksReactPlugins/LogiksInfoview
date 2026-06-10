@@ -266,7 +266,8 @@ export interface FormProps {
     components?: Record<string, ReactNode>
     initialvalues?: Record<string, any>;
     module_refid?: string | undefined;
-    toast?: Toast | undefined
+    toast?: Toast | undefined;
+     AttachmentPopup?: ComponentType<any> | undefined;
 
 }
 
@@ -281,7 +282,8 @@ export interface BaseFormViewProps {
     widget?: boolean | undefined;
     sqlOpsUrls: SqlEndpoints;
     refid?: string | undefined;
-    module_refid?: string | undefined
+    module_refid?: string | undefined;
+    AttachmentPopup?: ComponentType<any> | undefined;
 
 }
 
@@ -308,6 +310,7 @@ export interface FieldRendererProps {
     ) => void;
 
     fieldLoading?: boolean;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
 
 

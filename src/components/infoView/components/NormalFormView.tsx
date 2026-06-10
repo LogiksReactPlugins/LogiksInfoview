@@ -17,7 +17,8 @@ export default function NormalFormView({
   methods = {},
   sqlOpsUrls,
   refid,
-  module_refid
+  module_refid,
+  AttachmentPopup
 }: SimpleFormViewProps) {
   const flatfields = flatFields(fields, sqlOpsUrls?.operation);
 
@@ -108,6 +109,7 @@ export default function NormalFormView({
                     : {})}
                     fieldLoading={fieldLoading[field.name] ?? false}
                     setFieldLoading={updateFieldLoading}
+                    AttachmentPopup={AttachmentPopup}
                 />
               </div>
             })}

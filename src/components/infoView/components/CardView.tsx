@@ -76,6 +76,7 @@ export default function CardView({
 
                 refid={refid}
                 infoViewJson={infoViewJson}
+                AttachmentPopup={AttachmentPopup}
             />
         ),
     };

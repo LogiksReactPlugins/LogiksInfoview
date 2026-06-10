@@ -219,6 +219,7 @@ export interface FormProps {
     initialvalues?: Record<string, any>;
     module_refid?: string | undefined;
     toast?: Toast | undefined;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
 export interface BaseFormViewProps {
     title?: string | undefined;
@@ -231,6 +232,7 @@ export interface BaseFormViewProps {
     sqlOpsUrls: SqlEndpoints;
     refid?: string | undefined;
     module_refid?: string | undefined;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
 export interface SimpleFormViewProps extends BaseFormViewProps {
     fields: Record<string, Omit<FormField, "name">>;
@@ -247,6 +249,7 @@ export interface FieldRendererProps {
     setFieldOptions?: (fieldName: string, options: SelectOptions) => void;
     setFieldLoading?: (fieldName: string, loading: boolean) => void;
     fieldLoading?: boolean;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
 export interface TabViewProps {
     groups: Record<string, InfoViewGroup>;
