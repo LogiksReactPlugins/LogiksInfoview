@@ -1,10 +1,11 @@
 import React from 'react';
 import axios from "axios";
+import type {  ComponentType } from "react";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
 import { normalizeToObject, replacePlaceholders, tailwindCols, toColWidth, transformedObject } from '../utils.js'
 import type { InfoViewGroup, SelectOptions, SqlEndpoints } from '../InfoView.types.js'
 
-export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid, module_refid, setFieldOptions, fieldOptions }:
+export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid, module_refid, setFieldOptions, fieldOptions,AttachmentPopup }:
     {
         tabObj: InfoViewGroup, methods: Record<string, Function>, tabName: string,
         sqlOpsUrls: SqlEndpoints, refid: string, module_refid: string | undefined;
@@ -13,6 +14,7 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
             options: SelectOptions
         ) => void;
         fieldOptions: Record<string, SelectOptions>;
+        AttachmentPopup?: ComponentType<any> | undefined;
     }
 ) {
     const [data, setData] = React.useState<Record<string, any> | null>(null);
@@ -184,6 +186,7 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
                                 {...(fieldOptions[formattedField.name]
                                     ? { optionsOverride: fieldOptions[formattedField.name] }
                                     : {})}
+                                    AttachmentPopup={AttachmentPopup}
 
                             />
                         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import type { ComponentType, ReactNode } from "react";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
 import SingleView from './SingleView.js';
@@ -26,6 +26,7 @@ interface CardViewProps {
         options: SelectOptions
     ) => void;
     components?: Record<string, ComponentType<any> | ReactNode>;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
 
 export default function CardView({
@@ -41,7 +42,8 @@ export default function CardView({
     infoViewJson,
     fieldOptions,
     setFieldOptions,
-    components
+    components,
+    AttachmentPopup
 }
     : CardViewProps) {
 
@@ -50,7 +52,17 @@ export default function CardView({
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView fieldOptions={fieldOptions} setFieldOptions={setFieldOptions} module_refid={infoViewJson?.module_refid} tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
+            <SingleView 
+            fieldOptions={fieldOptions} 
+            setFieldOptions={setFieldOptions} 
+            module_refid={infoViewJson?.module_refid} 
+            tabObj={tab} 
+            methods={methods} 
+            tabName={tabName} 
+            sqlOpsUrls={sqlOpsUrls} 
+            refid={refid} 
+            AttachmentPopup={AttachmentPopup}
+            />
         ),
         grid: (tab, tabName) => (
             <GridView
@@ -134,6 +146,7 @@ export default function CardView({
                                                         : {})}
                                                     sqlOpsUrls={sqlOpsUrls}
                                                     refid={refid}
+                                                    AttachmentPopup={AttachmentPopup}
                                                 />
                                             </div>
                                         })}

@@ -174,7 +174,8 @@ const ContentArea = (
         setFieldOptions,
         buttons,
         handleAction,
-        components
+        components,
+        AttachmentPopup
     }: ContentAreaProps
 ) => {
 
@@ -236,6 +237,7 @@ const ContentArea = (
                                     {...(fieldOptions[field.name]
                                         ? { optionsOverride: fieldOptions[field.name] }
                                         : {})}
+                                    AttachmentPopup={AttachmentPopup}
                                 />
                             </div>
                         })}
@@ -347,7 +349,8 @@ export default function TabView({
     infoViewJson,
     fieldOptions,
     setFieldOptions,
-    components
+    components,
+    AttachmentPopup
 }: TabViewProps) {
 
     const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -398,7 +401,17 @@ export default function TabView({
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<string, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView fieldOptions={fieldOptions} setFieldOptions={setFieldOptions} module_refid={infoViewJson.module_refid} tabObj={tab} methods={methods} tabName={tabName} sqlOpsUrls={sqlOpsUrls} refid={refid} />
+            <SingleView
+                fieldOptions={fieldOptions}
+                setFieldOptions={setFieldOptions}
+                module_refid={infoViewJson.module_refid}
+                tabObj={tab}
+                methods={methods}
+                tabName={tabName}
+                sqlOpsUrls={sqlOpsUrls}
+                refid={refid}
+                AttachmentPopup={AttachmentPopup}
+            />
         ),
         grid: (tab, tabName) => (
             <GridView
@@ -453,6 +466,7 @@ export default function TabView({
                     buttons={infoViewJson.buttons}
                     handleAction={handleAction}
                     {...(components ? { components } : {})}
+                    AttachmentPopup={AttachmentPopup}
 
                 />
 
@@ -493,6 +507,7 @@ export default function TabView({
                     setFieldOptions={setFieldOptions}
                     handleAction={handleAction}
                     {...(components ? { components } : {})}
+                    AttachmentPopup={AttachmentPopup}
 
                 />
             </main>

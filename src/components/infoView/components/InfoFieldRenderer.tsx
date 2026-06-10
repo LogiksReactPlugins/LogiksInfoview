@@ -15,6 +15,7 @@ export default function InfoFieldRenderer({
   refid,
   module_refid,
   optionsOverride,
+  AttachmentPopup,
   setFieldOptions }: InfoFieldRendererProps) {
 
   const key = field?.name;
@@ -363,19 +364,19 @@ export default function InfoFieldRenderer({
               className="h-24 object-contain border bg-white rounded"
             />
           )
-        ) : (field.type === "file" || field.type === "camera"  || field.type === "camera2" || field.type === "attachement" || field.type === "photo" || field.type === "avatar") && displayVal ? (
+        ) : (field.type === "file" || field.type === "camera" || field.type === "camera2" || field.type === "attachement" || field.type === "photo" || field.type === "avatar") && displayVal ? (
           <div className="flex flex-wrap gap-2">
-            {String(displayVal)
-              .split(",")
-              .map((path) => path.trim())
-              .filter(Boolean)
-              .map((path) => (
-                <FilePreviewTrigger
-                  key={path}
-                  sqlOpsUrls={sqlOpsUrls}
-                  filePath={path}
-                />
-              ))}
+            {AttachmentPopup &&
+              String(displayVal)
+                .split(",")
+                .map((path) => path.trim())
+                .filter(Boolean)
+                .map((path) => (
+                  <AttachmentPopup
+                    key={path}
+                    url={path}
+                  />
+                ))}
           </div>
         ) : field.type === "richtextarea" ? (
           <div

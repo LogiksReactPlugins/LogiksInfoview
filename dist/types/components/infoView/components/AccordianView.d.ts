@@ -14,7 +14,8 @@ interface AccordianViewProps {
     fieldOptions: Record<string, SelectOptions>;
     setFieldOptions: (fieldName: string, options: SelectOptions) => void;
     components?: Record<string, ComponentType<any> | ReactNode>;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
-export default function AccordianView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson, fieldOptions, setFieldOptions, components }: AccordianViewProps): import("react/jsx-runtime").JSX.Element;
+export default function AccordianView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson, fieldOptions, setFieldOptions, components, AttachmentPopup }: AccordianViewProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=AccordianView.d.ts.map

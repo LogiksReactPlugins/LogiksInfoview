@@ -4,7 +4,8 @@ import { tailwindCols, toColWidth } from '../utils.js';
 import InfoFieldRenderer from './InfoFieldRenderer.js';
 import type { FormField, InfoData, SqlEndpoints, SelectOptions } from '../InfoView.types.js';
 import PhotoRenderer from './PhotoRenderer.js';
-import { useMemo } from 'react';
+
+import { useMemo, type ComponentType } from "react";
 
 
 interface CommonInfoProps {
@@ -24,6 +25,7 @@ interface CommonInfoProps {
     ) => void;
     refid: string;
     module_refid: string | undefined;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
 
 export default function CommonInfo({
@@ -35,7 +37,8 @@ export default function CommonInfo({
     fieldOptions,
     module_refid,
     refid,
-    methods
+    methods,
+    AttachmentPopup
 }: CommonInfoProps) {
 
     const avatarField = useMemo<FormField | undefined>(
@@ -90,17 +93,14 @@ export default function CommonInfo({
                                         field={field}
                                         data={infoData ?? {}}
                                         sqlOpsUrls={sqlOpsUrls}
-
-
-
                                         methods={methods}
                                         refid={refid}
-
                                         module_refid={module_refid}
                                         setFieldOptions={setFieldOptions}
                                         {...(fieldOptions[field.name]
                                             ? { optionsOverride: fieldOptions[field.name] }
                                             : {})}
+                                        AttachmentPopup={AttachmentPopup}
                                     />
                                 </div>
                             );

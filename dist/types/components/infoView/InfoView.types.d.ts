@@ -118,6 +118,7 @@ export interface InfoViewProps {
     components?: Record<string, ComponentType<any> | ReactNode>;
     toast?: Toast;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
+    AttachmentPopup?: ComponentType<any>;
 }
 export type FlatOptions = Record<string, string>;
 export type GroupedOptions = Record<string, Record<string, string>>;
@@ -134,6 +135,7 @@ export interface InfoFieldRendererProps {
     module_refid?: string | undefined;
     optionsOverride?: SelectOptions;
     setFieldOptions: (fieldName: string, options: SelectOptions) => void;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
 export interface sqlQueryProps {
     table: string;
@@ -267,6 +269,7 @@ export interface TabViewProps {
     infoViewJson: InfoviewJson;
     fieldOptions: Record<string, SelectOptions>;
     setFieldOptions: (fieldName: string, options: SelectOptions) => void;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
 export interface VerticalNavProps {
     groups: Record<string, InfoViewGroup>;
@@ -302,6 +305,7 @@ export interface ContentAreaProps extends VerticalNavProps {
     fieldOptions: Record<string, SelectOptions>;
     setFieldOptions: (name: string, options: SelectOptions) => void;
     buttons?: Record<string, any> | undefined;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
 export {};
 //# sourceMappingURL=InfoView.types.d.ts.map

@@ -23,6 +23,7 @@ export default function LogiksInfoView({
     handleAction = () => { },
     components,
     initialvalues,
+    AttachmentPopup
 }: InfoViewProps) {
 
 
@@ -252,6 +253,7 @@ export default function LogiksInfoView({
                     setFieldOptions={setOptionsForField}
                     fieldOptions={fieldOptions}
                     {...(components ? { components } : {})}
+                    AttachmentPopup={AttachmentPopup}
 
                 />
 
@@ -276,6 +278,7 @@ export default function LogiksInfoView({
                     fieldOptions={fieldOptions}
 
                     {...(components ? { components } : {})}
+                    AttachmentPopup={AttachmentPopup}
 
 
                 />
@@ -296,6 +299,7 @@ export default function LogiksInfoView({
                     setFieldOptions={setOptionsForField}
                     fieldOptions={fieldOptions}
                     {...(components ? { components } : {})}
+                    AttachmentPopup={AttachmentPopup}
 
 
                 />
@@ -318,6 +322,7 @@ export default function LogiksInfoView({
                     setFieldOptions={setOptionsForField}
                     fieldOptions={fieldOptions}
                     {...(components ? { components } : {})}
+                    AttachmentPopup={AttachmentPopup}
 
 
                 />
@@ -341,6 +346,8 @@ export default function LogiksInfoView({
                     module_refid={infoViewJson.module_refid}
                     refid={refid}
                     methods={methods}
+                    AttachmentPopup={AttachmentPopup}
+
                 />
             )}
             {formView(viewMode)}

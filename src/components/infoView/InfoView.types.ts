@@ -134,6 +134,7 @@ export interface InfoViewProps {
 
     toast?: Toast;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
+    AttachmentPopup?: ComponentType<any>;
 }
 
 export type FlatOptions = Record<string, string>;
@@ -157,6 +158,7 @@ export interface InfoFieldRendererProps {
         fieldName: string,
         options: SelectOptions
     ) => void;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
 
 export interface sqlQueryProps {
@@ -333,6 +335,7 @@ export interface TabViewProps {
         fieldName: string,
         options: SelectOptions
     ) => void;
+     AttachmentPopup?: ComponentType<any> | undefined;
 }
 
 
@@ -375,6 +378,7 @@ export interface ContentAreaProps extends VerticalNavProps {
     fieldOptions: Record<string, SelectOptions>;
     setFieldOptions: (name: string, options: SelectOptions) => void;
     buttons?: Record<string, any> | undefined;
+    AttachmentPopup?: ComponentType<any> | undefined;
 
 }
 

@@ -4,8 +4,8 @@ import Accordion from './Accordian.js';
 import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 
-import {  isHidden, tailwindCols, toColWidth } from '../utils.js';
-import type { InfoViewGroup, FormField, InfoData,  SqlEndpoints, SelectOptions, InfoviewJson, Toast } from '../InfoView.types.js';
+import { isHidden, tailwindCols, toColWidth } from '../utils.js';
+import type { InfoViewGroup, FormField, InfoData, SqlEndpoints, SelectOptions, InfoviewJson, Toast } from '../InfoView.types.js';
 import { resolveComponent } from "@/components/helpers/resolveComponent.js";
 
 interface AccordianViewProps {
@@ -25,6 +25,7 @@ interface AccordianViewProps {
         options: SelectOptions
     ) => void;
     components?: Record<string, ComponentType<any> | ReactNode>;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
 
 export default function AccordianView({
@@ -35,12 +36,13 @@ export default function AccordianView({
     sqlOpsUrls,
     refid,
     Reports,
-    toast ,
+    toast,
     handleAction = () => { },
     infoViewJson,
     fieldOptions,
     setFieldOptions,
-    components
+    components,
+    AttachmentPopup
 }
     : AccordianViewProps) {
 
@@ -59,6 +61,7 @@ export default function AccordianView({
                 setFieldOptions={setFieldOptions}
                 refid={refid}
                 module_refid={infoViewJson?.module_refid}
+                AttachmentPopup={AttachmentPopup}
             />
         ),
         grid: (tab, tabName) => (
@@ -117,13 +120,13 @@ export default function AccordianView({
                             return false;
                         }) : [];
 
-                      const node = resolveComponent(obj.component, components);
+                        const node = resolveComponent(obj.component, components);
                         return <Accordion key={group} title={obj.label} isFirst={index === 0}>
                             {obj?.type === "fields" && obj?.fields ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                                     <div className={"grid grid-cols-12 gap-2"}>
                                         {obj.fields.map((field: FormField, index: number) => {
-                                            if(isHidden(field.hidden)) return null;
+                                            if (isHidden(field.hidden)) return null;
                                             return <div
                                                 key={field?.name ?? `field-${index}`}
                                                 className={`col-span-12 sm:col-span-6 ${tailwindCols[toColWidth(Number(field.width))] || "lg:col-span-2"
@@ -139,9 +142,10 @@ export default function AccordianView({
                                                         : {})}
                                                     sqlOpsUrls={sqlOpsUrls}
                                                     refid={refid}
+                                                    AttachmentPopup={AttachmentPopup}
                                                 />
                                             </div>
-                    })}
+                                        })}
                                     </div>
                                 </div>
                             ) : obj?.type === "component" && node ? (
