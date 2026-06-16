@@ -3753,7 +3753,8 @@ function Yo({
     e.groupKey,
     e.valueKey,
     e.labelKey,
-    v
+    v,
+    f
   ]);
   const A = `
   w-full px-4 py-2 rounded-lg border transition-all duration-300

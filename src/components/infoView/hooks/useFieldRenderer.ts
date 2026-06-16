@@ -337,7 +337,8 @@ export default function useFieldRenderer({
         field.groupKey,
         field.valueKey,
         field.labelKey,
-        refreshTrigger
+        refreshTrigger,
+        parent_data
     ]);
 
 
