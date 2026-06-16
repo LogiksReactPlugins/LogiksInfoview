@@ -5,7 +5,7 @@ import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 
 import { isHidden, tailwindCols, toColWidth } from '../utils.js';
-import type { InfoViewGroup, FormField, InfoData, SqlEndpoints, SelectOptions, InfoviewJson, Toast } from '../InfoView.types.js';
+import type { InfoViewGroup, FormField, InfoData, SqlEndpoints, SelectOptions, InfoviewJson, Toast, OptionItem } from '../InfoView.types.js';
 import { resolveComponent } from "@/components/helpers/resolveComponent.js";
 
 interface AccordianViewProps {
@@ -19,10 +19,10 @@ interface AccordianViewProps {
     toast?: Toast | undefined;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoViewJson: InfoviewJson;
-    fieldOptions: Record<string, SelectOptions>;
+    fieldOptions: Record<string, OptionItem[]>;
     setFieldOptions: (
         fieldName: string,
-        options: SelectOptions
+        options: OptionItem[]
     ) => void;
     components?: Record<string, ComponentType<any> | ReactNode>;
     AttachmentPopup?: ComponentType<any> | undefined;
@@ -75,6 +75,7 @@ export default function AccordianView({
                 tabName={tabName}
                 sqlOpsUrls={sqlOpsUrls}
                 refid={refid}
+                parent_data={infoData}
                 AttachmentPopup={AttachmentPopup}
             />
         ),

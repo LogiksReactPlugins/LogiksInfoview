@@ -18,7 +18,8 @@ export default function LogiksForm({
   initialvalues,
   setEditData,
   toast,
-  AttachmentPopup
+  AttachmentPopup,
+  parent_data
 
 }: FormProps) {
 
@@ -35,7 +36,8 @@ export default function LogiksForm({
     const initGeo = async () => {
 
       try {
-        const geo = await fetchGeolocation();
+      const { latitude, longitude, altitude } = await fetchGeolocation();
+       const geo = `${latitude},${longitude}`;
 
         if (isMounted) {
           setResolvedData(prev => ({
@@ -371,6 +373,7 @@ export default function LogiksForm({
       refid={refid}
       module_refid={formJson?.module_refid}
       AttachmentPopup={AttachmentPopup}
+      parent_data={parent_data}
 
     />
   };

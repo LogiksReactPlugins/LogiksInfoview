@@ -337,6 +337,10 @@ export declare const example10: {
         registerQuery: string;
         runQuery: string;
     };
+    hooks: {
+        presubmit: string[];
+        postsubmit: string[];
+    };
     source: {
         type: string;
         dbopsid: string;
@@ -346,6 +350,10 @@ export declare const example10: {
     };
     gotolink: string;
     fields: {
+        id: {
+            lable: string;
+            hidden: boolean;
+        };
         company_code_id: {
             label: string;
             type: string;
@@ -388,7 +396,7 @@ export declare const example10: {
             width: number;
             options: never[];
         };
-        project_function_id: {
+        project_id: {
             label: string;
             type: string;
             required: boolean;
@@ -396,57 +404,14 @@ export declare const example10: {
             "no-option": string;
             options: never[];
         };
-        location_id: {
-            label: string;
-            type: string;
-            required: boolean;
-            width: number;
-        };
-        date: {
-            label: string;
-            type: string;
-            required: boolean;
-            width: number;
-        };
-        conducted_by_department: {
-            label: string;
-            type: string;
-            groupid: string;
-            required: boolean;
-            width: number;
-            options: {
-                title: string;
-                value: string;
-                class: null;
-                privilege: string;
-            }[];
-        };
-        conducted_by_name: {
-            label: string;
-            type: string;
-            width: number;
-            queryid: string;
-        };
-        participant_count: {
-            label: string;
-            type: string;
-            required: boolean;
-            width: number;
-        };
-        photo_attendance: {
-            label: string;
-            type: string;
-            width: number;
-        };
     };
     infoview: {
         template: string;
         groups: {
-            participant_details: {
+            design_details: {
                 label: string;
                 type: string;
                 src: string;
-                vmode: string;
                 config: {
                     type: string;
                     uimode: string;
@@ -464,7 +429,7 @@ export declare const example10: {
                     colkey: string;
                     "popup.form": {
                         hooks: {
-                            presubmit: string[];
+                            postsubmit: string[];
                         };
                         source: {
                             type: string;
@@ -474,42 +439,36 @@ export declare const example10: {
                             guid: string;
                         };
                         fields: {
-                            hse_induction_id: {
+                            id: {
+                                label: string;
+                                hidden: boolean;
+                            };
+                            design_id: {
                                 label: string;
                                 type: string;
+                                hidden: boolean;
                                 default: string;
                             };
-                            gender: {
-                                label: string;
-                                type: string;
-                                required: boolean;
-                                groupid: string;
-                                width: number;
-                                formatter: string;
-                                options: ({
-                                    title: string;
-                                    value: string;
-                                    class: string;
-                                    privilege: string;
-                                } | {
-                                    title: string;
-                                    value: string;
-                                    class: null;
-                                    privilege: string;
-                                })[];
-                            };
-                            count: {
+                            detail_key: {
                                 label: string;
                                 type: string;
                                 required: boolean;
                                 width: number;
+                                queryid: string;
                             };
-                            company: {
+                            detail_value: {
                                 label: string;
                                 type: string;
-                                onChange: string;
+                                required: boolean;
+                                width: number;
+                                queryid: string;
+                            };
+                            uom: {
+                                label: string;
+                                type: string;
                                 groupid: string;
                                 required: boolean;
+                                search: boolean;
                                 width: number;
                                 options: {
                                     title: string;
@@ -518,45 +477,58 @@ export declare const example10: {
                                     privilege: string;
                                 }[];
                             };
-                            company_name: {
+                            availableboq: {
                                 label: string;
-                                disabled: boolean;
                                 type: string;
+                                source: {
+                                    type: string;
+                                    method: string;
+                                    endpoint: string;
+                                };
+                                "no-option": string;
                                 required: boolean;
                                 width: number;
+                                options: never[];
                             };
-                            photograph: {
+                            short_desc: {
                                 label: string;
                                 type: string;
+                                disabled: boolean;
+                                required: boolean;
                                 width: number;
                             };
                         };
                     };
                     datagrid: {
-                        gender: {
-                            label: string;
-                            searchable: boolean;
-                            sortable: boolean;
-                            formatter: string;
-                        };
-                        count: {
-                            label: string;
-                            searchable: boolean;
-                            sortable: boolean;
-                        };
-                        company_name: {
+                        detail_key: {
                             label: string;
                             searchable: boolean;
                         };
-                        company: {
+                        detail_value: {
                             label: string;
-                            formatter: string;
                             searchable: boolean;
                         };
-                        photograph: {
+                        uom: {
                             label: string;
                             searchable: boolean;
                             formatter: string;
+                        };
+                        availableboq: {
+                            label: string;
+                            searchable: boolean;
+                        };
+                        short_desc: {
+                            label: string;
+                            searchable: boolean;
+                        };
+                    };
+                    rules: {
+                        row_class: {
+                            detail_key: {
+                                Concrete: string;
+                                Reinforcement: string;
+                                "HT Wire": string;
+                            };
                         };
                     };
                     actions1: {
@@ -569,57 +541,21 @@ export declare const example10: {
                             label: string;
                             icon: string;
                         };
-                        deleteRecord: {
+                        "api@precastTracking.deleteRecord": {
                             label: string;
                             icon: string;
+                            class: string;
+                            lgksConfirm: string;
+                            payload: {
+                                table: string;
+                            };
                         };
-                    };
-                    queryid: string;
-                };
-                width: number;
-            };
-            activity_log: {
-                label: string;
-                type: string;
-                src: string;
-                vmode: string;
-                config: {
-                    type: string;
-                    uimode: string;
-                    uiswitcher: boolean;
-                    policy_create: string;
-                    policy_view: string;
-                    policy_delete: string;
-                    policy_update: string;
-                    colkey: string;
-                    datagrid: {
-                        subject: {
+                        "popup@activity_logs.popup_activity_logs/{id}": {
                             label: string;
-                            formatter: string;
-                        };
-                        category: {
-                            label: string;
-                            formatter: string;
-                        };
-                        subcategory: {
-                            label: string;
-                            formatter: string;
-                        };
-                        pre_data: {
-                            label: string;
-                            formatter: string;
-                        };
-                        post_data: {
-                            label: string;
-                            formatter: string;
-                        };
-                        created_by: {
-                            label: string;
-                            formatter: string;
-                        };
-                        created_on: {
-                            label: string;
-                            formatter: string;
+                            params: {
+                                ref_src: string;
+                            };
+                            icon: string;
                         };
                     };
                     queryid: string;

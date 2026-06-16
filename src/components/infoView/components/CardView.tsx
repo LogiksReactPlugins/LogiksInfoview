@@ -5,7 +5,7 @@ import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 
 import { isHidden, tailwindCols, toColWidth } from '../utils.js';
-import type { InfoViewGroup, FormField, InfoData, SqlEndpoints, SelectOptions, InfoviewJson, Toast } from '../InfoView.types.js';
+import type { InfoViewGroup, FormField, InfoData, SqlEndpoints, SelectOptions, InfoviewJson, Toast, OptionItem } from '../InfoView.types.js';
 import Card from './Card.js';
 import { resolveComponent } from '@/components/helpers/resolveComponent.js';
 
@@ -20,10 +20,10 @@ interface CardViewProps {
     toast?: Toast | undefined;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoViewJson: InfoviewJson;
-    fieldOptions: Record<string, SelectOptions>;
+    fieldOptions: Record<string, OptionItem[]>;
     setFieldOptions: (
         fieldName: string,
-        options: SelectOptions
+        options: OptionItem[]
     ) => void;
     components?: Record<string, ComponentType<any> | ReactNode>;
     AttachmentPopup?: ComponentType<any> | undefined;
@@ -73,7 +73,7 @@ export default function CardView({
                 methods={methods}
                 tabName={tabName}
                 sqlOpsUrls={sqlOpsUrls}
-
+                parent_data={infoData}
                 refid={refid}
                 infoViewJson={infoViewJson}
                 AttachmentPopup={AttachmentPopup}

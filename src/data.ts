@@ -417,9 +417,9 @@ export const example9 = {
 
 
 export const example10 = {
-      "endPoints": {
+    "endPoints": {
         "baseURL": "http://192.168.0.20:9999",
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6ImZ1a2ZRazBIVnkrRUVBdmU3bytyeWVCQ05Tb3N6L1dQQnJGcTV4SmhwMW1kbUg3Ri84Z3dzMUx5WlFLMHZMTGZnQWtJWEk5RTZNNHBPSURIc09LbTNrQm5abEUwa3Y1eFVmcnNySjkxZERLdEdQeDZXb2ZiR0owUnRDOW5DS21Wa2x2R1pSNFdzUlJUR3ZoS3dObXBjNnFIKzBPdmNYQTIrSmdsdGJsNFZob282ZDNhSS9ac0NXZGowekFJdFYzQ04vY2ZxMjlvTWl1UWVYVTVEc2d0Q0h0WEU5U0d0YjVJZVNHMmtTWFY2aFVnRy8reWZxUjk2N2o1KzJTdDVuQ1Q0eTcwOFlMNFFLQWl1d2ZZWVBWRkR5Z292cS9sajlIVDJsOURucEU9IiwiaWF0IjoxNzY4ODI1NDA5LCJleHAiOjE3Njg4MjkwMDksImp0aSI6ImFjYzoxOjE3Njg4MjU0MDk2OTg6d2ViIn0.G2YpMrZvCeYy81E2_3CUKB6QcsIQfLAxg5DJCLnUQyA",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwicGF5bG9hZCI6IlBVcVVGNVh1RHZEQ3JDMXdQS2JTclZ2aGVLQ1ZYVmpuQ2Y4bmNFOXJyTEg2c3E1ODAvdVExOTlHU2MySlVSRG8yOUkwTUNsZ3NYUU1QRmlSTi9mMGRxNHlmRDZ0dUcranVKejRrRTFmbUswMnUxeDRPYjl1cVJoQjJhNEZ5MVJNVmFWb0ZENGkrenZyNTBZa2lSbTdyTWVHZmovQTJDK3ByeTFKWHRyUU1Ha0pUNkZkMlNTYjFXbHJHMEZqZ0Y2Zmhpb3BBSUxMK3FZai9KbmRMMFZDTWJ6MllES1kzNll1a2loK28zUnUzVi9RMDdVLy93RmYxRmFOQVFyOUVZdW43TUt0LzJQQTRTYWpLclgzWjc3cEsreUJsaTVqVjVGM3VmaGJhQlZEN2EvV2F5Z045SDNyS2pPSDN0ZHRXWUNPWSszYjhKSmNvWVU0V3p1SmlRTmZURUVyQlhVVGRUSUxmaUNBZFgreVlUUnI0L25qT2lRQ2wwOGdBek44bzI1UldHa2t4VUhwUzJuRGRwUjR5LzhqUjhRNVhjbUlUK0JaSGc4OUo3RHRGQnFKTmxTbTg2QmtqSXk3TjBzVGhxdEdmb0x1NkZWSDJJd2xNQy9oVEg0RyswdmxDeklGZzRXa1EraGEydUZCandqR0MxNFA5OFBtYkhHNFBBTitWeFMwQWtCNTRQZHVaMXZXTHRtNWg3Y0VRV2RBSkR3bkwxYnVEVWlmWG14YkJqSkJ2bUlMUk5wVmxNOUNpY0Jwd0VzYUJub2RDWmRUNmdjSUZFdGQ3eURjMXBiejlrcjNiTWRxM0xjUkk4RWtHMGhta3JMY2xBM3dmTU5paENsVk5Say83MDBQNE13N2ltTmpjMXVIQW1XbVNEWU13Y29ranhqKzU4M0JYSGw5WTNHa1lzaksxQUl1aU5KaTVidDN2d3N4dkdlbG8zSUM2MW5QcEZ3UzZzUWtuRXJ5Ync9PSIsImlhdCI6MTc4MTUxNDk1MiwiZXhwIjoxNzgxNTE4NTUyLCJqdGkiOiJhY2M6MToxNzgxNTE0OTUyMzc2OndlYiJ9.mpchhjucaj8u-rwFXF6SCbgPa_I2SjbhrFasdGSOf4g",
         "dbopsGetHash": "/api/dbops",
         "dbopsGetRefId": "/api/dbops/save",
         "dbopsCreate": "/api/dbops/create",
@@ -428,15 +428,27 @@ export const example10 = {
         "registerQuery": "/api/query/save",
         "runQuery": "/api/query/run"
     },
+    "hooks": {
+        "presubmit": [
+            "precastTracking.work_package_serial_no"
+        ],
+        "postsubmit": [
+            "precastTracking.storeDetails"
+        ]
+    },
     "source": {
         "type": "sql",
-        "dbopsid": "forms%40hse.induction%4028"
+        "dbopsid": "forms%40precastTracking.designprecast%4016"
     },
     "forcefill": {
         "guid": "#SESS_GUID#"
     },
-    "gotolink": "infoview/hse.induction/{hashid}",
+    "gotolink": "infoview/precastTracking.designprecast/{hashid}",
     "fields": {
+        "id": {
+            "lable": "",
+            "hidden": true
+        },
         "company_code_id": {
             "label": "Company/ SPV",
             "type": "select",
@@ -471,11 +483,11 @@ export const example10 = {
             },
             "ajaxchain": [
                 {
-                    "target": "project_function_id",
+                    "target": "project_id",
                     "src": {
                         "type": "api",
                         "method": "post",
-                        "endpoint": "/api/services/eofficeGlobal/get_project_function"
+                        "endpoint": "/api/services/eofficeGlobal/get_project_function?type=project&module=precastTracking"
                     }
                 }
             ],
@@ -483,214 +495,161 @@ export const example10 = {
             "width": 4,
             "options": []
         },
-        "project_function_id": {
-            "label": "Project Function ",
+        "project_id": {
+            "label": "Project",
             "type": "select",
             "required": true,
             "width": 4,
-            "no-option": "Select Project Function",
+            "no-option": "Select Project",
             "options": []
-        },
-        "location_id": {
-            "label": "Location",
-            "type": "text",
-            "required": true,
-            "width": 4
-        },
-        "date": {
-            "label": "Date",
-            "type": "date",
-            "required": true,
-            "width": 4
-        },
-        "conducted_by_department": {
-            "label": "Conducted By Department",
-            "type": "select",
-            "groupid": "hse_conducted_by_department",
-            "required": true,
-            "width": 4,
-            "options": [
-                {
-                    "title": "WEL HSE",
-                    "value": "wel_hse",
-                    "class": null,
-                    "privilege": "*"
-                },
-                {
-                    "title": "Contractor",
-                    "value": "contractor",
-                    "class": null,
-                    "privilege": "*"
-                }
-            ]
-        },
-        "conducted_by_name": {
-            "label": "Conducted By (Name)",
-            "type": "autocomplete",
-            "width": 4,
-            "queryid": "forms%40hse.induction%40undefined"
-        },
-        "participant_count": {
-            "label": "Participant Count",
-            "type": "number",
-            "required": true,
-            "width": 4
-        },
-        "photo_attendance": {
-            "label": "Induction Photo/Attendance (Max. Sizes:10MB)",
-            "type": "file",
-            "width": 4
         }
     },
     "infoview": {
         "template": "cards",
         "groups": {
-            "participant_details": {
-                "label": "Participant Details",
+            "design_details": {
+                "label": "Design Details",
                 "type": "module",
                 "src": "infoviewTable",
-                "vmode": "edit",
                 "config": {
                     "type": "sql",
                     "uimode": "grid",
                     "uiswitcher": false,
-                    "policy_create": "hse.create.access",
-                    "policy_view": "hse.view.access",
-                    "policy_delete": "hse.delete.access",
-                    "policy_update": "hse.update.access",
+                    "policy_create": "design.create.access",
+                    "policy_view": "design.view.access",
+                    "policy_delete": "design.delete.access",
+                    "policy_update": "design.update.access",
                     "toolbar": {
                         "search": true,
                         "print": false,
                         "export": false,
                         "email": false
                     },
-                    "colkey": "hse_induction_id",
+                    "colkey": "design_id",
                     "popup.form": {
                         "hooks": {
-                            "presubmit": [
-                                "hse.participant_count_test"
+                            "postsubmit": [
+                                "precastTracking.categoryAdd"
                             ]
                         },
                         "source": {
                             "type": "sql",
-                            "dbopsid": "forms%40hse.induction.infoview_popup.participant_details%40"
+                            "dbopsid": "forms%40precastTracking.designprecast.infoview_popup.design_details%40"
                         },
                         "forcefill": {
                             "guid": "#SESS_GUID#"
                         },
                         "fields": {
-                            "hse_induction_id": {
+                            "id": {
                                 "label": "",
-                                "type": "hidden",
-                                "default": "28"
+                                "hidden": true
                             },
-                            "gender": {
-                                "label": "Gender",
-                                "type": "select",
-                                "required": true,
-                                "groupid": "user_gender",
-                                "width": 4,
-                                "formatter": "pretty",
-                                "options": [
-                                    {
-                                        "title": "Female",
-                                        "value": "female",
-                                        "class": "",
-                                        "privilege": "*"
-                                    },
-                                    {
-                                        "title": "Male",
-                                        "value": "male",
-                                        "class": "",
-                                        "privilege": "*"
-                                    },
-                                    {
-                                        "title": "Other",
-                                        "value": "other",
-                                        "class": null,
-                                        "privilege": "*"
-                                    }
-                                ]
-                            },
-                            "count": {
-                                "label": "Count",
-                                "type": "number",
-                                "required": true,
-                                "width": 4
-                            },
-                            "company": {
-                                "label": "Company",
-                                "type": "select",
-                                "onChange": "company_required",
-                                "groupid": "company_type",
-                                "required": true,
-                                "width": 4,
-                                "options": [
-                                    {
-                                        "title": "Wel",
-                                        "value": "wel",
-                                        "class": null,
-                                        "privilege": "*"
-                                    },
-                                    {
-                                        "title": "Contractor Staff",
-                                        "value": "contractor_staff",
-                                        "class": null,
-                                        "privilege": "*"
-                                    },
-                                    {
-                                        "title": "Contractor Workers",
-                                        "value": "contractor_workers",
-                                        "class": null,
-                                        "privilege": "*"
-                                    },
-                                    {
-                                        "title": "Visitor",
-                                        "value": "visitor",
-                                        "class": null,
-                                        "privilege": "*"
-                                    }
-                                ]
-                            },
-                            "company_name": {
-                                "label": "Company Name",
-                                "disabled": true,
+                            "design_id": {
+                                "label": "",
                                 "type": "text",
-                                "required": true,
-                                "width": 4
+                                "hidden": true,
+                                "default": "16"
                             },
-                            "photograph": {
-                                "label": "Photograph",
-                                "type": "file",
+                            "detail_key": {
+                                "label": "Key",
+                                "type": "autocomplete",
+                                "required": true,
+                                "width": 6,
+                                "queryid": "forms%40precastTracking.designprecast%40undefined"
+                            },
+                            "detail_value": {
+                                "label": "Value",
+                                "type": "autocomplete",
+                                "required": true,
+                                "width": 3,
+                                "queryid": "forms%40precastTracking.designprecast%40undefined"
+                            },
+                            "uom": {
+                                "label": "Unit Of Measure",
+                                "type": "select",
+                                "groupid": "design_uom",
+                                "required": false,
+                                "search": false,
+                                "width": 3,
+                                "options": [
+                                    {
+                                        "title": "Meter",
+                                        "value": "meter",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Kilometer",
+                                        "value": "kilometer",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Gram",
+                                        "value": "gram",
+                                        "class": null,
+                                        "privilege": "*"
+                                    },
+                                    {
+                                        "title": "Cubic Meter",
+                                        "value": "cubic_meter",
+                                        "class": null,
+                                        "privilege": "*"
+                                    }
+                                ]
+                            },
+                            "availableboq": {
+                                "label": "Available For BOQ",
+                                "type": "select",
+                                "source": {
+                                    "type": "api",
+                                    "method": "post",
+                                    "endpoint": "/api/services/precastTracking/getBoqDropdown"
+                                },
+                                "no-option": "Select BOQ",
+                                "required": false,
+                                "width": 6,
+                                "options": []
+                            },
+                            "short_desc": {
+                                "label": "Short Description",
+                                "type": "text",
+                                "disabled": true,
+                                "required": false,
                                 "width": 6
                             }
                         }
                     },
                     "datagrid": {
-                        "gender": {
-                            "label": "Gender",
+                        "detail_key": {
+                            "label": "Key",
+                            "searchable": true
+                        },
+                        "detail_value": {
+                            "label": "Value",
+                            "searchable": true
+                        },
+                        "uom": {
+                            "label": "unit of measure",
                             "searchable": true,
-                            "sortable": true,
                             "formatter": "pretty"
                         },
-                        "count": {
-                            "label": "Count",
-                            "searchable": true,
-                            "sortable": true
-                        },
-                        "company_name": {
-                            "label": "Company Name",
+                        "availableboq": {
+                            "label": "Available For BOQ",
                             "searchable": true
                         },
-                        "company": {
-                            "label": "Company",
-                            "formatter": "pretty",
+                        "short_desc": {
+                            "label": "Short Description",
                             "searchable": true
-                        },
-                        "photograph": {
-                            "label": "Photograph",
-                            "searchable": true,
-                            "formatter": "attachment"
+                        }
+                    },
+                    "rules": {
+                        "row_class": {
+                            "detail_key": {
+                                "Concrete": "hide-delete-btn",
+                                "Reinforcement": "hide-delete-btn",
+                                "HT Wire": "hide-delete-btn"
+                            }
                         }
                     },
                     "actions1": {
@@ -703,66 +662,30 @@ export const example10 = {
                             "label": "Edit Record",
                             "icon": "fa fa-pen"
                         },
-                        "deleteRecord": {
+                        "api@precastTracking.deleteRecord": {
                             "label": "Delete Record",
-                            "icon": "fa fa-trash text-red-500"
+                            "icon": "fa fa-trash text-red-500",
+                            "class": "[tr.hide-delete-btn_&]:hidden",
+                            "lgksConfirm": "Are you sure you want to delete this record?",
+                            "payload": {
+                                "table": "design_details"
+                            }
+                        },
+                        "popup@activity_logs.popup_activity_logs/{id}": {
+                            "label": "History",
+                            "params": {
+                                "ref_src": "forms@precastTracking.designprecast.infoview_popup.design_details"
+                            },
+                            "icon": "fa-solid fa-clock-rotate-left"
                         }
                     },
-                    "queryid": "forms%40hse.induction.infoviewTable.participant_details%40infoview.groups.participant_details"
-                },
-                "width": 12
-            },
-            "activity_log": {
-                "label": "Activity Log",
-                "type": "module",
-                "src": "infoviewTable",
-                "vmode": "view",
-                "config": {
-                    "type": "sql",
-                    "uimode": "grid",
-                    "uiswitcher": false,
-                    "policy_create": "hse.create.access",
-                    "policy_view": "hse.view.access",
-                    "policy_delete": "hse.delete.access",
-                    "policy_update": "hse.update.access",
-                    "colkey": "id",
-                    "datagrid": {
-                        "subject": {
-                            "label": "Subject",
-                            "formatter": "text"
-                        },
-                        "category": {
-                            "label": "Category",
-                            "formatter": "text"
-                        },
-                        "subcategory": {
-                            "label": "Subcategory",
-                            "formatter": "text"
-                        },
-                        "pre_data": {
-                            "label": "Before Changes",
-                            "formatter": "text"
-                        },
-                        "post_data": {
-                            "label": "After Changes",
-                            "formatter": "text"
-                        },
-                        "created_by": {
-                            "label": "Created By",
-                            "formatter": "text"
-                        },
-                        "created_on": {
-                            "label": "Created On",
-                            "formatter": "attachment"
-                        }
-                    },
-                    "queryid": "forms%40hse.induction.infoviewTable.activity_log%40infoview.groups.activity_log"
+                    "queryid": "forms%40precastTracking.designprecast.infoviewTable.design_details%40infoview.groups.design_details"
                 },
                 "width": 12
             }
         }
     },
-    "script": "ZnVuY3Rpb24gY29tcGFueV9yZXF1aXJlZChkYXRhKSB7CiAgY29uc3QgdmFsdWUgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChkYXRhKT8udmFsdWU7CiAgY29uc3QgcmV3b3JrRmllbGQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY29tcGFueV9uYW1lIik7CiAgaWYgKHJld29ya0ZpZWxkKSB7CiAgICByZXdvcmtGaWVsZC5kaXNhYmxlZCA9ICF2YWx1ZTsKICB9Cn0K",
-    "module_refid": "hse.induction",
+    "script": "ZnVuY3Rpb24gb25sb2FkKCkgewogICAgc2V0VGltZW91dCgoKSA9PiB7CgogICAgICAgIGRvY3VtZW50CiAgICAgICAgICAgIC5xdWVyeVNlbGVjdG9yQWxsKCdpbnB1dFtuYW1lPSJ3b3JrX3BhY2thZ2UiXScpCiAgICAgICAgICAgIC5mb3JFYWNoKHJhZGlvID0+IHsKCiAgICAgICAgICAgICAgICByYWRpby5hZGRFdmVudExpc3RlbmVyKCJjaGFuZ2UiLCBmdW5jdGlvbiAoKSB7CgogICAgICAgICAgICAgICAgICAgIGNvbnN0IHNlcmlhbEZpZWxkID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIndvcmtfcGFja2FnZV9zZXJpYWxfbm8iKTsKICAgICAgICAgICAgICAgICAgICBjb25zdCBkZXNpZ25DYXRlZ29yeUZpZWxkID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImRlc2lnbl9jYXRlZ29yeV9uYW1lIik7CgogICAgICAgICAgICAgICAgICAgIGNvbnN0IGlzRXhpc3RpbmdXUCA9IHRoaXMudmFsdWUgPT09ICJleGlzdGluZyBfd29ya3BhY2thZ2UiOwoKICAgICAgICAgICAgICAgICAgICBbc2VyaWFsRmllbGQsIGRlc2lnbkNhdGVnb3J5RmllbGRdLmZvckVhY2goZmllbGQgPT4gewogICAgICAgICAgICAgICAgICAgICAgICBpZiAoIWZpZWxkKSByZXR1cm47CgogICAgICAgICAgICAgICAgICAgICAgICBmaWVsZC5kaXNhYmxlZCA9ICFpc0V4aXN0aW5nV1A7CiAgICAgICAgICAgICAgICAgICAgICAgIGZpZWxkLnJlcXVpcmVkID0gaXNFeGlzdGluZ1dQOwoKICAgICAgICAgICAgICAgICAgICAgICAgaWYgKGlzRXhpc3RpbmdXUCkgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgZmllbGQuc3R5bGUucG9pbnRlckV2ZW50cyA9ICJhdXRvIjsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZpZWxkLnN0eWxlLmN1cnNvciA9ICJwb2ludGVyIjsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZpZWxkLnN0eWxlLm9wYWNpdHkgPSAiMSI7CiAgICAgICAgICAgICAgICAgICAgICAgIH0gZWxzZSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBmaWVsZC5zdHlsZS5wb2ludGVyRXZlbnRzID0gIm5vbmUiOwogICAgICAgICAgICAgICAgICAgICAgICAgICAgZmllbGQuc3R5bGUuY3Vyc29yID0gIm5vdC1hbGxvd2VkIjsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZpZWxkLnN0eWxlLm9wYWNpdHkgPSAiMC42IjsKICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIH0pOwoKICAgICAgICAgICAgICAgIH0pOwoKICAgICAgICAgICAgfSk7CgogICAgfSwgNTAwKTsKfQ==",
+    "module_refid": "precastTracking.designprecast",
     "module_type": "forms"
 }

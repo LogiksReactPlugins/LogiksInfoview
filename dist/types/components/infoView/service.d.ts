@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { SelectOptions, SqlEndpoints, UploadResponse } from './InfoView.types.js';
+import { OptionItem, SqlEndpoints, UploadResponse } from './InfoView.types.js';
 type SqlSource = {
     table: string;
     columns: string;
@@ -33,7 +33,7 @@ export declare function runAjaxChain({ field, value, sqlOpsUrls, setFieldOptions
     field: any;
     value: any;
     sqlOpsUrls: any;
-    setFieldOptions: (name: string, options: SelectOptions) => void;
+    setFieldOptions: (name: string, options: OptionItem[]) => void;
     values: Record<string, any>;
 }): Promise<void>;
 export declare function getPreviewUrl(fileUrl: string, sqlOpsUrls: Record<string, any>): Promise<string>;

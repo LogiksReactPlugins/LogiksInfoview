@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import type { InfoFieldRendererProps, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
-import { decodeSignature, formatOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, sanitizeHtml } from '../utils.js';
+import type { InfoFieldRendererProps, OptionItem, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
+import { decodeSignature, formatOptions, mergeOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, sanitizeHtml } from '../utils.js';
 import FilePreviewTrigger from './FilePreviewTrigger.js';
 import { fetchDataByquery, runAjaxChain } from '../service.js';
 
@@ -29,8 +29,8 @@ export default function InfoFieldRenderer({
   `;
 
 
-  const [options, setOptions] = useState<SelectOptions>(
-    optionsOverride ?? field.options ?? {}
+  const [options, setOptions] = useState<OptionItem[]>(
+    mergeOptions(field, optionsOverride ?? [])
   );
   const ranRef = React.useRef(false);
 
@@ -45,47 +45,11 @@ export default function InfoFieldRenderer({
   );
   React.useEffect(() => {
     let isMounted = true;
-    let valueKey = field.valueKey ?? "value";
-
-    let labelKey = field.labelKey ?? "title";
 
     const fetchData = async () => {
 
-      let opts = field?.options;
-
-      if (opts && (
-        (Array.isArray(opts) && opts.length > 0) ||
-        (!Array.isArray(opts) && Object.keys(opts).length > 0)
-      )) {
-        //  CASE 1: flat or grouped object
-        // { "1": "WEL" } OR { quarter1: { "1": "January" } }
-        if (
-          typeof field.options === "object" &&
-          !Array.isArray(field.options)
-        ) {
-          const values = Object.values(field.options);
-          if (values.length && typeof values[0] === "string") {
-            setOptions(field.options as SelectOptions);
-            return;
-          }
-        }
-
-        // CASE 2 / 3: array of rows (flat or grouped via `category`)
-        const rawItems = Array.isArray(field.options)
-          ? field.options
-          : [field.options];
-
-        const normalizedItems = rawItems.map(normalizeRowSafe);
-
-        const mapped = formatOptions(
-          valueKey,
-          labelKey,
-          normalizedItems,
-          field.groupKey // auto-uses `category` if present
-        );
-        setOptions(mapped);
-        return;
-      }
+      let valueKey = field.valueKey ?? "value";
+      let labelKey = field.labelKey ?? "title";
 
       const source = field?.source ?? {};
 
@@ -95,7 +59,7 @@ export default function InfoFieldRenderer({
         const methodFn = methodName ? methods[methodName] : undefined;
         if (methodFn) {
           try {
-            const res = await Promise.resolve(methodFn());
+            const res = await methodFn();
 
             const rawItems = Array.isArray(res.data?.results?.options) ?
               res.data?.results?.options : Array.isArray(res?.data?.data)
@@ -106,30 +70,21 @@ export default function InfoFieldRenderer({
                     ? res.data
                     : res;
 
-            if (
-              typeof rawItems === "object" &&
-              !Array.isArray(rawItems)
-            ) {
-              const values = Object.values(rawItems);
-              if (values.length && typeof values[0] === "string") {
-                setOptions(rawItems as SelectOptions);
-                return;
-              }
-            }
-
             const normalizedItems = Array.isArray(rawItems)
               ? rawItems.map(normalizeRowSafe)
               : [];
+
+
             const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
-            if (isMounted) setOptions(mapped);
+            if (isMounted) setOptions(mergeOptions(field, mapped));
             return;
           } catch (err) {
             console.error("Method execution failed:", err);
-            if (isMounted) setOptions({});
+            if (isMounted) setOptions([]);
             return;
           }
         } else {
-          if (isMounted) setOptions({});
+          if (isMounted) setOptions([]);
           return;
         }
       }
@@ -159,28 +114,19 @@ export default function InfoFieldRenderer({
                 Array.isArray(res?.data)
                   ? res.data
                   : res;
-          if (
-            typeof rawItems === "object" &&
-            !Array.isArray(rawItems)
-          ) {
-            const values = Object.values(rawItems);
-            if (values.length && typeof values[0] === "string") {
-              setOptions(rawItems as SelectOptions);
-              return;
-            }
-          }
+
           const normalizedItems = Array.isArray(rawItems)
             ? rawItems.map(normalizeRowSafe)
             : [];
 
           const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey)
 
-          if (isMounted) setOptions(mapped);
+          if (isMounted) setOptions(mergeOptions(field, mapped));
           return
 
         } catch (err) {
           console.error("API execution failed:", err);
-          if (isMounted) setOptions({});
+          if (isMounted) setOptions([]);
           return
         }
       }
@@ -234,23 +180,14 @@ export default function InfoFieldRenderer({
               ? res.data
               : res;
 
-          if (
-            typeof rawItems === "object" &&
-            !Array.isArray(rawItems)
-          ) {
-            const values = Object.values(rawItems);
-            if (values.length && typeof values[0] === "string") {
-              setOptions(rawItems as SelectOptions);
-              return;
-            }
-          }
+
 
           const normalizedItems = Array.isArray(rawItems)
             ? rawItems.map(normalizeRowSafe)
             : [];
 
           const mapped = formatOptions(valueKey, labelKey, normalizedItems, field.groupKey);
-          if (isMounted) setOptions(mapped);
+          if (isMounted) setOptions(mergeOptions(field, mapped));
 
         } catch (err) {
           console.error("API fetch failed:", err);

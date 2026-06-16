@@ -1,8 +1,9 @@
 import * as Yup from "yup";
 import axios from "axios";
+import type { FormikProps } from "formik";
 
 import DOMPurify from "dompurify";
-import type { AutocompleteConfig, FileCategory, FileItem, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, SelectOptions, } from "./InfoView.types.js";
+import type { AutocompleteConfig, ChainMap, FileCategory, FileItem, FlatOptions, FormField, GroupedOptions, InfoViewGroup, Infoview, OptionItem, SelectOptions, } from "./InfoView.types.js";
 import { FILE_TYPES, IMAGE_EXT, PDF_EXT, TEXT_EXT, VIDEO_EXT } from "./constant.js";
 
 export function determineViewMode(json: Infoview) {
@@ -29,7 +30,14 @@ export const getGeoFieldKeys = (fields: Record<string, Omit<FormField, "name">>)
     .map(([key]) => key);
 };
 
-export async function fetchGeolocation(): Promise<string | null> {
+export type GeolocationData = {
+  latitude: number;
+  longitude: number;
+  altitude: number | null;
+  accuracy: number;
+};
+
+export async function fetchGeolocation(): Promise<GeolocationData> {
   if (!("geolocation" in navigator)) {
     throw new Error(
       "Geolocation is not supported by this browser. You cannot access this portal."
@@ -40,15 +48,27 @@ export async function fetchGeolocation(): Promise<string | null> {
     const position = await new Promise<GeolocationPosition>(
       (resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: false,
+          enableHighAccuracy: true,
           timeout: 30000,
-          maximumAge: 120000,
+          maximumAge: 0,
         });
       }
     );
 
-    const { latitude, longitude } = position.coords;
-    return `${latitude},${longitude}`;
+    const {
+      latitude,
+      longitude,
+      altitude,
+      accuracy,
+    } = position.coords;
+
+    return {
+      latitude,
+      longitude,
+      altitude,
+      accuracy,
+    };
+
   } catch (error) {
     if (!(error instanceof GeolocationPositionError)) {
       throw new Error("Failed to get your location.");
@@ -68,6 +88,80 @@ export async function fetchGeolocation(): Promise<string | null> {
     }
   }
 }
+
+export const buildApiParams = ({
+  field,
+  formValues,
+  parentData,
+}: {
+  field: FormField;
+  formValues: Record<string, any>;
+  parentData?: Record<string, any>;
+}) => {
+  const params: Record<string, any> = {};
+
+  const getValue = (value: string) => {
+    if (value.startsWith("$parent.")) {
+      return parentData?.[value.slice(8)];
+    }
+
+    return formValues?.[value];
+  };
+
+  // parameter: "id"
+  // parameter: "$parent.id"
+  if (typeof field.parameter === "string" && field.parameter) {
+    const param = field.parameter;
+
+    if (param.startsWith("$parent.")) {
+      const key = param.slice(8);
+      params[key] = parentData?.[key];
+    } else {
+      params[param] = formValues?.[param];
+    }
+
+    return params;
+  }
+
+  // parameter: { company_id: "$parent.id", country_id: "country_id" }
+  if (
+    typeof field.parameter === "object" &&
+    field.parameter !== null &&
+    Object.keys(field.parameter).length > 0
+  ) {
+    for (const [key, val] of Object.entries(field.parameter)) {
+      if (typeof val !== "string") continue;
+
+      params[key] = getValue(val);
+    }
+  }
+
+  return params;
+};
+
+
+export const buildChainMap = (fields: FormField[]): ChainMap => {
+  const map: ChainMap = {};
+
+  for (const field of fields) {
+    const source = field.name;
+    if (!source) continue;
+
+    const chains = field.ajaxchain;
+    if (!chains) continue;
+
+    const arr = Array.isArray(chains) ? chains : [chains];
+
+    for (const c of arr) {
+      if (!c?.target) continue;
+
+      if (!map[source]) map[source] = [];
+      map[source].push(c.target);
+    }
+  }
+
+  return map;
+};
 
 export function filterSavableValues(
   values: Record<string, any>,
@@ -210,8 +304,8 @@ export const formatOptions = (
   labelKey: string,
   items: any[],
   groupKey?: string
-): SelectOptions => {
-  if (!Array.isArray(items) || items.length === 0) return {};
+): OptionItem[] => {
+  if (!Array.isArray(items) || items.length === 0) return [];
 
   const resolvedGroupKey =
     groupKey ??
@@ -219,55 +313,46 @@ export const formatOptions = (
       ? "category"
       : undefined);
 
-  // ---- flat options ----
-  if (!resolvedGroupKey) {
-    const mapped: FlatOptions = {};
-    items.forEach(item => {
+  return items
+    .map((item) => {
       const value = item[valueKey];
       const label = item[labelKey];
-      if (value != null && label != null) {
-        mapped[String(value)] = String(label);
-      }
-    });
-    return mapped;
-  }
 
-  // ---- grouped options ----
-  const grouped: GroupedOptions = {};
+      if (value == null || label == null) return null;
 
-  items.forEach(item => {
-    const group = item[resolvedGroupKey] ?? "Others";
-    const value = item[valueKey];
-    const label = item[labelKey];
-
-    if (value == null || label == null) return;
-
-    if (!grouped[group]) grouped[group] = {};
-    grouped[group][String(value)] = String(label);
-  });
-
-  return grouped;
+      return {
+        value: String(value),
+        label: String(label),
+        group:
+          resolvedGroupKey && item[resolvedGroupKey]
+            ? String(item[resolvedGroupKey])
+            : undefined,
+      };
+    })
+    .filter(Boolean) as OptionItem[];
 };
 
 
 
 export function resolveDisplayValue(
   fieldValue: unknown,
-  options: FlatOptions
+  options: OptionItem[]
 ) {
+  if (!options?.length) return fieldValue;
 
-
-  if (!options || Object.keys(options).length === 0) return fieldValue;
+  const optionMap = new Map(
+    options.map(opt => [String(opt.value), opt.label])
+  );
 
   if (typeof fieldValue === "number") {
-    return options[String(fieldValue)] ?? fieldValue;
+    return optionMap.get(String(fieldValue)) ?? fieldValue;
   }
 
   if (typeof fieldValue === "string") {
     const parts = fieldValue.split(",").map(v => v.trim());
 
     const labels = parts
-      .map(v => options[v])
+      .map(v => optionMap.get(v))
       .filter(Boolean);
 
     return labels.length ? labels.join(", ") : fieldValue;
@@ -277,7 +362,10 @@ export function resolveDisplayValue(
 }
 
 
-
+const isEmpty = (v: any) =>
+  v === undefined || v === null || v === "";
+const isStringValidator = (schema: Yup.AnySchema): schema is Yup.StringSchema =>
+  schema.type === "string";
 
 export const isHidden = (hidden?: boolean | string): boolean =>
   hidden === true || hidden === "true";
@@ -285,17 +373,38 @@ export const intializeForm = (
   formFields: FormField[],
   initialValues: Record<string, any>,
   validationSchema: Record<string, Yup.AnySchema>,
-  data?: Record<string, any>
+  data?: Record<string, any>,
+  module_refid?: string,
+  operation?: string
 ) => {
+
+  const persisted =
+    operation === "create" && module_refid
+      ? readPersistedValues(module_refid)
+      : {};
+
   formFields.forEach((field) => {
     const name = field?.name;
     if (!name) return;
 
     let value = data?.[name];
 
+    const persistentKey =
+      operation === "create" && module_refid
+        ? getPersistentKey(field)
+        : null;
+
+    if (
+      operation === "create" &&
+      persistentKey &&
+      persisted[persistentKey] !== undefined &&
+      isEmpty(value)
+    ) {
+      value = persisted[persistentKey];
+    }
 
 
-    if (value === undefined || value === null) {
+    if (isEmpty(value) && field.default) {
       value = field.default;
     }
 
@@ -405,17 +514,22 @@ export const intializeForm = (
             break;
 
           case "mobile":
-            validator = (validator as Yup.StringSchema).matches(
-              /^[1-9][0-9]*$/,
-              "Invalid mobile number format"
-            );
+            if (isStringValidator(validator)) {
+              validator = (validator as Yup.StringSchema).matches(
+                /^[1-9][0-9]*$/,
+                "Invalid mobile number format"
+              );
+            }
+
             break;
 
           case "regex":
-            validator = (validator as Yup.StringSchema).matches(
-              new RegExp(val as string),
-              field?.error_message || `Must match pattern: ${val}`
-            );
+            if (isStringValidator(validator)) {
+              validator = (validator as Yup.StringSchema).matches(
+                new RegExp(val as string),
+                field?.error_message || `Must match pattern: ${val}`
+              );
+            }
             break;
 
           case "date":
@@ -439,17 +553,21 @@ export const intializeForm = (
 
 
           case "time":
-            validator = (validator as Yup.StringSchema).matches(
-              /^([0-1][0-9]|2[0-3])[:\-]([0-5][0-9])$/,
-              "Invalid time format (HH:MM)"
-            );
+            if (isStringValidator(validator)) {
+              validator = (validator as Yup.StringSchema).matches(
+                /^([0-1][0-9]|2[0-3])[:\-]([0-5][0-9])$/,
+                "Invalid time format (HH:MM)"
+              );
+            }
             break;
 
           case "timesec":
-            validator = (validator as Yup.StringSchema).matches(
-              /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/,
-              "Invalid time format (HH:MM:SS)"
-            );
+            if (isStringValidator(validator)) {
+              validator = (validator as Yup.StringSchema).matches(
+                /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/,
+                "Invalid time format (HH:MM:SS)"
+              );
+            }
             break;
 
           case "number":
@@ -475,17 +593,21 @@ export const intializeForm = (
             break;
 
           case "alphanumeric":
-            validator = (validator as Yup.StringSchema).matches(
-              /^[a-z0-9]+$/i,
-              "Must be alphanumeric"
-            );
+            if (isStringValidator(validator)) {
+              validator = (validator as Yup.StringSchema).matches(
+                /^[a-z0-9]+$/i,
+                "Must be alphanumeric"
+              );
+            }
             break;
 
           case "alpha":
-            validator = (validator as Yup.StringSchema).matches(
-              /^[a-zA-Z]+$/,
-              "Must contain only letters"
-            );
+            if (isStringValidator(validator)) {
+              validator = (validator as Yup.StringSchema).matches(
+                /^[a-zA-Z]+$/,
+                "Must contain only letters"
+              );
+            }
             break;
 
           case "upper":
@@ -572,28 +694,69 @@ export function getSearchColumns(columns: string): string[] {
 }
 
 export const getOptionLabel = (
-  options: SelectOptions,
+  options: OptionItem[],
   value: string
 ): string | undefined => {
   if (!options || value == null) return;
 
-  const key = String(value);
-  const first = Object.values(options)[0];
 
-  // flat
-  if (typeof first === "string") {
-    return (options as FlatOptions)[key];
+  return options.find((o) => String(o.value) === String(value))?.label;
+};
+
+
+export const groupOptions = (options: OptionItem[]) => {
+  return options.reduce<Record<string, OptionItem[]>>((acc, opt) => {
+    const key = opt.group || "__ungrouped__";
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(opt);
+    return acc;
+  }, {});
+};
+
+type ValidateFileInputParams = {
+  e: React.ChangeEvent<HTMLInputElement>;
+  existingFiles: string[];
+  maxFiles: number;
+  maxFileSize?: number | undefined; // bytes
+};
+
+const formatSize = (bytes: number) => {
+  if (bytes >= 1024 * 1024) {
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   }
+  return `${(bytes / 1024).toFixed(0)} KB`;
+};
+export const validateFiles = ({
+  e,
+  existingFiles,
+  maxFiles,
+  maxFileSize
+}: ValidateFileInputParams) => {
+  const selectedFiles = e.currentTarget.files;
+  if (!selectedFiles) return null;
+  const fileArray = Array.from(selectedFiles);
+  const total = existingFiles.length + fileArray.length;
+  if (total > maxFiles) {
+    alert(`You can upload maximum ${maxFiles} file(s)`);
+    e.currentTarget.value = "";
+    return null;
 
-  // grouped
-  for (const group of Object.values(options as GroupedOptions)) {
-    if (key in group) {
-      return group[key];
+  }
+  // file size validation
+  if (maxFileSize) {
+    const maxSize = Number(maxFileSize); // assume bytes
+    const invalidFile = fileArray.find((f) => f.size > maxSize);
+
+    if (invalidFile) {
+      alert(
+        `File "${invalidFile.name}" exceeds max size of ${formatSize(maxFileSize)}`);
+      e.currentTarget.value = "";
+      return null;
     }
   }
 
-  return;
-};
+  return selectedFiles
+}
 
 export type FlatEntry = [string, string];
 
@@ -635,23 +798,70 @@ export const flattenOptions = (options: SelectOptions): FlatEntry[] => {
 
 
 
-export function normalizeOptions(
-  options?: SelectOptions
-): FlatOptions {
-  if (!options) return {};
 
-  if (!isGroupedOptions(options)) {
-    return options;
+export const normalizeOptions = (opts?: any): OptionItem[] => {
+  if (!opts) return [];
+
+  // array input
+  if (Array.isArray(opts)) {
+    return opts.map((o) => ({
+      value: String(o.value),
+      label: String(o.label ?? o.title ?? o.value),
+      group:
+        o.group ??
+        o.category ?? // 👈 support category if present
+        undefined,
+    }));
   }
 
-  return Object.values(options).reduce<FlatOptions>((acc, group) => {
-    Object.assign(acc, group);
-    return acc;
-  }, {});
-}
+  // flat object: { "1": "Apple" }
+  if (typeof opts === "object") {
+    return Object.entries(opts).map(([value, label]) => ({
+      value: String(value),
+      label: String(label),
+    }));
+  }
+
+  return [];
+};
+
+export const mergeOptions = (
+  field: {
+    options?: any;
+    options_top?: any;
+    options_bottom?: any;
+  },
+  dynamicOpts?: OptionItem[]
+): OptionItem[] => {
+  const top = normalizeOptions(field.options_top);
+  const base = normalizeOptions(field.options);
+  const dynamic = dynamicOpts ?? [];
+  const bottom = normalizeOptions(field.options_bottom);
+
+  const seen = new Set<string>();
+
+  const dedupe = (arr: OptionItem[]) =>
+    arr.filter((o) => {
+      if (seen.has(o.value)) return false;
+      seen.add(o.value);
+      return true;
+    });
+
+  return [
+    ...dedupe(top),
+    ...dedupe(base),
+    ...dedupe(dynamic),
+    ...dedupe(bottom),
+  ];
+};
+
 type Row = Record<string, unknown>;
 
 export const normalizeRowSafe = (row: Row): Row => {
+
+  if (row == null || typeof row !== "object") {
+    return { value: row, title: row };
+  }
   const result: Row = {};
 
   for (const [key, value] of Object.entries(row)) {
@@ -666,7 +876,6 @@ export const normalizeRowSafe = (row: Row): Row => {
 
     result[normalizedKey] = value;
   }
-
   return result;
 };
 
@@ -904,7 +1113,41 @@ export const getMaxDate = (max?: string | number) => {
   return max;
 };
 
+export const resetChain = (
+  sourceKey: keyof ChainMap,
+  chainMap: ChainMap,
+  formik: FormikProps<Record<string, any>>,
+  visited: Set<keyof ChainMap> = new Set()
+): void => {
+  if (visited.has(sourceKey)) return;
+  visited.add(sourceKey);
 
 
+  const targets = chainMap[sourceKey] ?? [];
+
+
+
+  for (const target of targets) {
+    formik.setFieldValue(
+      target,
+      formik.initialValues[target]
+    );
+
+
+
+    resetChain(target, chainMap, formik, visited);
+  }
+};
+
+export const getFirstRow = (res: any) => {
+  const data = res?.data;
+
+  if (Array.isArray(data?.results?.options)) return data.results.options[0];
+  if (Array.isArray(data?.data)) return data.data[0];
+  if (Array.isArray(data?.results)) return data.results[0];
+  if (Array.isArray(data)) return data[0];
+
+  return data?.results ?? data;
+};
 
 

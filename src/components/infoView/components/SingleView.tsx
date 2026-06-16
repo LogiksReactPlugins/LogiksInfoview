@@ -3,7 +3,7 @@ import axios from "axios";
 import type {  ComponentType } from "react";
 import InfoFieldRenderer from './InfoFieldRenderer.js'
 import { normalizeToObject, replacePlaceholders, tailwindCols, toColWidth, transformedObject } from '../utils.js'
-import type { InfoViewGroup, SelectOptions, SqlEndpoints } from '../InfoView.types.js'
+import type { InfoViewGroup, OptionItem, SelectOptions, SqlEndpoints } from '../InfoView.types.js'
 
 export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid, module_refid, setFieldOptions, fieldOptions,AttachmentPopup }:
     {
@@ -11,9 +11,9 @@ export default function SingleView({ tabObj, methods, tabName, sqlOpsUrls, refid
         sqlOpsUrls: SqlEndpoints, refid: string, module_refid: string | undefined;
         setFieldOptions: (
             fieldName: string,
-            options: SelectOptions
+            options: OptionItem[]
         ) => void;
-        fieldOptions: Record<string, SelectOptions>;
+        fieldOptions: Record<string, OptionItem[]>;
         AttachmentPopup?: ComponentType<any> | undefined;
     }
 ) {

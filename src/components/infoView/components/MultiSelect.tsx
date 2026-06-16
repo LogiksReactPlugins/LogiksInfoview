@@ -1,14 +1,15 @@
 import React from 'react';
 import type { FormikProps } from "formik";
-import { getOptionLabel, type FlatEntry } from '../utils.js';
-import type { FormField, SelectOptions } from '../InfoView.types.js';
+import { flattenOptions, getOptionLabel, type FlatEntry } from '../utils.js';
+import type { FormField, OptionItem, SelectOptions } from '../InfoView.types.js';
 import { DropdownPortal } from './PortalDropdown.js';
 
 
 type MultiSelectProps = {
     field: FormField;
     isDisabled: boolean;
-loading: boolean;
+    loading: boolean;
+
 
     handleKeyDown: (e: React.KeyboardEvent, isSingle: boolean) => void;
 
@@ -17,14 +18,14 @@ loading: boolean;
 
     valueArray: string[];
     labelClasses: string;
-    options: SelectOptions;
+    options: OptionItem[];
     search: string;
     setSearch: React.Dispatch<React.SetStateAction<string>>;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
     filteredOptions: FlatEntry[];
     highlightedIndex: number;
- 
+
 
     formik: FormikProps<Record<string, any>>;
     executeFieldMethod: (
@@ -50,7 +51,7 @@ export default function MultiSelect({
     highlightedIndex,
     setSearch,
     formik,
-  
+
     executeFieldMethod,
     handlePersist,
     module_refid,
@@ -63,13 +64,26 @@ export default function MultiSelect({
 }: MultiSelectProps) {
 
     const key = field.name;
+
+
+
+    const allValues = options.map(o => o.value);
+
+
+    const isAllSelected = allValues.every(v => valueArray.includes(v));
     return (
         <div className="relative">
+            <input
+                type="hidden"
+                name={key}
+                value={JSON.stringify(valueArray ?? [])}
+            />
             <label className={labelClasses}>
                 {field.label}
                 {field.required && <span className="text-red-500 ml-1">*</span>}
             </label>
             <div
+                id={key}
 
                 className={`
     relative w-full select-none border rounded-lg px-4 py-2.5 flex justify-between items-center
@@ -80,19 +94,14 @@ export default function MultiSelect({
                 tabIndex={0}
                 ref={triggerRef}
                 onClick={() => {
-                    setOpen(v => !v);
+                    if (isDisabled) return;
+                    setOpen((prev) => !prev);
                 }}
                 onKeyDown={(e) => {
                     if (isDisabled) return;
                     handleKeyDown(e, false)
                 }}
-                onBlur={() => {
-                    if (field.multiple) return;
-                    setTimeout(() => {
-                        setOpen(false);
-                        setSearch("");
-                    }, 150);
-                }}
+
 
             >
 
@@ -102,7 +111,7 @@ export default function MultiSelect({
                             .join(", ")
                         : `Select ${field.label}`}
                 </span>
-               {loading ? (
+                {loading ? (
                     <i className="fa-solid fa-spinner fa-spin text-gray-900" />
                 ) : (
                     <svg
@@ -138,6 +147,27 @@ export default function MultiSelect({
                 focus:outline-none focus:ring-0"
                         />
                     </div>}
+                    <label
+                        className="flex items-center gap-x-2 px-2 py-1 hover:bg-gray-50 rounded cursor-pointer text-sm font-medium border-b mb-1"
+                    >
+                        <input
+                            type="checkbox"
+                            checked={isAllSelected}
+                            onChange={(e) => {
+                                const next = e.target.checked
+                                    ? allValues
+                                    : [];
+
+                                formik.setFieldValue(key, next);
+                                handlePersist(next, field, module_refid);
+                                executeFieldMethod("onChange", field, key);
+
+                            }}
+                            disabled={isDisabled}
+                            className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                        />
+                        Select All
+                    </label>
 
                     {/* Filtered options */}
                     {filteredOptions.length > 0 ? (
@@ -159,7 +189,7 @@ export default function MultiSelect({
                                     checked={valueArray?.includes(val)}
                                     onChange={(e) => {
                                         const next = e.target.checked
-                                            ? [...valueArray, val]
+                                            ? Array.from(new Set([...valueArray, val]))
                                             : valueArray?.filter(v => v !== val);
 
                                         formik.setFieldValue(key, next);

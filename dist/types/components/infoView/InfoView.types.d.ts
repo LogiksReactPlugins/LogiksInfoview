@@ -1,5 +1,4 @@
 import { ReactNode, ComponentType } from 'react';
-import { AxiosRequestConfig } from 'axios';
 import { FormikProps } from 'formik';
 export type DbOpsPayload = {
     refid: string | number;
@@ -7,12 +6,31 @@ export type DbOpsPayload = {
     datahash: string;
     refid1?: string | number;
 };
+type FieldName = string;
+export type ChainMap = Record<FieldName, FieldName[]>;
+export interface CommonInfoProps {
+    fields: FormField[];
+    formik: FormikProps<Record<string, any>>;
+    methods?: Record<string, Function>;
+    components?: Record<string, ReactNode>;
+    sqlOpsUrls?: SqlEndpoints | undefined;
+    refid?: string | undefined;
+    module_refid?: string | undefined;
+    fieldOptions: Record<string, OptionItem[]>;
+    setFieldOptions: (fieldName: string, options: OptionItem[]) => void;
+    chainMap: ChainMap;
+    setFieldLoading?: (fieldName: string, loading: boolean) => void;
+    fieldLoading?: boolean;
+    AttachmentPopup?: ComponentType<any> | undefined;
+}
 export interface FormField {
     name: string;
     label?: string;
     parameter?: string | Record<string, string>;
     width?: number | string;
     options?: Record<string, any>;
+    options_top?: Record<string, any>;
+    options_bottom?: Record<string, any>;
     group?: string;
     type?: string;
     regex?: string;
@@ -21,7 +39,6 @@ export interface FormField {
     error_message?: string;
     placeholder?: string;
     field_error?: string;
-    axiosObject?: AxiosRequestConfig;
     valueKey?: string;
     labelKey?: string;
     groupKey?: string;
@@ -58,6 +75,9 @@ export interface FormField {
     persistent?: string | boolean;
     content?: string;
     accept?: string;
+    file_size?: number;
+    buttons?: Record<string, any> | undefined;
+    capture?: "user" | "environment";
 }
 export interface sqlQueryProps {
     table: string;
@@ -120,9 +140,15 @@ export interface InfoViewProps {
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     AttachmentPopup?: ComponentType<any>;
 }
+export type OptionItem = {
+    value: string;
+    label: string;
+    group?: string;
+    title?: string;
+};
 export type FlatOptions = Record<string, string>;
 export type GroupedOptions = Record<string, Record<string, string>>;
-export type SelectOptions = FlatOptions | GroupedOptions;
+export type SelectOptions = FlatOptions | GroupedOptions | OptionItem[];
 export interface InfoData {
     [key: string]: string | number | boolean | null | undefined;
 }
@@ -133,8 +159,8 @@ export interface InfoFieldRendererProps {
     data?: Record<string, string | number | boolean | null | undefined>;
     refid?: string | undefined;
     module_refid?: string | undefined;
-    optionsOverride?: SelectOptions;
-    setFieldOptions: (fieldName: string, options: SelectOptions) => void;
+    optionsOverride?: OptionItem[];
+    setFieldOptions: (fieldName: string, options: OptionItem[]) => void;
     AttachmentPopup?: ComponentType<any> | undefined;
 }
 export interface sqlQueryProps {
@@ -220,19 +246,28 @@ export interface FormProps {
     module_refid?: string | undefined;
     toast?: Toast | undefined;
     AttachmentPopup?: ComponentType<any> | undefined;
+    parent_data: InfoData;
+}
+export interface FormButtonLabels {
+    submit?: string;
+    reset?: string;
+    cancel?: string;
 }
 export interface BaseFormViewProps {
     title?: string | undefined;
     data?: Record<string, any>;
-    onSubmit: (data: Record<string, any>) => void;
+    onSubmit: (values: Record<string, any>) => Promise<any>;
     onCancel: () => void;
     methods?: Record<string, Function>;
     components?: Record<string, ReactNode>;
     widget?: boolean | undefined;
-    sqlOpsUrls: SqlEndpoints;
+    sqlOpsUrls?: SqlEndpoints | undefined;
     refid?: string | undefined;
     module_refid?: string | undefined;
+    buttons?: Record<string, any> | undefined;
+    button_labels?: FormButtonLabels | undefined;
     AttachmentPopup?: ComponentType<any> | undefined;
+    parent_data: InfoData;
 }
 export interface SimpleFormViewProps extends BaseFormViewProps {
     fields: Record<string, Omit<FormField, "name">>;
@@ -245,11 +280,13 @@ export interface FieldRendererProps {
     sqlOpsUrls?: SqlEndpoints | undefined;
     refid?: string | undefined;
     module_refid?: string | undefined;
-    optionsOverride?: SelectOptions;
-    setFieldOptions?: (fieldName: string, options: SelectOptions) => void;
+    optionsOverride?: OptionItem[];
+    setFieldOptions?: (fieldName: string, options: OptionItem[]) => void;
+    chainMap: ChainMap;
     setFieldLoading?: (fieldName: string, loading: boolean) => void;
     fieldLoading?: boolean;
     AttachmentPopup?: ComponentType<any> | undefined;
+    parent_data: InfoData;
 }
 export interface TabViewProps {
     groups: Record<string, InfoViewGroup>;
@@ -270,8 +307,8 @@ export interface TabViewProps {
     toast?: Toast | undefined;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoViewJson: InfoviewJson;
-    fieldOptions: Record<string, SelectOptions>;
-    setFieldOptions: (fieldName: string, options: SelectOptions) => void;
+    fieldOptions: Record<string, OptionItem[]>;
+    setFieldOptions: (fieldName: string, options: OptionItem[]) => void;
     AttachmentPopup?: ComponentType<any> | undefined;
 }
 export interface VerticalNavProps {
@@ -305,8 +342,8 @@ export interface ContentAreaProps extends VerticalNavProps {
     sqlOpsUrls: SqlEndpoints;
     refid?: string | undefined;
     module_refid?: string | undefined;
-    fieldOptions: Record<string, SelectOptions>;
-    setFieldOptions: (name: string, options: SelectOptions) => void;
+    fieldOptions: Record<string, OptionItem[]>;
+    setFieldOptions: (name: string, options: OptionItem[]) => void;
     buttons?: Record<string, any> | undefined;
     AttachmentPopup?: ComponentType<any> | undefined;
 }

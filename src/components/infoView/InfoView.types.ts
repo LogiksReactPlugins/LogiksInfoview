@@ -9,8 +9,31 @@ export type DbOpsPayload = {
     datahash: string;
     refid1?: string | number;
 }
+type FieldName = string;
+export type ChainMap = Record<FieldName, FieldName[]>;
+export interface CommonInfoProps {
+    fields: FormField[];
+    formik: FormikProps<Record<string, any>>;
+    methods?: Record<string, Function>;
+    components?: Record<string, ReactNode>
+    sqlOpsUrls?: SqlEndpoints | undefined;
+    refid?: string | undefined;
+    module_refid?: string | undefined
+    fieldOptions: Record<string, OptionItem[]>;
 
+    setFieldOptions: (
+        fieldName: string,
+        options: OptionItem[]
+    ) => void;
+    chainMap: ChainMap;
+    setFieldLoading?: (
+        fieldName: string,
+        loading: boolean
+    ) => void;
 
+    fieldLoading?: boolean;
+    AttachmentPopup?: ComponentType<any> | undefined;
+}
 
 export interface FormField {
     name: string;
@@ -18,6 +41,8 @@ export interface FormField {
     parameter?: string | Record<string, string>;
     width?: number | string;
     options?: Record<string, any>;
+    options_top?: Record<string, any>;
+    options_bottom?: Record<string, any>;
     group?: string;
     type?: string;
     regex?: string;
@@ -26,7 +51,6 @@ export interface FormField {
     error_message?: string;      // error message if regex fails
     placeholder?: string;        // input placeholder
     field_error?: string;
-    axiosObject?: AxiosRequestConfig,
     valueKey?: string;
     labelKey?: string;
     groupKey?: string;
@@ -63,6 +87,9 @@ export interface FormField {
     persistent?: string | boolean;
     content?: string;
     accept?: string;
+    file_size?: number;
+    buttons?: Record<string, any> | undefined;
+    capture?: "user" | "environment";
 
 }
 
@@ -137,9 +164,16 @@ export interface InfoViewProps {
     AttachmentPopup?: ComponentType<any>;
 }
 
+export type OptionItem = {
+    value: string;
+    label: string;
+    group?: string;
+    title?: string
+};
+
 export type FlatOptions = Record<string, string>;
 export type GroupedOptions = Record<string, Record<string, string>>;
-export type SelectOptions = FlatOptions | GroupedOptions;
+export type SelectOptions = FlatOptions | GroupedOptions | OptionItem[];;
 
 export interface InfoData {
     [key: string]: string | number | boolean | null | undefined;
@@ -153,10 +187,10 @@ export interface InfoFieldRendererProps {
     data?: Record<string, string | number | boolean | null | undefined>; // or data?: Record<string, unknown> if optional
     refid?: string | undefined;
     module_refid?: string | undefined;
-    optionsOverride?: SelectOptions;
+    optionsOverride?: OptionItem[];
     setFieldOptions: (
         fieldName: string,
-        options: SelectOptions
+        options: OptionItem[]
     ) => void;
     AttachmentPopup?: ComponentType<any> | undefined;
 }
@@ -181,12 +215,12 @@ export interface SqlEndpoints {
     uploadURL?: string;
     removeFileURL?: string;
     refid?: string;
-      native?: {
-    downloadFile?: (
-      blob: Blob,
-      fileName: string
-    ) => Promise<void>;
-  };
+    native?: {
+        downloadFile?: (
+            blob: Blob,
+            fileName: string
+        ) => Promise<void>;
+    };
 };
 
 
@@ -267,23 +301,31 @@ export interface FormProps {
     initialvalues?: Record<string, any>;
     module_refid?: string | undefined;
     toast?: Toast | undefined;
-     AttachmentPopup?: ComponentType<any> | undefined;
+    AttachmentPopup?: ComponentType<any> | undefined;
+    parent_data: InfoData
 
 }
-
+export interface FormButtonLabels {
+    submit?: string;
+    reset?: string;
+    cancel?: string;
+}
 
 export interface BaseFormViewProps {
     title?: string | undefined;
     data?: Record<string, any>;
-    onSubmit: (data: Record<string, any>) => void;
+    onSubmit: (values: Record<string, any>) => Promise<any>;
     onCancel: () => void;
     methods?: Record<string, Function>;
     components?: Record<string, ReactNode>;
     widget?: boolean | undefined;
-    sqlOpsUrls: SqlEndpoints;
+    sqlOpsUrls?: SqlEndpoints | undefined;
     refid?: string | undefined;
     module_refid?: string | undefined;
+    buttons?: Record<string, any> | undefined;
+    button_labels?: FormButtonLabels | undefined;
     AttachmentPopup?: ComponentType<any> | undefined;
+    parent_data: InfoData
 
 }
 
@@ -298,19 +340,21 @@ export interface FieldRendererProps {
     components?: Record<string, ReactNode>
     sqlOpsUrls?: SqlEndpoints | undefined;
     refid?: string | undefined;
-    module_refid?: string | undefined;
-    optionsOverride?: SelectOptions;
+    module_refid?: string | undefined
+    optionsOverride?: OptionItem[];
     setFieldOptions?: (
         fieldName: string,
-        options: SelectOptions
+        options: OptionItem[]
     ) => void;
-      setFieldLoading?: (
+    chainMap: ChainMap;
+    setFieldLoading?: (
         fieldName: string,
         loading: boolean
     ) => void;
 
     fieldLoading?: boolean;
     AttachmentPopup?: ComponentType<any> | undefined;
+    parent_data: InfoData
 }
 
 
@@ -333,12 +377,12 @@ export interface TabViewProps {
     toast?: Toast | undefined;
     handleAction?: (action: Record<string, any>, data: InfoData) => void;
     infoViewJson: InfoviewJson;
-    fieldOptions: Record<string, SelectOptions>;
+    fieldOptions: Record<string, OptionItem[]>;
     setFieldOptions: (
         fieldName: string,
-        options: SelectOptions
+        options: OptionItem[]
     ) => void;
-     AttachmentPopup?: ComponentType<any> | undefined;
+    AttachmentPopup?: ComponentType<any> | undefined;
 }
 
 
@@ -378,8 +422,8 @@ export interface ContentAreaProps extends VerticalNavProps {
     sqlOpsUrls: SqlEndpoints;
     refid?: string | undefined;
     module_refid?: string | undefined;
-    fieldOptions: Record<string, SelectOptions>;
-    setFieldOptions: (name: string, options: SelectOptions) => void;
+    fieldOptions: Record<string, OptionItem[]>;
+    setFieldOptions: (name: string, options: OptionItem[]) => void;
     buttons?: Record<string, any> | undefined;
     AttachmentPopup?: ComponentType<any> | undefined;
 

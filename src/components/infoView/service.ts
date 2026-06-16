@@ -1,7 +1,7 @@
 // sqlClient.ts
 
 import axios, { type AxiosResponse } from "axios";
-import type { SelectOptions, SqlEndpoints, sqlQueryProps, UploadResponse } from "./InfoView.types.js";
+import type { OptionItem, SelectOptions, SqlEndpoints, sqlQueryProps, UploadResponse } from "./InfoView.types.js";
 import { formatOptions, normalizeRowSafe, replacePlaceholders } from "./utils.js";
 
 
@@ -193,7 +193,7 @@ export async function runAjaxChain({
     field: any;
     value: any;
     sqlOpsUrls: any;
-    setFieldOptions: (name: string, options: SelectOptions) => void;
+    setFieldOptions: (name: string, options: OptionItem[]) => void;
     values: Record<string, any>
 }) {
     if (!field.ajaxchain || !value || !sqlOpsUrls) return;
@@ -271,13 +271,18 @@ export async function runAjaxChain({
                 };
             }
 
-            const { data: res } = await fetchDataByquery(
-                sqlOpsUrls,
-                query,
-                src.queryid,
-                value
-            );
-            responseData = res;
+            try {
+
+                const { data: res } = await fetchDataByquery(
+                    sqlOpsUrls,
+                    query,
+                    src.queryid,
+                    value
+                );
+                responseData = res;
+            } catch (error) {
+
+            }
 
         }
 
@@ -322,38 +327,38 @@ export async function getPreviewUrl(
 }
 
 export async function getPreviewUrlWithBlob(
-  fileUrl: string,
-  sqlOpsUrls: Record<string, any>
+    fileUrl: string,
+    sqlOpsUrls: Record<string, any>
 ): Promise<{
-  previewUrl: string;
-  blob: Blob;
+    previewUrl: string;
+    blob: Blob;
 }> {
-  const previewPath =
-    sqlOpsUrls.previewPath ?? "/api/files/preview";
+    const previewPath =
+        sqlOpsUrls.previewPath ?? "/api/files/preview";
 
-  const { data: blob } = await axios.get(
-    `${sqlOpsUrls.baseURL}${previewPath}?uri=${encodeURIComponent(
-      fileUrl
-    )}`,
-    {
-      responseType: "blob",
-      headers: {
-        Authorization: `Bearer ${sqlOpsUrls?.accessToken}`,
-      },
-    }
-  );
+    const { data: blob } = await axios.get(
+        `${sqlOpsUrls.baseURL}${previewPath}?uri=${encodeURIComponent(
+            fileUrl
+        )}`,
+        {
+            responseType: "blob",
+            headers: {
+                Authorization: `Bearer ${sqlOpsUrls?.accessToken}`,
+            },
+        }
+    );
 
-  return {
-    previewUrl: URL.createObjectURL(blob),
-    blob,
-  };
+    return {
+        previewUrl: URL.createObjectURL(blob),
+        blob,
+    };
 }
 
 export async function uploadFiles(
     sqlOpsUrls: SqlEndpoints | undefined,
     files: FileList
 ): Promise<UploadResponse[]> {
- 
+
 
     const uploadUrl = sqlOpsUrls?.uploadURL ?? "/api/files/upload";
 

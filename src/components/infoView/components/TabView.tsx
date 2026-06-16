@@ -425,6 +425,7 @@ export default function TabView({
                 refid={refid}
                 infoViewJson={infoViewJson}
                 AttachmentPopup={AttachmentPopup}
+                parent_data={infoData}
             />
         ),
     };

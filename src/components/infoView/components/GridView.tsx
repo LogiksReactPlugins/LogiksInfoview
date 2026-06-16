@@ -8,9 +8,9 @@ import LogiksForm from './Form.js';
 
 
 
-export default function GridView({ 
+export default function GridView({
     tabObj, methods, tabName, sqlOpsUrls, refid, Reports, toast, handleAction,
-     infoViewJson ,AttachmentPopup
+    infoViewJson, AttachmentPopup, parent_data
 }:
     {
         tabObj: InfoViewGroup,
@@ -19,7 +19,7 @@ export default function GridView({
         sqlOpsUrls: Record<string, any>,
         refid: string;
         Reports?: ComponentType<any>;
-        toast?: Toast| undefined;
+        toast?: Toast | undefined;
         handleAction?: (action: Record<string, any>, data: InfoData) => void;
         AttachmentPopup?: ComponentType<any> | undefined;
         infoViewJson: {
@@ -32,6 +32,7 @@ export default function GridView({
             actions?: Record<string, any>;
             module_refid?: string | undefined
         };
+        parent_data: InfoData;
     }) {
     // Pagination state
 
@@ -75,7 +76,7 @@ export default function GridView({
 
 
     const confirmDelete = async () => {
-   
+
 
         if (!deleteTarget?.id) return;
 
@@ -227,14 +228,15 @@ export default function GridView({
                                     operation: editData ? "update" : "create"
 
                                 },
-                                module_refid:infoViewJson?.module_refid
+                                module_refid: infoViewJson?.module_refid
                             }}
                             toast={toast}
                             methods={methods}
                             initialvalues={editData ?? {}}
                             setEditData={handleFormClose}
                             AttachmentPopup={AttachmentPopup}
-                            
+                            parent_data={parent_data}
+
                         />
                     }
                     <ConfirmModal
@@ -245,30 +247,31 @@ export default function GridView({
                 </>
             ) : (
 
-               
-               
-                  hasFormConfig && <LogiksForm
-                            formJson={{
-                                ...config[formType],
-                                source: {
-                                    ...config?.[formType].source,
-                                    refid: editData?.id
-                                },
-                                endPoints: {
-                                    ...sqlOpsUrls,
-                                    operation: editData ? "update" : "create"
 
-                                },
-                                module_refid:infoViewJson?.module_refid
-                            }}
-                            toast={toast}
-                            methods={methods}
-                            initialvalues={editData ?? {}}
-                            setEditData={handleFormClose}
-                            AttachmentPopup={AttachmentPopup}
-                            
-                        />
-                    
+
+                hasFormConfig && <LogiksForm
+                    formJson={{
+                        ...config[formType],
+                        source: {
+                            ...config?.[formType].source,
+                            refid: editData?.id
+                        },
+                        endPoints: {
+                            ...sqlOpsUrls,
+                            operation: editData ? "update" : "create"
+
+                        },
+                        module_refid: infoViewJson?.module_refid
+                    }}
+                    toast={toast}
+                    methods={methods}
+                    initialvalues={editData ?? {}}
+                    setEditData={handleFormClose}
+                    AttachmentPopup={AttachmentPopup}
+                    parent_data={parent_data}
+
+                />
+
 
             )}
         </>

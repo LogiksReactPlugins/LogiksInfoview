@@ -1,7 +1,7 @@
 import { default as React } from 'react';
 import { FormikProps } from 'formik';
 import { FlatEntry } from '../utils.js';
-import { FormField, SelectOptions } from '../InfoView.types.js';
+import { FormField, OptionItem } from '../InfoView.types.js';
 type MultiSelectProps = {
     field: FormField;
     isDisabled: boolean;
@@ -10,7 +10,7 @@ type MultiSelectProps = {
     listRef: React.RefObject<HTMLDivElement | null>;
     valueArray: string[];
     labelClasses: string;
-    options: SelectOptions;
+    options: OptionItem[];
     search: string;
     setSearch: React.Dispatch<React.SetStateAction<string>>;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;

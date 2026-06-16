@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { determineViewMode, groupFields, normalizeToObject, replacePlaceholders, transformedObject } from './utils.js';
 
-import type { InfoViewGroup, InfoViewProps, InfoData, SelectOptions } from './InfoView.types.js';
+import type { InfoViewGroup, InfoViewProps, InfoData,  OptionItem } from './InfoView.types.js';
 
 import CommonInfo from "./components/CommonInfo.js";
 import TabView from "./components/TabView.js";
@@ -38,13 +38,15 @@ export default function LogiksInfoView({
 
 
     const [fieldOptions, setFieldOptions] = React.useState<
-        Record<string, SelectOptions>
+        Record<string, OptionItem[]>
     >({});
 
-    const setOptionsForField = (name: string, options: SelectOptions) => {
-        setFieldOptions(prev => ({ ...prev, [name]: options }));
+    const setOptionsForField = (name: string, options: OptionItem[]) => {
+        setFieldOptions(prev => ({
+            ...prev,
+            [name]: options,
+        }));
     };
-
     const refid = infoViewJson?.source?.refid;
     let groups: Record<string, InfoViewGroup> = { ...groupedFields };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { FormikProps } from "formik";
 import { getOptionLabel, type FlatEntry } from '../utils.js';
-import type { FormField, SelectOptions } from '../InfoView.types.js';
+import type { FormField, OptionItem, SelectOptions } from '../InfoView.types.js';
 import { DropdownPortal } from './PortalDropdown.js';
 
 
@@ -16,7 +16,7 @@ type MultiSelectProps = {
     listRef: React.RefObject<HTMLDivElement | null>;
 
     labelClasses: string;
-    options: SelectOptions;
+    options: OptionItem[];
     search: string;
     setSearch: React.Dispatch<React.SetStateAction<string>>;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -61,6 +61,7 @@ export default function CustomSelect({
 }: MultiSelectProps) {
     const key = field.name;
 
+
     return <div className="relative">
         <input
             type="hidden"
@@ -73,6 +74,7 @@ export default function CustomSelect({
             {field.required && <span className="text-red-500 ml-1">*</span>}
         </label>
         <div
+            id={key}
 
             className={`
         relative w-full select-none border rounded-lg px-4 py-2.5 flex justify-between items-center
@@ -85,15 +87,17 @@ export default function CustomSelect({
             ref={triggerRef}
             tabIndex={0}
             onClick={() => {
-                setOpen(v => !v);
-                //setHighlightedIndex(0);
+                if (isDisabled) return;
+                setOpen((prev) => !prev);
             }}
+
 
 
             onKeyDown={(e) => {
                 if (isDisabled) return;
                 handleKeyDown(e, true)
             }}
+
 
         >
             <span className="text-sm text-gray-700">
@@ -126,7 +130,7 @@ export default function CustomSelect({
             <div
                 ref={listRef}
 
-                className="w-full border border-gray-200 rounded-lg bg-white shadow-md z-10 max-h-60 overflow-y-auto p-2">
+                className=" w-full border border-gray-200 rounded-lg bg-white shadow-md  max-h-60 overflow-y-auto p-2">
                 {/*  Search input */}
                 {field.search && <div className="sticky top-0 bg-white p-1">
                     <input

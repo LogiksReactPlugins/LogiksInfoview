@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 import { InfoData, Infoview, FormField, InfoViewGroup, Toast } from '../InfoView.types.js';
-export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson, AttachmentPopup }: {
+export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson, AttachmentPopup, parent_data }: {
     tabObj: InfoViewGroup;
     methods: Record<string, Function>;
     tabName: string;
@@ -20,5 +20,6 @@ export default function GridView({ tabObj, methods, tabName, sqlOpsUrls, refid, 
         actions?: Record<string, any>;
         module_refid?: string | undefined;
     };
+    parent_data: InfoData;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=GridView.d.ts.map
