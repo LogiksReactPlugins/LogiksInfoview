@@ -13,7 +13,6 @@ export default function LogiksForm({
   formJson,
   methods = {},
   onCancel = () => { },
-  components = {},
   callback = () => { },
   initialvalues,
   setEditData,
@@ -367,7 +366,7 @@ export default function LogiksForm({
       onSubmit={handleSubmit}
       onCancel={onCancel}
       methods={methods}
-      components={components}
+    
       sqlOpsUrls={sqlOpsUrls}
 
       refid={refid}

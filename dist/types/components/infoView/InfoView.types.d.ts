@@ -241,7 +241,6 @@ export interface FormProps {
     onCancel?: () => void;
     setEditData?: React.Dispatch<React.SetStateAction<Record<string, any> | null>>;
     callback?: (res: any) => void;
-    components?: Record<string, ReactNode>;
     initialvalues?: Record<string, any>;
     module_refid?: string | undefined;
     toast?: Toast | undefined;
@@ -259,7 +258,6 @@ export interface BaseFormViewProps {
     onSubmit: (values: Record<string, any>) => Promise<any>;
     onCancel: () => void;
     methods?: Record<string, Function>;
-    components?: Record<string, ReactNode>;
     widget?: boolean | undefined;
     sqlOpsUrls?: SqlEndpoints | undefined;
     refid?: string | undefined;
