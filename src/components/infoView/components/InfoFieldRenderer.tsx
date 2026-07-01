@@ -4,6 +4,7 @@ import type { InfoFieldRendererProps, OptionItem, SelectOptions, sqlQueryProps }
 import { decodeSignature, formatOptions, mergeOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, sanitizeHtml } from '../utils.js';
 import FilePreviewTrigger from './FilePreviewTrigger.js';
 import { fetchDataByquery, runAjaxChain } from '../service.js';
+import MarkdownViewer from './MarkdownViewer.js';
 
 
 
@@ -317,9 +318,15 @@ export default function InfoFieldRenderer({
           </div>
         ) : field.type === "richtextarea" ? (
           <div
-            className="tiptap border border-gray-200 min-h-[400px] max-h-[220px] overflow-auto bg-white rounded p-2 text-sm"
+            className="tiptap border border-gray-200 min-h-[220px] max-h-[400px] overflow-auto bg-white rounded p-2 text-sm"
             dangerouslySetInnerHTML={{ __html: safeHtml ?? "" }}
           />
+        ) : field.type === "markdown" ? (
+          <MarkdownViewer value={
+            typeof renderValue === "string"
+              ? renderValue
+              : String(renderValue)
+          } />
         ) : (
           <p className={baseInputClasses}>{renderValue}</p>
         )}
