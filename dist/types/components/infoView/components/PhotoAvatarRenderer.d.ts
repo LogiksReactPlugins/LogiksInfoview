@@ -1,3 +1,4 @@
+import { default as React } from 'react';
 import { FormikProps } from 'formik';
 import { FormField, SqlEndpoints } from '../InfoView.types.js';
 type PhotoAvatarRendererProps = {
@@ -6,6 +7,6 @@ type PhotoAvatarRendererProps = {
     sqlOpsUrls?: SqlEndpoints | undefined;
     module_refid?: string | undefined;
 };
-export default function PhotoAvatarRenderer({ formik, field, sqlOpsUrls, module_refid }: PhotoAvatarRendererProps): import("react/jsx-runtime").JSX.Element;
+export default function PhotoAvatarRenderer({ formik, field, sqlOpsUrls, module_refid }: PhotoAvatarRendererProps): React.JSX.Element;
 export {};
 //# sourceMappingURL=PhotoAvatarRenderer.d.ts.map

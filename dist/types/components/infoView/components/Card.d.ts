@@ -3,6 +3,6 @@ interface CardProps {
     title: string;
     children: ReactNode;
 }
-export default function Card({ title, children }: CardProps): import("react/jsx-runtime").JSX.Element;
+export default function Card({ title, children }: CardProps): import("react").JSX.Element;
 export {};
 //# sourceMappingURL=Card.d.ts.map

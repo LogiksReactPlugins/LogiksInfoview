@@ -16,6 +16,6 @@ interface CardViewProps {
     components?: Record<string, ComponentType<any> | ReactNode>;
     AttachmentPopup?: ComponentType<any> | undefined;
 }
-export default function CardView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson, fieldOptions, setFieldOptions, components, AttachmentPopup }: CardViewProps): import("react/jsx-runtime").JSX.Element;
+export default function CardView({ groups, methods, infoData, viewRenderers, sqlOpsUrls, refid, Reports, toast, handleAction, infoViewJson, fieldOptions, setFieldOptions, components, AttachmentPopup }: CardViewProps): React.JSX.Element;
 export {};
 //# sourceMappingURL=CardView.d.ts.map

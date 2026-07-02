@@ -6,6 +6,6 @@ type FilePreviewProps = {
     blob: Blob | null;
     filePath: string;
 };
-declare const FilePreview: ({ fileUrl, category, blob, sqlOpsUrls, filePath, }: FilePreviewProps) => import("react/jsx-runtime").JSX.Element | null;
+declare const FilePreview: ({ fileUrl, category, blob, sqlOpsUrls, filePath, }: FilePreviewProps) => import("react").JSX.Element | null;
 export default FilePreview;
 //# sourceMappingURL=FilePreview.d.ts.map

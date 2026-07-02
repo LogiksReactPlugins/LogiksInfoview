@@ -23,6 +23,6 @@ type MultiSelectProps = {
     triggerRef: React.RefObject<HTMLDivElement | null>;
     open: boolean;
 };
-export default function MultiSelect({ field, isDisabled, handleKeyDown, valueArray, labelClasses, listRef, search, filteredOptions, highlightedIndex, setSearch, formik, executeFieldMethod, handlePersist, module_refid, options, triggerRef, open, setOpen, loading }: MultiSelectProps): import("react/jsx-runtime").JSX.Element;
+export default function MultiSelect({ field, isDisabled, handleKeyDown, valueArray, labelClasses, listRef, search, filteredOptions, highlightedIndex, setSearch, formik, executeFieldMethod, handlePersist, module_refid, options, triggerRef, open, setOpen, loading }: MultiSelectProps): React.JSX.Element;
 export {};
 //# sourceMappingURL=MultiSelect.d.ts.map

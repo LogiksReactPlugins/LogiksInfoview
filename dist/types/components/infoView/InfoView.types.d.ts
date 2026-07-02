@@ -28,6 +28,8 @@ export interface FormField {
     label?: string;
     parameter?: string | Record<string, string>;
     width?: number | string;
+    height?: number | string;
+    language?: string;
     options?: Record<string, any>;
     options_top?: Record<string, any>;
     options_bottom?: Record<string, any>;

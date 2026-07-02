@@ -5,6 +5,7 @@ import { decodeSignature, formatOptions, mergeOptions, normalizeOptions, normali
 import FilePreviewTrigger from './FilePreviewTrigger.js';
 import { fetchDataByquery, runAjaxChain } from '../service.js';
 import MarkdownViewer from './MarkdownViewer.js';
+import CodeViewer from './CodeViewer.js';
 
 
 
@@ -327,6 +328,16 @@ export default function InfoFieldRenderer({
               ? renderValue
               : String(renderValue)
           } />
+        ) : field.type === "codeeditor" ? (
+          <CodeViewer value={
+            typeof renderValue === "string"
+              ? renderValue
+              : String(renderValue)
+          } 
+
+          language={field.language ?? "javascript"}
+          height={field.height?? 400}
+          />
         ) : (
           <p className={baseInputClasses}>{renderValue}</p>
         )}

@@ -337,23 +337,12 @@ export declare const example10: {
         registerQuery: string;
         runQuery: string;
     };
-    hooks: {
-        presubmit: string[];
-        postsubmit: string[];
-    };
     source: {
         type: string;
         dbopsid: string;
     };
-    forcefill: {
-        guid: string;
-    };
     gotolink: string;
     fields: {
-        id: {
-            lable: string;
-            hidden: boolean;
-        };
         company_code_id: {
             label: string;
             type: string;
@@ -396,175 +385,249 @@ export declare const example10: {
             width: number;
             options: never[];
         };
-        project_id: {
+        project_function_id: {
+            label: string;
+            type: string;
+            required: boolean;
+            parameter: {
+                project_id: string;
+            };
+            ajaxchain: {
+                target: string;
+                src: {
+                    type: string;
+                    method: string;
+                    endpoint: string;
+                };
+            }[];
+            width: number;
+            "no-option": string;
+            options: never[];
+        };
+        location_id: {
+            label: string;
+            type: string;
+            "no-option": string;
+            required: boolean;
+            width: number;
+            options: never[];
+        };
+        name: {
+            label: string;
+            hidden: boolean;
+            width: number;
+        };
+        email: {
+            label: string;
+            type: string;
+            hidden: boolean;
+            width: number;
+        };
+        mobile: {
+            label: string;
+            type: string;
+            hidden: boolean;
+            width: number;
+        };
+        subject: {
             label: string;
             type: string;
             required: boolean;
             width: number;
+        };
+        ticket_type: {
+            label: string;
+            type: string;
+            options: {
+                bug: string;
+                service_request: string;
+                enhancement: string;
+                change_request: string;
+            };
+            search: boolean;
             "no-option": string;
+            required: boolean;
+            width: number;
+        };
+        department_id: {
+            label: string;
+            type: string;
+            "no-option": string;
+            required: boolean;
+            width: number;
+            ajaxchain: {
+                target: string;
+                src: {
+                    type: string;
+                    queryid: string;
+                };
+            }[];
+            autocomplete: {
+                target: string;
+                src: {
+                    type: string;
+                    method: string;
+                    endpoint: string;
+                    parameter: {
+                        department_id: string;
+                        tickets_category_id: string;
+                        tickets_subcategory_id: string;
+                        tickets_sub_subcategory_id: string;
+                    };
+                };
+            };
+            options: {
+                title: string;
+                value: number;
+            }[];
+        };
+        priority: {
+            label: string;
+            type: string;
+            groupid: string;
+            required: boolean;
+            default: string;
+            width: number;
+            options: {
+                title: string;
+                value: string;
+                class: null;
+                privilege: string;
+            }[];
+        };
+        tickets_category_id: {
+            label: string;
+            type: string;
+            "no-option": string;
+            required: boolean;
+            width: number;
+            ajaxchain: {
+                target: string;
+                src: {
+                    type: string;
+                    queryid: string;
+                };
+            };
             options: never[];
+        };
+        tickets_subcategory_id: {
+            label: string;
+            type: string;
+            "no-option": string;
+            required: boolean;
+            width: number;
+            ajaxchain: {
+                target: string;
+                src: {
+                    type: string;
+                    queryid: string;
+                };
+            };
+            options: never[];
+        };
+        tickets_sub_subcategory_id: {
+            label: string;
+            type: string;
+            "no-option": string;
+            required: boolean;
+            width: number;
+            options: never[];
+        };
+        raised_by: {
+            label: string;
+            type: string;
+            search: boolean;
+            default: string;
+            orderBy: string;
+            required: boolean;
+            width: number;
+            options: {
+                title: string;
+                value: string;
+            }[];
+        };
+        descs: {
+            label: string;
+            type: string;
+            width: number;
+            height: string;
+            language: string;
+            required: boolean;
+        };
+        attachment: {
+            label: string;
+            multiple: boolean;
+            type: string;
+            width: number;
+        };
+        assigned_to: {
+            label: string;
+            type: string;
+            search: boolean;
+            "no-option": string;
+            required: boolean;
+            width: number;
+            options: {
+                title: string;
+                value: string;
+            }[];
+        };
+        forward_to: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+            options: {
+                title: string;
+                value: string;
+            }[];
+        };
+        forward_remark: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+        hold_remark: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+        resolved_remark: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+        reopen_remark: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
+        };
+        closed_remark: {
+            label: string;
+            type: string;
+            required: boolean;
+            width: number;
         };
     };
     infoview: {
         template: string;
         groups: {
-            design_details: {
+            comments: {
                 label: string;
                 type: string;
-                src: string;
-                config: {
-                    type: string;
-                    uimode: string;
-                    uiswitcher: boolean;
-                    policy_create: string;
-                    policy_view: string;
-                    policy_delete: string;
-                    policy_update: string;
-                    toolbar: {
-                        search: boolean;
-                        print: boolean;
-                        export: boolean;
-                        email: boolean;
-                    };
-                    colkey: string;
-                    "popup.form": {
-                        hooks: {
-                            postsubmit: string[];
-                        };
-                        source: {
-                            type: string;
-                            dbopsid: string;
-                        };
-                        forcefill: {
-                            guid: string;
-                        };
-                        fields: {
-                            id: {
-                                label: string;
-                                hidden: boolean;
-                            };
-                            design_id: {
-                                label: string;
-                                type: string;
-                                hidden: boolean;
-                                default: string;
-                            };
-                            detail_key: {
-                                label: string;
-                                type: string;
-                                required: boolean;
-                                width: number;
-                                queryid: string;
-                            };
-                            detail_value: {
-                                label: string;
-                                type: string;
-                                required: boolean;
-                                width: number;
-                                queryid: string;
-                            };
-                            uom: {
-                                label: string;
-                                type: string;
-                                groupid: string;
-                                required: boolean;
-                                search: boolean;
-                                width: number;
-                                options: {
-                                    title: string;
-                                    value: string;
-                                    class: null;
-                                    privilege: string;
-                                }[];
-                            };
-                            availableboq: {
-                                label: string;
-                                type: string;
-                                source: {
-                                    type: string;
-                                    method: string;
-                                    endpoint: string;
-                                };
-                                "no-option": string;
-                                required: boolean;
-                                width: number;
-                                options: never[];
-                            };
-                            short_desc: {
-                                label: string;
-                                type: string;
-                                disabled: boolean;
-                                required: boolean;
-                                width: number;
-                            };
-                        };
-                    };
-                    datagrid: {
-                        detail_key: {
-                            label: string;
-                            searchable: boolean;
-                        };
-                        detail_value: {
-                            label: string;
-                            searchable: boolean;
-                        };
-                        uom: {
-                            label: string;
-                            searchable: boolean;
-                            formatter: string;
-                        };
-                        availableboq: {
-                            label: string;
-                            searchable: boolean;
-                        };
-                        short_desc: {
-                            label: string;
-                            searchable: boolean;
-                        };
-                    };
-                    rules: {
-                        row_class: {
-                            detail_key: {
-                                Concrete: string;
-                                Reinforcement: string;
-                                "HT Wire": string;
-                            };
-                        };
-                    };
-                    actions1: {
-                        addInfoRecord: {
-                            label: string;
-                        };
-                    };
-                    buttons: {
-                        editRecord: {
-                            label: string;
-                            icon: string;
-                        };
-                        "api@precastTracking.deleteRecord": {
-                            label: string;
-                            icon: string;
-                            class: string;
-                            lgksConfirm: string;
-                            payload: {
-                                table: string;
-                            };
-                        };
-                        "popup@activity_logs.popup_activity_logs/{id}": {
-                            label: string;
-                            params: {
-                                ref_src: string;
-                            };
-                            icon: string;
-                        };
-                    };
-                    queryid: string;
-                };
-                width: number;
+                component: string;
+            };
+            movements: {
+                label: string;
+                type: string;
+                component: string;
             };
         };
     };
-    script: string;
     module_refid: string;
     module_type: string;
 };
