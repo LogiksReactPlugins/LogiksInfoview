@@ -4,7 +4,7 @@ import InfoFieldRenderer from './InfoFieldRenderer.js'
 import SingleView from './SingleView.js';
 import GridView from './GridView.js';
 
-import { isHidden, tailwindCols, toColWidth } from '../utils.js';
+import { isHidden, tailwindCols, tailwindRows, toColWidth } from '../utils.js';
 import type { InfoViewGroup, FormField, InfoData, SqlEndpoints, SelectOptions, InfoviewJson, Toast, OptionItem } from '../InfoView.types.js';
 import Card from './Card.js';
 import { resolveComponent } from '@/components/helpers/resolveComponent.js';
@@ -52,16 +52,16 @@ export default function CardView({
     type RendererKey = "single" | "grid";
     const defaultRenderer: Record<RendererKey, (tab: InfoViewGroup, tabName: string) => React.JSX.Element> = {
         single: (tab, tabName) => (
-            <SingleView 
-            fieldOptions={fieldOptions} 
-            setFieldOptions={setFieldOptions} 
-            module_refid={infoViewJson?.module_refid} 
-            tabObj={tab} 
-            methods={methods} 
-            tabName={tabName} 
-            sqlOpsUrls={sqlOpsUrls} 
-            refid={refid} 
-            AttachmentPopup={AttachmentPopup}
+            <SingleView
+                fieldOptions={fieldOptions}
+                setFieldOptions={setFieldOptions}
+                module_refid={infoViewJson?.module_refid}
+                tabObj={tab}
+                methods={methods}
+                tabName={tabName}
+                sqlOpsUrls={sqlOpsUrls}
+                refid={refid}
+                AttachmentPopup={AttachmentPopup}
             />
         ),
         grid: (tab, tabName) => (
@@ -115,7 +115,7 @@ export default function CardView({
         <div className="bg-white animate-in fade-in duration-300 rounded-b-2xl border-t-0 border border-gray-100">
 
             <div className="mx-auto">
-                <div className="space-y-2  flex flex-col min-h-0">
+                <div className="grid grid-cols-12 gap-3">
                     {groups && Object.entries(groups).map(([group, obj], index) => {
 
                         let visibleButtons = buttons ? Object.entries(buttons).filter(([_, val]) => {
@@ -124,8 +124,20 @@ export default function CardView({
                         }) : [];
 
                         const node = resolveComponent(obj.component, components);
+                        console.log("ojjj", obj);
+                        const width = obj.width ?? 12;
+                        const rowSpan = obj.row_span ?? 1;
+                        const rowSpanClass = tailwindRows[rowSpan] ?? "";
 
-                        return <Card key={group} title={obj.label} >
+                        return  <div
+        key={group}
+        className={`
+            col-span-12
+            ${tailwindCols[toColWidth(Number(width))] || "lg:col-span-12"}
+            ${rowSpanClass}
+        `}
+    >
+        <Card key={group} title={obj.label} >
                             {obj?.type === "fields" && obj?.fields ? (
                                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0">
                                     <div className={"grid grid-cols-12 gap-2"}>
@@ -179,6 +191,7 @@ export default function CardView({
                                     ))}
                             </div>
                         </Card>
+                        </div>
                     })}
 
                     <div className="flex justify-end gap-2 pt-3 border-t border-gray-100">

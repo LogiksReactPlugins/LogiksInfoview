@@ -25,6 +25,7 @@ export declare function transformedObject(originalObject: Record<string, any>, o
 export declare function flatFields(fields: Record<string, Omit<FormField, "name">>, operation?: string): FormField[];
 type ColWidth = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 export declare const tailwindCols: Record<ColWidth, string>;
+export declare const tailwindRows: Record<number, string>;
 export declare function toColWidth(width: number | undefined): ColWidth;
 export declare function toGrid(width: number | undefined): ColWidth;
 export declare function copyToClipboard(content: string): Promise<void>;

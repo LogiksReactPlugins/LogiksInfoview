@@ -224,6 +224,15 @@ export const tailwindCols: Record<ColWidth, string> = {
   1: "lg:col-span-1"
 };
 
+export const tailwindRows: Record<number, string> = {
+  1: "row-span-1",
+  2: "row-span-2",
+  3: "row-span-3",
+  4: "row-span-4",
+  5: "row-span-5",
+  6: "row-span-6",
+};
+
 export function toColWidth(width: number | undefined): ColWidth {
   const allowed: ColWidth[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   return allowed.includes(width as ColWidth) ? (width as ColWidth) : 6;

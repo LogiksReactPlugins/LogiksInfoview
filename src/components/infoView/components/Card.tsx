@@ -10,11 +10,9 @@ export default function Card({ title, children }: CardProps) {
 
 
     return (
-        <div className={`group relative mt-1 flex-1 flex flex-col min-h-0 max-h-screen`}>
-            {/* Decorative gradient line */}
+      <div className="group relative h-full">
+    <div className="h-full flex flex-col bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-lg overflow-hidden">
 
-
-            <div className="flex flex-col min-h-0 relative  bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden ">
                 {/* Header with gradient background */}
                 <button
 
@@ -32,14 +30,13 @@ export default function Card({ title, children }: CardProps) {
                 </button>
 
                 {/* Content with smooth slide animation */}
-                <div
-                    className={`flex flex-col min-h-0 transition-all duration-500 ease-in-out opacity-100'
-            }`}
-                >
-                    <div className="px-1 pb-1 bg-gradient-to-br from-gray-50/50 to-white flex flex-col min-h-0">
-                        <div className="space-y-5 pt-1 flex-1 flex flex-col min-h-0 overflow-y-auto">{children}</div>
-                    </div>
-                </div>
+              <div className="flex-1 flex flex-col min-h-0 transition-all duration-500 ease-in-out">
+    <div className="flex-1 flex flex-col min-h-0 px-1 pb-1 bg-gradient-to-br from-gray-50/50 to-white">
+        <div className="flex-1 flex flex-col min-h-0 overflow-y-auto">
+            {children}
+        </div>
+    </div>
+</div>
             </div>
         </div>
     );

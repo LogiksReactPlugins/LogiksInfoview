@@ -96,6 +96,7 @@ export interface InfoViewGroup {
     config?: Record<string, any>;
     width?: number;
     vmode?: string;
+    row_span?: number;
 }
 export interface Infoview {
     groups?: Record<string, InfoViewGroup>;

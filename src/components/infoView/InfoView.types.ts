@@ -111,7 +111,8 @@ export interface InfoViewGroup {
     fields?: FormField[];
     config?: Record<string, any>;
     width?: number;
-    vmode?: string
+    vmode?: string;
+    row_span?:number;
 }
 
 export interface Infoview {
