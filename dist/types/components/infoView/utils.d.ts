@@ -2,6 +2,8 @@ import { FormikProps } from 'formik';
 import { AutocompleteConfig, ChainMap, FileCategory, FileItem, FormField, GroupedOptions, InfoViewGroup, Infoview, OptionItem, SelectOptions } from './InfoView.types.js';
 import * as Yup from "yup";
 export declare function determineViewMode(json: Infoview): string;
+export declare const formatDate: (value: string) => string;
+export declare const formatMonth: (value: string) => string;
 export declare function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup>;
 export declare const getGeoFieldKeys: (fields: Record<string, Omit<FormField, "name">>) => string[];
 export type GeolocationData = {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import type { InfoFieldRendererProps, OptionItem, SelectOptions, sqlQueryProps } from '../InfoView.types.js';
-import { decodeSignature, formatOptions, mergeOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, sanitizeHtml } from '../utils.js';
+import { decodeSignature, formatDate, formatMonth, formatOptions, mergeOptions, normalizeOptions, normalizeRowSafe, replacePlaceholders, resolveDisplayValue, sanitizeHtml } from '../utils.js';
 import FilePreviewTrigger from './FilePreviewTrigger.js';
 import { fetchDataByquery, runAjaxChain } from '../service.js';
 import MarkdownViewer from './MarkdownViewer.js';
@@ -232,7 +232,10 @@ export default function InfoFieldRenderer({
 
   if (typeof rawVal === "string") {
     if (field.type === "date") {
-      displayVal = rawVal.split("T")[0];
+
+      displayVal = formatDate(rawVal);
+    } else if (field.type === "month") {
+      displayVal = formatMonth(rawVal);
     } else if (field.type === "time") {
       displayVal = rawVal.includes("T")
         ? rawVal.slice(11, 16)
@@ -333,10 +336,10 @@ export default function InfoFieldRenderer({
             typeof renderValue === "string"
               ? renderValue
               : String(renderValue)
-          } 
+          }
 
-          language={field.language ?? "javascript"}
-          height={field.height?? 400}
+            language={field.language ?? "javascript"}
+            height={field.height ?? 400}
           />
         ) : (
           <p className={baseInputClasses}>{renderValue}</p>
