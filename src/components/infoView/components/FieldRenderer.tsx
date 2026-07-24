@@ -1,4 +1,5 @@
 
+import { useEffect, useRef, useState } from 'react';
 import type { FieldRendererProps, FormField } from '../InfoView.types.js';
 import useFieldRenderer from '../hooks/useFieldRenderer.js';
 import { fetchGeolocation, getMaxDate, getOptionLabel, groupOptions, validateFiles } from '../utils.js';
@@ -47,7 +48,34 @@ export default function FieldRenderer({
 
     return null;
   };
+  const fieldButtons = field.buttons
+    ? Object.entries(field.buttons as Record<string, any>)
+    : [];
 
+  // Separate "more" (dropdown) buttons from direct buttons
+  const moreButtons = fieldButtons.find(([key]) => key === "more")?.[1] ?? null;
+  const directButtons = fieldButtons.filter(([key]) => key !== "more");
+
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    if (!moreOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
+        setMoreOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [moreOpen]);
+
+  const handleButtonClick = (method: string, val: any) => {
+    console.log("called handleaction");
+    
+    methods?.handleActions?.({ [method]: val }, formik.values, refreshOptions);
+  };
 
   const renderField = (): React.ReactNode => {
     switch (field.type) {
@@ -976,8 +1004,78 @@ export default function FieldRenderer({
     }
 
   }
+if (fieldButtons.length === 0) return renderField();
+  return (
+    <div className="flex items-start gap-1.5">
+      <div className="flex-1 min-w-0">{renderField()}</div>
 
-  return renderField();
+    <div className="flex gap-1 shrink-0 pt-[22px]">
+
+        {/* Direct buttons */}
+       {directButtons.map(([method, val]) => (
+      <button
+        key={method}
+        type="button"
+        onClick={() => handleButtonClick(method, val)}
+        className={val.class
+          ? val.class
+          : `inline-flex items-center gap-1.5 px-2.5 py-2 text-xs font-semibold
+             text-indigo-600 bg-indigo-50 hover:bg-indigo-100
+             border border-indigo-200 rounded-lg shadow-sm
+             hover:shadow-md transform hover:scale-105
+             transition-all duration-200 cursor-pointer whitespace-nowrap`}
+      >
+        {val.icon ? <i className={val.icon} /> : val.label}
+      </button>
+    ))}
+
+        {/* Three-dot dropdown */}
+        {moreButtons && (
+          <div className="relative" ref={moreRef}>
+       <button
+          type="button"
+          onClick={() => setMoreOpen(p => !p)}
+          className="inline-flex items-center justify-center px-2 py-2
+            text-gray-500 hover:text-gray-700 bg-white hover:bg-gray-50
+            border border-gray-200 rounded-lg shadow-sm
+            hover:shadow-md transform hover:scale-105
+            transition-all duration-200 cursor-pointer"
+        >
+          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+            <circle cx="12" cy="5" r="1.8" />
+            <circle cx="12" cy="12" r="1.8" />
+            <circle cx="12" cy="19" r="1.8" />
+          </svg>
+        </button>
+
+            {moreOpen && (
+              <div className="absolute right-0 top-full mt-1.5 w-44 bg-white
+              border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden
+              animate-in fade-in slide-in-from-top-1 duration-150">
+                {Object.entries(moreButtons as Record<string, any>).map(([method, val]: [string, any]) => (
+                  <button
+                    key={method}
+                    type="button"
+                    onClick={() => {
+                      handleButtonClick(method, val);
+                      setMoreOpen(false);
+                    }}
+                    className={val.class
+                      ? `w-full flex items-center gap-2 px-3 py-2 text-sm cursor-pointer ${val.class}`
+                      : `w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700
+                       hover:bg-gray-50 transition-colors duration-150 cursor-pointer`}
+                  >
+                    {val.icon && <i className={`${val.icon} w-4 text-center text-gray-400`} />}
+                    <span>{val.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 
 }
 

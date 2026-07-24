@@ -1,3 +1,3 @@
 import { FieldRendererProps } from '../InfoView.types.js';
-export default function FieldRenderer({ field, formik, methods, sqlOpsUrls, refid, module_refid, optionsOverride, setFieldOptions, chainMap, fieldLoading, setFieldLoading, AttachmentPopup, parent_data }: FieldRendererProps): import('react').ReactNode;
+export default function FieldRenderer({ field, formik, methods, sqlOpsUrls, refid, module_refid, optionsOverride, setFieldOptions, chainMap, fieldLoading, setFieldLoading, AttachmentPopup, parent_data }: FieldRendererProps): string | number | bigint | boolean | Iterable<import('react').ReactNode> | Promise<string | number | bigint | boolean | import('react').ReactPortal | import('react').ReactElement<unknown, string | import('react').JSXElementConstructor<any>> | Iterable<import('react').ReactNode> | null | undefined> | import("react").JSX.Element | null | undefined;
 //# sourceMappingURL=FieldRenderer.d.ts.map

@@ -324,7 +324,25 @@ export const example9 = {
                                 "type": "dataSelector",
                                 "required": true,
                                 "groupid": "hse_observations_external_type",
-                                "width": 4
+                                "width": 4,
+                                "buttons": {
+  "api@hse.someAction": {
+    "label": "Add",
+    "icon": "fa fa-plus",
+    "class": "bg-emerald-50 text-emerald-600 border-emerald-200"
+  },
+  "more": {
+    "infoview@hse.tool_box_talk/{id}": {
+      "label": "View Detail",
+      "icon": "fa fa-eye",
+      "class": "bg-white"
+    },
+    "api@hse.archive": {
+      "label": "Archive",
+      "icon": "fa fa-box-archive"
+    }
+  }
+}
                             },
                             "type_issued": {
                                 "label": " Issued Count",

@@ -236,6 +236,24 @@ export declare const example9: {
                                 required: boolean;
                                 groupid: string;
                                 width: number;
+                                buttons: {
+                                    "api@hse.someAction": {
+                                        label: string;
+                                        icon: string;
+                                        class: string;
+                                    };
+                                    more: {
+                                        "infoview@hse.tool_box_talk/{id}": {
+                                            label: string;
+                                            icon: string;
+                                            class: string;
+                                        };
+                                        "api@hse.archive": {
+                                            label: string;
+                                            icon: string;
+                                        };
+                                    };
+                                };
                             };
                             type_issued: {
                                 label: string;
