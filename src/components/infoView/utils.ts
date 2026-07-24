@@ -11,12 +11,13 @@ export function determineViewMode(json: Infoview) {
   return json.template ? json.template : 'tab'
 }
 
+
+
 export const formatDate = (value: string) => {
   if (!value) return value;
 
-const date = value.split("T")[0] ?? value;
-const [year, month, day] = date.split("-");
-
+  const [datePart = ""] = value.split(/[T ]/);
+  const [year, month, day] = datePart.split("-");
 
   return year && month && day ? `${day}-${month}-${year}` : value;
 };
@@ -27,6 +28,21 @@ export const formatMonth = (value: string) => {
   const [year, month] = value.split("-");
 
   return year && month ? `${month}-${year}` : value;
+};
+
+export const formatDateTime = (value: string) => {
+  if (!value) return value;
+
+  const [datePart = "", timePart = ""] = value.split(/[T ]/);
+  const [year, month, day] = datePart.split("-");
+
+  if (!year || !month || !day) return value;
+
+  const time = timePart.split(".")[0]; // Remove milliseconds if present
+
+  return time
+    ? `${day}-${month}-${year} ${time}`
+    : `${day}-${month}-${year}`;
 };
 
 export function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup> {

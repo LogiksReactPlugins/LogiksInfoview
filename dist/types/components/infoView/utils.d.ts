@@ -4,6 +4,7 @@ import * as Yup from "yup";
 export declare function determineViewMode(json: Infoview): string;
 export declare const formatDate: (value: string) => string;
 export declare const formatMonth: (value: string) => string;
+export declare const formatDateTime: (value: string) => string;
 export declare function groupFields(fields: Record<string, any>): Record<string, InfoViewGroup>;
 export declare const getGeoFieldKeys: (fields: Record<string, Omit<FormField, "name">>) => string[];
 export type GeolocationData = {
