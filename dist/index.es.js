@@ -48955,7 +48955,7 @@ function Xb({
     )
   };
   return /* @__PURE__ */ b.jsxs("div", { className: "relative mt-1", children: [
-    !y && /* @__PURE__ */ b.jsx("div", { className: "flex justify-end px-4 py-2 border-b border-gray-100", children: /* @__PURE__ */ b.jsxs(
+    y && /* @__PURE__ */ b.jsx("div", { className: "flex justify-end px-4 py-2 border-b border-gray-100", children: /* @__PURE__ */ b.jsxs(
       "button",
       {
         type: "button",

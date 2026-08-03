@@ -382,7 +382,7 @@ export default function LogiksForm({
 
   return (
     <div className="relative mt-1">
-      {!isEdit && (
+      {isEdit && (
         <div className="flex justify-end px-4 py-2 border-b border-gray-100">
           <button
             type="button"
