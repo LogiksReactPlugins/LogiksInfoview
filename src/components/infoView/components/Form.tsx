@@ -224,6 +224,7 @@ export default function LogiksForm({
           callback?.(err);
           toast?.error?.(getErrorMessage(err));
           console.error("Method execution failed:", err);
+          throw err
         }
       }
     }
@@ -252,6 +253,7 @@ export default function LogiksForm({
         callback?.(err);
         toast?.error?.(getErrorMessage(err));
         console.error("API fetch failed:", err);
+        throw err
       }
     }
 
@@ -349,6 +351,7 @@ export default function LogiksForm({
         callback?.(err);
         toast?.error?.(getErrorMessage(err));
         console.error("API fetch failed:", err);
+        throw err
       }
     }
   };

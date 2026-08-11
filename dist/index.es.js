@@ -48850,7 +48850,7 @@ function Xb({
           const C = Oo(M, e?.submit_msg);
           C && s?.success?.(C);
         } catch (j) {
-          r?.(j), s?.error?.(vo(j)), console.error("Method execution failed:", j);
+          throw r?.(j), s?.error?.(vo(j)), console.error("Method execution failed:", j), j;
         }
     }
     if (T.type === "api") {
@@ -48871,7 +48871,7 @@ function Xb({
         const L = Oo(E, e?.submit_msg);
         L && s?.success?.(L);
       } catch (E) {
-        r?.(E), s?.error?.(vo(E)), console.error("API fetch failed:", E);
+        throw r?.(E), s?.error?.(vo(E)), console.error("API fetch failed:", E), E;
       }
     }
     if (T.type === "sql") {
@@ -48933,7 +48933,7 @@ function Xb({
         }), B = Oo(O, e?.submit_msg);
         B && s?.success?.(B), i?.(null), r?.(O);
       } catch (L) {
-        r?.(L), s?.error?.(vo(L)), console.error("API fetch failed:", L);
+        throw r?.(L), s?.error?.(vo(L)), console.error("API fetch failed:", L), L;
       }
     }
   }, y = a != null && Object.keys(a).length > 0, g = {
