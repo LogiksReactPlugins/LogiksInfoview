@@ -119,6 +119,7 @@ export interface Toast {
     info?: (message: string) => void;
     warn?: (message: string) => void;
 }
+export type InfoData = Record<string, unknown>;
 export interface InfoViewProps {
     infoViewJson: InfoviewJson;
     initialvalues?: Record<string, any>;
@@ -152,14 +153,11 @@ export type OptionItem = {
 export type FlatOptions = Record<string, string>;
 export type GroupedOptions = Record<string, Record<string, string>>;
 export type SelectOptions = FlatOptions | GroupedOptions | OptionItem[];
-export interface InfoData {
-    [key: string]: string | number | boolean | null | undefined;
-}
 export interface InfoFieldRendererProps {
     field: FormField;
     methods?: Record<string, Function>;
     sqlOpsUrls: SqlEndpoints;
-    data?: Record<string, string | number | boolean | null | undefined>;
+    data?: InfoData;
     refid?: string | undefined;
     module_refid?: string | undefined;
     optionsOverride?: OptionItem[];
@@ -287,6 +285,7 @@ export interface FieldRendererProps {
     setFieldLoading?: (fieldName: string, loading: boolean) => void;
     fieldLoading?: boolean;
     AttachmentPopup?: ComponentType<any> | undefined;
+    data?: Record<string, unknown> | undefined;
     parent_data: InfoData;
 }
 export interface TabViewProps {
