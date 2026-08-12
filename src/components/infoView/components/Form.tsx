@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import { fetchGeolocation, getErrorMessage, getGeoFieldKeys, getSuccessMessage, replacePlaceholders, transformedObject } from "../utils.js";
+import { fetchGeolocation, getErrorMessage, getGeoFieldKeys, getSuccessMessage, normalizeRowSafe, replacePlaceholders, transformedObject } from "../utils.js";
 
 
 import NormalFormView from "./NormalFormView.js";
@@ -24,7 +24,9 @@ export default function LogiksForm({
 
   const sqlOpsUrls = formJson.endPoints;
   const refid = formJson?.source?.refid;
-  const [resolvedData, setResolvedData] = React.useState<Record<string, any>>(initialvalues ?? {});
+  const [resolvedData, setResolvedData] = React.useState<Record<string, any>>(
+    () => normalizeRowSafe(initialvalues ?? {})
+  );
   const geoFieldKeys = React.useMemo(() => {
     return getGeoFieldKeys(formJson.fields)
   }, [formJson.fields]);
@@ -35,8 +37,8 @@ export default function LogiksForm({
     const initGeo = async () => {
 
       try {
-      const { latitude, longitude, altitude } = await fetchGeolocation();
-       const geo = `${latitude},${longitude}`;
+        const { latitude, longitude, altitude } = await fetchGeolocation();
+        const geo = `${latitude},${longitude}`;
 
         if (isMounted) {
           setResolvedData(prev => ({
@@ -60,7 +62,12 @@ export default function LogiksForm({
 
 
   React.useEffect(() => {
-    setResolvedData(initialvalues ?? {});
+    const normalizedInitialValues = normalizeRowSafe(initialvalues ?? {});
+
+    setResolvedData((prev) => ({
+      ...prev,
+      ...normalizedInitialValues,
+    }));
   }, [initialvalues]);
 
   const safeSetResolvedData = React.useCallback(
@@ -71,9 +78,9 @@ export default function LogiksForm({
         const merged = { ...prev };
 
         for (const key in data) {
-          if (data[key] !== null && data[key] !== undefined) {
-            merged[key] = data[key];
-          }
+
+          merged[key] = data[key];
+
         }
 
         return merged;
@@ -357,7 +364,7 @@ export default function LogiksForm({
   };
 
 
- const isEdit =
+  const isEdit =
     initialvalues != null &&
     Object.keys(initialvalues).length > 0;
 

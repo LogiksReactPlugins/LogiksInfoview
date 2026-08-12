@@ -25,7 +25,8 @@ export default function FieldRenderer({
   fieldLoading,
   setFieldLoading,
   AttachmentPopup,
-  parent_data
+  parent_data,
+  data
 }: FieldRendererProps) {
 
   const {
@@ -73,8 +74,8 @@ export default function FieldRenderer({
 
   const handleButtonClick = (method: string, val: any) => {
     console.log("called handleaction");
-    
-    methods?.handleActions?.({ [method]: val }, formik.values, refreshOptions);
+
+    methods?.handleActions?.({ [method]: val }, { parent_data, child_data: data }, refreshOptions);
   };
 
   const renderField = (): React.ReactNode => {
@@ -1004,49 +1005,49 @@ export default function FieldRenderer({
     }
 
   }
-if (fieldButtons.length === 0) return renderField();
+  if (fieldButtons.length === 0) return renderField();
   return (
     <div className="flex items-start gap-1.5">
       <div className="flex-1 min-w-0">{renderField()}</div>
 
-    <div className="flex gap-1 shrink-0 pt-[22px]">
+      <div className="flex gap-1 shrink-0 pt-[22px]">
 
         {/* Direct buttons */}
-       {directButtons.map(([method, val]) => (
-      <button
-        key={method}
-        type="button"
-        onClick={() => handleButtonClick(method, val)}
-        className={val.class
-          ? val.class
-          : `inline-flex items-center gap-1.5 px-2.5 py-2 text-xs font-semibold
+        {directButtons.map(([method, val]) => (
+          <button
+            key={method}
+            type="button"
+            onClick={() => handleButtonClick(method, val)}
+            className={val.class
+              ? val.class
+              : `inline-flex items-center gap-1.5 px-2.5 py-2 text-xs font-semibold
              text-indigo-600 bg-indigo-50 hover:bg-indigo-100
              border border-indigo-200 rounded-lg shadow-sm
              hover:shadow-md transform hover:scale-105
              transition-all duration-200 cursor-pointer whitespace-nowrap`}
-      >
-        {val.icon ? <i className={val.icon} /> : val.label}
-      </button>
-    ))}
+          >
+            {val.icon ? <i className={val.icon} /> : val.label}
+          </button>
+        ))}
 
         {/* Three-dot dropdown */}
         {moreButtons && (
           <div className="relative" ref={moreRef}>
-       <button
-          type="button"
-          onClick={() => setMoreOpen(p => !p)}
-          className="inline-flex items-center justify-center px-2 py-2
+            <button
+              type="button"
+              onClick={() => setMoreOpen(p => !p)}
+              className="inline-flex items-center justify-center px-2 py-2
             text-gray-500 hover:text-gray-700 bg-white hover:bg-gray-50
             border border-gray-200 rounded-lg shadow-sm
             hover:shadow-md transform hover:scale-105
             transition-all duration-200 cursor-pointer"
-        >
-          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-            <circle cx="12" cy="5" r="1.8" />
-            <circle cx="12" cy="12" r="1.8" />
-            <circle cx="12" cy="19" r="1.8" />
-          </svg>
-        </button>
+            >
+              <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="5" r="1.8" />
+                <circle cx="12" cy="12" r="1.8" />
+                <circle cx="12" cy="19" r="1.8" />
+              </svg>
+            </button>
 
             {moreOpen && (
               <div className="absolute right-0 top-full mt-1.5 w-44 bg-white

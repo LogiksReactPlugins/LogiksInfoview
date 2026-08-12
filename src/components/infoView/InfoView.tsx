@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import { determineViewMode, groupFields, normalizeToObject, replacePlaceholders, transformedObject } from './utils.js';
+import { determineViewMode, groupFields, normalizeRowSafe, normalizeToObject, replacePlaceholders, transformedObject } from './utils.js';
 
 import type { InfoViewGroup, InfoViewProps, InfoData, OptionItem } from './InfoView.types.js';
 
@@ -28,7 +28,9 @@ export default function LogiksInfoView({
 
 
 
-    const [infoData, setInfoData] = React.useState<InfoData>(initialvalues ?? {});
+    const [infoData, setInfoData] = React.useState<InfoData>(
+        () => normalizeRowSafe(initialvalues ?? {})
+    );
     const viewMode = determineViewMode(infoViewJson.infoview ?? {});
     const sqlOpsUrls = infoViewJson.endPoints;
     const groupedFields = React.useMemo(
@@ -58,10 +60,10 @@ export default function LogiksInfoView({
     });
 
     React.useEffect(() => {
-        if (!initialvalues) return;
+        const normalizedInitialValues = normalizeRowSafe(initialvalues ?? {});
         setInfoData(prev => ({
             ...prev,
-            ...(initialvalues ?? {})
+            ...normalizedInitialValues,
         }));
     }, [initialvalues]);
 

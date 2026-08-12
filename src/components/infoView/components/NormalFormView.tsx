@@ -196,6 +196,8 @@ export default function NormalFormView({
                     setFieldLoading={updateFieldLoading}
                     AttachmentPopup={AttachmentPopup}
                     parent_data={parent_data}
+                    data={data}
+
                   />
                 </div>
               })}
