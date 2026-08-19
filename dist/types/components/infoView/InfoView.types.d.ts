@@ -257,7 +257,7 @@ export interface BaseFormViewProps {
     title?: string | undefined;
     data?: Record<string, any>;
     onSubmit: (values: Record<string, any>) => Promise<any>;
-    onCancel: () => void;
+    reset: () => void;
     methods?: Record<string, Function>;
     widget?: boolean | undefined;
     sqlOpsUrls?: SqlEndpoints | undefined;
