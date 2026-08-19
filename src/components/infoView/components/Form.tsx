@@ -64,10 +64,7 @@ export default function LogiksForm({
   React.useEffect(() => {
     const normalizedInitialValues = normalizeRowSafe(initialvalues ?? {});
 
-    setResolvedData((prev) => ({
-      ...prev,
-      ...normalizedInitialValues,
-    }));
+    setResolvedData(normalizedInitialValues);
   }, [initialvalues]);
 
   const safeSetResolvedData = React.useCallback(
@@ -364,9 +361,9 @@ export default function LogiksForm({
   };
 
 
-  const isEdit =
-    initialvalues != null &&
-    Object.keys(initialvalues).length > 0;
+  const resetForm = () => {
+    setEditData?.(null)
+  }
 
 
   const formView = {
@@ -377,7 +374,7 @@ export default function LogiksForm({
       fields={formJson.fields}
       data={resolvedData}
       onSubmit={handleSubmit}
-      onCancel={onCancel}
+      reset={resetForm}
       methods={methods}
 
       sqlOpsUrls={sqlOpsUrls}
@@ -392,19 +389,7 @@ export default function LogiksForm({
 
   return (
     <div className="relative mt-1">
-      {isEdit && (
-        <div className="flex justify-end px-4 py-2 border-b border-gray-100">
-          <button
-            type="button"
-            onMouseDown={(e) => e.preventDefault()}
-            onClick={() => setEditData?.(null)}
-            className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-indigo-700 hover:underline"
-          >
-            <i className="fa-solid fa-xmark text-[10px]" />
-            Cancel edit
-          </button>
-        </div>
-      )}
+
 
       {formView.simple}
     </div>

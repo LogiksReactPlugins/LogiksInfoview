@@ -12,7 +12,7 @@ export default function NormalFormView({
   fields,
   data,
   onSubmit = async (values) => { },
-  onCancel = () => { },
+  reset = () => { },
   methods = {},
   sqlOpsUrls,
   refid,
@@ -96,9 +96,7 @@ export default function NormalFormView({
 
         let filteredValues = filterSavableValues(values, flatfields)
         const res = await onSubmit(filteredValues);
-        console.log("res", res);
-
-        formik.resetForm();
+     
       } catch (error) {
         console.log("error", error);
 
@@ -128,7 +126,7 @@ export default function NormalFormView({
   // }
 
   const resetForm = () => {
-    formik.resetForm();
+    reset()
   }
 
 

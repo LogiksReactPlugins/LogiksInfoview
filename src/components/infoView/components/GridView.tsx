@@ -249,28 +249,7 @@ export default function GridView({
 
 
 
-                hasFormConfig && <LogiksForm
-                    formJson={{
-                        ...config[formType],
-                        source: {
-                            ...config?.[formType].source,
-                            refid: editData?.id
-                        },
-                        endPoints: {
-                            ...sqlOpsUrls,
-                            operation: editData ? "update" : "create"
-
-                        },
-                        module_refid: infoViewJson?.module_refid
-                    }}
-                    toast={toast}
-                    methods={methods}
-                    initialvalues={editData ?? {}}
-                    setEditData={handleFormClose}
-                    AttachmentPopup={AttachmentPopup}
-                    parent_data={parent_data}
-
-                />
+                <p>Report not available</p>
 
 
             )}
